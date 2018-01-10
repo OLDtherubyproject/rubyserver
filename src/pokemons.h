@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_MONSTERS_H_776E8327BCE2450EB7C4A260785E6C0D
-#define FS_MONSTERS_H_776E8327BCE2450EB7C4A260785E6C0D
+#ifndef FS_POKEMONS_H_776E8327BCE2450EB7C4A260785E6C0D
+#define FS_POKEMONS_H_776E8327BCE2450EB7C4A260785E6C0D
 
 #include "creature.h"
 
@@ -88,9 +89,9 @@ struct voiceBlock_t {
 	bool yellText;
 };
 
-class MonsterType
+class PokemonType
 {
-	struct MonsterInfo {
+	struct PokemonInfo {
 		LuaScriptInterface* scriptInterface;
 
 		std::map<CombatType_t, int32_t> elementMap;
@@ -150,29 +151,29 @@ class MonsterType
 	};
 
 	public:
-		MonsterType() = default;
+		PokemonType() = default;
 
 		// non-copyable
-		MonsterType(const MonsterType&) = delete;
-		MonsterType& operator=(const MonsterType&) = delete;
+		PokemonType(const PokemonType&) = delete;
+		PokemonType& operator=(const PokemonType&) = delete;
 
 		std::string name;
 		std::string nameDescription;
 
-		MonsterInfo info;
+		PokemonInfo info;
 
 		void createLoot(Container* corpse);
 		bool createLootContainer(Container* parent, const LootBlock& lootblock);
 		std::vector<Item*> createLootItem(const LootBlock& lootBlock);
 };
 
-class Monsters
+class Pokemons
 {
 	public:
-		Monsters() = default;
+		Pokemons() = default;
 		// non-copyable
-		Monsters(const Monsters&) = delete;
-		Monsters& operator=(const Monsters&) = delete;
+		Pokemons(const Pokemons&) = delete;
+		Pokemons& operator=(const Pokemons&) = delete;
 
 		bool loadFromXml(bool reloading = false);
 		bool isLoaded() const {
@@ -180,7 +181,7 @@ class Monsters
 		}
 		bool reload();
 
-		MonsterType* getMonsterType(const std::string& name);
+		PokemonType* getPokemonType(const std::string& name);
 
 		static uint32_t getLootRandom();
 
@@ -189,13 +190,13 @@ class Monsters
 		                                    int32_t maxDamage, int32_t minDamage, int32_t startDamage, uint32_t tickInterval);
 		bool deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, const std::string& description = "");
 
-		MonsterType* loadMonster(const std::string& file, const std::string& monsterName, bool reloading = false);
+		PokemonType* loadPokemon(const std::string& file, const std::string& pokemonName, bool reloading = false);
 
 		void loadLootContainer(const pugi::xml_node& node, LootBlock&);
 		bool loadLootItem(const pugi::xml_node& node, LootBlock&);
 
-		std::map<std::string, MonsterType> monsters;
-		std::map<std::string, std::string> unloadedMonsters;
+		std::map<std::string, PokemonType> pokemons;
+		std::map<std::string, std::string> unloadedPokemons;
 		std::unique_ptr<LuaScriptInterface> scriptInterface;
 
 		bool loaded = false;

@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@
 #include "combat.h"
 #include "game.h"
 #include "mailbox.h"
-#include "monster.h"
+#include "pokemon.h"
 #include "movement.h"
 #include "teleport.h"
 #include "trashholder.h"
@@ -491,22 +492,22 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			return RETURNVALUE_NOTPOSSIBLE;
 		}
 
-		if (const Monster* monster = creature->getMonster()) {
+		if (const Pokemon* pokemon = creature->getPokemon()) {
 			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
 				return RETURNVALUE_NOTPOSSIBLE;
 			}
 
 			const CreatureVector* creatures = getCreatures();
-			if (monster->canPushCreatures() && !monster->isSummon()) {
+			if (pokemon->canPushCreatures() && !pokemon->isSummon()) {
 				if (creatures) {
 					for (Creature* tileCreature : *creatures) {
 						if (tileCreature->getPlayer() && tileCreature->getPlayer()->isInGhostMode()) {
 							continue;
 						}
 
-						const Monster* creatureMonster = tileCreature->getMonster();
-						if (!creatureMonster || !tileCreature->isPushable() ||
-						        (creatureMonster->isSummon() && creatureMonster->getMaster()->getPlayer())) {
+						const Pokemon* creaturePokemon = tileCreature->getPokemon();
+						if (!creaturePokemon || !tileCreature->isPushable() ||
+						        (creaturePokemon->isSummon() && creaturePokemon->getMaster()->getPlayer())) {
 							return RETURNVALUE_NOTPOSSIBLE;
 						}
 					}
@@ -528,7 +529,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			}
 
 			if (hasFlag(TILESTATE_BLOCKSOLID) || (hasBitSet(FLAG_PATHFINDING, flags) && hasFlag(TILESTATE_NOFIELDBLOCKPATH))) {
-				if (!(monster->canPushItems() || hasBitSet(FLAG_IGNOREBLOCKITEM, flags))) {
+				if (!(pokemon->canPushItems() || hasBitSet(FLAG_IGNOREBLOCKITEM, flags))) {
 					return RETURNVALUE_NOTPOSSIBLE;
 				}
 			}
@@ -540,13 +541,13 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 
 			CombatType_t combatType = field->getCombatType();
 
-			//There is 3 options for a monster to enter a magic field
-			//1) Monster is immune
-			if (!monster->isImmune(combatType)) {
-				//1) Monster is able to walk over field type
+			//There is 3 options for a pokemon to enter a magic field
+			//1) Pokemon is immune
+			if (!pokemon->isImmune(combatType)) {
+				//1) Pokemon is able to walk over field type
 				//2) Being attacked while random stepping will make it ignore field damages
 				if (hasBitSet(FLAG_IGNOREFIELDDAMAGE, flags)) {
-					if (!(monster->canWalkOnFieldType(combatType) || monster->isIgnoringFieldDamage())) {
+					if (!(pokemon->canWalkOnFieldType(combatType) || pokemon->isIgnoringFieldDamage())) {
 						return RETURNVALUE_NOTPOSSIBLE;
 					}
 				} else {

@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +133,7 @@ bool Weapons::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return result.second;
 }
 
-//monsters
+//pokemons
 int32_t Weapons::getMaxMeleeDamage(int32_t attackSkill, int32_t attackValue)
 {
 	return static_cast<int32_t>(std::ceil((attackSkill * (attackValue * 0.05)) + (attackValue * 0.5)));

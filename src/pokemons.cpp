@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +20,8 @@
 
 #include "otpch.h"
 
-#include "monsters.h"
-#include "monster.h"
+#include "pokemons.h"
+#include "pokemon.h"
 #include "spells.h"
 #include "combat.h"
 #include "weapons.h"
@@ -31,7 +32,7 @@
 
 extern Game g_game;
 extern Spells* g_spells;
-extern Monsters g_monsters;
+extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 
 spellBlock_t::~spellBlock_t()
@@ -41,12 +42,12 @@ spellBlock_t::~spellBlock_t()
 	}
 }
 
-uint32_t Monsters::getLootRandom()
+uint32_t Pokemons::getLootRandom()
 {
 	return uniform_random(0, MAX_LOOTCHANCE) / g_config.getNumber(ConfigManager::RATE_LOOT);
 }
 
-void MonsterType::createLoot(Container* corpse)
+void PokemonType::createLoot(Container* corpse)
 {
 	if (g_config.getNumber(ConfigManager::RATE_LOOT) == 0) {
 		corpse->startDecaying();
@@ -100,11 +101,11 @@ void MonsterType::createLoot(Container* corpse)
 	corpse->startDecaying();
 }
 
-std::vector<Item*> MonsterType::createLootItem(const LootBlock& lootBlock)
+std::vector<Item*> PokemonType::createLootItem(const LootBlock& lootBlock)
 {
 	int32_t itemCount = 0;
 
-	uint32_t randvalue = Monsters::getLootRandom();
+	uint32_t randvalue = Pokemons::getLootRandom();
 	if (randvalue < lootBlock.chance) {
 		if (Item::items[lootBlock.id].stackable) {
 			itemCount = randvalue % lootBlock.countmax + 1;
@@ -140,7 +141,7 @@ std::vector<Item*> MonsterType::createLootItem(const LootBlock& lootBlock)
 	return itemList;
 }
 
-bool MonsterType::createLootContainer(Container* parent, const LootBlock& lootblock)
+bool PokemonType::createLootContainer(Container* parent, const LootBlock& lootblock)
 {
 	auto it = lootblock.childLoot.begin(), end = lootblock.childLoot.end();
 	if (it == end) {
@@ -164,31 +165,31 @@ bool MonsterType::createLootContainer(Container* parent, const LootBlock& lootbl
 	return !parent->empty();
 }
 
-bool Monsters::loadFromXml(bool reloading /*= false*/)
+bool Pokemons::loadFromXml(bool reloading /*= false*/)
 {
-	unloadedMonsters = {};
+	unloadedPokemons = {};
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("data/monster/monsters.xml");
+	pugi::xml_parse_result result = doc.load_file("data/pokemons/pokemons.xml");
 	if (!result) {
-		printXMLError("Error - Monsters::loadFromXml", "data/monster/monsters.xml", result);
+		printXMLError("Error - Pokemons::loadFromXml", "data/pokemons/pokemons.xml", result);
 		return false;
 	}
 
 	loaded = true;
 
-	for (auto monsterNode : doc.child("monsters").children()) {
-		std::string name = asLowerCaseString(monsterNode.attribute("name").as_string());
-		std::string file = "data/monster/" + std::string(monsterNode.attribute("file").as_string());
-		if (reloading && monsters.find(name) != monsters.end()) {
-			loadMonster(file, name, true);
+	for (auto pokemonNode : doc.child("pokemons").children()) {
+		std::string name = asLowerCaseString(pokemonNode.attribute("name").as_string());
+		std::string file = "data/pokemons/" + std::string(pokemonNode.attribute("file").as_string());
+		if (reloading && pokemons.find(name) != pokemons.end()) {
+			loadPokemon(file, name, true);
 		} else {
-			unloadedMonsters.emplace(name, file);
+			unloadedPokemons.emplace(name, file);
 		}
 	}
 	return true;
 }
 
-bool Monsters::reload()
+bool Pokemons::reload()
 {
 	loaded = false;
 
@@ -197,7 +198,7 @@ bool Monsters::reload()
 	return loadFromXml(true);
 }
 
-ConditionDamage* Monsters::getDamageCondition(ConditionType_t conditionType,
+ConditionDamage* Pokemons::getDamageCondition(ConditionType_t conditionType,
         int32_t maxDamage, int32_t minDamage, int32_t startDamage, uint32_t tickInterval)
 {
 	ConditionDamage* condition = static_cast<ConditionDamage*>(Condition::createCondition(CONDITIONID_COMBAT, conditionType, 0, 0));
@@ -209,7 +210,7 @@ ConditionDamage* Monsters::getDamageCondition(ConditionType_t conditionType,
 	return condition;
 }
 
-bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, const std::string& description)
+bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, const std::string& description)
 {
 	std::string name;
 	std::string scriptName;
@@ -464,8 +465,8 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 				duration = pugi::cast<int32_t>(attr.value());
 			}
 
-			if ((attr = node.attribute("monster"))) {
-				MonsterType* mType = g_monsters.getMonsterType(attr.as_string());
+			if ((attr = node.attribute("pokemon"))) {
+				PokemonType* mType = g_pokemons.getPokemonType(attr.as_string());
 				if (mType) {
 					ConditionOutfit* condition = static_cast<ConditionOutfit*>(Condition::createCondition(CONDITIONID_COMBAT, CONDITION_OUTFIT, duration, 0));
 					condition->setOutfit(mType->info.outfit);
@@ -567,7 +568,7 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		} else if (tmpName == "effect") {
 			//
 		} else {
-			std::cout << "[Error - Monsters::deserializeSpell] - " << description << " - Unknown spell name: " << name << std::endl;
+			std::cout << "[Error - Pokemons::deserializeSpell] - " << description << " - Unknown spell name: " << name << std::endl;
 			delete combat;
 			return false;
 		}
@@ -584,7 +585,7 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 						if (shoot != CONST_ANI_NONE) {
 							combat->setParam(COMBAT_PARAM_DISTANCEEFFECT, shoot);
 						} else {
-							std::cout << "[Warning - Monsters::deserializeSpell] " << description << " - Unknown shootEffect: " << attr.as_string() << std::endl;
+							std::cout << "[Warning - Pokemons::deserializeSpell] " << description << " - Unknown shootEffect: " << attr.as_string() << std::endl;
 						}
 					}
 				} else if (strcasecmp(value, "areaeffect") == 0) {
@@ -593,11 +594,11 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 						if (effect != CONST_ME_NONE) {
 							combat->setParam(COMBAT_PARAM_EFFECT, effect);
 						} else {
-							std::cout << "[Warning - Monsters::deserializeSpell] " << description << " - Unknown areaEffect: " << attr.as_string() << std::endl;
+							std::cout << "[Warning - Pokemons::deserializeSpell] " << description << " - Unknown areaEffect: " << attr.as_string() << std::endl;
 						}
 					}
 				} else {
-					std::cout << "[Warning - Monsters::deserializeSpells] Effect type \"" << attr.as_string() << "\" does not exist." << std::endl;
+					std::cout << "[Warning - Pokemons::deserializeSpells] Effect type \"" << attr.as_string() << "\" does not exist." << std::endl;
 				}
 			}
 		}
@@ -610,50 +611,50 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 	return true;
 }
 
-MonsterType* Monsters::loadMonster(const std::string& file, const std::string& monsterName, bool reloading /*= false*/)
+PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& pokemonName, bool reloading /*= false*/)
 {
-	MonsterType* mType = nullptr;
+	PokemonType* mType = nullptr;
 
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(file.c_str());
 	if (!result) {
-		printXMLError("Error - Monsters::loadMonster", file, result);
+		printXMLError("Error - Pokemons::loadPokemon", file, result);
 		return nullptr;
 	}
 
-	pugi::xml_node monsterNode = doc.child("monster");
-	if (!monsterNode) {
-		std::cout << "[Error - Monsters::loadMonster] Missing monster node in: " << file << std::endl;
+	pugi::xml_node pokemonNode = doc.child("pokemon");
+	if (!pokemonNode) {
+		std::cout << "[Error - Pokemons::loadPokemon] Missing pokemon node in: " << file << std::endl;
 		return nullptr;
 	}
 
 	pugi::xml_attribute attr;
-	if (!(attr = monsterNode.attribute("name"))) {
-		std::cout << "[Error - Monsters::loadMonster] Missing name in: " << file << std::endl;
+	if (!(attr = pokemonNode.attribute("name"))) {
+		std::cout << "[Error - Pokemons::loadPokemon] Missing name in: " << file << std::endl;
 		return nullptr;
 	}
 
 	if (reloading) {
-		auto it = monsters.find(asLowerCaseString(monsterName));
-		if (it != monsters.end()) {
+		auto it = pokemons.find(asLowerCaseString(pokemonName));
+		if (it != pokemons.end()) {
 			mType = &it->second;
 			mType->info = {};
 		}
 	}
 
 	if (!mType) {
-		mType = &monsters[asLowerCaseString(monsterName)];
+		mType = &pokemons[asLowerCaseString(pokemonName)];
 	}
 
 	mType->name = attr.as_string();
 
-	if ((attr = monsterNode.attribute("nameDescription"))) {
+	if ((attr = pokemonNode.attribute("nameDescription"))) {
 		mType->nameDescription = attr.as_string();
 	} else {
 		mType->nameDescription = "a " + asLowerCaseString(mType->name);
 	}
 
-	if ((attr = monsterNode.attribute("race"))) {
+	if ((attr = pokemonNode.attribute("race"))) {
 		std::string tmpStrValue = asLowerCaseString(attr.as_string());
 		uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
 		if (tmpStrValue == "venom" || tmpInt == 1) {
@@ -667,34 +668,34 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		} else if (tmpStrValue == "energy" || tmpInt == 5) {
 			mType->info.race = RACE_ENERGY;
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Unknown race type " << attr.as_string() << ". " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Unknown race type " << attr.as_string() << ". " << file << std::endl;
 		}
 	}
 
-	if ((attr = monsterNode.attribute("experience"))) {
+	if ((attr = pokemonNode.attribute("experience"))) {
 		mType->info.experience = pugi::cast<uint64_t>(attr.value());
 	}
 
-	if ((attr = monsterNode.attribute("speed"))) {
+	if ((attr = pokemonNode.attribute("speed"))) {
 		mType->info.baseSpeed = pugi::cast<int32_t>(attr.value());
 	}
 
-	if ((attr = monsterNode.attribute("manacost"))) {
+	if ((attr = pokemonNode.attribute("manacost"))) {
 		mType->info.manaCost = pugi::cast<uint32_t>(attr.value());
 	}
 
-	if ((attr = monsterNode.attribute("skull"))) {
+	if ((attr = pokemonNode.attribute("skull"))) {
 		mType->info.skull = getSkullType(asLowerCaseString(attr.as_string()));
 	}
 
-	if ((attr = monsterNode.attribute("script"))) {
+	if ((attr = pokemonNode.attribute("script"))) {
 		if (!scriptInterface) {
-			scriptInterface.reset(new LuaScriptInterface("Monster Interface"));
+			scriptInterface.reset(new LuaScriptInterface("Pokemon Interface"));
 			scriptInterface->initState();
 		}
 
 		std::string script = attr.as_string();
-		if (scriptInterface->loadFile("data/monster/scripts/" + script) == 0) {
+		if (scriptInterface->loadFile("data/pokemon/scripts/" + script) == 0) {
 			mType->info.scriptInterface = scriptInterface.get();
 			mType->info.creatureAppearEvent = scriptInterface->getEvent("onCreatureAppear");
 			mType->info.creatureDisappearEvent = scriptInterface->getEvent("onCreatureDisappear");
@@ -702,27 +703,27 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			mType->info.creatureSayEvent = scriptInterface->getEvent("onCreatureSay");
 			mType->info.thinkEvent = scriptInterface->getEvent("onThink");
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Can not load script: " << script << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Can not load script: " << script << std::endl;
 			std::cout << scriptInterface->getLastLuaError() << std::endl;
 		}
 	}
 
 	pugi::xml_node node;
-	if ((node = monsterNode.child("health"))) {
+	if ((node = pokemonNode.child("health"))) {
 		if ((attr = node.attribute("now"))) {
 			mType->info.health = pugi::cast<int32_t>(attr.value());
 		} else {
-			std::cout << "[Error - Monsters::loadMonster] Missing health now. " << file << std::endl;
+			std::cout << "[Error - Pokemons::loadPokemon] Missing health now. " << file << std::endl;
 		}
 
 		if ((attr = node.attribute("max"))) {
 			mType->info.healthMax = pugi::cast<int32_t>(attr.value());
 		} else {
-			std::cout << "[Error - Monsters::loadMonster] Missing health max. " << file << std::endl;
+			std::cout << "[Error - Pokemons::loadPokemon] Missing health max. " << file << std::endl;
 		}
 	}
 
-	if ((node = monsterNode.child("flags"))) {
+	if ((node = pokemonNode.child("flags"))) {
 		for (auto flagNode : node.children()) {
 			attr = flagNode.first_attribute();
 			const char* attrName = attr.name();
@@ -745,7 +746,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			} else if (strcasecmp(attrName, "staticattack") == 0) {
 				uint32_t staticAttack = pugi::cast<uint32_t>(attr.value());
 				if (staticAttack > 100) {
-					std::cout << "[Warning - Monsters::loadMonster] staticattack greater than 100. " << file << std::endl;
+					std::cout << "[Warning - Pokemons::loadPokemon] staticattack greater than 100. " << file << std::endl;
 					staticAttack = 100;
 				}
 
@@ -767,32 +768,32 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			} else if (strcasecmp(attrName, "canwalkonpoison") == 0) {
 				mType->info.canWalkOnPoison = attr.as_bool();
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Unknown flag attribute: " << attrName << ". " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Unknown flag attribute: " << attrName << ". " << file << std::endl;
 			}
 		}
 
-		//if a monster can push creatures,
+		//if a pokemon can push creatures,
 		// it should not be pushable
 		if (mType->info.canPushCreatures) {
 			mType->info.pushable = false;
 		}
 	}
 
-	if ((node = monsterNode.child("targetchange"))) {
+	if ((node = pokemonNode.child("targetchange"))) {
 		if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
 			mType->info.changeTargetSpeed = pugi::cast<uint32_t>(attr.value());
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing targetchange speed. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing targetchange speed. " << file << std::endl;
 		}
 
 		if ((attr = node.attribute("chance"))) {
 			mType->info.changeTargetChance = pugi::cast<int32_t>(attr.value());
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing targetchange chance. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing targetchange chance. " << file << std::endl;
 		}
 	}
 
-	if ((node = monsterNode.child("look"))) {
+	if ((node = pokemonNode.child("look"))) {
 		if ((attr = node.attribute("type"))) {
 			mType->info.outfit.lookType = pugi::cast<uint16_t>(attr.value());
 
@@ -818,7 +819,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		} else if ((attr = node.attribute("typeex"))) {
 			mType->info.outfit.lookTypeEx = pugi::cast<uint16_t>(attr.value());
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing look type/typeex. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing look type/typeex. " << file << std::endl;
 		}
 
 		if ((attr = node.attribute("mount"))) {
@@ -830,18 +831,18 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		}
 	}
 
-	if ((node = monsterNode.child("attacks"))) {
+	if ((node = pokemonNode.child("attacks"))) {
 		for (auto attackNode : node.children()) {
 			spellBlock_t sb;
-			if (deserializeSpell(attackNode, sb, monsterName)) {
+			if (deserializeSpell(attackNode, sb, pokemonName)) {
 				mType->info.attackSpells.emplace_back(std::move(sb));
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Cant load spell. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Cant load spell. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("defenses"))) {
+	if ((node = pokemonNode.child("defenses"))) {
 		if ((attr = node.attribute("defense"))) {
 			mType->info.defense = pugi::cast<int32_t>(attr.value());
 		}
@@ -852,15 +853,15 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 
 		for (auto defenseNode : node.children()) {
 			spellBlock_t sb;
-			if (deserializeSpell(defenseNode, sb, monsterName)) {
+			if (deserializeSpell(defenseNode, sb, pokemonName)) {
 				mType->info.defenseSpells.emplace_back(std::move(sb));
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Cant load spell. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Cant load spell. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("immunities"))) {
+	if ((node = pokemonNode.child("immunities"))) {
 		for (auto immunityNode : node.children()) {
 			if ((attr = immunityNode.attribute("name"))) {
 				std::string tmpStrValue = asLowerCaseString(attr.as_string());
@@ -904,7 +905,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				} else if (tmpStrValue == "bleed") {
 					mType->info.conditionImmunities |= CONDITION_BLEEDING;
 				} else {
-					std::cout << "[Warning - Monsters::loadMonster] Unknown immunity name " << attr.as_string() << ". " << file << std::endl;
+					std::cout << "[Warning - Pokemons::loadPokemon] Unknown immunity name " << attr.as_string() << ". " << file << std::endl;
 				}
 			} else if ((attr = immunityNode.attribute("physical"))) {
 				if (attr.as_bool()) {
@@ -975,22 +976,22 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 					mType->info.conditionImmunities |= CONDITION_INVISIBLE;
 				}
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Unknown immunity. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Unknown immunity. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("voices"))) {
+	if ((node = pokemonNode.child("voices"))) {
 		if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
 			mType->info.yellSpeedTicks = pugi::cast<uint32_t>(attr.value());
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing voices speed. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing voices speed. " << file << std::endl;
 		}
 
 		if ((attr = node.attribute("chance"))) {
 			mType->info.yellChance = pugi::cast<uint32_t>(attr.value());
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing voices chance. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing voices chance. " << file << std::endl;
 		}
 
 		for (auto voiceNode : node.children()) {
@@ -998,7 +999,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			if ((attr = voiceNode.attribute("sentence"))) {
 				vb.text = attr.as_string();
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Missing voice sentence. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing voice sentence. " << file << std::endl;
 			}
 
 			if ((attr = voiceNode.attribute("yell"))) {
@@ -1010,18 +1011,18 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		}
 	}
 
-	if ((node = monsterNode.child("loot"))) {
+	if ((node = pokemonNode.child("loot"))) {
 		for (auto lootNode : node.children()) {
 			LootBlock lootBlock;
 			if (loadLootItem(lootNode, lootBlock)) {
 				mType->info.lootItems.emplace_back(std::move(lootBlock));
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Cant load loot. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Cant load loot. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("elements"))) {
+	if ((node = pokemonNode.child("elements"))) {
 		for (auto elementNode : node.children()) {
 			if ((attr = elementNode.attribute("physicalPercent"))) {
 				mType->info.elementMap[COMBAT_PHYSICALDAMAGE] = pugi::cast<int32_t>(attr.value());
@@ -1044,16 +1045,16 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			} else if ((attr = elementNode.attribute("manadrainPercent"))) {
 				mType->info.elementMap[COMBAT_MANADRAIN] = pugi::cast<int32_t>(attr.value());
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Unknown element percent. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Unknown element percent. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("summons"))) {
+	if ((node = pokemonNode.child("summons"))) {
 		if ((attr = node.attribute("maxSummons"))) {
 			mType->info.maxSummons = std::min<uint32_t>(pugi::cast<uint32_t>(attr.value()), 100);
 		} else {
-			std::cout << "[Warning - Monsters::loadMonster] Missing summons maxSummons. " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing summons maxSummons. " << file << std::endl;
 		}
 
 		for (auto summonNode : node.children()) {
@@ -1087,17 +1088,17 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				sb.force = force;
 				mType->info.summons.emplace_back(sb);
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Missing summon name. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing summon name. " << file << std::endl;
 			}
 		}
 	}
 
-	if ((node = monsterNode.child("script"))) {
+	if ((node = pokemonNode.child("script"))) {
 		for (auto eventNode : node.children()) {
 			if ((attr = eventNode.attribute("name"))) {
 				mType->info.scripts.emplace_back(attr.as_string());
 			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Missing name for script event. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing name for script event. " << file << std::endl;
 			}
 		}
 	}
@@ -1111,7 +1112,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 	return mType;
 }
 
-bool Monsters::loadLootItem(const pugi::xml_node& node, LootBlock& lootBlock)
+bool Pokemons::loadLootItem(const pugi::xml_node& node, LootBlock& lootBlock)
 {
 	pugi::xml_attribute attr;
 	if ((attr = node.attribute("id"))) {
@@ -1121,14 +1122,14 @@ bool Monsters::loadLootItem(const pugi::xml_node& node, LootBlock& lootBlock)
 		auto ids = Item::items.nameToItems.equal_range(asLowerCaseString(name));
 
 		if (ids.first == Item::items.nameToItems.cend()) {
-			std::cout << "[Warning - Monsters::loadMonster] Unknown loot item \"" << name << "\". " << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Unknown loot item \"" << name << "\". " << std::endl;
 			return false;
 		}
 
 		uint32_t id = ids.first->second;
 
 		if (std::next(ids.first) != ids.second) {
-			std::cout << "[Warning - Monsters::loadMonster] Non-unique loot item \"" << name << "\". " << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Non-unique loot item \"" << name << "\". " << std::endl;
 			return false;
 		}
 
@@ -1175,7 +1176,7 @@ bool Monsters::loadLootItem(const pugi::xml_node& node, LootBlock& lootBlock)
 	return true;
 }
 
-void Monsters::loadLootContainer(const pugi::xml_node& node, LootBlock& lBlock)
+void Pokemons::loadLootContainer(const pugi::xml_node& node, LootBlock& lBlock)
 {
 	for (auto subNode : node.children()) {
 		LootBlock lootBlock;
@@ -1185,18 +1186,18 @@ void Monsters::loadLootContainer(const pugi::xml_node& node, LootBlock& lBlock)
 	}
 }
 
-MonsterType* Monsters::getMonsterType(const std::string& name)
+PokemonType* Pokemons::getPokemonType(const std::string& name)
 {
 	std::string lowerCaseName = asLowerCaseString(name);
 
-	auto it = monsters.find(lowerCaseName);
-	if (it == monsters.end()) {
-		auto it2 = unloadedMonsters.find(lowerCaseName);
-		if (it2 == unloadedMonsters.end()) {
+	auto it = pokemons.find(lowerCaseName);
+	if (it == pokemons.end()) {
+		auto it2 = unloadedPokemons.find(lowerCaseName);
+		if (it2 == unloadedPokemons.end()) {
 			return nullptr;
 		}
 
-		return loadMonster(it2->second, name);
+		return loadPokemon(it2->second, name);
 	}
 	return &it->second;
 }

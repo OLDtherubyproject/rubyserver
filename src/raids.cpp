@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@
 #include "game.h"
 #include "configmanager.h"
 #include "scheduler.h"
-#include "monster.h"
+#include "pokemon.h"
 
 extern Game g_game;
 extern ConfigManager g_config;
@@ -353,7 +354,7 @@ bool SingleSpawnEvent::configureRaidEvent(const pugi::xml_node& eventNode)
 
 	pugi::xml_attribute attr;
 	if ((attr = eventNode.attribute("name"))) {
-		monsterName = attr.as_string();
+		pokemonName = attr.as_string();
 	} else {
 		std::cout << "[Error] Raid: name tag missing for singlespawn event." << std::endl;
 		return false;
@@ -384,15 +385,15 @@ bool SingleSpawnEvent::configureRaidEvent(const pugi::xml_node& eventNode)
 
 bool SingleSpawnEvent::executeEvent()
 {
-	Monster* monster = Monster::createMonster(monsterName);
-	if (!monster) {
-		std::cout << "[Error] Raids: Cant create monster " << monsterName << std::endl;
+	Pokemon* pokemon = Pokemon::createPokemon(pokemonName);
+	if (!pokemon) {
+		std::cout << "[Error] Raids: Cant create pokemon " << pokemonName << std::endl;
 		return false;
 	}
 
-	if (!g_game.placeCreature(monster, position, false, true)) {
-		delete monster;
-		std::cout << "[Error] Raids: Cant place monster " << monsterName << std::endl;
+	if (!g_game.placeCreature(pokemon, position, false, true)) {
+		delete pokemon;
+		std::cout << "[Error] Raids: Cant place pokemon " << pokemonName << std::endl;
 		return false;
 	}
 	return true;
@@ -481,36 +482,36 @@ bool AreaSpawnEvent::configureRaidEvent(const pugi::xml_node& eventNode)
 		}
 	}
 
-	for (auto monsterNode : eventNode.children()) {
+	for (auto pokemonNode : eventNode.children()) {
 		const char* name;
 
-		if ((attr = monsterNode.attribute("name"))) {
+		if ((attr = pokemonNode.attribute("name"))) {
 			name = attr.value();
 		} else {
-			std::cout << "[Error] Raid: name tag missing for monster node." << std::endl;
+			std::cout << "[Error] Raid: name tag missing for pokemon node." << std::endl;
 			return false;
 		}
 
 		uint32_t minAmount;
-		if ((attr = monsterNode.attribute("minamount"))) {
+		if ((attr = pokemonNode.attribute("minamount"))) {
 			minAmount = pugi::cast<uint32_t>(attr.value());
 		} else {
 			minAmount = 0;
 		}
 
 		uint32_t maxAmount;
-		if ((attr = monsterNode.attribute("maxamount"))) {
+		if ((attr = pokemonNode.attribute("maxamount"))) {
 			maxAmount = pugi::cast<uint32_t>(attr.value());
 		} else {
 			maxAmount = 0;
 		}
 
 		if (maxAmount == 0 && minAmount == 0) {
-			if ((attr = monsterNode.attribute("amount"))) {
+			if ((attr = pokemonNode.attribute("amount"))) {
 				minAmount = pugi::cast<uint32_t>(attr.value());
 				maxAmount = minAmount;
 			} else {
-				std::cout << "[Error] Raid: amount tag missing for monster node." << std::endl;
+				std::cout << "[Error] Raid: amount tag missing for pokemon node." << std::endl;
 				return false;
 			}
 		}
@@ -522,26 +523,26 @@ bool AreaSpawnEvent::configureRaidEvent(const pugi::xml_node& eventNode)
 
 bool AreaSpawnEvent::executeEvent()
 {
-	for (const MonsterSpawn& spawn : spawnList) {
+	for (const PokemonSpawn& spawn : spawnList) {
 		uint32_t amount = uniform_random(spawn.minAmount, spawn.maxAmount);
 		for (uint32_t i = 0; i < amount; ++i) {
-			Monster* monster = Monster::createMonster(spawn.name);
-			if (!monster) {
-				std::cout << "[Error - AreaSpawnEvent::executeEvent] Can't create monster " << spawn.name << std::endl;
+			Pokemon* pokemon = Pokemon::createPokemon(spawn.name);
+			if (!pokemon) {
+				std::cout << "[Error - AreaSpawnEvent::executeEvent] Can't create pokemon " << spawn.name << std::endl;
 				return false;
 			}
 
 			bool success = false;
-			for (int32_t tries = 0; tries < MAXIMUM_TRIES_PER_MONSTER; tries++) {
+			for (int32_t tries = 0; tries < MAXIMUM_TRIES_PER_POKEMON; tries++) {
 				Tile* tile = g_game.map.getTile(uniform_random(fromPos.x, toPos.x), uniform_random(fromPos.y, toPos.y), uniform_random(fromPos.z, toPos.z));
-				if (tile && !tile->isMoveableBlocking() && !tile->hasFlag(TILESTATE_PROTECTIONZONE) && tile->getTopCreature() == nullptr && g_game.placeCreature(monster, tile->getPosition(), false, true)) {
+				if (tile && !tile->isMoveableBlocking() && !tile->hasFlag(TILESTATE_PROTECTIONZONE) && tile->getTopCreature() == nullptr && g_game.placeCreature(pokemon, tile->getPosition(), false, true)) {
 					success = true;
 					break;
 				}
 			}
 
 			if (!success) {
-				delete monster;
+				delete pokemon;
 			}
 		}
 	}

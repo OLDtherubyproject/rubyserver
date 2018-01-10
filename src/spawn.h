@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +24,13 @@
 #include "tile.h"
 #include "position.h"
 
-class Monster;
-class MonsterType;
+class Pokemon;
+class PokemonType;
 class Npc;
 
 struct spawnBlock_t {
 	Position pos;
-	MonsterType* mType;
+	PokemonType* mType;
 	int64_t lastSpawn;
 	uint32_t interval;
 	Direction direction;
@@ -45,8 +46,8 @@ class Spawn
 		Spawn(const Spawn&) = delete;
 		Spawn& operator=(const Spawn&) = delete;
 
-		bool addMonster(const std::string& name, const Position& pos, Direction dir, uint32_t interval);
-		void removeMonster(Monster* monster);
+		bool addPokemon(const std::string& name, const Position& pos, Direction dir, uint32_t interval);
+		void removePokemon(Pokemon* pokemon);
 
 		uint32_t getInterval() const {
 			return interval;
@@ -61,7 +62,7 @@ class Spawn
 
 	private:
 		//map of the spawned creatures
-		using SpawnedMap = std::multimap<uint32_t, Monster*>;
+		using SpawnedMap = std::multimap<uint32_t, Pokemon*>;
 		using spawned_pair = SpawnedMap::value_type;
 		SpawnedMap spawnedMap;
 
@@ -75,7 +76,7 @@ class Spawn
 		uint32_t checkSpawnEvent = 0;
 
 		static bool findPlayer(const Position& pos);
-		bool spawnMonster(uint32_t spawnId, MonsterType* mType, const Position& pos, Direction dir, bool startup = false);
+		bool spawnPokemon(uint32_t spawnId, PokemonType* mType, const Position& pos, Direction dir, bool startup = false);
 		void checkSpawn();
 };
 

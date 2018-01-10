@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,28 +20,28 @@
 
 #include "otpch.h"
 
-#include "monster.h"
+#include "pokemon.h"
 #include "game.h"
 #include "spells.h"
 
 extern Game g_game;
-extern Monsters g_monsters;
+extern Pokemons g_pokemons;
 
-int32_t Monster::despawnRange;
-int32_t Monster::despawnRadius;
+int32_t Pokemon::despawnRange;
+int32_t Pokemon::despawnRadius;
 
-uint32_t Monster::monsterAutoID = 0x40000000;
+uint32_t Pokemon::pokemonAutoID = 0x40000000;
 
-Monster* Monster::createMonster(const std::string& name)
+Pokemon* Pokemon::createPokemon(const std::string& name)
 {
-	MonsterType* mType = g_monsters.getMonsterType(name);
+	PokemonType* mType = g_pokemons.getPokemonType(name);
 	if (!mType) {
 		return nullptr;
 	}
-	return new Monster(mType);
+	return new Pokemon(mType);
 }
 
-Monster::Monster(MonsterType* mType) :
+Pokemon::Pokemon(PokemonType* mType) :
 	Creature(),
 	strDescription(mType->nameDescription),
 	mType(mType)
@@ -57,33 +58,33 @@ Monster::Monster(MonsterType* mType) :
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
 		if (!registerCreatureEvent(scriptName)) {
-			std::cout << "[Warning - Monster::Monster] Unknown event name: " << scriptName << std::endl;
+			std::cout << "[Warning - Pokemon::Pokemon] Unknown event name: " << scriptName << std::endl;
 		}
 	}
 }
 
-Monster::~Monster()
+Pokemon::~Pokemon()
 {
 	clearTargetList();
 	clearFriendList();
 }
 
-void Monster::addList()
+void Pokemon::addList()
 {
-	g_game.addMonster(this);
+	g_game.addPokemon(this);
 }
 
-void Monster::removeList()
+void Pokemon::removeList()
 {
-	g_game.removeMonster(this);
+	g_game.removePokemon(this);
 }
 
-bool Monster::canSee(const Position& pos) const
+bool Pokemon::canSee(const Position& pos) const
 {
 	return Creature::canSee(getPosition(), pos, 9, 9);
 }
 
-bool Monster::canWalkOnFieldType(CombatType_t combatType) const
+bool Pokemon::canWalkOnFieldType(CombatType_t combatType) const
 {
 	switch (combatType) {
 		case COMBAT_ENERGYDAMAGE:
@@ -97,13 +98,13 @@ bool Monster::canWalkOnFieldType(CombatType_t combatType) const
 	}
 }
 
-void Monster::onAttackedCreatureDisappear(bool)
+void Pokemon::onAttackedCreatureDisappear(bool)
 {
 	attackTicks = 0;
 	extraMeleeAttack = true;
 }
 
-void Monster::onCreatureAppear(Creature* creature, bool isLogin)
+void Pokemon::onCreatureAppear(Creature* creature, bool isLogin)
 {
 	Creature::onCreatureAppear(creature, isLogin);
 
@@ -111,7 +112,7 @@ void Monster::onCreatureAppear(Creature* creature, bool isLogin)
 		// onCreatureAppear(self, creature)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
 		if (!scriptInterface->reserveScriptEnv()) {
-			std::cout << "[Error - Monster::onCreatureAppear] Call stack overflow" << std::endl;
+			std::cout << "[Error - Pokemon::onCreatureAppear] Call stack overflow" << std::endl;
 			return;
 		}
 
@@ -121,8 +122,8 @@ void Monster::onCreatureAppear(Creature* creature, bool isLogin)
 		lua_State* L = scriptInterface->getLuaState();
 		scriptInterface->pushFunction(mType->info.creatureAppearEvent);
 
-		LuaScriptInterface::pushUserdata<Monster>(L, this);
-		LuaScriptInterface::setMetatable(L, -1, "Monster");
+		LuaScriptInterface::pushUserdata<Pokemon>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 		LuaScriptInterface::pushUserdata<Creature>(L, creature);
 		LuaScriptInterface::setCreatureMetatable(L, -1, creature);
@@ -145,7 +146,7 @@ void Monster::onCreatureAppear(Creature* creature, bool isLogin)
 	}
 }
 
-void Monster::onRemoveCreature(Creature* creature, bool isLogout)
+void Pokemon::onRemoveCreature(Creature* creature, bool isLogout)
 {
 	Creature::onRemoveCreature(creature, isLogout);
 
@@ -153,7 +154,7 @@ void Monster::onRemoveCreature(Creature* creature, bool isLogout)
 		// onCreatureDisappear(self, creature)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
 		if (!scriptInterface->reserveScriptEnv()) {
-			std::cout << "[Error - Monster::onCreatureDisappear] Call stack overflow" << std::endl;
+			std::cout << "[Error - Pokemon::onCreatureDisappear] Call stack overflow" << std::endl;
 			return;
 		}
 
@@ -163,8 +164,8 @@ void Monster::onRemoveCreature(Creature* creature, bool isLogout)
 		lua_State* L = scriptInterface->getLuaState();
 		scriptInterface->pushFunction(mType->info.creatureDisappearEvent);
 
-		LuaScriptInterface::pushUserdata<Monster>(L, this);
-		LuaScriptInterface::setMetatable(L, -1, "Monster");
+		LuaScriptInterface::pushUserdata<Pokemon>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 		LuaScriptInterface::pushUserdata<Creature>(L, creature);
 		LuaScriptInterface::setCreatureMetatable(L, -1, creature);
@@ -185,7 +186,7 @@ void Monster::onRemoveCreature(Creature* creature, bool isLogout)
 	}
 }
 
-void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
+void Pokemon::onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
                              const Tile* oldTile, const Position& oldPos, bool teleport)
 {
 	Creature::onCreatureMove(creature, newTile, newPos, oldTile, oldPos, teleport);
@@ -194,7 +195,7 @@ void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Posi
 		// onCreatureMove(self, creature, oldPosition, newPosition)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
 		if (!scriptInterface->reserveScriptEnv()) {
-			std::cout << "[Error - Monster::onCreatureMove] Call stack overflow" << std::endl;
+			std::cout << "[Error - Pokemon::onCreatureMove] Call stack overflow" << std::endl;
 			return;
 		}
 
@@ -204,8 +205,8 @@ void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Posi
 		lua_State* L = scriptInterface->getLuaState();
 		scriptInterface->pushFunction(mType->info.creatureMoveEvent);
 
-		LuaScriptInterface::pushUserdata<Monster>(L, this);
-		LuaScriptInterface::setMetatable(L, -1, "Monster");
+		LuaScriptInterface::pushUserdata<Pokemon>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 		LuaScriptInterface::pushUserdata<Creature>(L, creature);
 		LuaScriptInterface::setCreatureMetatable(L, -1, creature);
@@ -268,7 +269,7 @@ void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Posi
 	}
 }
 
-void Monster::onCreatureSay(Creature* creature, SpeakClasses type, const std::string& text)
+void Pokemon::onCreatureSay(Creature* creature, SpeakClasses type, const std::string& text)
 {
 	Creature::onCreatureSay(creature, type, text);
 
@@ -276,7 +277,7 @@ void Monster::onCreatureSay(Creature* creature, SpeakClasses type, const std::st
 		// onCreatureSay(self, creature, type, message)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
 		if (!scriptInterface->reserveScriptEnv()) {
-			std::cout << "[Error - Monster::onCreatureSay] Call stack overflow" << std::endl;
+			std::cout << "[Error - Pokemon::onCreatureSay] Call stack overflow" << std::endl;
 			return;
 		}
 
@@ -286,8 +287,8 @@ void Monster::onCreatureSay(Creature* creature, SpeakClasses type, const std::st
 		lua_State* L = scriptInterface->getLuaState();
 		scriptInterface->pushFunction(mType->info.creatureSayEvent);
 
-		LuaScriptInterface::pushUserdata<Monster>(L, this);
-		LuaScriptInterface::setMetatable(L, -1, "Monster");
+		LuaScriptInterface::pushUserdata<Pokemon>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 		LuaScriptInterface::pushUserdata<Creature>(L, creature);
 		LuaScriptInterface::setCreatureMetatable(L, -1, creature);
@@ -299,7 +300,7 @@ void Monster::onCreatureSay(Creature* creature, SpeakClasses type, const std::st
 	}
 }
 
-void Monster::addFriend(Creature* creature)
+void Pokemon::addFriend(Creature* creature)
 {
 	assert(creature != this);
 	auto result = friendList.insert(creature);
@@ -308,7 +309,7 @@ void Monster::addFriend(Creature* creature)
 	}
 }
 
-void Monster::removeFriend(Creature* creature)
+void Pokemon::removeFriend(Creature* creature)
 {
 	auto it = friendList.find(creature);
 	if (it != friendList.end()) {
@@ -317,7 +318,7 @@ void Monster::removeFriend(Creature* creature)
 	}
 }
 
-void Monster::addTarget(Creature* creature, bool pushFront/* = false*/)
+void Pokemon::addTarget(Creature* creature, bool pushFront/* = false*/)
 {
 	assert(creature != this);
 	if (std::find(targetList.begin(), targetList.end(), creature) == targetList.end()) {
@@ -330,7 +331,7 @@ void Monster::addTarget(Creature* creature, bool pushFront/* = false*/)
 	}
 }
 
-void Monster::removeTarget(Creature* creature)
+void Pokemon::removeTarget(Creature* creature)
 {
 	auto it = std::find(targetList.begin(), targetList.end(), creature);
 	if (it != targetList.end()) {
@@ -339,7 +340,7 @@ void Monster::removeTarget(Creature* creature)
 	}
 }
 
-void Monster::updateTargetList()
+void Pokemon::updateTargetList()
 {
 	auto friendIterator = friendList.begin();
 	while (friendIterator != friendList.end()) {
@@ -373,7 +374,7 @@ void Monster::updateTargetList()
 	}
 }
 
-void Monster::clearTargetList()
+void Pokemon::clearTargetList()
 {
 	for (Creature* creature : targetList) {
 		creature->decrementReferenceCounter();
@@ -381,7 +382,7 @@ void Monster::clearTargetList()
 	targetList.clear();
 }
 
-void Monster::clearFriendList()
+void Pokemon::clearFriendList()
 {
 	for (Creature* creature : friendList) {
 		creature->decrementReferenceCounter();
@@ -389,7 +390,7 @@ void Monster::clearFriendList()
 	friendList.clear();
 }
 
-void Monster::onCreatureFound(Creature* creature, bool pushFront/* = false*/)
+void Pokemon::onCreatureFound(Creature* creature, bool pushFront/* = false*/)
 {
 	if (isFriend(creature)) {
 		addFriend(creature);
@@ -402,7 +403,7 @@ void Monster::onCreatureFound(Creature* creature, bool pushFront/* = false*/)
 	updateIdleStatus();
 }
 
-void Monster::onCreatureEnter(Creature* creature)
+void Pokemon::onCreatureEnter(Creature* creature)
 {
 	// std::cout << "onCreatureEnter - " << creature->getName() << std::endl;
 
@@ -414,7 +415,7 @@ void Monster::onCreatureEnter(Creature* creature)
 	onCreatureFound(creature, true);
 }
 
-bool Monster::isFriend(const Creature* creature) const
+bool Pokemon::isFriend(const Creature* creature) const
 {
 	if (isSummon() && getMaster()->getPlayer()) {
 		const Player* masterPlayer = getMaster()->getPlayer();
@@ -433,21 +434,21 @@ bool Monster::isFriend(const Creature* creature) const
 		if (tmpPlayer && (tmpPlayer == getMaster() || masterPlayer->isPartner(tmpPlayer))) {
 			return true;
 		}
-	} else if (creature->getMonster() && !creature->isSummon()) {
+	} else if (creature->getPokemon() && !creature->isSummon()) {
 		return true;
 	}
 
 	return false;
 }
 
-bool Monster::isOpponent(const Creature* creature) const
+bool Pokemon::isOpponent(const Creature* creature) const
 {
 	if (isSummon() && getMaster()->getPlayer()) {
 		if (creature != getMaster()) {
 			return true;
 		}
 	} else {
-		if ((creature->getPlayer() && !creature->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) ||
+		if ((creature->getPlayer() && !creature->getPlayer()->hasFlag(PlayerFlag_IgnoredByPokemons)) ||
 		        (creature->getMaster() && creature->getMaster()->getPlayer())) {
 			return true;
 		}
@@ -456,7 +457,7 @@ bool Monster::isOpponent(const Creature* creature) const
 	return false;
 }
 
-void Monster::onCreatureLeave(Creature* creature)
+void Pokemon::onCreatureLeave(Creature* creature)
 {
 	// std::cout << "onCreatureLeave - " << creature->getName() << std::endl;
 
@@ -479,7 +480,7 @@ void Monster::onCreatureLeave(Creature* creature)
 	}
 }
 
-bool Monster::searchTarget(TargetSearchType_t searchType /*= TARGETSEARCH_DEFAULT*/)
+bool Pokemon::searchTarget(TargetSearchType_t searchType /*= TARGETSEARCH_DEFAULT*/)
 {
 	std::list<Creature*> resultList;
 	const Position& myPos = getPosition();
@@ -561,7 +562,7 @@ bool Monster::searchTarget(TargetSearchType_t searchType /*= TARGETSEARCH_DEFAUL
 	return false;
 }
 
-void Monster::onFollowCreatureComplete(const Creature* creature)
+void Pokemon::onFollowCreatureComplete(const Creature* creature)
 {
 	if (creature) {
 		auto it = std::find(targetList.begin(), targetList.end(), creature);
@@ -580,7 +581,7 @@ void Monster::onFollowCreatureComplete(const Creature* creature)
 	}
 }
 
-BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
+BlockType_t Pokemon::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
                               bool checkDefense /* = false*/, bool checkArmor /* = false*/, bool /* field = false */)
 {
 	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, checkDefense, checkArmor);
@@ -605,7 +606,7 @@ BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32
 }
 
 
-bool Monster::isTarget(const Creature* creature) const
+bool Pokemon::isTarget(const Creature* creature) const
 {
 	if (creature->isRemoved() || !creature->isAttackable() ||
 	        creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature)) {
@@ -618,7 +619,7 @@ bool Monster::isTarget(const Creature* creature) const
 	return true;
 }
 
-bool Monster::selectTarget(Creature* creature)
+bool Pokemon::selectTarget(Creature* creature)
 {
 	if (!isTarget(creature)) {
 		return false;
@@ -638,7 +639,7 @@ bool Monster::selectTarget(Creature* creature)
 	return setFollowCreature(creature);
 }
 
-void Monster::setIdle(bool idle)
+void Pokemon::setIdle(bool idle)
 {
 	if (isRemoved() || getHealth() <= 0) {
 		return;
@@ -656,7 +657,7 @@ void Monster::setIdle(bool idle)
 	}
 }
 
-void Monster::updateIdleStatus()
+void Pokemon::updateIdleStatus()
 {
 	bool idle = false;
 
@@ -669,7 +670,7 @@ void Monster::updateIdleStatus()
 	setIdle(idle);
 }
 
-void Monster::onAddCondition(ConditionType_t type)
+void Pokemon::onAddCondition(ConditionType_t type)
 {
 	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
 		updateMapCache();
@@ -678,7 +679,7 @@ void Monster::onAddCondition(ConditionType_t type)
 	updateIdleStatus();
 }
 
-void Monster::onEndCondition(ConditionType_t type)
+void Pokemon::onEndCondition(ConditionType_t type)
 {
 	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
 		ignoreFieldDamage = false;
@@ -688,7 +689,7 @@ void Monster::onEndCondition(ConditionType_t type)
 	updateIdleStatus();
 }
 
-void Monster::onThink(uint32_t interval)
+void Pokemon::onThink(uint32_t interval)
 {
 	Creature::onThink(interval);
 
@@ -696,7 +697,7 @@ void Monster::onThink(uint32_t interval)
 		// onThink(self, interval)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
 		if (!scriptInterface->reserveScriptEnv()) {
-			std::cout << "[Error - Monster::onThink] Call stack overflow" << std::endl;
+			std::cout << "[Error - Pokemon::onThink] Call stack overflow" << std::endl;
 			return;
 		}
 
@@ -706,8 +707,8 @@ void Monster::onThink(uint32_t interval)
 		lua_State* L = scriptInterface->getLuaState();
 		scriptInterface->pushFunction(mType->info.thinkEvent);
 
-		LuaScriptInterface::pushUserdata<Monster>(L, this);
-		LuaScriptInterface::setMetatable(L, -1, "Monster");
+		LuaScriptInterface::pushUserdata<Pokemon>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 		lua_pushnumber(L, interval);
 
@@ -728,7 +729,7 @@ void Monster::onThink(uint32_t interval)
 			if (isSummon()) {
 				if (!attackedCreature) {
 					if (getMaster() && getMaster()->getAttackedCreature()) {
-						//This happens if the monster is summoned during combat
+						//This happens if the pokemon is summoned during combat
 						selectTarget(getMaster()->getAttackedCreature());
 					} else if (getMaster() != followCreature) {
 						//Our master has not ordered us to attack anything, lets follow him around instead.
@@ -757,7 +758,7 @@ void Monster::onThink(uint32_t interval)
 	}
 }
 
-void Monster::doAttacking(uint32_t interval)
+void Pokemon::doAttacking(uint32_t interval)
 {
 	if (!attackedCreature || (isSummon() && attackedCreature == this)) {
 		return;
@@ -805,7 +806,7 @@ void Monster::doAttacking(uint32_t interval)
 	}
 }
 
-bool Monster::canUseAttack(const Position& pos, const Creature* target) const
+bool Pokemon::canUseAttack(const Position& pos, const Creature* target) const
 {
 	if (isHostile()) {
 		const Position& targetPos = target->getPosition();
@@ -820,7 +821,7 @@ bool Monster::canUseAttack(const Position& pos, const Creature* target) const
 	return true;
 }
 
-bool Monster::canUseSpell(const Position& pos, const Position& targetPos,
+bool Pokemon::canUseSpell(const Position& pos, const Position& targetPos,
                           const spellBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks)
 {
 	inRange = true;
@@ -854,7 +855,7 @@ bool Monster::canUseSpell(const Position& pos, const Position& targetPos,
 	return true;
 }
 
-void Monster::onThinkTarget(uint32_t interval)
+void Pokemon::onThinkTarget(uint32_t interval)
 {
 	if (!isSummon()) {
 		if (mType->info.changeTargetSpeed != 0) {
@@ -891,7 +892,7 @@ void Monster::onThinkTarget(uint32_t interval)
 	}
 }
 
-void Monster::onThinkDefense(uint32_t interval)
+void Pokemon::onThinkDefense(uint32_t interval)
 {
 	bool resetTicks = true;
 	defenseTicks += interval;
@@ -945,7 +946,7 @@ void Monster::onThinkDefense(uint32_t interval)
 				continue;
 			}
 
-			Monster* summon = Monster::createMonster(summonBlock.name);
+			Pokemon* summon = Pokemon::createPokemon(summonBlock.name);
 			if (summon) {
 				if (g_game.placeCreature(summon, getPosition(), false, summonBlock.force)) {
 					summon->setDropLoot(false);
@@ -965,7 +966,7 @@ void Monster::onThinkDefense(uint32_t interval)
 	}
 }
 
-void Monster::onThinkYell(uint32_t interval)
+void Pokemon::onThinkYell(uint32_t interval)
 {
 	if (mType->info.yellSpeedTicks == 0) {
 		return;
@@ -980,20 +981,20 @@ void Monster::onThinkYell(uint32_t interval)
 			const voiceBlock_t& vb = mType->info.voiceVector[index];
 
 			if (vb.yellText) {
-				g_game.internalCreatureSay(this, TALKTYPE_MONSTER_YELL, vb.text, false);
+				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_YELL, vb.text, false);
 			} else {
-				g_game.internalCreatureSay(this, TALKTYPE_MONSTER_SAY, vb.text, false);
+				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, vb.text, false);
 			}
 		}
 	}
 }
 
-void Monster::onWalk()
+void Pokemon::onWalk()
 {
 	Creature::onWalk();
 }
 
-bool Monster::pushItem(Item* item)
+bool Pokemon::pushItem(Item* item)
 {
 	const Position& centerPos = item->getPosition();
 
@@ -1017,7 +1018,7 @@ bool Monster::pushItem(Item* item)
 	return false;
 }
 
-void Monster::pushItems(Tile* tile)
+void Pokemon::pushItems(Tile* tile)
 {
 	//We can not use iterators here since we can push the item to another tile
 	//which will invalidate the iterator.
@@ -1031,7 +1032,7 @@ void Monster::pushItems(Tile* tile)
 			Item* item = items->at(i);
 			if (item && item->hasProperty(CONST_PROP_MOVEABLE) && (item->hasProperty(CONST_PROP_BLOCKPATH)
 			        || item->hasProperty(CONST_PROP_BLOCKSOLID))) {
-				if (moveCount < 20 && Monster::pushItem(item)) {
+				if (moveCount < 20 && Pokemon::pushItem(item)) {
 					++moveCount;
 				} else if (g_game.internalRemoveItem(item) == RETURNVALUE_NOERROR) {
 					++removeCount;
@@ -1045,7 +1046,7 @@ void Monster::pushItems(Tile* tile)
 	}
 }
 
-bool Monster::pushCreature(Creature* creature)
+bool Pokemon::pushCreature(Creature* creature)
 {
 	static std::vector<Direction> dirList {
 			DIRECTION_NORTH,
@@ -1066,24 +1067,24 @@ bool Monster::pushCreature(Creature* creature)
 	return false;
 }
 
-void Monster::pushCreatures(Tile* tile)
+void Pokemon::pushCreatures(Tile* tile)
 {
 	//We can not use iterators here since we can push a creature to another tile
 	//which will invalidate the iterator.
 	if (CreatureVector* creatures = tile->getCreatures()) {
 		uint32_t removeCount = 0;
-		Monster* lastPushedMonster = nullptr;
+		Pokemon* lastPushedPokemon = nullptr;
 
 		for (size_t i = 0; i < creatures->size();) {
-			Monster* monster = creatures->at(i)->getMonster();
-			if (monster && monster->isPushable()) {
-				if (monster != lastPushedMonster && Monster::pushCreature(monster)) {
-					lastPushedMonster = monster;
+			Pokemon* pokemon = creatures->at(i)->getPokemon();
+			if (pokemon && pokemon->isPushable()) {
+				if (pokemon != lastPushedPokemon && Pokemon::pushCreature(pokemon)) {
+					lastPushedPokemon = pokemon;
 					continue;
 				}
 
-				monster->changeHealth(-monster->getHealth());
-				monster->setDropLoot(false);
+				pokemon->changeHealth(-pokemon->getHealth());
+				pokemon->setDropLoot(false);
 				removeCount++;
 			}
 
@@ -1096,7 +1097,7 @@ void Monster::pushCreatures(Tile* tile)
 	}
 }
 
-bool Monster::getNextStep(Direction& direction, uint32_t& flags)
+bool Pokemon::getNextStep(Direction& direction, uint32_t& flags)
 {
 	if (isIdle || getHealth() <= 0) {
 		//we dont have anyone watching might aswell stop walking
@@ -1137,11 +1138,11 @@ bool Monster::getNextStep(Direction& direction, uint32_t& flags)
 		Tile* tile = g_game.map.getTile(pos);
 		if (tile) {
 			if (canPushItems()) {
-				Monster::pushItems(tile);
+				Pokemon::pushItems(tile);
 			}
 
 			if (canPushCreatures()) {
-				Monster::pushCreatures(tile);
+				Pokemon::pushCreatures(tile);
 			}
 		}
 	}
@@ -1149,7 +1150,7 @@ bool Monster::getNextStep(Direction& direction, uint32_t& flags)
 	return result;
 }
 
-bool Monster::getRandomStep(const Position& creaturePos, Direction& direction) const
+bool Pokemon::getRandomStep(const Position& creaturePos, Direction& direction) const
 {
 	static std::vector<Direction> dirList{
 			DIRECTION_NORTH,
@@ -1167,7 +1168,7 @@ bool Monster::getRandomStep(const Position& creaturePos, Direction& direction) c
 	return false;
 }
 
-bool Monster::getDanceStep(const Position& creaturePos, Direction& direction,
+bool Pokemon::getDanceStep(const Position& creaturePos, Direction& direction,
                            bool keepAttack /*= true*/, bool keepDistance /*= true*/)
 {
 	bool canDoAttackNow = canUseAttack(creaturePos, attackedCreature);
@@ -1253,7 +1254,7 @@ bool Monster::getDanceStep(const Position& creaturePos, Direction& direction,
 	return false;
 }
 
-bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, bool flee /* = false */)
+bool Pokemon::getDistanceStep(const Position& targetPos, Direction& direction, bool flee /* = false */)
 {
 	const Position& creaturePos = getPosition();
 
@@ -1272,7 +1273,7 @@ bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, b
 	int_fast32_t offsety = Position::getOffsetY(creaturePos, targetPos);
 
 	if (dx <= 1 && dy <= 1) {
-		//seems like a target is near, it this case we need to slow down our movements (as a monster)
+		//seems like a target is near, it this case we need to slow down our movements (as a pokemon)
 		if (stepDuration < 2) {
 			stepDuration++;
 		}
@@ -1281,11 +1282,11 @@ bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, b
 	}
 
 	if (offsetx == 0 && offsety == 0) {
-		return getRandomStep(creaturePos, direction); // player is "on" the monster so let's get some random step and rest will be taken care later.
+		return getRandomStep(creaturePos, direction); // player is "on" the pokemon so let's get some random step and rest will be taken care later.
 	}
 
 	if (dx == dy) {
-		//player is diagonal to the monster
+		//player is diagonal to the pokemon
 		if (offsetx >= 1 && offsety >= 1) {
 			// player is NW
 			//escape to SE, S or E [and some extra]
@@ -1475,7 +1476,7 @@ bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, b
 		}
 	}
 
-	//Now let's decide where the player is located to the monster (what direction) so we can decide where to escape.
+	//Now let's decide where the player is located to the pokemon (what direction) so we can decide where to escape.
 	if (dy > dx) {
 		Direction playerDir = offsety < 0 ? DIRECTION_SOUTH : DIRECTION_NORTH;
 		switch (playerDir) {
@@ -1748,7 +1749,7 @@ bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, b
 	return true;
 }
 
-bool Monster::canWalkTo(Position pos, Direction direction) const
+bool Pokemon::canWalkTo(Position pos, Direction direction) const
 {
 	pos = getNextPosition(direction, pos);
 	if (isInSpawnRange(pos)) {
@@ -1764,7 +1765,7 @@ bool Monster::canWalkTo(Position pos, Direction direction) const
 	return false;
 }
 
-void Monster::death(Creature*)
+void Pokemon::death(Creature*)
 {
 	setAttackedCreature(nullptr);
 
@@ -1779,7 +1780,7 @@ void Monster::death(Creature*)
 	onIdleStatus();
 }
 
-Item* Monster::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
+Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 {
 	Item* corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature);
 	if (corpse) {
@@ -1797,32 +1798,32 @@ Item* Monster::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 	return corpse;
 }
 
-bool Monster::isInSpawnRange(const Position& pos) const
+bool Pokemon::isInSpawnRange(const Position& pos) const
 {
 	if (!spawn) {
 		return true;
 	}
 
-	if (Monster::despawnRadius == 0) {
+	if (Pokemon::despawnRadius == 0) {
 		return true;
 	}
 
-	if (!Spawns::isInZone(masterPos, Monster::despawnRadius, pos)) {
+	if (!Spawns::isInZone(masterPos, Pokemon::despawnRadius, pos)) {
 		return false;
 	}
 
-	if (Monster::despawnRange == 0) {
+	if (Pokemon::despawnRange == 0) {
 		return true;
 	}
 
-	if (Position::getDistanceZ(pos, masterPos) > Monster::despawnRange) {
+	if (Position::getDistanceZ(pos, masterPos) > Pokemon::despawnRange) {
 		return false;
 	}
 
 	return true;
 }
 
-bool Monster::getCombatValues(int32_t& min, int32_t& max)
+bool Pokemon::getCombatValues(int32_t& min, int32_t& max)
 {
 	if (minCombatValue == 0 && maxCombatValue == 0) {
 		return false;
@@ -1833,7 +1834,7 @@ bool Monster::getCombatValues(int32_t& min, int32_t& max)
 	return true;
 }
 
-void Monster::updateLookDirection()
+void Pokemon::updateLookDirection()
 {
 	Direction newDir = getDirection();
 
@@ -1892,19 +1893,19 @@ void Monster::updateLookDirection()
 	g_game.internalCreatureTurn(this, newDir);
 }
 
-void Monster::dropLoot(Container* corpse, Creature*)
+void Pokemon::dropLoot(Container* corpse, Creature*)
 {
 	if (corpse && lootDrop) {
 		mType->createLoot(corpse);
 	}
 }
 
-void Monster::setNormalCreatureLight()
+void Pokemon::setNormalCreatureLight()
 {
 	internalLight = mType->info.light;
 }
 
-void Monster::drainHealth(Creature* attacker, int32_t damage)
+void Pokemon::drainHealth(Creature* attacker, int32_t damage)
 {
 	Creature::drainHealth(attacker, damage);
 
@@ -1918,14 +1919,14 @@ void Monster::drainHealth(Creature* attacker, int32_t damage)
 	}
 }
 
-void Monster::changeHealth(int32_t healthChange, bool sendHealthChange/* = true*/)
+void Pokemon::changeHealth(int32_t healthChange, bool sendHealthChange/* = true*/)
 {
-	//In case a player with ignore flag set attacks the monster
+	//In case a player with ignore flag set attacks the pokemon
 	setIdle(false);
 	Creature::changeHealth(healthChange, sendHealthChange);
 }
 
-bool Monster::challengeCreature(Creature* creature)
+bool Pokemon::challengeCreature(Creature* creature)
 {
 	if (isSummon()) {
 		return false;
@@ -1939,7 +1940,7 @@ bool Monster::challengeCreature(Creature* creature)
 	return result;
 }
 
-void Monster::getPathSearchParams(const Creature* creature, FindPathParams& fpp) const
+void Pokemon::getPathSearchParams(const Creature* creature, FindPathParams& fpp) const
 {
 	Creature::getPathSearchParams(creature, fpp);
 

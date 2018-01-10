@@ -154,7 +154,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		local isInSlot = targetType.slot and targetType.slot.check and target:getType():usesSlot(targetType.slot.type) and Player(target:getParent())
 		if isInSlot then
 			if targetItem.say then
-				player:say(targetItem.say.text, TALKTYPE_MONSTER_SAY)
+				player:say(targetItem.say.text, TALKTYPE_POKEMON_SAY)
 				return true
 			elseif targetItem.message then
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, targetItem.message.text)

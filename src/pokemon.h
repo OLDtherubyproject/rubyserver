@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_MONSTER_H_9F5EEFE64314418CA7DA41D1B9409DD0
-#define FS_MONSTER_H_9F5EEFE64314418CA7DA41D1B9409DD0
+#ifndef FS_POKEMON_H_9F5EEFE64314418CA7DA41D1B9409DD0
+#define FS_POKEMON_H_9F5EEFE64314418CA7DA41D1B9409DD0
 
 #include "tile.h"
-#include "monsters.h"
+#include "pokemons.h"
 
 class Creature;
 class Game;
@@ -37,30 +38,30 @@ enum TargetSearchType_t {
 	TARGETSEARCH_NEAREST,
 };
 
-class Monster final : public Creature
+class Pokemon final : public Creature
 {
 	public:
-		static Monster* createMonster(const std::string& name);
+		static Pokemon* createPokemon(const std::string& name);
 		static int32_t despawnRange;
 		static int32_t despawnRadius;
 
-		explicit Monster(MonsterType* mType);
-		~Monster();
+		explicit Pokemon(PokemonType* mType);
+		~Pokemon();
 
 		// non-copyable
-		Monster(const Monster&) = delete;
-		Monster& operator=(const Monster&) = delete;
+		Pokemon(const Pokemon&) = delete;
+		Pokemon& operator=(const Pokemon&) = delete;
 
-		Monster* getMonster() override {
+		Pokemon* getPokemon() override {
 			return this;
 		}
-		const Monster* getMonster() const override {
+		const Pokemon* getPokemon() const override {
 			return this;
 		}
 
 		void setID() override {
 			if (id == 0) {
-				id = monsterAutoID++;
+				id = pokemonAutoID++;
 			}
 		}
 
@@ -78,7 +79,7 @@ class Monster final : public Creature
 		}
 
 		CreatureType_t getType() const override {
-			return CREATURETYPE_MONSTER;
+			return CREATURETYPE_POKEMON;
 		}
 
 		const Position& getMasterPos() const {
@@ -177,7 +178,7 @@ class Monster final : public Creature
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
 		                     bool checkDefense = false, bool checkArmor = false, bool field = false) override;
 
-		static uint32_t monsterAutoID;
+		static uint32_t pokemonAutoID;
 
 	private:
 		CreatureHashSet friendList;
@@ -185,7 +186,7 @@ class Monster final : public Creature
 
 		std::string strDescription;
 
-		MonsterType* mType;
+		PokemonType* mType;
 		Spawn* spawn = nullptr;
 
 		int64_t lastMeleeAttack = 0;

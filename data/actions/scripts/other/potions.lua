@@ -42,13 +42,13 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	local potion = potions[item:getId()]
 	if potion.level and player:getLevel() < potion.level or potion.vocations and not table.contains(potion.vocations, player:getVocation():getId()) then
-		player:say(potion.description, TALKTYPE_MONSTER_SAY)
+		player:say(potion.description, TALKTYPE_POKEMON_SAY)
 		return true
 	end
 
 	if potion.condition then
 		player:addCondition(potion.condition)
-		player:say(potion.text, TALKTYPE_MONSTER_SAY)
+		player:say(potion.text, TALKTYPE_POKEMON_SAY)
 		player:getPosition():sendMagicEffect(potion.effect)
 	elseif potion.transform then
 		item:transform(potion.transform[math.random(#potion.transform)])
@@ -68,7 +68,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 
 		player:addItem(potion.flask)
-		target:say("Aaaah...", TALKTYPE_MONSTER_SAY)
+		target:say("Aaaah...", TALKTYPE_POKEMON_SAY)
 		target:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	end
 

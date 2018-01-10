@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +22,14 @@
 
 #include "spawn.h"
 #include "game.h"
-#include "monster.h"
+#include "pokemon.h"qt
 #include "configmanager.h"
 #include "scheduler.h"
 
 #include "pugicast.h"
 
 extern ConfigManager g_config;
-extern Monsters g_monsters;
+extern Pokemons g_pokemons;
 extern Game g_game;
 
 static constexpr int32_t MINSPAWN_INTERVAL = 1000;
@@ -90,7 +91,7 @@ bool Spawns::loadFromXml(const std::string& filename)
 				);
 				uint32_t interval = pugi::cast<uint32_t>(childNode.attribute("spawntime").value()) * 1000;
 				if (interval > MINSPAWN_INTERVAL) {
-					spawn.addMonster(nameAttribute.as_string(), pos, dir, interval);
+					spawn.addPokemon(nameAttribute.as_string(), pos, dir, interval);
 				} else {
 					std::cout << "[Warning - Spawns::loadFromXml] " << nameAttribute.as_string() << ' ' << pos << " spawntime can not be less than " << MINSPAWN_INTERVAL / 1000 << " seconds." << std::endl;
 				}
@@ -172,9 +173,9 @@ void Spawn::startSpawnCheck()
 Spawn::~Spawn()
 {
 	for (const auto& it : spawnedMap) {
-		Monster* monster = it.second;
-		monster->setSpawn(nullptr);
-		monster->decrementReferenceCounter();
+		Pokemon* pokemon = it.second;
+		pokemon->setSpawn(nullptr);
+		pokemon->decrementReferenceCounter();
 	}
 }
 
@@ -183,7 +184,7 @@ bool Spawn::findPlayer(const Position& pos)
 	SpectatorHashSet spectators;
 	g_game.map.getSpectators(spectators, pos, false, true);
 	for (Creature* spectator : spectators) {
-		if (!spectator->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) {
+		if (!spectator->getPlayer()->hasFlag(PlayerFlag_IgnoredByPokemons)) {
 			return true;
 		}
 	}
@@ -195,27 +196,27 @@ bool Spawn::isInSpawnZone(const Position& pos)
 	return Spawns::isInZone(centerPos, radius, pos);
 }
 
-bool Spawn::spawnMonster(uint32_t spawnId, MonsterType* mType, const Position& pos, Direction dir, bool startup /*= false*/)
+bool Spawn::spawnPokemon(uint32_t spawnId, PokemonType* mType, const Position& pos, Direction dir, bool startup /*= false*/)
 {
-	std::unique_ptr<Monster> monster_ptr(new Monster(mType));
+	std::unique_ptr<Pokemon> pokemon_ptr(new Pokemon(mType));
 	if (startup) {
 		//No need to send out events to the surrounding since there is no one out there to listen!
-		if (!g_game.internalPlaceCreature(monster_ptr.get(), pos, true)) {
+		if (!g_game.internalPlaceCreature(pokemon_ptr.get(), pos, true)) {
 			return false;
 		}
 	} else {
-		if (!g_game.placeCreature(monster_ptr.get(), pos, false, true)) {
+		if (!g_game.placeCreature(pokemon_ptr.get(), pos, false, true)) {
 			return false;
 		}
 	}
 
-	Monster* monster = monster_ptr.release();
-	monster->setDirection(dir);
-	monster->setSpawn(this);
-	monster->setMasterPos(pos);
-	monster->incrementReferenceCounter();
+	Pokemon* pokemon = pokemon_ptr.release();
+	pokemon->setDirection(dir);
+	pokemon->setSpawn(this);
+	pokemon->setMasterPos(pos);
+	pokemon->incrementReferenceCounter();
 
-	spawnedMap.insert(spawned_pair(spawnId, monster));
+	spawnedMap.insert(spawned_pair(spawnId, pokemon));
 	spawnMap[spawnId].lastSpawn = OTSYS_TIME();
 	return true;
 }
@@ -225,7 +226,7 @@ void Spawn::startup()
 	for (const auto& it : spawnMap) {
 		uint32_t spawnId = it.first;
 		const spawnBlock_t& sb = it.second;
-		spawnMonster(spawnId, sb.mType, sb.pos, sb.direction, true);
+		spawnPokemon(spawnId, sb.mType, sb.pos, sb.direction, true);
 	}
 }
 
@@ -250,7 +251,7 @@ void Spawn::checkSpawn()
 				continue;
 			}
 
-			spawnMonster(spawnId, sb.mType, sb.pos, sb.direction);
+			spawnPokemon(spawnId, sb.mType, sb.pos, sb.direction);
 			if (++spawnCount >= static_cast<uint32_t>(g_config.getNumber(ConfigManager::RATE_SPAWN))) {
 				break;
 			}
@@ -267,16 +268,16 @@ void Spawn::cleanup()
 	auto it = spawnedMap.begin();
 	while (it != spawnedMap.end()) {
 		uint32_t spawnId = it->first;
-		Monster* monster = it->second;
-		if (monster->isRemoved()) {
+		Pokemon* pokemon = it->second;
+		if (pokemon->isRemoved()) {
 			if (spawnId != 0) {
 				spawnMap[spawnId].lastSpawn = OTSYS_TIME();
 			}
 
-			monster->decrementReferenceCounter();
+			pokemon->decrementReferenceCounter();
 			it = spawnedMap.erase(it);
-		} else if (!isInSpawnZone(monster->getPosition()) && spawnId != 0) {
-			spawnedMap.insert(spawned_pair(0, monster));
+		} else if (!isInSpawnZone(pokemon->getPosition()) && spawnId != 0) {
+			spawnedMap.insert(spawned_pair(0, pokemon));
 			it = spawnedMap.erase(it);
 		} else {
 			++it;
@@ -284,11 +285,11 @@ void Spawn::cleanup()
 	}
 }
 
-bool Spawn::addMonster(const std::string& name, const Position& pos, Direction dir, uint32_t interval)
+bool Spawn::addPokemon(const std::string& name, const Position& pos, Direction dir, uint32_t interval)
 {
-	MonsterType* mType = g_monsters.getMonsterType(name);
+	PokemonType* mType = g_pokemons.getPokemonType(name);
 	if (!mType) {
-		std::cout << "[Spawn::addMonster] Can not find " << name << std::endl;
+		std::cout << "[Spawn::addPokemon] Can not find " << name << std::endl;
 		return false;
 	}
 
@@ -306,11 +307,11 @@ bool Spawn::addMonster(const std::string& name, const Position& pos, Direction d
 	return true;
 }
 
-void Spawn::removeMonster(Monster* monster)
+void Spawn::removePokemon(Pokemon* pokemon)
 {
 	for (auto it = spawnedMap.begin(), end = spawnedMap.end(); it != end; ++it) {
-		if (it->second == monster) {
-			monster->decrementReferenceCounter();
+		if (it->second == pokemon) {
+			pokemon->decrementReferenceCounter();
 			spawnedMap.erase(it);
 			break;
 		}

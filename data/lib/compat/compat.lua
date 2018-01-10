@@ -20,13 +20,13 @@ STACKPOS_TOP_FIELD = 254
 STACKPOS_TOP_MOVEABLE_ITEM_OR_CREATURE = 255
 
 THING_TYPE_PLAYER = CREATURETYPE_PLAYER + 1
-THING_TYPE_MONSTER = CREATURETYPE_MONSTER + 1
+THING_TYPE_POKEMON = CREATURETYPE_POKEMON + 1
 THING_TYPE_NPC = CREATURETYPE_NPC + 1
 
 COMBAT_POISONDAMAGE = COMBAT_EARTHDAMAGE
 CONDITION_EXHAUST = CONDITION_EXHAUST_WEAPON
-TALKTYPE_ORANGE_1 = TALKTYPE_MONSTER_SAY
-TALKTYPE_ORANGE_2 = TALKTYPE_MONSTER_YELL
+TALKTYPE_ORANGE_1 = TALKTYPE_POKEMON_SAY
+TALKTYPE_ORANGE_2 = TALKTYPE_POKEMON_YELL
 
 NORTH = DIRECTION_NORTH
 EAST = DIRECTION_EAST
@@ -46,8 +46,8 @@ do
 			local creatureType = 0
 			if methods.isPlayer(self) then
 				creatureType = THING_TYPE_PLAYER
-			elseif methods.isMonster(self) then
-				creatureType = THING_TYPE_MONSTER
+			elseif methods.isPokemon(self) then
+				creatureType = THING_TYPE_POKEMON
 			elseif methods.isNpc(self) then
 				creatureType = THING_TYPE_NPC
 			end
@@ -60,7 +60,7 @@ do
 		return methods[key]
 	end
 	rawgetmetatable("Player").__index = CreatureIndex
-	rawgetmetatable("Monster").__index = CreatureIndex
+	rawgetmetatable("Pokemon").__index = CreatureIndex
 	rawgetmetatable("Npc").__index = CreatureIndex
 end
 
@@ -98,8 +98,8 @@ function pushThing(thing)
 			t.itemid = 1
 			if thing:isPlayer() then
 				t.type = THING_TYPE_PLAYER
-			elseif thing:isMonster() then
-				t.type = THING_TYPE_MONSTER
+			elseif thing:isPokemon() then
+				t.type = THING_TYPE_POKEMON
 			else
 				t.type = THING_TYPE_NPC
 			end
@@ -135,7 +135,7 @@ function doCombat(cid, combat, var) return combat:execute(cid, var) end
 
 function isCreature(cid) return Creature(cid) end
 function isPlayer(cid) return Player(cid) end
-function isMonster(cid) return Monster(cid) end
+function isPokemon(cid) return Pokemon(cid) end
 function isSummon(cid) return Creature(cid):getMaster() end
 function isNpc(cid) return Npc(cid) end
 function isItem(uid) return Item(uid) end
@@ -480,43 +480,43 @@ end
 
 doPlayerSendDefaultCancel = doPlayerSendCancel
 
-function getMonsterTargetList(cid)
-	local monster = Monster(cid)
-	if monster == nil then
+function getPokemonTargetList(cid)
+	local pokemon = Pokemon(cid)
+	if pokemon == nil then
 		return false
 	end
 
 	local result = {}
-	for _, creature in ipairs(monster:getTargetList()) do
-		if monster:isTarget(creature) then
+	for _, creature in ipairs(pokemon:getTargetList()) do
+		if pokemon:isTarget(creature) then
 			result[#result + 1] = creature:getId()
 		end
 	end
 	return result
 end
-function getMonsterFriendList(cid)
-	local monster = Monster(cid)
-	if monster == nil then
+function getPokemonFriendList(cid)
+	local pokemon = Pokemon(cid)
+	if pokemon == nil then
 		return false
 	end
 
-	local z = monster:getPosition().z
+	local z = pokemon:getPosition().z
 
 	local result = {}
-	for _, creature in ipairs(monster:getFriendList()) do
+	for _, creature in ipairs(pokemon:getFriendList()) do
 		if not creature:isRemoved() and creature:getPosition().z == z then
 			result[#result + 1] = creature:getId()
 		end
 	end
 	return result
 end
-function doSetMonsterTarget(cid, target)
-	local monster = Monster(cid)
-	if monster == nil then
+function doSetPokemonTarget(cid, target)
+	local pokemon = Pokemon(cid)
+	if pokemon == nil then
 		return false
 	end
 
-	if monster:getMaster() then
+	if pokemon:getMaster() then
 		return true
 	end
 
@@ -525,27 +525,27 @@ function doSetMonsterTarget(cid, target)
 		return false
 	end
 
-	monster:selectTarget(target)
+	pokemon:selectTarget(target)
 	return true
 end
-function doMonsterChangeTarget(cid)
-	local monster = Monster(cid)
-	if monster == nil then
+function doPokemonChangeTarget(cid)
+	local pokemon = Pokemon(cid)
+	if pokemon == nil then
 		return false
 	end
 
-	if monster:getMaster() then
+	if pokemon:getMaster() then
 		return true
 	end
 
-	monster:searchTarget(1)
+	pokemon:searchTarget(1)
 	return true
 end
 function doCreateNpc(name, pos, ...)
 	local npc = Game.createNpc(name, pos, ...) return npc and npc:setMasterPos(pos) or false
 end
 function doSummonCreature(name, pos, ...)
-	local m = Game.createMonster(name, pos, ...) return m and m:getId() or false
+	local m = Game.createPokemon(name, pos, ...) return m and m:getId() or false
 end
 function doConvinceCreature(cid, target)
 	local creature = Creature(cid)
@@ -951,11 +951,11 @@ function getWorldCreatures(type)
 	if type == 0 then
 		return Game.getPlayerCount()
 	elseif type == 1 then
-		return Game.getMonsterCount()
+		return Game.getPokemonCount()
 	elseif type == 2 then
 		return Game.getNpcCount()
 	end
-	return Game.getPlayerCount() + Game.getMonsterCount() + Game.getNpcCount()
+	return Game.getPlayerCount() + Game.getPokemonCount() + Game.getNpcCount()
 end
 
 saveData = saveServer
@@ -1035,7 +1035,7 @@ function getPlayerInstantSpellInfo(cid, spellId)
 end
 
 function doSetItemOutfit(cid, item, time) local c = Creature(cid) return c and c:setItemOutfit(item, time) end
-function doSetMonsterOutfit(cid, name, time) local c = Creature(cid) return c and c:setMonsterOutfit(name, time) end
+function doSetPokemonOutfit(cid, name, time) local c = Creature(cid) return c and c:setPokemonOutfit(name, time) end
 function doSetCreatureOutfit(cid, outfit, time)
 	local creature = Creature(cid)
 	if not creature then

@@ -40,7 +40,7 @@ function Creature.isItem(self)
 	return false
 end
 
-function Creature.isMonster(self)
+function Creature.isPokemon(self)
 	return false
 end
 
@@ -60,18 +60,18 @@ function Creature.isTile(self)
 	return false
 end
 
-function Creature:setMonsterOutfit(monster, time)
-	local monsterType = MonsterType(monster)
-	if not monsterType then
+function Creature:setPokemonOutfit(pokemon, time)
+	local pokemonType = PokemonType(pokemon)
+	if not pokemonType then
 		return false
 	end
 
-	if self:isPlayer() and not (self:hasFlag(PlayerFlag_CanIllusionAll) or monsterType:isIllusionable()) then
+	if self:isPlayer() and not (self:hasFlag(PlayerFlag_CanIllusionAll) or pokemonType:isIllusionable()) then
 		return false
 	end
 
 	local condition = Condition(CONDITION_OUTFIT)
-	condition:setOutfit(monsterType:getOutfit())
+	condition:setOutfit(pokemonType:getOutfit())
 	condition:setTicks(time)
 	self:addCondition(condition)
 
@@ -94,8 +94,8 @@ function Creature:setItemOutfit(item, time)
 	return true
 end
 
-function Creature:addSummon(monster)
-	local summon = Monster(monster)
+function Creature:addSummon(pokemon)
+	local summon = Pokemon(pokemon)
 	if not summon then
 		return false
 	end
@@ -109,8 +109,8 @@ function Creature:addSummon(monster)
 	return true
 end
 
-function Creature:removeSummon(monster)
-	local summon = Monster(monster)
+function Creature:removeSummon(pokemon)
+	local summon = Pokemon(pokemon)
 	if not summon or summon:getMaster() ~= self then
 		return false
 	end

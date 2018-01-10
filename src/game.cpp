@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@
 #include "iologindata.h"
 #include "iomarket.h"
 #include "items.h"
-#include "monster.h"
+#include "pokemon.h"
 #include "movement.h"
 #include "scheduler.h"
 #include "server.h"
@@ -51,7 +52,7 @@ extern GlobalEvents* g_globalEvents;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
 extern CreatureEvents* g_creatureEvents;
-extern Monsters g_monsters;
+extern Pokemons g_pokemons;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
 
@@ -195,8 +196,8 @@ void Game::saveGameState()
 
 bool Game::loadMainMap(const std::string& filename)
 {
-	Monster::despawnRange = g_config.getNumber(ConfigManager::DEFAULT_DESPAWNRANGE);
-	Monster::despawnRadius = g_config.getNumber(ConfigManager::DEFAULT_DESPAWNRADIUS);
+	Pokemon::despawnRange = g_config.getNumber(ConfigManager::DEFAULT_DESPAWNRANGE);
+	Pokemon::despawnRadius = g_config.getNumber(ConfigManager::DEFAULT_DESPAWNRADIUS);
 	return map.loadMap("data/world/" + filename + ".otbm", true);
 }
 
@@ -365,22 +366,22 @@ Creature* Game::getCreatureByID(uint32_t id)
 {
 	if (id <= Player::playerAutoID) {
 		return getPlayerByID(id);
-	} else if (id <= Monster::monsterAutoID) {
-		return getMonsterByID(id);
+	} else if (id <= Pokemon::pokemonAutoID) {
+		return getPokemonByID(id);
 	} else if (id <= Npc::npcAutoID) {
 		return getNpcByID(id);
 	}
 	return nullptr;
 }
 
-Monster* Game::getMonsterByID(uint32_t id)
+Pokemon* Game::getPokemonByID(uint32_t id)
 {
 	if (id == 0) {
 		return nullptr;
 	}
 
-	auto it = monsters.find(id);
-	if (it == monsters.end()) {
+	auto it = pokemons.find(id);
+	if (it == pokemons.end()) {
 		return nullptr;
 	}
 	return it->second;
@@ -431,7 +432,7 @@ Creature* Game::getCreatureByName(const std::string& s)
 		}
 	}
 
-	for (const auto& it : monsters) {
+	for (const auto& it : pokemons) {
 		if (lowerCaseName == asLowerCaseString(it.second->getName())) {
 			return it.second;
 		}
@@ -3368,7 +3369,7 @@ bool Game::playerSaySpell(Player* player, SpeakClasses type, const std::string& 
 		if (!g_config.getBoolean(ConfigManager::EMOTE_SPELLS)) {
 			return internalCreatureSay(player, TALKTYPE_SAY, words, false);
 		} else {
-			return internalCreatureSay(player, TALKTYPE_MONSTER_SAY, words, false);
+			return internalCreatureSay(player, TALKTYPE_POKEMON_SAY, words, false);
 		}
 
 	} else if (result == TALKACTION_FAILED) {
@@ -3509,7 +3510,7 @@ bool Game::internalCreatureSay(Creature* creature, SpeakClasses type, const std:
 		// is used if available and if it can be used, else a local vector is
 		// used (hopefully the compiler will optimize away the construction of
 		// the temporary when it's not used).
-		if (type != TALKTYPE_YELL && type != TALKTYPE_MONSTER_YELL) {
+		if (type != TALKTYPE_YELL && type != TALKTYPE_POKEMON_YELL) {
 			map.getSpectators(spectators, *pos, false, false,
 			              Map::maxClientViewportX, Map::maxClientViewportX,
 			              Map::maxClientViewportY, Map::maxClientViewportY);
@@ -4623,7 +4624,7 @@ void Game::updateCreatureType(Creature* creature)
 
 	uint32_t creatureId = creature->getID();
 	CreatureType_t creatureType = creature->getType();
-	if (creatureType == CREATURETYPE_MONSTER) {
+	if (creatureType == CREATURETYPE_POKEMON) {
 		const Creature* master = creature->getMaster();
 		if (master) {
 			masterPlayer = master->getPlayer();
@@ -5554,14 +5555,14 @@ void Game::removeNpc(Npc* npc)
 	npcs.erase(npc->getID());
 }
 
-void Game::addMonster(Monster* monster)
+void Game::addPokemon(Pokemon* pokemon)
 {
-	monsters[monster->getID()] = monster;
+	pokemons[pokemon->getID()] = pokemon;
 }
 
-void Game::removeMonster(Monster* monster)
+void Game::removePokemon(Pokemon* pokemon)
 {
-	monsters.erase(monster->getID());
+	pokemons.erase(pokemon->getID());
 }
 
 Guild* Game::getGuild(uint32_t id) const
@@ -5673,7 +5674,7 @@ bool Game::reload(ReloadTypes_t reloadType)
 		case RELOAD_TYPE_EVENTS: return g_events->load();
 		case RELOAD_TYPE_GLOBALEVENTS: return g_globalEvents->reload();
 		case RELOAD_TYPE_ITEMS: return Item::items.reload();
-		case RELOAD_TYPE_MONSTERS: return g_monsters.reload();
+		case RELOAD_TYPE_POKEMONS: return g_pokemons.reload();
 		case RELOAD_TYPE_MOUNTS: return mounts.reload();
 		case RELOAD_TYPE_MOVEMENTS: return g_moveEvents->reload();
 		case RELOAD_TYPE_NPCS: {
@@ -5688,8 +5689,8 @@ bool Game::reload(ReloadTypes_t reloadType)
 			if (!g_spells->reload()) {
 				std::cout << "[Error - Game::reload] Failed to reload spells." << std::endl;
 				std::terminate();
-			} else if (!g_monsters.reload()) {
-				std::cout << "[Error - Game::reload] Failed to reload monsters." << std::endl;
+			} else if (!g_pokemons.reload()) {
+				std::cout << "[Error - Game::reload] Failed to reload pokemons." << std::endl;
 				std::terminate();
 			}
 			return true;
@@ -5707,15 +5708,15 @@ bool Game::reload(ReloadTypes_t reloadType)
 			if (!g_spells->reload()) {
 				std::cout << "[Error - Game::reload] Failed to reload spells." << std::endl;
 				std::terminate();
-			} else if (!g_monsters.reload()) {
-				std::cout << "[Error - Game::reload] Failed to reload monsters." << std::endl;
+			} else if (!g_pokemons.reload()) {
+				std::cout << "[Error - Game::reload] Failed to reload pokemons." << std::endl;
 				std::terminate();
 			}
 
 			g_actions->reload();
 			g_config.reload();
 			g_creatureEvents->reload();
-			g_monsters.reload();
+			g_pokemons.reload();
 			g_moveEvents->reload();
 			Npcs::reload();
 			raids.reload() && raids.startup();

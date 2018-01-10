@@ -51,7 +51,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				player:addHealth(60)
 				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)
 			end
-			player:say(fluidMessage[item.type] or "Gulp.", TALKTYPE_MONSTER_SAY)
+			player:say(fluidMessage[item.type] or "Gulp.", TALKTYPE_POKEMON_SAY)
 			item:transform(item:getId(), 0)
 		else
 			Game.createItem(2016, item.type, toPosition):decay()

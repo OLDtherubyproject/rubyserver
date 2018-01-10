@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017 Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +30,7 @@
 #include "events.h"
 #include "game.h"
 #include "iologindata.h"
-#include "monster.h"
+#include "pokemon.h"
 #include "movement.h"
 #include "scheduler.h"
 #include "weapons.h"
@@ -3449,8 +3450,8 @@ void Player::onAttackedCreatureDrainHealth(Creature* target, int32_t points)
 
 	if (target) {
 		if (party && !Combat::isPlayerCombat(target)) {
-			Monster* tmpMonster = target->getMonster();
-			if (tmpMonster && tmpMonster->isHostile()) {
+			Pokemon* tmpPokemon = target->getPokemon();
+			if (tmpPokemon && tmpPokemon->isHostile()) {
 				//We have fulfilled a requirement for shared experience
 				party->updatePlayerTicks(this, points);
 			}

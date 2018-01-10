@@ -22,7 +22,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		if randomValue == 1 then
 			Game.createItem(2159, 1, toPosition)
 		elseif randomValue > 95 then
-			Game.createMonster("Scarab", toPosition)
+			Game.createPokemon("Scarab", toPosition)
 		end
 		toPosition:sendMagicEffect(CONST_ME_POFF)
 	else

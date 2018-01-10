@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@
 
 class ServiceManager;
 class Creature;
-class Monster;
+class Pokemon;
 class Npc;
 class CombatInfo;
 
@@ -127,11 +128,11 @@ class Game
 		Creature* getCreatureByID(uint32_t id);
 
 		/**
-		  * Returns a monster based on the unique creature identifier
-		  * \param id is the unique monster id to get a monster pointer to
-		  * \returns A Monster pointer to the monster
+		  * Returns a pokemon based on the unique creature identifier
+		  * \param id is the unique pokemon id to get a pokemon pointer to
+		  * \returns A Pokemon pointer to the pokemon
 		  */
-		Monster* getMonsterByID(uint32_t id);
+		Pokemon* getPokemonByID(uint32_t id);
 
 		/**
 		  * Returns a npc based on the unique creature identifier
@@ -219,8 +220,8 @@ class Game
 		size_t getPlayersOnline() const {
 			return players.size();
 		}
-		size_t getMonstersOnline() const {
-			return monsters.size();
+		size_t getPokemonsOnline() const {
+			return pokemons.size();
 		}
 		size_t getNpcsOnline() const {
 			return npcs.size();
@@ -476,8 +477,8 @@ class Game
 		void addNpc(Npc* npc);
 		void removeNpc(Npc* npc);
 
-		void addMonster(Monster* monster);
-		void removeMonster(Monster* monster);
+		void addPokemon(Pokemon* pokemon);
+		void removePokemon(Pokemon* pokemon);
 
 		Guild* getGuild(uint32_t id) const;
 		void addGuild(Guild* guild);
@@ -533,7 +534,7 @@ class Game
 		WildcardTreeNode wildcardTree { false };
 
 		std::map<uint32_t, Npc*> npcs;
-		std::map<uint32_t, Monster*> monsters;
+		std::map<uint32_t, Pokemon*> pokemons;
 
 		//list of items that are in trading state, mapped to the player
 		std::map<Item*, uint32_t> tradeItems;

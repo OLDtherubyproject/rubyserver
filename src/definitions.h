@@ -1,6 +1,7 @@
 /**
- * The Ruby Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +23,7 @@
 
 static constexpr auto STATUS_SERVER_NAME = "The Ruby Server";
 static constexpr auto STATUS_SERVER_VERSION = "0.1";
-static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman (TFS) and Leandro Matheus";
+static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman (TFS) (TFS) and Leandro Matheus";
 
 static constexpr auto CLIENT_VERSION_MIN = 1097;
 static constexpr auto CLIENT_VERSION_MAX = 1098;

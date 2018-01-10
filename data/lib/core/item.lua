@@ -10,7 +10,7 @@ function Item.isCreature(self)
 	return false
 end
 
-function Item.isMonster(self)
+function Item.isPokemon(self)
 	return false
 end
 

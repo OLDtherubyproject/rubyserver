@@ -109,7 +109,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, "You are full.")
 	else
 		player:feed(food[1] * 12)
-		player:say(food[2], TALKTYPE_MONSTER_SAY)
+		player:say(food[2], TALKTYPE_POKEMON_SAY)
 		item:remove(1)
 	end
 	return true

@@ -1,6 +1,7 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
+ *                     Leandro Matheus <kesuhige@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -145,7 +146,7 @@ CreatureEvent::CreatureEvent(LuaScriptInterface* interface) :
 
 bool CreatureEvent::configureEvent(const pugi::xml_node& node)
 {
-	// Name that will be used in monster xml files and
+	// Name that will be used in pokemon xml files and
 	// lua function to register events to reference this event
 	pugi::xml_attribute nameAttribute = node.attribute("name");
 	if (!nameAttribute) {
