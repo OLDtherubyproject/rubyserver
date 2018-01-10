@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pokemons>
+	<!-- Kanto -->
+	<pokemon name="Bulbasaur" file="Kanto/bulbasaur.xml" />
+	<pokemon name="Charmander" file="Kanto/charmander.xml" />
+	<pokemon name="Squirtle" file="Kanto/squirtle.xml" />
+
+	<!-- Johto -->
+	<pokemon name="Chikorita" file="Johto/chikorita.xml" />
+	<pokemon name="Cyndaquil" file="Johto/cyndaquil.xml" />
+	<pokemon name="Totodile" file="Johto/totodile.xml" />
+</pokemons>
