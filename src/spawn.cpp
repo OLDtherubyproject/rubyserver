@@ -22,7 +22,7 @@
 
 #include "spawn.h"
 #include "game.h"
-#include "pokemon.h"qt
+#include "pokemon.h"
 #include "configmanager.h"
 #include "scheduler.h"
 
