@@ -6,6 +6,9 @@ The Ruby Server is a free and open-source Pokémon MMORPG server emulator writte
 
 ### Getting Started
 
+* [Compiling](https://github.com/RubyServer/rubyserver/wiki/Script-Interface), alternatively download [AppVeyor builds for Windows](https://ci.appveyor.com/project/Leohige/rubyserver)
+* [Scripting Reference](https://github.com/RubyServer/rubyserver/wiki/Script-Interface)
+
 ### Support
 
 ### Issues
