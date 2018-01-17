@@ -3870,30 +3870,30 @@ double Player::getLostPercent() const
 	return lossPercent * pow(0.92, blessingCount) / 100;
 }
 
-void Player::learnInstantSpell(const std::string& spellName)
+void Player::learnInstantMove(const std::string& moveName)
 {
-	if (!hasLearnedInstantSpell(spellName)) {
-		learnedInstantSpellList.push_front(spellName);
+	if (!hasLearnedInstantMove(moveName)) {
+		learnedInstantMoveList.push_front(moveName);
 	}
 }
 
-void Player::forgetInstantSpell(const std::string& spellName)
+void Player::forgetInstantMove(const std::string& moveName)
 {
-	learnedInstantSpellList.remove(spellName);
+	learnedInstantMoveList.remove(moveName);
 }
 
-bool Player::hasLearnedInstantSpell(const std::string& spellName) const
+bool Player::hasLearnedInstantMove(const std::string& moveName) const
 {
-	if (hasFlag(PlayerFlag_CannotUseSpells)) {
+	if (hasFlag(PlayerFlag_CannotUseMoves)) {
 		return false;
 	}
 
-	if (hasFlag(PlayerFlag_IgnoreSpellCheck)) {
+	if (hasFlag(PlayerFlag_IgnoreMoveCheck)) {
 		return true;
 	}
 
-	for (const auto& learnedSpellName : learnedInstantSpellList) {
-		if (strcasecmp(learnedSpellName.c_str(), spellName.c_str()) == 0) {
+	for (const auto& learnedMoveName : learnedInstantMoveList) {
+		if (strcasecmp(learnedMoveName.c_str(), moveName.c_str()) == 0) {
 			return true;
 		}
 	}

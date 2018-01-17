@@ -27,7 +27,7 @@
 #include "player.h"
 #include "game.h"
 #include "protocolstatus.h"
-#include "spells.h"
+#include "moves.h"
 #include "iologindata.h"
 #include "configmanager.h"
 #include "teleport.h"
@@ -42,7 +42,7 @@ extern Game g_game;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 extern Vocations g_vocations;
-extern Spells* g_spells;
+extern Moves* g_moves;
 
 ScriptEnvironment::DBResultMap ScriptEnvironment::tempResults;
 uint32_t ScriptEnvironment::lastResultId = 0;
@@ -249,7 +249,7 @@ std::string LuaScriptInterface::getErrorDesc(ErrorCode_t code)
 		case LUA_ERROR_CONTAINER_NOT_FOUND: return "Container not found";
 		case LUA_ERROR_VARIANT_NOT_FOUND: return "Variant not found";
 		case LUA_ERROR_VARIANT_UNKNOWN: return "Unknown variant type";
-		case LUA_ERROR_SPELL_NOT_FOUND: return "Spell not found";
+		case LUA_ERROR_MOVE_NOT_FOUND: return "Move not found";
 		default: return "Bad error code";
 	}
 }
@@ -881,18 +881,18 @@ void LuaScriptInterface::pushCombatDamage(lua_State* L, const CombatDamage& dama
 	lua_pushnumber(L, damage.origin);
 }
 
-void LuaScriptInterface::pushInstantSpell(lua_State* L, const InstantSpell& spell)
+void LuaScriptInterface::pushInstantMove(lua_State* L, const InstantMove& move)
 {
 	lua_createtable(L, 0, 6);
 
-	setField(L, "name", spell.getName());
-	setField(L, "words", spell.getWords());
-	setField(L, "level", spell.getLevel());
-	setField(L, "mlevel", spell.getMagicLevel());
-	setField(L, "mana", spell.getMana());
-	setField(L, "manapercent", spell.getManaPercent());
+	setField(L, "name", move.getName());
+	setField(L, "words", move.getWords());
+	setField(L, "level", move.getLevel());
+	setField(L, "mlevel", move.getMagicLevel());
+	setField(L, "mana", move.getMana());
+	setField(L, "manapercent", move.getManaPercent());
 
-	setMetatable(L, -1, "Spell");
+	setMetatable(L, -1, "Move");
 }
 
 void LuaScriptInterface::pushPosition(lua_State* L, const Position& position, int32_t stackpos/* = 0*/)
@@ -1123,8 +1123,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_EXHAUST_COMBAT)
 	registerEnum(CONDITION_EXHAUST_HEAL)
 	registerEnum(CONDITION_PACIFIED)
-	registerEnum(CONDITION_SPELLCOOLDOWN)
-	registerEnum(CONDITION_SPELLGROUPCOOLDOWN)
+	registerEnum(CONDITION_MOVECOOLDOWN)
+	registerEnum(CONDITION_MOVEGROUPCOOLDOWN)
 
 	registerEnum(CONDITIONID_DEFAULT)
 	registerEnum(CONDITIONID_COMBAT)
@@ -1179,7 +1179,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SKILL_DISTANCEPERCENT)
 	registerEnum(CONDITION_PARAM_SKILL_SHIELDPERCENT)
 	registerEnum(CONDITION_PARAM_SKILL_FISHINGPERCENT)
-	registerEnum(CONDITION_PARAM_BUFF_SPELL)
+	registerEnum(CONDITION_PARAM_BUFF_MOVE)
 	registerEnum(CONDITION_PARAM_SUBID)
 	registerEnum(CONDITION_PARAM_FIELD)
 	registerEnum(CONDITION_PARAM_DISABLE_DEFENSE)
@@ -1490,7 +1490,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_HasInfiniteMana)
 	registerEnum(PlayerFlag_HasInfiniteSoul)
 	registerEnum(PlayerFlag_HasNoExhaustion)
-	registerEnum(PlayerFlag_CannotUseSpells)
+	registerEnum(PlayerFlag_CannotUseMoves)
 	registerEnum(PlayerFlag_CannotPickupItem)
 	registerEnum(PlayerFlag_CanAlwaysLogin)
 	registerEnum(PlayerFlag_CanBroadcast)
@@ -1511,7 +1511,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_NotGenerateLoot)
 	registerEnum(PlayerFlag_CanTalkRedChannelAnonymous)
 	registerEnum(PlayerFlag_IgnoreProtectionZone)
-	registerEnum(PlayerFlag_IgnoreSpellCheck)
+	registerEnum(PlayerFlag_IgnoreMoveCheck)
 	registerEnum(PlayerFlag_IgnoreWeaponCheck)
 	registerEnum(PlayerFlag_CannotBeMuted)
 	registerEnum(PlayerFlag_IsAlwaysPremium)
@@ -1666,7 +1666,7 @@ void LuaScriptInterface::registerFunctions()
 	// Use with combat functions
 	registerEnum(ORIGIN_NONE)
 	registerEnum(ORIGIN_CONDITION)
-	registerEnum(ORIGIN_SPELL)
+	registerEnum(ORIGIN_MOVE)
 	registerEnum(ORIGIN_MELEE)
 	registerEnum(ORIGIN_RANGED)
 
@@ -1753,14 +1753,14 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_CREATUREISNOTREACHABLE)
 	registerEnum(RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS)
 	registerEnum(RETURNVALUE_YOUNEEDPREMIUMACCOUNT)
-	registerEnum(RETURNVALUE_YOUNEEDTOLEARNTHISSPELL)
-	registerEnum(RETURNVALUE_YOURVOCATIONCANNOTUSETHISSPELL)
-	registerEnum(RETURNVALUE_YOUNEEDAWEAPONTOUSETHISSPELL)
+	registerEnum(RETURNVALUE_YOUNEEDTOLEARNTHISMOVE)
+	registerEnum(RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE)
+	registerEnum(RETURNVALUE_YOUNEEDAWEAPONTOUSETHISMOVE)
 	registerEnum(RETURNVALUE_PLAYERISPZLOCKEDLEAVEPVPZONE)
 	registerEnum(RETURNVALUE_PLAYERISPZLOCKEDENTERPVPZONE)
 	registerEnum(RETURNVALUE_ACTIONNOTPERMITTEDINANOPVPZONE)
 	registerEnum(RETURNVALUE_YOUCANNOTLOGOUTHERE)
-	registerEnum(RETURNVALUE_YOUNEEDAMAGICITEMTOCASTSPELL)
+	registerEnum(RETURNVALUE_YOUNEEDAMAGICITEMTOCASTMOVE)
 	registerEnum(RETURNVALUE_CANNOTCONJUREITEMHERE)
 	registerEnum(RETURNVALUE_YOUNEEDTOSPLITYOURSPEARS)
 	registerEnum(RETURNVALUE_NAMEISTOOAMBIGUOUS)
@@ -1788,7 +1788,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_NPCS)
 	registerEnum(RELOAD_TYPE_QUESTS)
 	registerEnum(RELOAD_TYPE_RAIDS)
-	registerEnum(RELOAD_TYPE_SPELLS)
+	registerEnum(RELOAD_TYPE_MOVES)
 	registerEnum(RELOAD_TYPE_TALKACTIONS)
 	registerEnum(RELOAD_TYPE_WEAPONS)
 
@@ -1819,7 +1819,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::BIND_ONLY_GLOBAL_ADDRESS)
 	registerEnumIn("configKeys", ConfigManager::OPTIMIZE_DATABASE)
 	registerEnumIn("configKeys", ConfigManager::MARKET_PREMIUM)
-	registerEnumIn("configKeys", ConfigManager::EMOTE_SPELLS)
+	registerEnumIn("configKeys", ConfigManager::EMOTE_MOVES)
 	registerEnumIn("configKeys", ConfigManager::STAMINA_SYSTEM)
 	registerEnumIn("configKeys", ConfigManager::WARN_UNSAFE_SCRIPTS)
 	registerEnumIn("configKeys", ConfigManager::CONVERT_UNSAFE_SCRIPTS)
@@ -2323,10 +2323,10 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "addBlessing", LuaScriptInterface::luaPlayerAddBlessing);
 	registerMethod("Player", "removeBlessing", LuaScriptInterface::luaPlayerRemoveBlessing);
 
-	registerMethod("Player", "canLearnSpell", LuaScriptInterface::luaPlayerCanLearnSpell);
-	registerMethod("Player", "learnSpell", LuaScriptInterface::luaPlayerLearnSpell);
-	registerMethod("Player", "forgetSpell", LuaScriptInterface::luaPlayerForgetSpell);
-	registerMethod("Player", "hasLearnedSpell", LuaScriptInterface::luaPlayerHasLearnedSpell);
+	registerMethod("Player", "canLearnMove", LuaScriptInterface::luaPlayerCanLearnMove);
+	registerMethod("Player", "learnMove", LuaScriptInterface::luaPlayerLearnMove);
+	registerMethod("Player", "forgetMove", LuaScriptInterface::luaPlayerForgetMove);
+	registerMethod("Player", "hasLearnedMove", LuaScriptInterface::luaPlayerHasLearnedMove);
 
 	registerMethod("Player", "sendTutorial", LuaScriptInterface::luaPlayerSendTutorial);
 	registerMethod("Player", "addMapMark", LuaScriptInterface::luaPlayerAddMapMark);
@@ -2348,7 +2348,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getContainerById", LuaScriptInterface::luaPlayerGetContainerById);
 	registerMethod("Player", "getContainerIndex", LuaScriptInterface::luaPlayerGetContainerIndex);
 
-	registerMethod("Player", "getInstantSpells", LuaScriptInterface::luaPlayerGetInstantSpells);
+	registerMethod("Player", "getInstantMoves", LuaScriptInterface::luaPlayerGetInstantMoves);
 	registerMethod("Player", "canCast", LuaScriptInterface::luaPlayerCanCast);
 
 	registerMethod("Player", "hasChaseMode", LuaScriptInterface::luaPlayerHasChaseMode);
@@ -2665,15 +2665,15 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Party", "shareExperience", LuaScriptInterface::luaPartyShareExperience);
 	registerMethod("Party", "setSharedExperience", LuaScriptInterface::luaPartySetSharedExperience);
 
-	// Spells
-	registerClass("Spell", "", LuaScriptInterface::luaSpellCreate);
-	registerMetaMethod("Spell", "__eq", LuaScriptInterface::luaUserdataCompare);
+	// Moves
+	registerClass("Move", "", LuaScriptInterface::luaMoveCreate);
+	registerMetaMethod("Move", "__eq", LuaScriptInterface::luaUserdataCompare);
 
-	registerMethod("Spell", "getManaCost", LuaScriptInterface::luaSpellGetManaCost);
-	registerMethod("Spell", "getSoulCost", LuaScriptInterface::luaSpellGetSoulCost);
+	registerMethod("Move", "getManaCost", LuaScriptInterface::luaMoveGetManaCost);
+	registerMethod("Move", "getSoulCost", LuaScriptInterface::luaMoveGetSoulCost);
 
-	registerMethod("Spell", "isPremium", LuaScriptInterface::luaSpellIsPremium);
-	registerMethod("Spell", "isLearnable", LuaScriptInterface::luaSpellIsLearnable);
+	registerMethod("Move", "isPremium", LuaScriptInterface::luaMoveIsPremium);
+	registerMethod("Move", "isLearnable", LuaScriptInterface::luaMoveIsLearnable);
 }
 
 #undef registerEnum
@@ -2984,7 +2984,7 @@ int LuaScriptInterface::luaCreateCombatArea(lua_State* L)
 
 int LuaScriptInterface::luaDoAreaCombatHealth(lua_State* L)
 {
-	//doAreaCombatHealth(cid, type, pos, area, min, max, effect[, origin = ORIGIN_SPELL])
+	//doAreaCombatHealth(cid, type, pos, area, min, max, effect[, origin = ORIGIN_MOVE])
 	Creature* creature = getCreature(L, 1);
 	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
 		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
@@ -3002,7 +3002,7 @@ int LuaScriptInterface::luaDoAreaCombatHealth(lua_State* L)
 		params.impactEffect = getNumber<uint8_t>(L, 7);
 
 		CombatDamage damage;
-		damage.origin = getNumber<CombatOrigin>(L, 8, ORIGIN_SPELL);
+		damage.origin = getNumber<CombatOrigin>(L, 8, ORIGIN_MOVE);
 		damage.primary.type = combatType;
 		damage.primary.value = normal_random(getNumber<int32_t>(L, 6), getNumber<int32_t>(L, 5));
 
@@ -3017,7 +3017,7 @@ int LuaScriptInterface::luaDoAreaCombatHealth(lua_State* L)
 
 int LuaScriptInterface::luaDoTargetCombatHealth(lua_State* L)
 {
-	//doTargetCombatHealth(cid, target, type, min, max, effect[, origin = ORIGIN_SPELL])
+	//doTargetCombatHealth(cid, target, type, min, max, effect[, origin = ORIGIN_MOVE])
 	Creature* creature = getCreature(L, 1);
 	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
 		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
@@ -3039,7 +3039,7 @@ int LuaScriptInterface::luaDoTargetCombatHealth(lua_State* L)
 	params.impactEffect = getNumber<uint8_t>(L, 6);
 
 	CombatDamage damage;
-	damage.origin = getNumber<CombatOrigin>(L, 7, ORIGIN_SPELL);
+	damage.origin = getNumber<CombatOrigin>(L, 7, ORIGIN_MOVE);
 	damage.primary.type = combatType;
 	damage.primary.value = normal_random(getNumber<int32_t>(L, 4), getNumber<int32_t>(L, 5));
 
@@ -3050,7 +3050,7 @@ int LuaScriptInterface::luaDoTargetCombatHealth(lua_State* L)
 
 int LuaScriptInterface::luaDoAreaCombatMana(lua_State* L)
 {
-	//doAreaCombatMana(cid, pos, area, min, max, effect[, origin = ORIGIN_SPELL])
+	//doAreaCombatMana(cid, pos, area, min, max, effect[, origin = ORIGIN_MOVE])
 	Creature* creature = getCreature(L, 1);
 	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
 		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
@@ -3065,7 +3065,7 @@ int LuaScriptInterface::luaDoAreaCombatMana(lua_State* L)
 		params.impactEffect = getNumber<uint8_t>(L, 6);
 
 		CombatDamage damage;
-		damage.origin = getNumber<CombatOrigin>(L, 7, ORIGIN_SPELL);
+		damage.origin = getNumber<CombatOrigin>(L, 7, ORIGIN_MOVE);
 		damage.primary.type = COMBAT_MANADRAIN;
 		damage.primary.value = normal_random(getNumber<int32_t>(L, 4), getNumber<int32_t>(L, 5));
 
@@ -3081,7 +3081,7 @@ int LuaScriptInterface::luaDoAreaCombatMana(lua_State* L)
 
 int LuaScriptInterface::luaDoTargetCombatMana(lua_State* L)
 {
-	//doTargetCombatMana(cid, target, min, max, effect[, origin = ORIGIN_SPELL)
+	//doTargetCombatMana(cid, target, min, max, effect[, origin = ORIGIN_MOVE)
 	Creature* creature = getCreature(L, 1);
 	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
 		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
@@ -3100,7 +3100,7 @@ int LuaScriptInterface::luaDoTargetCombatMana(lua_State* L)
 	params.impactEffect = getNumber<uint8_t>(L, 5);
 
 	CombatDamage damage;
-	damage.origin = getNumber<CombatOrigin>(L, 6, ORIGIN_SPELL);
+	damage.origin = getNumber<CombatOrigin>(L, 6, ORIGIN_MOVE);
 	damage.primary.type = COMBAT_MANADRAIN;
 	damage.primary.value = normal_random(getNumber<int32_t>(L, 3), getNumber<int32_t>(L, 4));
 
@@ -9211,34 +9211,34 @@ int LuaScriptInterface::luaPlayerRemoveBlessing(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerCanLearnSpell(lua_State* L)
+int LuaScriptInterface::luaPlayerCanLearnMove(lua_State* L)
 {
-	// player:canLearnSpell(spellName)
+	// player:canLearnMove(moveName)
 	const Player* player = getUserdata<const Player>(L, 1);
 	if (!player) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	const std::string& spellName = getString(L, 2);
-	InstantSpell* spell = g_spells->getInstantSpellByName(spellName);
-	if (!spell) {
-		reportErrorFunc("Spell \"" + spellName + "\" not found");
+	const std::string& moveName = getString(L, 2);
+	InstantMove* move = g_moves->getInstantMoveByName(moveName);
+	if (!move) {
+		reportErrorFunc("Move \"" + moveName + "\" not found");
 		pushBoolean(L, false);
 		return 1;
 	}
 
-	if (player->hasFlag(PlayerFlag_IgnoreSpellCheck)) {
+	if (player->hasFlag(PlayerFlag_IgnoreMoveCheck)) {
 		pushBoolean(L, true);
 		return 1;
 	}
 
-	const auto& vocMap = spell->getVocMap();
+	const auto& vocMap = move->getVocMap();
 	if (vocMap.count(player->getVocationId()) == 0) {
 		pushBoolean(L, false);
-	} else if (player->getLevel() < spell->getLevel()) {
+	} else if (player->getLevel() < move->getLevel()) {
 		pushBoolean(L, false);
-	} else if (player->getMagicLevel() < spell->getMagicLevel()) {
+	} else if (player->getMagicLevel() < move->getMagicLevel()) {
 		pushBoolean(L, false);
 	} else {
 		pushBoolean(L, true);
@@ -9246,13 +9246,13 @@ int LuaScriptInterface::luaPlayerCanLearnSpell(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerLearnSpell(lua_State* L)
+int LuaScriptInterface::luaPlayerLearnMove(lua_State* L)
 {
-	// player:learnSpell(spellName)
+	// player:learnMove(moveName)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		const std::string& spellName = getString(L, 2);
-		player->learnInstantSpell(spellName);
+		const std::string& moveName = getString(L, 2);
+		player->learnInstantMove(moveName);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -9260,13 +9260,13 @@ int LuaScriptInterface::luaPlayerLearnSpell(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerForgetSpell(lua_State* L)
+int LuaScriptInterface::luaPlayerForgetMove(lua_State* L)
 {
-	// player:forgetSpell(spellName)
+	// player:forgetMove(moveName)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		const std::string& spellName = getString(L, 2);
-		player->forgetInstantSpell(spellName);
+		const std::string& moveName = getString(L, 2);
+		player->forgetInstantMove(moveName);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -9274,13 +9274,13 @@ int LuaScriptInterface::luaPlayerForgetSpell(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerHasLearnedSpell(lua_State* L)
+int LuaScriptInterface::luaPlayerHasLearnedMove(lua_State* L)
 {
-	// player:hasLearnedSpell(spellName)
+	// player:hasLearnedMove(moveName)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		const std::string& spellName = getString(L, 2);
-		pushBoolean(L, player->hasLearnedInstantSpell(spellName));
+		const std::string& moveName = getString(L, 2);
+		pushBoolean(L, player->hasLearnedInstantMove(moveName));
 	} else {
 		lua_pushnil(L);
 	}
@@ -9536,27 +9536,27 @@ int LuaScriptInterface::luaPlayerGetContainerIndex(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetInstantSpells(lua_State* L)
+int LuaScriptInterface::luaPlayerGetInstantMoves(lua_State* L)
 {
-	// player:getInstantSpells()
+	// player:getInstantMoves()
 	Player* player = getUserdata<Player>(L, 1);
 	if (!player) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	std::vector<InstantSpell*> spells;
-	for (auto spell : g_spells->getInstantSpells()) {
-		if (spell.second.canCast(player)) {
-			spells.push_back(&spell.second);
+	std::vector<InstantMove*> moves;
+	for (auto move : g_moves->getInstantMoves()) {
+		if (move.second.canCast(player)) {
+			moves.push_back(&move.second);
 		}
 	}
 
-	lua_createtable(L, spells.size(), 0);
+	lua_createtable(L, moves.size(), 0);
 
 	int index = 0;
-	for (auto spell : spells) {
-		pushInstantSpell(L, *spell);
+	for (auto move : moves) {
+		pushInstantMove(L, *move);
 		lua_rawseti(L, -2, ++index);
 	}
 	return 1;
@@ -9564,11 +9564,11 @@ int LuaScriptInterface::luaPlayerGetInstantSpells(lua_State* L)
 
 int LuaScriptInterface::luaPlayerCanCast(lua_State* L)
 {
-	// player:canCast(spell)
+	// player:canCast(move)
 	Player* player = getUserdata<Player>(L, 1);
-	InstantSpell* spell = getUserdata<InstantSpell>(L, 2);
-	if (player && spell) {
-		pushBoolean(L, spell->canCast(player));
+	InstantMove* move = getUserdata<InstantMove>(L, 2);
+	if (player && move) {
+		pushBoolean(L, move->canCast(player));
 	} else {
 		lua_pushnil(L);
 	}
@@ -12100,21 +12100,21 @@ int LuaScriptInterface::luaPokemonTypeGetAttackList(lua_State* L)
 		return 1;
 	}
 
-	lua_createtable(L, pokemonType->info.attackSpells.size(), 0);
+	lua_createtable(L, pokemonType->info.attackMoves.size(), 0);
 
 	int index = 0;
-	for (const auto& spellBlock : pokemonType->info.attackSpells) {
+	for (const auto& moveBlock : pokemonType->info.attackMoves) {
 		lua_createtable(L, 0, 8);
 
-		setField(L, "chance", spellBlock.chance);
-		setField(L, "isCombatSpell", spellBlock.combatSpell ? 1 : 0);
-		setField(L, "isMelee", spellBlock.isMelee ? 1 : 0);
-		setField(L, "minCombatValue", spellBlock.minCombatValue);
-		setField(L, "maxCombatValue", spellBlock.maxCombatValue);
-		setField(L, "range", spellBlock.range);
-		setField(L, "speed", spellBlock.speed);
-		pushUserdata<CombatSpell>(L, static_cast<CombatSpell*>(spellBlock.spell));
-		lua_setfield(L, -2, "spell");
+		setField(L, "chance", moveBlock.chance);
+		setField(L, "isCombatMove", moveBlock.combatMove ? 1 : 0);
+		setField(L, "isMelee", moveBlock.isMelee ? 1 : 0);
+		setField(L, "minCombatValue", moveBlock.minCombatValue);
+		setField(L, "maxCombatValue", moveBlock.maxCombatValue);
+		setField(L, "range", moveBlock.range);
+		setField(L, "speed", moveBlock.speed);
+		pushUserdata<CombatMove>(L, static_cast<CombatMove*>(moveBlock.move));
+		lua_setfield(L, -2, "move");
 
 		lua_rawseti(L, -2, ++index);
 	}
@@ -12130,22 +12130,22 @@ int LuaScriptInterface::luaPokemonTypeGetDefenseList(lua_State* L)
 		return 1;
 	}
 
-	lua_createtable(L, pokemonType->info.defenseSpells.size(), 0);
+	lua_createtable(L, pokemonType->info.defenseMoves.size(), 0);
 
 
 	int index = 0;
-	for (const auto& spellBlock : pokemonType->info.defenseSpells) {
+	for (const auto& moveBlock : pokemonType->info.defenseMoves) {
 		lua_createtable(L, 0, 8);
 
-		setField(L, "chance", spellBlock.chance);
-		setField(L, "isCombatSpell", spellBlock.combatSpell ? 1 : 0);
-		setField(L, "isMelee", spellBlock.isMelee ? 1 : 0);
-		setField(L, "minCombatValue", spellBlock.minCombatValue);
-		setField(L, "maxCombatValue", spellBlock.maxCombatValue);
-		setField(L, "range", spellBlock.range);
-		setField(L, "speed", spellBlock.speed);
-		pushUserdata<CombatSpell>(L, static_cast<CombatSpell*>(spellBlock.spell));
-		lua_setfield(L, -2, "spell");
+		setField(L, "chance", moveBlock.chance);
+		setField(L, "isCombatMove", moveBlock.combatMove ? 1 : 0);
+		setField(L, "isMelee", moveBlock.isMelee ? 1 : 0);
+		setField(L, "minCombatValue", moveBlock.minCombatValue);
+		setField(L, "maxCombatValue", moveBlock.maxCombatValue);
+		setField(L, "range", moveBlock.range);
+		setField(L, "speed", moveBlock.speed);
+		pushUserdata<CombatMove>(L, static_cast<CombatMove*>(moveBlock.move));
+		lua_setfield(L, -2, "move");
 
 		lua_rawseti(L, -2, ++index);
 	}
@@ -12678,69 +12678,69 @@ int LuaScriptInterface::luaPartySetSharedExperience(lua_State* L)
 	return 1;
 }
 
-// Spells
-int LuaScriptInterface::luaSpellCreate(lua_State* L)
+// Moves
+int LuaScriptInterface::luaMoveCreate(lua_State* L)
 {
-	// Spell(words, name or id)
-	InstantSpell* spell = nullptr;
+	// Move(words, name or id)
+	InstantMove* move = nullptr;
 	if (isNumber(L, 2)) {
-		spell = g_spells->getInstantSpellById(getNumber<uint32_t>(L, 2));
+		move = g_moves->getInstantMoveById(getNumber<uint32_t>(L, 2));
 	} else {
 		std::string stringArgument = getString(L, 2);
-		spell = g_spells->getInstantSpellByName(stringArgument);
-		if (!spell) {
-			spell = g_spells->getInstantSpell(stringArgument);
+		move = g_moves->getInstantMoveByName(stringArgument);
+		if (!move) {
+			move = g_moves->getInstantMove(stringArgument);
 		}
 	}
 
-	if (spell) {
-		pushInstantSpell(L, *spell);
+	if (move) {
+		pushInstantMove(L, *move);
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaSpellGetManaCost(lua_State* L)
+int LuaScriptInterface::luaMoveGetManaCost(lua_State* L)
 {
-	// spell:getManaCost(player)
-	InstantSpell* spell = getUserdata<InstantSpell>(L, 1);
+	// move:getManaCost(player)
+	InstantMove* move = getUserdata<InstantMove>(L, 1);
 	Player* player = getUserdata<Player>(L, 2);
-	if (spell && player) {
-		lua_pushnumber(L, spell->getManaCost(player));
+	if (move && player) {
+		lua_pushnumber(L, move->getManaCost(player));
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaSpellGetSoulCost(lua_State* L)
+int LuaScriptInterface::luaMoveGetSoulCost(lua_State* L)
 {
-	// spell:getSoulCost()
-	if (InstantSpell* spell = getUserdata<InstantSpell>(L, 1)) {
-		lua_pushnumber(L, spell->getSoulCost());
+	// move:getSoulCost()
+	if (InstantMove* move = getUserdata<InstantMove>(L, 1)) {
+		lua_pushnumber(L, move->getSoulCost());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaSpellIsPremium(lua_State* L)
+int LuaScriptInterface::luaMoveIsPremium(lua_State* L)
 {
-	// spell:isPremium()
-	if (InstantSpell* spell = getUserdata<InstantSpell>(L, 1)) {
-		pushBoolean(L, spell->isPremium());
+	// move:isPremium()
+	if (InstantMove* move = getUserdata<InstantMove>(L, 1)) {
+		pushBoolean(L, move->isPremium());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaSpellIsLearnable(lua_State* L)
+int LuaScriptInterface::luaMoveIsLearnable(lua_State* L)
 {
-	// spell:isLearnable()
-	if (InstantSpell* spell = getUserdata<InstantSpell>(L, 1)) {
-		pushBoolean(L, spell->isLearnable());
+	// move:isLearnable()
+	if (InstantMove* move = getUserdata<InstantMove>(L, 1)) {
+		pushBoolean(L, move->isLearnable());
 	} else {
 		lua_pushnil(L);
 	}

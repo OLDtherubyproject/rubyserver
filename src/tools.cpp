@@ -1152,14 +1152,14 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUNEEDPREMIUMACCOUNT:
 			return "You need a premium account.";
 
-		case RETURNVALUE_YOUNEEDTOLEARNTHISSPELL:
-			return "You need to learn this spell first.";
+		case RETURNVALUE_YOUNEEDTOLEARNTHISMOVE:
+			return "You need to learn this move first.";
 
-		case RETURNVALUE_YOURVOCATIONCANNOTUSETHISSPELL:
-			return "Your vocation cannot use this spell.";
+		case RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE:
+			return "Your vocation cannot use this move.";
 
-		case RETURNVALUE_YOUNEEDAWEAPONTOUSETHISSPELL:
-			return "You need to equip a weapon to use this spell.";
+		case RETURNVALUE_YOUNEEDAWEAPONTOUSETHISMOVE:
+			return "You need to equip a weapon to use this move.";
 
 		case RETURNVALUE_PLAYERISPZLOCKEDLEAVEPVPZONE:
 			return "You can not leave a pvp zone after attacking another player.";
@@ -1173,8 +1173,8 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUCANNOTLOGOUTHERE:
 			return "You can not logout here.";
 
-		case RETURNVALUE_YOUNEEDAMAGICITEMTOCASTSPELL:
-			return "You need a magic item to cast this spell.";
+		case RETURNVALUE_YOUNEEDAMAGICITEMTOCASTMOVE:
+			return "You need a magic item to cast this move.";
 
 		case RETURNVALUE_CANNOTCONJUREITEMHERE:
 			return "You cannot conjure items here.";

@@ -67,7 +67,7 @@ bool TalkActions::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return true;
 }
 
-TalkActionResult_t TalkActions::playerSaySpell(Player* player, SpeakClasses type, const std::string& words) const
+TalkActionResult_t TalkActions::playerSayMove(Player* player, SpeakClasses type, const std::string& words) const
 {
 	size_t wordsLength = words.length();
 	for (const TalkAction& talkAction : talkActions) {
@@ -110,7 +110,7 @@ bool TalkAction::configureEvent(const pugi::xml_node& node)
 {
 	pugi::xml_attribute wordsAttribute = node.attribute("words");
 	if (!wordsAttribute) {
-		std::cout << "[Error - TalkAction::configureEvent] Missing words for talk action or spell" << std::endl;
+		std::cout << "[Error - TalkAction::configureEvent] Missing words for talk action or move" << std::endl;
 		return false;
 	}
 

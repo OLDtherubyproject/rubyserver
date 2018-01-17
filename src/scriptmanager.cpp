@@ -25,7 +25,7 @@
 #include "actions.h"
 #include "chat.h"
 #include "talkaction.h"
-#include "spells.h"
+#include "moves.h"
 #include "movement.h"
 #include "weapons.h"
 #include "globalevent.h"
@@ -36,7 +36,7 @@ CreatureEvents* g_creatureEvents = nullptr;
 Chat* g_chat = nullptr;
 Events* g_events = nullptr;
 GlobalEvents* g_globalEvents = nullptr;
-Spells* g_spells = nullptr;
+Moves* g_moves = nullptr;
 TalkActions* g_talkActions = nullptr;
 MoveEvents* g_moveEvents = nullptr;
 Weapons* g_weapons = nullptr;
@@ -47,7 +47,7 @@ ScriptingManager::~ScriptingManager()
 {
 	delete g_events;
 	delete g_weapons;
-	delete g_spells;
+	delete g_moves;
 	delete g_actions;
 	delete g_talkActions;
 	delete g_moveEvents;
@@ -72,9 +72,9 @@ bool ScriptingManager::loadScriptSystems()
 
 	g_weapons->loadDefaults();
 
-	g_spells = new Spells();
-	if (!g_spells->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load spells!" << std::endl;
+	g_moves = new Moves();
+	if (!g_moves->loadFromXml()) {
+		std::cout << "> ERROR: Unable to load moves!" << std::endl;
 		return false;
 	}
 

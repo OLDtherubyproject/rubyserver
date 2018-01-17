@@ -22,7 +22,7 @@
 
 #include "pokemons.h"
 #include "pokemon.h"
-#include "spells.h"
+#include "moves.h"
 #include "combat.h"
 #include "weapons.h"
 #include "configmanager.h"
@@ -31,14 +31,14 @@
 #include "pugicast.h"
 
 extern Game g_game;
-extern Spells* g_spells;
+extern Moves* g_moves;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 
-spellBlock_t::~spellBlock_t()
+moveBlock_t::~moveBlock_t()
 {
-	if (combatSpell) {
-		delete spell;
+	if (combatMove) {
+		delete move;
 	}
 }
 
@@ -210,7 +210,7 @@ ConditionDamage* Pokemons::getDamageCondition(ConditionType_t conditionType,
 	return condition;
 }
 
-bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, const std::string& description)
+bool Pokemons::deserializeMove(const pugi::xml_node& node, moveBlock_t& sb, const std::string& description)
 {
 	std::string name;
 	std::string scriptName;
@@ -262,12 +262,12 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		}
 	}
 
-	if (auto spell = g_spells->getSpellByName(name)) {
-		sb.spell = spell;
+	if (auto move = g_moves->getMoveByName(name)) {
+		sb.move = move;
 		return true;
 	}
 
-	CombatSpell* combatSpell = nullptr;
+	CombatMove* combatMove = nullptr;
 	bool needTarget = false;
 	bool needDirection = false;
 
@@ -280,17 +280,17 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 			needTarget = attr.as_bool();
 		}
 
-		std::unique_ptr<CombatSpell> combatSpellPtr(new CombatSpell(nullptr, needTarget, needDirection));
-		if (!combatSpellPtr->loadScript("data/" + g_spells->getScriptBaseName() + "/scripts/" + scriptName)) {
+		std::unique_ptr<CombatMove> combatMovePtr(new CombatMove(nullptr, needTarget, needDirection));
+		if (!combatMovePtr->loadScript("data/" + g_moves->getScriptBaseName() + "/scripts/" + scriptName)) {
 			return false;
 		}
 
-		if (!combatSpellPtr->loadScriptCombat()) {
+		if (!combatMovePtr->loadScriptCombat()) {
 			return false;
 		}
 
-		combatSpell = combatSpellPtr.release();
-		combatSpell->getCombat()->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
+		combatMove = combatMovePtr.release();
+		combatMove->getCombat()->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
 	} else {
 		Combat* combat = new Combat;
 		if ((attr = node.attribute("length"))) {
@@ -298,7 +298,7 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 			if (length > 0) {
 				int32_t spread = 3;
 
-				//need direction spell
+				//need direction move
 				if ((attr = node.attribute("spread"))) {
 					spread = std::max<int32_t>(0, pugi::cast<int32_t>(attr.value()));
 				}
@@ -314,7 +314,7 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		if ((attr = node.attribute("radius"))) {
 			int32_t radius = pugi::cast<int32_t>(attr.value());
 
-			//target spell
+			//target move
 			if ((attr = node.attribute("target"))) {
 				needTarget = attr.as_bool();
 			}
@@ -568,13 +568,13 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		} else if (tmpName == "effect") {
 			//
 		} else {
-			std::cout << "[Error - Pokemons::deserializeSpell] - " << description << " - Unknown spell name: " << name << std::endl;
+			std::cout << "[Error - Pokemons::deserializeMove] - " << description << " - Unknown move name: " << name << std::endl;
 			delete combat;
 			return false;
 		}
 
 		combat->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
-		combatSpell = new CombatSpell(combat, needTarget, needDirection);
+		combatMove = new CombatMove(combat, needTarget, needDirection);
 
 		for (auto attributeNode : node.children()) {
 			if ((attr = attributeNode.attribute("key"))) {
@@ -585,7 +585,7 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 						if (shoot != CONST_ANI_NONE) {
 							combat->setParam(COMBAT_PARAM_DISTANCEEFFECT, shoot);
 						} else {
-							std::cout << "[Warning - Pokemons::deserializeSpell] " << description << " - Unknown shootEffect: " << attr.as_string() << std::endl;
+							std::cout << "[Warning - Pokemons::deserializeMove] " << description << " - Unknown shootEffect: " << attr.as_string() << std::endl;
 						}
 					}
 				} else if (strcasecmp(value, "areaeffect") == 0) {
@@ -594,19 +594,19 @@ bool Pokemons::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 						if (effect != CONST_ME_NONE) {
 							combat->setParam(COMBAT_PARAM_EFFECT, effect);
 						} else {
-							std::cout << "[Warning - Pokemons::deserializeSpell] " << description << " - Unknown areaEffect: " << attr.as_string() << std::endl;
+							std::cout << "[Warning - Pokemons::deserializeMove] " << description << " - Unknown areaEffect: " << attr.as_string() << std::endl;
 						}
 					}
 				} else {
-					std::cout << "[Warning - Pokemons::deserializeSpells] Effect type \"" << attr.as_string() << "\" does not exist." << std::endl;
+					std::cout << "[Warning - Pokemons::deserializeMoves] Effect type \"" << attr.as_string() << "\" does not exist." << std::endl;
 				}
 			}
 		}
 	}
 
-	sb.spell = combatSpell;
-	if (combatSpell) {
-		sb.combatSpell = true;
+	sb.move = combatMove;
+	if (combatMove) {
+		sb.combatMove = true;
 	}
 	return true;
 }
@@ -833,11 +833,11 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 
 	if ((node = pokemonNode.child("attacks"))) {
 		for (auto attackNode : node.children()) {
-			spellBlock_t sb;
-			if (deserializeSpell(attackNode, sb, pokemonName)) {
-				mType->info.attackSpells.emplace_back(std::move(sb));
+			moveBlock_t sb;
+			if (deserializeMove(attackNode, sb, pokemonName)) {
+				mType->info.attackMoves.emplace_back(std::move(sb));
 			} else {
-				std::cout << "[Warning - Pokemons::loadPokemon] Cant load spell. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Cant load move. " << file << std::endl;
 			}
 		}
 	}
@@ -852,11 +852,11 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 
 		for (auto defenseNode : node.children()) {
-			spellBlock_t sb;
-			if (deserializeSpell(defenseNode, sb, pokemonName)) {
-				mType->info.defenseSpells.emplace_back(std::move(sb));
+			moveBlock_t sb;
+			if (deserializeMove(defenseNode, sb, pokemonName)) {
+				mType->info.defenseMoves.emplace_back(std::move(sb));
 			} else {
-				std::cout << "[Warning - Pokemons::loadPokemon] Cant load spell. " << file << std::endl;
+				std::cout << "[Warning - Pokemons::loadPokemon] Cant load move. " << file << std::endl;
 			}
 		}
 	}
@@ -1105,8 +1105,8 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 
 	mType->info.summons.shrink_to_fit();
 	mType->info.lootItems.shrink_to_fit();
-	mType->info.attackSpells.shrink_to_fit();
-	mType->info.defenseSpells.shrink_to_fit();
+	mType->info.attackMoves.shrink_to_fit();
+	mType->info.defenseMoves.shrink_to_fit();
 	mType->info.voiceVector.shrink_to_fit();
 	mType->info.scripts.shrink_to_fit();
 	return mType;

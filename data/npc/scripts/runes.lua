@@ -10,7 +10,7 @@ function onThink()                          npcHandler:onThink()                
 local shopModule = ShopModule:new()
 npcHandler:addModule(shopModule)
 
-shopModule:addBuyableItem({'spellbook'}, 2175, 150, 'spellbook')
+shopModule:addBuyableItem({'movebook'}, 2175, 150, 'movebook')
 shopModule:addBuyableItem({'magic lightwand'}, 2163, 400, 'magic lightwand')
 
 shopModule:addBuyableItem({'small health'}, 8704, 20, 1, 'small health potion')

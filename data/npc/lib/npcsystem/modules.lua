@@ -94,10 +94,10 @@ if Modules == nil then
 		return true
 	end
 
-	function StdModule.learnSpell(cid, message, keywords, parameters, node)
+	function StdModule.learnMove(cid, message, keywords, parameters, node)
 		local npcHandler = parameters.npcHandler
 		if npcHandler == nil then
-			error("StdModule.learnSpell called without any npcHandler instance.")
+			error("StdModule.learnMove called without any npcHandler instance.")
 		end
 
 		if not npcHandler:isFocused(cid) then
@@ -106,18 +106,18 @@ if Modules == nil then
 
 		local player = Player(cid)
 		if player:isPremium() or not parameters.premium then
-			if player:hasLearnedSpell(parameters.spellName) then
-				npcHandler:say("You already know this spell.", cid)
-			elseif not player:canLearnSpell(parameters.spellName) then
-				npcHandler:say("You cannot learn this spell.", cid)
+			if player:hasLearnedMove(parameters.moveName) then
+				npcHandler:say("You already know this move.", cid)
+			elseif not player:canLearnMove(parameters.moveName) then
+				npcHandler:say("You cannot learn this move.", cid)
 			elseif not player:removeMoney(parameters.price) then
-				npcHandler:say("You do not have enough money, this spell costs " .. parameters.price .. " gold.", cid)
+				npcHandler:say("You do not have enough money, this move costs " .. parameters.price .. " gold.", cid)
 			else
-				npcHandler:say("You have learned " .. parameters.spellName .. ".", cid)
-				player:learnSpell(parameters.spellName)
+				npcHandler:say("You have learned " .. parameters.moveName .. ".", cid)
+				player:learnMove(parameters.moveName)
 			end
 		else
-			npcHandler:say("You need a premium account in order to buy " .. parameters.spellName .. ".", cid)
+			npcHandler:say("You need a premium account in order to buy " .. parameters.moveName .. ".", cid)
 		end
 		npcHandler:resetNpc(cid)
 		return true

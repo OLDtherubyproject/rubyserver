@@ -190,7 +190,7 @@ class ItemType
 		std::string article;
 		std::string pluralName;
 		std::string description;
-		std::string runeSpellName;
+		std::string runeMoveName;
 		std::string vocationString;
 
 		std::unique_ptr<Abilities> abilities;

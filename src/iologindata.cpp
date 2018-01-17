@@ -444,10 +444,10 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	}
 
 	query.str(std::string());
-	query << "SELECT `player_id`, `name` FROM `player_spells` WHERE `player_id` = " << player->getGUID();
+	query << "SELECT `player_id`, `name` FROM `player_moves` WHERE `player_id` = " << player->getGUID();
 	if ((result = db.storeQuery(query.str()))) {
 		do {
-			player->learnedInstantSpellList.emplace_front(result->getString("name"));
+			player->learnedInstantMoveList.emplace_front(result->getString("name"));
 		} while (result->next());
 	}
 
@@ -752,24 +752,24 @@ bool IOLoginData::savePlayer(Player* player)
 		return false;
 	}
 
-	// learned spells
+	// learned moves
 	query.str(std::string());
-	query << "DELETE FROM `player_spells` WHERE `player_id` = " << player->getGUID();
+	query << "DELETE FROM `player_moves` WHERE `player_id` = " << player->getGUID();
 	if (!db.executeQuery(query.str())) {
 		return false;
 	}
 
 	query.str(std::string());
 
-	DBInsert spellsQuery("INSERT INTO `player_spells` (`player_id`, `name` ) VALUES ");
-	for (const std::string& spellName : player->learnedInstantSpellList) {
-		query << player->getGUID() << ',' << db.escapeString(spellName);
-		if (!spellsQuery.addRow(query)) {
+	DBInsert movesQuery("INSERT INTO `player_moves` (`player_id`, `name` ) VALUES ");
+	for (const std::string& moveName : player->learnedInstantMoveList) {
+		query << player->getGUID() << ',' << db.escapeString(moveName);
+		if (!movesQuery.addRow(query)) {
 			return false;
 		}
 	}
 
-	if (!spellsQuery.execute()) {
+	if (!movesQuery.execute()) {
 		return false;
 	}
 

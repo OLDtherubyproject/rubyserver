@@ -26,10 +26,10 @@
 #include "container.h"
 #include "game.h"
 #include "pugicast.h"
-#include "spells.h"
+#include "moves.h"
 
 extern Game g_game;
-extern Spells* g_spells;
+extern Moves* g_moves;
 extern Actions* g_actions;
 extern ConfigManager g_config;
 
@@ -255,7 +255,7 @@ Action* Actions::getAction(const Item* item)
 	}
 
 	//rune items
-	return g_spells->getRuneSpell(item->getID());
+	return g_moves->getRuneMove(item->getID());
 }
 
 ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_t index, Item* item, bool isHotkey)

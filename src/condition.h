@@ -391,31 +391,31 @@ class ConditionLight final : public Condition
 		uint32_t lightChangeInterval = 0;
 };
 
-class ConditionSpellCooldown final : public ConditionGeneric
+class ConditionMoveCooldown final : public ConditionGeneric
 {
 	public:
-		ConditionSpellCooldown(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
+		ConditionMoveCooldown(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
 			ConditionGeneric(id, type, ticks, buff, subId) {}
 
 		bool startCondition(Creature* creature) override;
 		void addCondition(Creature* creature, const Condition* condition) override;
 
-		ConditionSpellCooldown* clone() const override {
-			return new ConditionSpellCooldown(*this);
+		ConditionMoveCooldown* clone() const override {
+			return new ConditionMoveCooldown(*this);
 		}
 };
 
-class ConditionSpellGroupCooldown final : public ConditionGeneric
+class ConditionMoveGroupCooldown final : public ConditionGeneric
 {
 	public:
-		ConditionSpellGroupCooldown(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
+		ConditionMoveGroupCooldown(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
 			ConditionGeneric(id, type, ticks, buff, subId) {}
 
 		bool startCondition(Creature* creature) override;
 		void addCondition(Creature* creature, const Condition* condition) override;
 
-		ConditionSpellGroupCooldown* clone() const override {
-			return new ConditionSpellGroupCooldown(*this);
+		ConditionMoveGroupCooldown* clone() const override {
+			return new ConditionMoveGroupCooldown(*this);
 		}
 };
 

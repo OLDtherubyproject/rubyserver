@@ -38,7 +38,7 @@
 #include "movement.h"
 #include "scheduler.h"
 #include "server.h"
-#include "spells.h"
+#include "moves.h"
 #include "talkaction.h"
 #include "weapons.h"
 
@@ -46,7 +46,7 @@ extern ConfigManager g_config;
 extern Actions* g_actions;
 extern Chat* g_chat;
 extern TalkActions* g_talkActions;
-extern Spells* g_spells;
+extern Moves* g_moves;
 extern Vocations g_vocations;
 extern GlobalEvents* g_globalEvents;
 extern CreatureEvents* g_creatureEvents;
@@ -3298,7 +3298,7 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 
 	player->resetIdleTime();
 
-	if (playerSaySpell(player, type, text)) {
+	if (playerSayMove(player, type, text)) {
 		return;
 	}
 
@@ -3355,18 +3355,18 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 	}
 }
 
-bool Game::playerSaySpell(Player* player, SpeakClasses type, const std::string& text)
+bool Game::playerSayMove(Player* player, SpeakClasses type, const std::string& text)
 {
 	std::string words = text;
 
-	TalkActionResult_t result = g_talkActions->playerSaySpell(player, type, words);
+	TalkActionResult_t result = g_talkActions->playerSayMove(player, type, words);
 	if (result == TALKACTION_BREAK) {
 		return true;
 	}
 
-	result = g_spells->playerSaySpell(player, words);
+	result = g_moves->playerSayMove(player, words);
 	if (result == TALKACTION_BREAK) {
-		if (!g_config.getBoolean(ConfigManager::EMOTE_SPELLS)) {
+		if (!g_config.getBoolean(ConfigManager::EMOTE_MOVES)) {
 			return internalCreatureSay(player, TALKTYPE_SAY, words, false);
 		} else {
 			return internalCreatureSay(player, TALKTYPE_POKEMON_SAY, words, false);
@@ -5673,9 +5673,9 @@ bool Game::reload(ReloadTypes_t reloadType)
 		case RELOAD_TYPE_QUESTS: return quests.reload();
 		case RELOAD_TYPE_RAIDS: return raids.reload() && raids.startup();
 
-		case RELOAD_TYPE_SPELLS: {
-			if (!g_spells->reload()) {
-				std::cout << "[Error - Game::reload] Failed to reload spells." << std::endl;
+		case RELOAD_TYPE_MOVES: {
+			if (!g_moves->reload()) {
+				std::cout << "[Error - Game::reload] Failed to reload moves." << std::endl;
 				std::terminate();
 			} else if (!g_pokemons.reload()) {
 				std::cout << "[Error - Game::reload] Failed to reload pokemons." << std::endl;
@@ -5693,8 +5693,8 @@ bool Game::reload(ReloadTypes_t reloadType)
 		}
 
 		default: {
-			if (!g_spells->reload()) {
-				std::cout << "[Error - Game::reload] Failed to reload spells." << std::endl;
+			if (!g_moves->reload()) {
+				std::cout << "[Error - Game::reload] Failed to reload moves." << std::endl;
 				std::terminate();
 			} else if (!g_pokemons.reload()) {
 				std::cout << "[Error - Game::reload] Failed to reload pokemons." << std::endl;

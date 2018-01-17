@@ -62,7 +62,7 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/server.cpp
 	${CMAKE_CURRENT_LIST_DIR}/signals.cpp
 	${CMAKE_CURRENT_LIST_DIR}/spawn.cpp
-	${CMAKE_CURRENT_LIST_DIR}/spells.cpp
+	${CMAKE_CURRENT_LIST_DIR}/moves.cpp
 	${CMAKE_CURRENT_LIST_DIR}/talkaction.cpp
 	${CMAKE_CURRENT_LIST_DIR}/tasks.cpp
 	${CMAKE_CURRENT_LIST_DIR}/teleport.cpp

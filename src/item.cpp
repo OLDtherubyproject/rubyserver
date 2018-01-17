@@ -30,10 +30,10 @@
 #include "bed.h"
 
 #include "actions.h"
-#include "spells.h"
+#include "moves.h"
 
 extern Game g_game;
-extern Spells* g_spells;
+extern Moves* g_moves;
 extern Vocations g_vocations;
 
 Items Item::items;
@@ -832,14 +832,14 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 	if (it.isRune()) {
 		if (it.runeLevel > 0 || it.runeMagLevel > 0) {
-			if (RuneSpell* rune = g_spells->getRuneSpell(it.id)) {
+			if (RuneMove* rune = g_moves->getRuneMove(it.id)) {
 				int32_t tmpSubType = subType;
 				if (item) {
 					tmpSubType = item->getSubType();
 				}
 				s << ". " << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by ";
 
-				const VocSpellMap& vocMap = rune->getVocMap();
+				const VocMoveMap& vocMap = rune->getVocMap();
 				std::vector<Vocation*> showVocMap;
 
 				// vocations are usually listed with the unpromoted and promoted version, the latter being

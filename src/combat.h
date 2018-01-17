@@ -66,7 +66,7 @@ struct CombatParams {
 
 	ConditionType_t dispelType = CONDITION_NONE;
 	CombatType_t combatType = COMBAT_NONE;
-	CombatOrigin origin = ORIGIN_SPELL;
+	CombatOrigin origin = ORIGIN_MOVE;
 
 	uint8_t impactEffect = CONST_ME_NONE;
 	uint8_t distanceEffect = CONST_ANI_NONE;

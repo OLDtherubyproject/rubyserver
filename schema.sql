@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `player_items` (
   KEY `sid` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_spells` (
+CREATE TABLE IF NOT EXISTS `player_moves` (
   `player_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE

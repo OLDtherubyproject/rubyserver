@@ -22,7 +22,7 @@
 
 #include "pokemon.h"
 #include "game.h"
-#include "spells.h"
+#include "moves.h"
 
 extern Game g_game;
 extern Pokemons g_pokemons;
@@ -771,27 +771,27 @@ void Pokemon::doAttacking(uint32_t interval)
 	const Position& myPos = getPosition();
 	const Position& targetPos = attackedCreature->getPosition();
 
-	for (const spellBlock_t& spellBlock : mType->info.attackSpells) {
+	for (const moveBlock_t& moveBlock : mType->info.attackMoves) {
 		bool inRange = false;
 
-		if (canUseSpell(myPos, targetPos, spellBlock, interval, inRange, resetTicks)) {
-			if (spellBlock.chance >= static_cast<uint32_t>(uniform_random(1, 100))) {
+		if (canUseMove(myPos, targetPos, moveBlock, interval, inRange, resetTicks)) {
+			if (moveBlock.chance >= static_cast<uint32_t>(uniform_random(1, 100))) {
 				if (updateLook) {
 					updateLookDirection();
 					updateLook = false;
 				}
 
-				minCombatValue = spellBlock.minCombatValue;
-				maxCombatValue = spellBlock.maxCombatValue;
-				spellBlock.spell->castSpell(this, attackedCreature);
+				minCombatValue = moveBlock.minCombatValue;
+				maxCombatValue = moveBlock.maxCombatValue;
+				moveBlock.move->castMove(this, attackedCreature);
 
-				if (spellBlock.isMelee) {
+				if (moveBlock.isMelee) {
 					extraMeleeAttack = false;
 				}
 			}
 		}
 
-		if (!inRange && spellBlock.isMelee) {
+		if (!inRange && moveBlock.isMelee) {
 			//melee swing out of reach
 			extraMeleeAttack = true;
 		}
@@ -811,8 +811,8 @@ bool Pokemon::canUseAttack(const Position& pos, const Creature* target) const
 	if (isHostile()) {
 		const Position& targetPos = target->getPosition();
 		uint32_t distance = std::max<uint32_t>(Position::getDistanceX(pos, targetPos), Position::getDistanceY(pos, targetPos));
-		for (const spellBlock_t& spellBlock : mType->info.attackSpells) {
-			if (spellBlock.range != 0 && distance <= spellBlock.range) {
+		for (const moveBlock_t& moveBlock : mType->info.attackMoves) {
+			if (moveBlock.range != 0 && distance <= moveBlock.range) {
 				return g_game.isSightClear(pos, targetPos, true);
 			}
 		}
@@ -821,8 +821,8 @@ bool Pokemon::canUseAttack(const Position& pos, const Creature* target) const
 	return true;
 }
 
-bool Pokemon::canUseSpell(const Position& pos, const Position& targetPos,
-                          const spellBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks)
+bool Pokemon::canUseMove(const Position& pos, const Position& targetPos,
+                          const moveBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks)
 {
 	inRange = true;
 
@@ -843,7 +843,7 @@ bool Pokemon::canUseSpell(const Position& pos, const Position& targetPos,
 		}
 
 		if (attackTicks % sb.speed >= interval) {
-			//already used this spell for this round
+			//already used this move for this round
 			return false;
 		}
 	}
@@ -897,21 +897,21 @@ void Pokemon::onThinkDefense(uint32_t interval)
 	bool resetTicks = true;
 	defenseTicks += interval;
 
-	for (const spellBlock_t& spellBlock : mType->info.defenseSpells) {
-		if (spellBlock.speed > defenseTicks) {
+	for (const moveBlock_t& moveBlock : mType->info.defenseMoves) {
+		if (moveBlock.speed > defenseTicks) {
 			resetTicks = false;
 			continue;
 		}
 
-		if (defenseTicks % spellBlock.speed >= interval) {
-			//already used this spell for this round
+		if (defenseTicks % moveBlock.speed >= interval) {
+			//already used this move for this round
 			continue;
 		}
 
-		if ((spellBlock.chance >= static_cast<uint32_t>(uniform_random(1, 100)))) {
-			minCombatValue = spellBlock.minCombatValue;
-			maxCombatValue = spellBlock.maxCombatValue;
-			spellBlock.spell->castSpell(this, this);
+		if ((moveBlock.chance >= static_cast<uint32_t>(uniform_random(1, 100)))) {
+			minCombatValue = moveBlock.minCombatValue;
+			maxCombatValue = moveBlock.maxCombatValue;
+			moveBlock.move->castMove(this, this);
 		}
 	}
 
@@ -927,7 +927,7 @@ void Pokemon::onThinkDefense(uint32_t interval)
 			}
 
 			if (defenseTicks % summonBlock.speed >= interval) {
-				//already used this spell for this round
+				//already used this move for this round
 				continue;
 			}
 
@@ -1056,7 +1056,7 @@ bool Pokemon::pushCreature(Creature* creature)
 	std::shuffle(dirList.begin(), dirList.end(), getRandomGenerator());
 
 	for (Direction dir : dirList) {
-		const Position& tryPos = Spells::getCasterPosition(creature, dir);
+		const Position& tryPos = Moves::getCasterPosition(creature, dir);
 		Tile* toTile = g_game.map.getTile(tryPos);
 		if (toTile && !toTile->hasFlag(TILESTATE_BLOCKPATH)) {
 			if (g_game.internalMoveCreature(creature, dir) == RETURNVALUE_NOERROR) {
@@ -1134,7 +1134,7 @@ bool Pokemon::getNextStep(Direction& direction, uint32_t& flags)
 	}
 
 	if (result && (canPushItems() || canPushCreatures())) {
-		const Position& pos = Spells::getCasterPosition(this, direction);
+		const Position& pos = Moves::getCasterPosition(this, direction);
 		Tile* tile = g_game.map.getTile(pos);
 		if (tile) {
 			if (canPushItems()) {

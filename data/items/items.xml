@@ -2255,8 +2255,8 @@
 		<attribute key="slotType" value="ammo" />
 		<attribute key="weight" value="200" />
 	</item>
-	<item id="2175" article="a" name="spellbook">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="2175" article="a" name="movebook">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="1800" />
 		<attribute key="defense" value="14" />
 		<attribute key="weaponType" value="shield" />
@@ -2546,7 +2546,7 @@
 		<attribute key="showduration" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
-	<item id="2217" article="a" name="spellbook">
+	<item id="2217" article="a" name="movebook">
 		<attribute key="weight" value="5800" />
 	</item>
 	<item id="2218" article="a" name="paw amulet">
@@ -2649,247 +2649,247 @@
 	</item>
 	<item id="2261" article="a" name="destroy field rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adito grav" />
+		<attribute key="runeMoveName" value="adito grav" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2262" article="an" name="energy bomb rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas vis" />
+		<attribute key="runeMoveName" value="adevo mas vis" />
 		<attribute key="weight" value="105" />
 		<attribute key="charges" value="2" />
 	</item>
-	<item fromid="2263" toid="2264" article="a" name="spell rune">
+	<item fromid="2263" toid="2264" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2265" article="an" name="intense healing rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adura gran" />
+		<attribute key="runeMoveName" value="adura gran" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
 	<item id="2266" article="an" name="cure poison rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adana pox" />
+		<attribute key="runeMoveName" value="adana pox" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
-	<item id="2267" article="a" name="spell rune">
+	<item id="2267" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2268" article="a" name="sudden death rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori gran mort" />
+		<attribute key="runeMoveName" value="adori gran mort" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2269" article="a" name="wild growth rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav vita" />
+		<attribute key="runeMoveName" value="adevo grav vita" />
 		<attribute key="weight" value="105" />
 		<attribute key="charges" value="2" />
 	</item>
-	<item id="2270" article="a" name="spell rune">
+	<item id="2270" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2271" article="an" name="icicle rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori frigo" />
+		<attribute key="runeMoveName" value="adori frigo" />
 		<attribute key="weight" value="42" />
 		<attribute key="charges" value="5" />
 	</item>
-	<item id="2272" article="a" name="spell rune">
+	<item id="2272" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2273" article="an" name="ultimate healing rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adura vita" />
+		<attribute key="runeMoveName" value="adura vita" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
 	<item id="2274" article="an" name="avalanche rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori mas frigo" />
+		<attribute key="runeMoveName" value="adori mas frigo" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
-	<item fromid="2275" toid="2276" article="a" name="spell rune">
+	<item fromid="2275" toid="2276" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2277" article="an" name="energy field rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav vis" />
+		<attribute key="runeMoveName" value="adevo grav vis" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2278" article="a" name="paralyze rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adana ani" />
+		<attribute key="runeMoveName" value="adana ani" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
 	<item id="2279" article="an" name="energy wall rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas grav vis" />
+		<attribute key="runeMoveName" value="adevo mas grav vis" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
-	<item fromid="2280" toid="2284" article="a" name="spell rune">
+	<item fromid="2280" toid="2284" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2285" article="a" name="poison field rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav pox" />
+		<attribute key="runeMoveName" value="adevo grav pox" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2286" article="a" name="poison bomb rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas pox" />
+		<attribute key="runeMoveName" value="adevo mas pox" />
 		<attribute key="weight" value="105" />
 		<attribute key="charges" value="2" />
 	</item>
 	<item id="2287" article="a" name="light magic missile rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori min vis" />
+		<attribute key="runeMoveName" value="adori min vis" />
 		<attribute key="weight" value="21" />
 		<attribute key="charges" value="10" />
 	</item>
 	<item id="2288" article="a" name="stone shower rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori mas tera" />
+		<attribute key="runeMoveName" value="adori mas tera" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="2289" article="a" name="poison wall rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas grav pox" />
+		<attribute key="runeMoveName" value="adevo mas grav pox" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="2290" article="a" name="convince creature rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adeta sio" />
+		<attribute key="runeMoveName" value="adeta sio" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
 	<item id="2291" article="a" name="chameleon rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo ina" />
+		<attribute key="runeMoveName" value="adevo ina" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
 	<item id="2292" article="a" name="stalagmite rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori tera" />
+		<attribute key="runeMoveName" value="adori tera" />
 		<attribute key="weight" value="21" />
 		<attribute key="charges" value="10" />
 	</item>
 	<item id="2293" article="a" name="magic wall rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav tera" />
+		<attribute key="runeMoveName" value="adevo grav tera" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
-	<item id="2294" article="a" name="spell rune">
+	<item id="2294" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2295" article="a" name="holy missile rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori san" />
+		<attribute key="runeMoveName" value="adori san" />
 		<attribute key="weight" value="42" />
 		<attribute key="charges" value="5" />
 	</item>
-	<item fromid="2296" toid="2300" article="a" name="spell rune">
+	<item fromid="2296" toid="2300" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2301" article="a" name="fire field rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav flam" />
+		<attribute key="runeMoveName" value="adevo grav flam" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2302" article="a" name="fireball rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori flam" />
+		<attribute key="runeMoveName" value="adori flam" />
 		<attribute key="weight" value="42" />
 		<attribute key="charges" value="5" />
 	</item>
 	<item id="2303" article="a" name="fire wall rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas grav flam" />
+		<attribute key="runeMoveName" value="adevo mas grav flam" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="2304" article="a" name="great fireball rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori mas flam" />
+		<attribute key="runeMoveName" value="adori mas flam" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="2305" article="a" name="fire bomb rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas flam" />
+		<attribute key="runeMoveName" value="adevo mas flam" />
 		<attribute key="weight" value="105" />
 		<attribute key="charges" value="2" />
 	</item>
-	<item fromid="2306" toid="2307" article="a" name="spell rune">
+	<item fromid="2306" toid="2307" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2308" article="a" name="soulfire rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo res flam" />
+		<attribute key="runeMoveName" value="adevo res flam" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
-	<item id="2309" article="a" name="spell rune">
+	<item id="2309" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2310" article="a" name="disintegrate rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adito tera" />
+		<attribute key="runeMoveName" value="adito tera" />
 		<attribute key="weight" value="70" />
 		<attribute key="charges" value="3" />
 	</item>
 	<item id="2311" article="a" name="heavy magic missile rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori vis" />
+		<attribute key="runeMoveName" value="adori vis" />
 		<attribute key="weight" value="21" />
 		<attribute key="charges" value="10" />
 	</item>
-	<item id="2312" article="a" name="spell rune">
+	<item id="2312" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2313" article="an" name="explosion rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo mas hur" />
+		<attribute key="runeMoveName" value="adevo mas hur" />
 		<attribute key="weight" value="35" />
 		<attribute key="charges" value="6" />
 	</item>
-	<item id="2314" article="a" name="spell rune">
+	<item id="2314" article="a" name="move rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
 	<item id="2315" article="a" name="thunderstorm rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori mas vis" />
+		<attribute key="runeMoveName" value="adori mas vis" />
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="2316" article="an" name="animate dead rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adana mort" />
+		<attribute key="runeMoveName" value="adana mort" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
@@ -10542,7 +10542,7 @@
 	<item id="6119" article="a" name="scroll">
 		<attribute key="weight" value="120" />
 	</item>
-	<item id="6120" name="Dragha's spellbook">
+	<item id="6120" name="Dragha's movebook">
 		<attribute key="description" value="It apparently belonged to someone called Dragha, the apprentice of a voodoomaster." />
 		<attribute key="weight" value="5800" />
 	</item>
@@ -13509,7 +13509,7 @@
 	<item id="7734" article="a" name="watering can">
 		<attribute key="weight" value="850" />
 	</item>
-	<item id="7735" article="a" name="spellwand">
+	<item id="7735" article="a" name="movewand">
 		<attribute key="description" value="It might have some strange effects." />
 		<attribute key="weight" value="200" />
 	</item>
@@ -14974,7 +14974,7 @@
 		<attribute key="description" value="It contains a love poem, written by an unknown elven poet." />
 		<attribute key="weight" value="120" />
 	</item>
-	<item id="8190" article="a" name="nature magic spellbook">
+	<item id="8190" article="a" name="nature magic movebook">
 		<attribute key="description" value="It contains the arcane secrets of nature magic." />
 		<attribute key="weight" value="5800" />
 	</item>
@@ -15661,7 +15661,7 @@
 	<item id="8843" article="an" name="onion">
 		<attribute key="weight" value="140" />
 	</item>
-	<item id="8844" name="jalapeño pepper" article="a">
+	<item id="8844" name="jalapeï¿½o pepper" article="a">
 		<attribute key="weight" value="30" />
 	</item>
 	<item id="8845" article="a" name="beetroot">
@@ -15964,36 +15964,36 @@
 	<item id="8893" name="" />
 	<item fromid="8894" toid="8897" article="a" name="mysterious machine" />
 	<item fromid="8898" toid="8899" article="a" name="chalk board" />
-	<item id="8900" article="a" name="spellbook of enlightenment">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8900" article="a" name="movebook of enlightenment">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="1950" />
 		<attribute key="magiclevelpoints" value="1" />
 		<attribute key="defense" value="18" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="8901" article="a" name="spellbook of warding">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8901" article="a" name="movebook of warding">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2100" />
 		<attribute key="magiclevelpoints" value="1" />
 		<attribute key="defense" value="22" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="8902" article="a" name="spellbook of mind control">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8902" article="a" name="movebook of mind control">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2450" />
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="defense" value="16" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="8903" article="a" name="spellbook of lost souls">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8903" article="a" name="movebook of lost souls">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2560" />
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="defense" value="20" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="8904" article="a" name="spellscroll of prophecies">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8904" article="a" name="movescroll of prophecies">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2650" />
 		<attribute key="magiclevelpoints" value="3" />
 		<attribute key="defense" value="12" />
@@ -16065,14 +16065,14 @@
 		<attribute key="range" value="3" />
 	</item>
 	<item fromid="8913" toid="8917" name="earth" />
-	<item id="8918" article="a" name="spellbook of dark mysteries">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="8918" article="a" name="movebook of dark mysteries">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2850" />
 		<attribute key="magiclevelpoints" value="3" />
 		<attribute key="defense" value="16" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="8919" article="a" name="spell rune">
+	<item id="8919" article="a" name="move rune">
 		<attribute key="description" value="It is Yandur's healing rune. You can't remove it from his house, but you may use it." />
 	</item>
 	<item id="8920" article="a" name="wand of starstorm">
@@ -17694,7 +17694,7 @@
 		<attribute key="description" value="This one would be quite healthy if it wasn't for all the melted cheese on top." />
 		<attribute key="weight" value="1100" />
 	</item>
-	<item id="9998" article="a" name="filled jalapeño peppers">
+	<item id="9998" article="a" name="filled jalapeï¿½o peppers">
 		<attribute key="description" value="The creamy cheese makes a great combination with the spicy peppers." />
 		<attribute key="weight" value="650" />
 	</item>
@@ -18418,7 +18418,7 @@
 		<attribute key="weaponType" value="sword" />
 	</item>
 	<item id="10305" article="a" name="holy icon">
-		<attribute key="description" value="It is said that you can break a mighty evil spell with it." />
+		<attribute key="description" value="It is said that you can break a mighty evil move with it." />
 		<attribute key="weight" value="500" />
 	</item>
 	<item id="10306" name="fan doll of the King">
@@ -19883,26 +19883,26 @@
 	<item id="11315" article="a" name="draken trophy">
 		<attribute key="weight" value="600" />
 	</item>
-	<item id="11316" article="a" name="dead draken spellweaver">
+	<item id="11316" article="a" name="dead draken moveweaver">
 		<attribute key="containerSize" value="10" />
 		<attribute key="decayTo" value="11317" />
 		<attribute key="duration" value="10" />
 		<attribute key="corpseType" value="blood" />
 		<attribute key="fluidSource" value="blood" />
 	</item>
-	<item id="11317" article="a" name="dead draken spellweaver">
+	<item id="11317" article="a" name="dead draken moveweaver">
 		<attribute key="containerSize" value="10" />
 		<attribute key="decayTo" value="11318" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
 		<attribute key="fluidSource" value="blood" />
 	</item>
-	<item id="11318" article="a" name="dead draken spellweaver">
+	<item id="11318" article="a" name="dead draken moveweaver">
 		<attribute key="decayTo" value="11319" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
 	</item>
-	<item id="11319" article="a" name="dead draken spellweaver">
+	<item id="11319" article="a" name="dead draken moveweaver">
 		<attribute key="decayTo" value="0" />
 		<attribute key="duration" value="60" />
 		<attribute key="corpseType" value="blood" />
@@ -20017,7 +20017,7 @@
 		<attribute key="corpseType" value="venom" />
 	</item>
 	<item fromid="11351" toid="11354" article="a" name="large pile of bones" />
-	<item id="11355" article="a" name="spellweaver's robe">
+	<item id="11355" article="a" name="moveweaver's robe">
 		<attribute key="armor" value="11" />
 		<attribute key="weight" value="2350" />
 		<attribute key="slotType" value="body" />
@@ -21262,7 +21262,7 @@
 		<attribute key="slotType" value="feet" />
 	</item>
 	<item id="12647" article="a" name="snake god's wristguard">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2800" />
 		<attribute key="magiclevelpoints" value="3" />
 		<attribute key="defense" value="14" />
@@ -23224,27 +23224,27 @@
 		<attribute key="corpseType" value="blood" />
 	</item>
 	<item fromid="15191" toid="15206" name="leaves" />
-	<item id="15208" article="a" name="dead deepling spellsinger">
+	<item id="15208" article="a" name="dead deepling movesinger">
 		<attribute key="weight" value="4400" />
 		<attribute key="containerSize" value="24" />
 		<attribute key="decayTo" value="15209" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
 	</item>
-	<item id="15209" article="a" name="dead deepling spellsinger">
+	<item id="15209" article="a" name="dead deepling movesinger">
 		<attribute key="weight" value="3000" />
 		<attribute key="containerSize" value="24" />
 		<attribute key="decayTo" value="15210" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
 	</item>
-	<item id="15210" article="a" name="dead deepling spellsinger">
+	<item id="15210" article="a" name="dead deepling movesinger">
 		<attribute key="weight" value="2000" />
 		<attribute key="decayTo" value="0" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
 	</item>
-	<item id="15211" article="a" name="dead deepling spellsinger">
+	<item id="15211" article="a" name="dead deepling movesinger">
 		<attribute key="weight" value="2000" />
 		<attribute key="containerSize" value="24" />
 		<attribute key="decayTo" value="15208" />
@@ -23747,9 +23747,9 @@
 		<attribute key="defense" value="24" />
 		<attribute key="weaponType" value="club" />
 	</item>
-	<item id="15421" article="a" name="spellsinger's seal">
+	<item id="15421" article="a" name="movesinger's seal">
 		<attribute key="weight" value="190" />
-		<attribute key="description" value="The seal used by the spellsingers of the deep." />
+		<attribute key="description" value="The seal used by the movesingers of the deep." />
 	</item>
 	<item id="15422" article="a" name="key to the Drowned Library">
 		<attribute key="weight" value="120" />
@@ -24257,9 +24257,9 @@
 		<attribute key="attack" value="9" />
 		<attribute key="hitChance" value="1" />
 	</item>
-	<item id="16112" article="a" name="spellbook of ancient arcana">
+	<item id="16112" article="a" name="movebook of ancient arcana">
 		<attribute key="weight" value="2500" />
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="defense" value="19" />
 		<attribute key="weaponType" value="shield" />
 		<attribute key="absorbPercentDeath" value="5" />
@@ -25102,8 +25102,8 @@
 		<attribute key="absorbPercentFire" value="-8" />
 		<attribute key="magiclevelpoints" value="1" />
 	</item>
-	<item id="18401" article="a" name="spellbook of vigilance">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="18401" article="a" name="movebook of vigilance">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="2700" />
 		<attribute key="magiclevelpoints" value="3" />
 		<attribute key="defense" value="20" />
@@ -25747,7 +25747,7 @@
 	<item fromid="19376" toid="19388" article="a" name="stone wall" />
 	<item id="19392" article="a" name="lightest magic missile rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori dis min vis" />
+		<attribute key="runeMoveName" value="adori dis min vis" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="10" />
 	</item>
@@ -29733,7 +29733,7 @@
 		<attribute key="attack" value="9" />
 		<attribute key="skillDist" value="3" />
 	</item>
-	<item id="22422" article="a" name="crude umbral spellbook">
+	<item id="22422" article="a" name="crude umbral movebook">
 		<attribute key="weight" value="4000" />
 		<attribute key="magiclevelpoints" value="1" />
 		<attribute key="absorbPercentEarth" value="2" />
@@ -29743,7 +29743,7 @@
 		<attribute key="defense" value="14" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="22423" article="a" name="umbral spellbook">
+	<item id="22423" article="a" name="umbral movebook">
 		<attribute key="weight" value="3500" />
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="absorbPercentEarth" value="3" />
@@ -29753,7 +29753,7 @@
 		<attribute key="defense" value="16" />
 		<attribute key="weaponType" value="shield" />
 	</item>
-	<item id="22424" article="a" name="umbral master spellbook">
+	<item id="22424" article="a" name="umbral master movebook">
 		<attribute key="weight" value="3000" />
 		<attribute key="magiclevelpoints" value="4" />
 		<attribute key="absorbPercentEarth" value="5" />
@@ -31005,18 +31005,18 @@
 	</item>
 	<item id="23722" article="a" name="light stone shower rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori infir mas tera" />
+		<attribute key="runeMoveName" value="adori infir mas tera" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="4" />
 	</item>
 	<item id="23723" article="a" name="lightest missile rune">
 		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori infir vis" />
+		<attribute key="runeMoveName" value="adori infir vis" />
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="4" />
 	</item>
-	<item id="23771" article="a" name="spellbook of the novice">
-		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
+	<item id="23771" article="a" name="movebook of the novice">
+		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
 		<attribute key="weight" value="1400" />
 		<attribute key="defense" value="8" />
 		<attribute key="weaponType" value="shield" />

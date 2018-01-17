@@ -48,7 +48,7 @@ class Combat;
 class Condition;
 class Npc;
 class Pokemon;
-class InstantSpell;
+class InstantMove;
 
 enum {
 	EVENT_ID_LOADING = 1,
@@ -191,7 +191,7 @@ enum ErrorCode_t {
 	LUA_ERROR_CONTAINER_NOT_FOUND,
 	LUA_ERROR_VARIANT_NOT_FOUND,
 	LUA_ERROR_VARIANT_UNKNOWN,
-	LUA_ERROR_SPELL_NOT_FOUND,
+	LUA_ERROR_MOVE_NOT_FOUND,
 };
 
 class LuaScriptInterface
@@ -372,7 +372,7 @@ class LuaScriptInterface
 		// Push
 		static void pushBoolean(lua_State* L, bool value);
 		static void pushCombatDamage(lua_State* L, const CombatDamage& damage);
-		static void pushInstantSpell(lua_State* L, const InstantSpell& spell);
+		static void pushInstantMove(lua_State* L, const InstantMove& move);
 		static void pushPosition(lua_State* L, const Position& position, int32_t stackpos = 0);
 		static void pushOutfit(lua_State* L, const Outfit_t& outfit);
 
@@ -953,10 +953,10 @@ class LuaScriptInterface
 		static int luaPlayerAddBlessing(lua_State* L);
 		static int luaPlayerRemoveBlessing(lua_State* L);
 
-		static int luaPlayerCanLearnSpell(lua_State* L);
-		static int luaPlayerLearnSpell(lua_State* L);
-		static int luaPlayerForgetSpell(lua_State* L);
-		static int luaPlayerHasLearnedSpell(lua_State* L);
+		static int luaPlayerCanLearnMove(lua_State* L);
+		static int luaPlayerLearnMove(lua_State* L);
+		static int luaPlayerForgetMove(lua_State* L);
+		static int luaPlayerHasLearnedMove(lua_State* L);
 
 		static int luaPlayerSendTutorial(lua_State* L);
 		static int luaPlayerAddMapMark(lua_State* L);
@@ -978,7 +978,7 @@ class LuaScriptInterface
 		static int luaPlayerGetContainerById(lua_State* L);
 		static int luaPlayerGetContainerIndex(lua_State* L);
 
-		static int luaPlayerGetInstantSpells(lua_State* L);
+		static int luaPlayerGetInstantMoves(lua_State* L);
 		static int luaPlayerCanCast(lua_State* L);
 
 		static int luaPlayerHasChaseMode(lua_State* L);
@@ -1280,14 +1280,14 @@ class LuaScriptInterface
 		static int luaPartyShareExperience(lua_State* L);
 		static int luaPartySetSharedExperience(lua_State* L);
 
-		// Spells
-		static int luaSpellCreate(lua_State* L);
+		// Moves
+		static int luaMoveCreate(lua_State* L);
 
-		static int luaSpellGetManaCost(lua_State* L);
-		static int luaSpellGetSoulCost(lua_State* L);
+		static int luaMoveGetManaCost(lua_State* L);
+		static int luaMoveGetSoulCost(lua_State* L);
 
-		static int luaSpellIsPremium(lua_State* L);
-		static int luaSpellIsLearnable(lua_State* L);
+		static int luaMoveIsPremium(lua_State* L);
+		static int luaMoveIsLearnable(lua_State* L);
 
 		//
 		std::string lastLuaError;
@@ -1341,7 +1341,7 @@ class LuaEnvironment : public LuaScriptInterface
 		uint32_t lastAreaId = 0;
 
 		friend class LuaScriptInterface;
-		friend class CombatSpell;
+		friend class CombatMove;
 };
 
 #endif

@@ -21,7 +21,7 @@
 #include "otpch.h"
 
 #include "items.h"
-#include "spells.h"
+#include "moves.h"
 #include "movement.h"
 #include "weapons.h"
 
@@ -425,8 +425,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			}
 		} else if (tmpStrValue == "description") {
 			it.description = valueAttribute.as_string();
-		} else if (tmpStrValue == "runespellname") {
-			it.runeSpellName = valueAttribute.as_string();
+		} else if (tmpStrValue == "runemovename") {
+			it.runeMoveName = valueAttribute.as_string();
 		} else if (tmpStrValue == "weight") {
 			it.weight = pugi::cast<uint32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "showcount") {

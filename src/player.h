@@ -825,14 +825,14 @@ class Player final : public Creature, public Cylinder
 				client->sendCreatureHelpers(creatureId, helpers);
 			}
 		}
-		void sendSpellCooldown(uint8_t spellId, uint32_t time) {
+		void sendMoveCooldown(uint8_t moveId, uint32_t time) {
 			if (client) {
-				client->sendSpellCooldown(spellId, time);
+				client->sendMoveCooldown(moveId, time);
 			}
 		}
-		void sendSpellGroupCooldown(SpellGroup_t groupId, uint32_t time) {
+		void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time) {
 			if (client) {
-				client->sendSpellGroupCooldown(groupId, time);
+				client->sendMoveGroupCooldown(groupId, time);
 			}
 		}
 		void sendModalWindow(const ModalWindow& modalWindow);
@@ -1139,9 +1139,9 @@ class Player final : public Creature, public Cylinder
 		House* getEditHouse(uint32_t& windowTextId, uint32_t& listId);
 		void setEditHouse(House* house, uint32_t listId = 0);
 
-		void learnInstantSpell(const std::string& spellName);
-		void forgetInstantSpell(const std::string& spellName);
-		bool hasLearnedInstantSpell(const std::string& spellName) const;
+		void learnInstantMove(const std::string& moveName);
+		void forgetInstantMove(const std::string& moveName);
+		bool hasLearnedInstantMove(const std::string& moveName) const;
 
 	private:
 		std::forward_list<Condition*> getMuteConditions() const;
@@ -1205,7 +1205,7 @@ class Player final : public Creature, public Cylinder
 
 		std::forward_list<Party*> invitePartyList;
 		std::forward_list<uint32_t> modalWindows;
-		std::forward_list<std::string> learnedInstantSpellList;
+		std::forward_list<std::string> learnedInstantMoveList;
 		std::forward_list<Condition*> storedConditionList; // TODO: This variable is only temporarily used when logging in, get rid of it somehow
 
 		std::string name;

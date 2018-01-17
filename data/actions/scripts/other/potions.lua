@@ -2,18 +2,18 @@ local berserk = Condition(CONDITION_ATTRIBUTES)
 berserk:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 berserk:setParameter(CONDITION_PARAM_SKILL_MELEE, 5)
 berserk:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
-berserk:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
+berserk:setParameter(CONDITION_PARAM_BUFF_MOVE, true)
 
 local mastermind = Condition(CONDITION_ATTRIBUTES)
 mastermind:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 mastermind:setParameter(CONDITION_PARAM_STAT_MAGICPOINTS, 3)
-mastermind:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
+mastermind:setParameter(CONDITION_PARAM_BUFF_MOVE, true)
 
 local bullseye = Condition(CONDITION_ATTRIBUTES)
 bullseye:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 bullseye:setParameter(CONDITION_PARAM_SKILL_DISTANCE, 5)
 bullseye:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
-bullseye:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
+bullseye:setParameter(CONDITION_PARAM_BUFF_MOVE, true)
 
 local potions = {
 	[6558] = {transform = {7588, 7589}, effect = CONST_ME_DRAWBLOOD},

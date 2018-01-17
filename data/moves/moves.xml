@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moves>
+	<!-- House Moves -->
+	<instant name="House Door List" words="aleta grav" casterTargetOrDirection="1" aggressive="0" script="house/edit_door_list.lua" />
+	<instant name="House Guest List" words="aleta sio" aggressive="0" script="house/edit_guest_list.lua" />
+	<instant name="House Kick" words="alana sio" aggressive="0" playernameparam="1" params="1" script="house/kick.lua" />
+	<instant name="House Subowner List" words="aleta som" aggressive="0" script="house/edit_subowner_list.lua" />
+
+	<!-- Grass Moves -->
+	<instant name="Absorb" words="###1" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Grass/absorb.lua" />
+
+	<!-- Bug Moves -->
+	<instant name="Heal Order" words="###2" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Bug/heal order.lua" />
+
+	<!-- Dark Moves -->
+	<instant name="Absorb" words="###3" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Dark/assurance.lua" />
+
+	<!-- Dragon Moves -->
+	<instant name="Absorb" words="###4" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Dragon/dual chop.lua" />
+
+	<!-- Electric Moves -->
+	<instant name="Absorb" words="###5" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Electric/electro ball.lua" />
+
+	<!-- Fairy Moves -->
+	<instant name="Absorb" words="###6" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fairy/fairy wind.lua" />
+
+	<!-- Fighting Moves -->
+	<instant name="Absorb" words="###7" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fighting/focus punch.lua" />
+
+	<!-- Fire Moves -->
+	<instant name="Absorb" words="###8" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fire/blast burn.lua" />
+
+	<!-- Flying Moves -->
+	<instant name="Absorb" words="###9" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Flying/aeroblast.lua" />
+
+	<!-- Ghost Moves -->
+	<instant name="Absorb" words="###10" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ghost/astonish.lua" />
+
+	<!-- Ground Moves -->
+	<instant name="Absorb" words="###11" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ground/bone club.lua" />
+
+	<!-- Ice Moves -->
+	<instant name="Absorb" words="###12" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ice/aurora beam.lua" />
+
+	<!-- Normal Moves -->
+	<instant name="Absorb" words="###13" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Normal/assist.lua" />
+
+	<!-- Poison Moves -->
+	<instant name="Absorb" words="###14" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Poison/acid.lua" />
+
+	<!-- Psychic Moves -->
+	<instant name="Absorb" words="###15" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Psychic/barrier.lua" />
+
+	<!-- Rock Moves -->
+	<instant name="Absorb" words="###16" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Rock/ancient power.lua" />
+
+	<!-- Steel Moves -->
+	<instant name="Absorb" words="###17" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Steel/iron tail.lua" />
+
+	<!-- Water Moves -->
+	<instant name="Absorb" words="###18" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Water/aqua tail.lua" />
+</moves>

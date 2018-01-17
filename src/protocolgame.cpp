@@ -1326,9 +1326,9 @@ void ProtocolGame::sendBasicData()
 		msg.add<uint32_t>(0);
 	}
 	msg.addByte(player->getVocation()->getClientId());
-	msg.add<uint16_t>(0xFF); // number of known spells
-	for (uint8_t spellId = 0x00; spellId < 0xFF; spellId++) {
-		msg.addByte(spellId);
+	msg.add<uint16_t>(0xFF); // number of known moves
+	for (uint8_t moveId = 0x00; moveId < 0xFF; moveId++) {
+		msg.addByte(moveId);
 	}
 	writeToOutputBuffer(msg);
 }
@@ -1913,7 +1913,7 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 
 	msg.addString(it.vocationString);
 
-	msg.addString(it.runeSpellName);
+	msg.addString(it.runeMoveName);
 
 	if (it.abilities) {
 		std::ostringstream ss;
@@ -2751,16 +2751,16 @@ void ProtocolGame::sendVIPEntries()
 	}
 }
 
-void ProtocolGame::sendSpellCooldown(uint8_t spellId, uint32_t time)
+void ProtocolGame::sendMoveCooldown(uint8_t moveId, uint32_t time)
 {
 	NetworkMessage msg;
 	msg.addByte(0xA4);
-	msg.addByte(spellId);
+	msg.addByte(moveId);
 	msg.add<uint32_t>(time);
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendSpellGroupCooldown(SpellGroup_t groupId, uint32_t time)
+void ProtocolGame::sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time)
 {
 	NetworkMessage msg;
 	msg.addByte(0xA5);

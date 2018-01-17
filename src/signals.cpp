@@ -26,7 +26,7 @@
 #include "game.h"
 #include "actions.h"
 #include "configmanager.h"
-#include "spells.h"
+#include "moves.h"
 #include "talkaction.h"
 #include "movement.h"
 #include "weapons.h"
@@ -45,7 +45,7 @@ extern Actions* g_actions;
 extern Pokemons g_pokemons;
 extern TalkActions* g_talkActions;
 extern MoveEvents* g_moveEvents;
-extern Spells* g_spells;
+extern Moves* g_moves;
 extern Weapons* g_weapons;
 extern Game g_game;
 extern CreatureEvents* g_creatureEvents;
@@ -141,11 +141,11 @@ void Signals::sighupHandler()
 	g_game.raids.startup();
 	std::cout << "Reloaded raids." << std::endl;
 
-	g_spells->reload();
+	g_moves->reload();
 	std::cout << "Reloaded pokemons." << std::endl;
 
 	g_pokemons.reload();
-	std::cout << "Reloaded spells." << std::endl;
+	std::cout << "Reloaded moves." << std::endl;
 
 	g_talkActions->reload();
 	std::cout << "Reloaded talk actions." << std::endl;
