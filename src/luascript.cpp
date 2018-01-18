@@ -2386,6 +2386,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "selectTarget", LuaScriptInterface::luaPokemonSelectTarget);
 	registerMethod("Pokemon", "searchTarget", LuaScriptInterface::luaPokemonSearchTarget);
 
+	registerMethod("Pokemon", "castMove", LuaScriptInterface::luaPokemonCastMove);
+
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
 	registerMetaMethod("Npc", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -9893,6 +9895,56 @@ int LuaScriptInterface::luaPokemonSearchTarget(lua_State* L)
 	} else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonCastMove(lua_State* L)
+{
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	Player* player = pokemon->getMaster()->getPlayer();
+
+	if (!player) {
+		reportErrorFunc("castMove can only be used with a Pokémon that belongs to a player.");
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	if (!pokemon) {
+		reportErrorFunc("Pokémon not found.");
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	
+	InstantMove* move = g_moves->getInstantMoveByName(getString(L, 2));
+
+	if (!move) {
+		reportErrorFunc("Move \"" + getString(L, 2) + "\" not found");
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	if (!move->needTarget) {
+		move->castMove(pokemon);
+		lua_pushboolean(L, 1);
+		return 1;
+	}
+
+	Creature* target = pokemon->getAttackedCreature();
+
+	if (!target || !(target->getHealth() > 0)) {
+		player->sendCancelMessage(RETURNVALUE_YOUCANONLYUSEITONCREATURES);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	if (!move->canThrowMove(pokemon, target)) {
+		player->sendCancelMessage(RETURNVALUE_CREATUREISNOTREACHABLE);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	move->castMove(pokemon, target);
+	//lua_pushboolean(L, 1);
 	return 1;
 }
 

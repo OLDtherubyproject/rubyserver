@@ -1014,6 +1014,8 @@ class LuaScriptInterface
 
 		static int luaPokemonSelectTarget(lua_State* L);
 		static int luaPokemonSearchTarget(lua_State* L);
+		
+		static int luaPokemonCastMove(lua_State* L);
 
 		// Npc
 		static int luaNpcCreate(lua_State* L);

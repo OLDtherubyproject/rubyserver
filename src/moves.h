@@ -163,6 +163,8 @@ class Move : public BaseMove
 			return vocMoveMap;
 		}
 
+		bool needTarget = false;
+
 	protected:
 		bool playerMoveCheck(Player* player) const;
 		bool playerInstantMoveCheck(Player* player, const Position& toPos);
@@ -183,7 +185,6 @@ class Move : public BaseMove
 		uint8_t moveId = 0;
 
 		bool selfTarget = false;
-		bool needTarget = false;
 
 	private:
 
