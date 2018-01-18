@@ -345,7 +345,7 @@ void Items::buildInventoryList()
 			type.slotPosition & SLOTP_POKEBALL ||
 			type.slotPosition & SLOTP_HEAD ||
 			type.slotPosition & SLOTP_ARMOR ||
-			type.slotPosition & SLOTP_LEGS)
+			type.slotPosition & SLOTP_PORTRAIT)
 		{
 			inventory.push_back(type.clientId);
 		}
@@ -562,8 +562,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.slotPosition |= SLOTP_HEAD;
 			} else if (tmpStrValue == "body") {
 				it.slotPosition |= SLOTP_ARMOR;
-			} else if (tmpStrValue == "legs") {
-				it.slotPosition |= SLOTP_LEGS;
+			} else if (tmpStrValue == "portrait") {
+				it.slotPosition |= SLOTP_PORTRAIT;
 			} else if (tmpStrValue == "pokeball") {
 				it.slotPosition |= SLOTP_POKEBALL;
 			} else if (tmpStrValue == "backpack") {

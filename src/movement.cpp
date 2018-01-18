@@ -193,7 +193,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 		case CONST_SLOT_ARMOR: slotp = SLOTP_ARMOR; break;
 		case CONST_SLOT_RIGHT: slotp = SLOTP_RIGHT; break;
 		case CONST_SLOT_LEFT: slotp = SLOTP_LEFT; break;
-		case CONST_SLOT_LEGS: slotp = SLOTP_LEGS; break;
+		case CONST_SLOT_PORTRAIT: slotp = SLOTP_PORTRAIT; break;
 		case CONST_SLOT_POKEBALL: slotp = SLOTP_POKEBALL; break;
 		case CONST_SLOT_SUPPORT: slotp = SLOTP_SUPPORT; break;
 		case CONST_SLOT_RING: slotp = SLOTP_RING; break;
@@ -425,8 +425,8 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 				slot = SLOTP_LEFT;
 			} else if (tmpStr == "hand" || tmpStr == "shield") {
 				slot = SLOTP_RIGHT | SLOTP_LEFT;
-			} else if (tmpStr == "legs") {
-				slot = SLOTP_LEGS;
+			} else if (tmpStr == "portrait") {
+				slot = SLOTP_PORTRAIT;
 			} else if (tmpStr == "pokeball") {
 				slot = SLOTP_POKEBALL;
 			} else if (tmpStr == "ring") {

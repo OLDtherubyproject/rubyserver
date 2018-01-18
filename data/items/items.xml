@@ -3758,17 +3758,17 @@
 	<item id="2468" name="studded legs">
 		<attribute key="weight" value="2600" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2469" name="dragon scale legs">
 		<attribute key="weight" value="4800" />
 		<attribute key="armor" value="10" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2470" name="golden legs">
 		<attribute key="weight" value="5600" />
 		<attribute key="armor" value="9" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2471" article="a" name="golden helmet">
 		<attribute key="description" value="It's the famous Helmet of the Stars." />
@@ -3805,12 +3805,12 @@
 	<item id="2477" name="knight legs">
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2478" name="brass legs">
 		<attribute key="weight" value="3800" />
 		<attribute key="armor" value="5" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2479" article="a" name="strange helmet">
 		<attribute key="weight" value="4600" />
@@ -3860,7 +3860,7 @@
 	<item id="2488" name="crown legs">
 		<attribute key="weight" value="6500" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2489" article="a" name="dark armor">
 		<attribute key="weight" value="12000" />
@@ -3896,7 +3896,7 @@
 	<item id="2495" name="demon legs">
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="9" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2496" article="a" name="horned helmet">
 		<attribute key="weight" value="5100" />
@@ -3945,7 +3945,7 @@
 	<item id="2504" name="dwarven legs">
 		<attribute key="weight" value="4900" />
 		<attribute key="armor" value="7" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentPhysical" value="3" />
 	</item>
 	<item id="2505" article="an" name="elven mail">
@@ -3961,7 +3961,7 @@
 	<item id="2507" name="elven legs">
 		<attribute key="weight" value="3300" />
 		<attribute key="armor" value="4" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2508" article="a" name="native armor">
 		<attribute key="weight" value="8000" />
@@ -4456,17 +4456,17 @@
 	<item id="2647" name="plate legs">
 		<attribute key="weight" value="5000" />
 		<attribute key="armor" value="7" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2648" name="chain legs">
 		<attribute key="weight" value="3500" />
 		<attribute key="armor" value="3" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2649" name="leather legs">
 		<attribute key="weight" value="1800" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="2650" article="a" name="jacket">
 		<attribute key="weight" value="2400" />
@@ -7403,7 +7403,7 @@
 	</item>
 	<item id="3983" article="a" name="bast skirt">
 		<attribute key="weight" value="350" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="3984" name="jungle grass">
 		<attribute key="decayTo" value="3985" />
@@ -9425,7 +9425,7 @@
 	<item id="5918" name="pirate knee breeches">
 		<attribute key="weight" value="1200" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="5919" article="a" name="dragon claw">
 		<attribute key="description" value="It is the claw of Demodras." />
@@ -13012,7 +13012,7 @@
 	<item id="7464" name="mammoth fur shorts">
 		<attribute key="weight" value="150" />
 		<attribute key="armor" value="0" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="description" value="They offer little protection but will at least provide some comfort and warmth." />
 	</item>
 	<item fromid="7465" toid="7473" article="a" name="searing fire">
@@ -13494,7 +13494,7 @@
 	<item id="7730" name="blue legs">
 		<attribute key="weight" value="1800" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="7731" article="an" name="elvenhair rope">
 		<attribute key="weight" value="600" />
@@ -14558,7 +14558,7 @@
 	<item id="7885" name="terra legs">
 		<attribute key="weight" value="1900" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentEarth" value="6" />
 		<attribute key="absorbPercentFire" value="-6" />
 	</item>
@@ -14631,19 +14631,19 @@
 		<attribute key="armor" value="8" />
 		<attribute key="absorbPercentFire" value="6" />
 		<attribute key="absorbPercentIce" value="-6" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="7895" name="lightning legs">
 		<attribute key="weight" value="1900" />
 		<attribute key="armor" value="8" />
 		<attribute key="absorbPercentEnergy" value="6" />
 		<attribute key="absorbPercentEarth" value="-6" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="7896" article="a" name="glacier kilt">
 		<attribute key="weight" value="1900" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentIce" value="6" />
 		<attribute key="absorbPercentEnergy" value="-6" />
 	</item>
@@ -16100,7 +16100,7 @@
 	<item id="8923" name="ranger legs">
 		<attribute key="weight" value="3500" />
 		<attribute key="armor" value="4" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="8924" article="a" name="hellforged axe">
 		<attribute key="weight" value="8800" />
@@ -17077,7 +17077,7 @@
 	<item id="9777" article="a" name="yalahari leg piece">
 		<attribute key="weight" value="6500" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentDeath" value="5" />
 		<attribute key="skillDist" value="2" />
 	</item>
@@ -17400,7 +17400,7 @@
 		<attribute key="weight" value="500" />
 	</item>
 	<item id="9928" article="a" name="leaf legs">
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="weight" value="1200" />
 	</item>
 	<item id="9929" article="a" name="flower dress">
@@ -18386,7 +18386,7 @@
 		<attribute key="description" value="These atavistic trousers already served the forefathers of mankind." />
 		<attribute key="weight" value="30" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 	</item>
 	<item id="10301" article="a" name="scythe of the reaper">
 		<attribute key="description" value="This scythe has harvested countless souls and still hungers for more." />
@@ -19816,7 +19816,7 @@
 	<item id="11304" article="a" name="Zaoan legs">
 		<attribute key="weight" value="6600" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentPhysical" value="2" />
 	</item>
 	<item id="11305" article="a" name="drakinata">
@@ -23709,7 +23709,7 @@
 	<item id="15409" article="a" name="depth ocrea">
 		<attribute key="weight" value="4800" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentManaDrain" value="15" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -23731,7 +23731,7 @@
 	<item id="15412" article="an" name="ornate legs">
 		<attribute key="weight" value="7700" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentPhysical" value="5" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -23928,7 +23928,7 @@
 	<item id="15490" article="a" name="grasshopper legs">
 		<attribute key="weight" value="3200" />
 		<attribute key="armor" value="7" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="speed" value="20" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -25098,7 +25098,7 @@
 	<item id="18400" article="a" name="gill legs">
 		<attribute key="weight" value="2800" />
 		<attribute key="armor" value="7" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentEarth" value="8" />
 		<attribute key="absorbPercentFire" value="-8" />
 		<attribute key="magiclevelpoints" value="1" />
@@ -25139,7 +25139,7 @@
 	<item id="18405" name="prismatic legs">
 		<attribute key="weight" value="7100" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentPhysical" value="3" />
 		<attribute key="skillDist" value="2" />
 	</item>
@@ -29428,7 +29428,7 @@
 	<item id="21700" article="a" name="icy culotte">
 		<attribute key="weight" value="1500" />
 		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="absorbPercentIce" value="8" />
 	</item>
 	<item id="21703" article="an" name="eye of the storm">
@@ -30775,7 +30775,7 @@
 	<item id="23539" article="a" name="alloy legs">
 		<attribute key="description" value="It can only be wielded properly by players of level 60 or higher." />
 		<attribute key="armor" value="6" />
-		<attribute key="slotType" value="legs" />
+		<attribute key="slotType" value="portrait" />
 		<attribute key="speed" value="20" />
 		<attribute key="weight" value="4500" />
 	</item>

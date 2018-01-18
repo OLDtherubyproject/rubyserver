@@ -1716,8 +1716,8 @@ slots_t getSlotType(const ItemType& it)
 			slot = CONST_SLOT_NECKLACE;
 		} else if (slotPosition & SLOTP_ARMOR) {
 			slot = CONST_SLOT_ARMOR;
-		} else if (slotPosition & SLOTP_LEGS) {
-			slot = CONST_SLOT_LEGS;
+		} else if (slotPosition & SLOTP_PORTRAIT) {
+			slot = CONST_SLOT_PORTRAIT;
 		} else if (slotPosition & SLOTP_POKEBALL) {
 			slot = CONST_SLOT_POKEBALL ;
 		} else if (slotPosition & SLOTP_RING) {

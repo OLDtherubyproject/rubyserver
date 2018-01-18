@@ -34,7 +34,7 @@ enum SlotPositionBits : uint32_t {
 	SLOTP_ARMOR = 1 << 3,
 	SLOTP_RIGHT = 1 << 4,
 	SLOTP_LEFT = 1 << 5,
-	SLOTP_LEGS = 1 << 6,
+	SLOTP_PORTRAIT = 1 << 6,
 	SLOTP_POKEBALL = 1 << 7,
 	SLOTP_RING = 1 << 8,
 	SLOTP_SUPPORT = 1 << 9,
