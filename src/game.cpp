@@ -1722,8 +1722,8 @@ slots_t getSlotType(const ItemType& it)
 			slot = CONST_SLOT_POKEBALL ;
 		} else if (slotPosition & SLOTP_RING) {
 			slot = CONST_SLOT_RING;
-		} else if (slotPosition & SLOTP_AMMO) {
-			slot = CONST_SLOT_AMMO;
+		} else if (slotPosition & SLOTP_SUPPORT) {
+			slot = CONST_SLOT_SUPPORT;
 		} else if (slotPosition & SLOTP_TWO_HAND || slotPosition & SLOTP_LEFT) {
 			slot = CONST_SLOT_LEFT;
 		}

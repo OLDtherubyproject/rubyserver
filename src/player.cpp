@@ -219,7 +219,7 @@ Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 	if (!ignoreAmmo && weaponType == WEAPON_DISTANCE) {
 		const ItemType& it = Item::items[item->getID()];
 		if (it.ammoType != AMMO_NONE) {
-			Item* ammoItem = inventory[CONST_SLOT_AMMO];
+			Item* ammoItem = inventory[CONST_SLOT_SUPPORT];
 			if (!ammoItem || ammoItem->getAmmoType() != it.ammoType) {
 				return nullptr;
 			}
@@ -2270,7 +2270,7 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 	if ((slotPosition & SLOTP_HEAD) || (slotPosition & SLOTP_NECKLACE) ||
 	        (slotPosition & SLOTP_BACKPACK) || (slotPosition & SLOTP_ARMOR) ||
 	        (slotPosition & SLOTP_LEGS) || (slotPosition & SLOTP_POKEBALL) ||
-	        (slotPosition & SLOTP_RING) || ((slotPosition & SLOTP_AMMO) || (slotPosition & SLOTP_POKEBALL))) {
+	        (slotPosition & SLOTP_RING) || ((slotPosition & SLOTP_SUPPORT) || (slotPosition & SLOTP_POKEBALL))) {
 		ret = RETURNVALUE_CANNOTBEDRESSED;
 	} else if (slotPosition & SLOTP_TWO_HAND) {
 		ret = RETURNVALUE_PUTTHISOBJECTINBOTHHANDS;
@@ -2420,7 +2420,7 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 			break;
 		}
 
-		case CONST_SLOT_AMMO: {
+		case CONST_SLOT_SUPPORT: {
 			ret = RETURNVALUE_NOERROR;
 			break;
 		}

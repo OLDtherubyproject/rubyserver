@@ -21,7 +21,7 @@ function onDeath(player, corpse, killer, mostDamage, unjustified, mostDamage_unj
 			player:removeItem(ITEM_AMULETOFLOSS, 1, -1, false)
 		end
 	else
-		for i = CONST_SLOT_HEAD, CONST_SLOT_AMMO do
+		for i = CONST_SLOT_HEAD, CONST_SLOT_SUPPORT do
 			local item = player:getSlotItem(i)
 			if item then
 				if table.contains({SKULL_RED, SKULL_BLACK}, player:getSkull()) or math.random(item:isContainer() and 100 or 1000) <= player:getLossPercent() then

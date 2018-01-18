@@ -195,7 +195,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 		case CONST_SLOT_LEFT: slotp = SLOTP_LEFT; break;
 		case CONST_SLOT_LEGS: slotp = SLOTP_LEGS; break;
 		case CONST_SLOT_POKEBALL: slotp = SLOTP_POKEBALL; break;
-		case CONST_SLOT_AMMO: slotp = SLOTP_AMMO; break;
+		case CONST_SLOT_SUPPORT: slotp = SLOTP_SUPPORT; break;
 		case CONST_SLOT_RING: slotp = SLOTP_RING; break;
 		default: slotp = 0; break;
 	}
@@ -432,7 +432,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 			} else if (tmpStr == "ring") {
 				slot = SLOTP_RING;
 			} else if (tmpStr == "ammo") {
-				slot = SLOTP_AMMO;
+				slot = SLOTP_SUPPORT;
 			} else {
 				std::cout << "[Warning - MoveEvent::configureMoveEvent] Unknown slot type: " << slotAttribute.as_string() << std::endl;
 			}
