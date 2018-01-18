@@ -2359,7 +2359,7 @@
 	</item>
 	<item id="2195" name="boots of haste">
 		<attribute key="weight" value="750" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="speed" value="40" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -2646,6 +2646,7 @@
 	<item id="2260" article="a" name="blank rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="210" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2261" article="a" name="destroy field rune">
 		<attribute key="type" value="rune" />
@@ -3072,7 +3073,7 @@
 	<item id="2358" name="boots of waterwalking">
 		<attribute key="description" value="(This item has 5 charges left)." />
 		<attribute key="weight" value="770" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2359" article="a" name="djinn's lamp">
 		<attribute key="description" value="(This item has 2 charges left)." />
@@ -4413,7 +4414,7 @@
 	</item>
 	<item id="2640" article="a" name="pair of soft boots (faster regeneration)">
 		<attribute key="weight" value="800" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="decayTo" value="10021" />
 		<attribute key="transformDeEquipTo" value="6132" />
 		<attribute key="duration" value="14400" />
@@ -4427,30 +4428,30 @@
 	<item id="2641" name="patched boots">
 		<attribute key="weight" value="1000" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2642" name="sandals">
 		<attribute key="weight" value="600" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2643" name="leather boots">
 		<attribute key="weight" value="900" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2644" name="bunnyslippers">
 		<attribute key="weight" value="600" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2645" name="steel boots">
 		<attribute key="weight" value="2900" />
 		<attribute key="armor" value="3" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2646" name="golden boots">
 		<attribute key="weight" value="3100" />
 		<attribute key="armor" value="4" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2647" name="plate legs">
 		<attribute key="weight" value="5000" />
@@ -7398,7 +7399,7 @@
 	<item id="3982" name="crocodile boots">
 		<attribute key="weight" value="900" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="3983" article="a" name="bast skirt">
 		<attribute key="weight" value="350" />
@@ -8651,7 +8652,7 @@
 	<item id="5462" name="pirate boots">
 		<attribute key="weight" value="800" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="5463" article="a" name="sugar cane">
 		<attribute key="description" value="It has just been harvested." />
@@ -10570,7 +10571,7 @@
 	</item>
 	<item id="6132" name="pair of soft boots">
 		<attribute key="weight" value="800" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="transformEquipTo" value="2640" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
@@ -12971,7 +12972,7 @@
 		<attribute key="description" value="These boots keep your toes warm in even the iciest regions, but they feel kind of heavy." />
 		<attribute key="weight" value="1200" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="speed" value="-12" />
 	</item>
 	<item id="7458" article="a" name="fur cap">
@@ -14564,7 +14565,7 @@
 	<item id="7886" name="terra boots">
 		<attribute key="weight" value="750" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="absorbPercentEarth" value="5" />
 		<attribute key="absorbPercentFire" value="-5" />
 	</item>
@@ -14609,12 +14610,12 @@
 		<attribute key="armor" value="2" />
 		<attribute key="absorbPercentFire" value="5" />
 		<attribute key="absorbPercentIce" value="-5" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="7892" name="glacier shoes">
 		<attribute key="weight" value="750" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="absorbPercentIce" value="5" />
 		<attribute key="absorbPercentEnergy" value="-5" />
 	</item>
@@ -14623,7 +14624,7 @@
 		<attribute key="armor" value="2" />
 		<attribute key="absorbPercentEnergy" value="5" />
 		<attribute key="absorbPercentEarth" value="-5" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="7894" name="magma legs">
 		<attribute key="weight" value="1900" />
@@ -17134,7 +17135,7 @@
 		<attribute key="description" value="If you can remove the rust layer and dirt from the boots you will be able to see what it is." />
 		<attribute key="weight" value="2800" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item fromid="9820" toid="9822" article="a" name="rusty helmet">
 		<attribute key="description" value="If you can remove the rust layer and dirt from the helmets you will be able to see what it is." />
@@ -17411,14 +17412,14 @@
 		<attribute key="weight" value="90" />
 	</item>
 	<item id="9931" article="a" name="coconut shoes">
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="weight" value="600" />
 	</item>
 	<item id="9932" article="a" name="firewalker boots">
 		<attribute key="description" value="Wearing these boots reduces the damage gotten from fiery ground." />
 		<attribute key="weight" value="950" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="decayTo" value="10022" />
 		<attribute key="transformDeEquipTo" value="9933" />
 		<attribute key="fieldabsorbpercentfire" value="90" />
@@ -17430,7 +17431,7 @@
 		<attribute key="description" value="Wearing these boots reduces the damage gotten from fiery ground." />
 		<attribute key="weight" value="950" />
 		<attribute key="armor" value="2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="transformEquipTo" value="9932" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
@@ -17781,12 +17782,12 @@
 	<item id="10021" name="worn soft boots">
 		<attribute key="description" value="Someone specialised in shoes might be able to repair them for you." />
 		<attribute key="weight" value="800" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="10022" name="worn firewalker boots">
 		<attribute key="description" value="They can be recharged with an enchanted ruby." />
 		<attribute key="weight" value="950" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="10024" article="a" name="crystal ball">
 		<attribute key="weight" value="3400" />
@@ -19290,14 +19291,14 @@
 		<attribute key="armor" value="3" />
 		<attribute key="absorbPercentIce" value="3" />
 		<attribute key="absorbPercentEnergy" value="-3" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="weight" value="1850" />
 	</item>
 	<item id="11118" name="dragon scale boots">
 		<attribute key="armor" value="3" />
 		<attribute key="absorbPercentFire" value="3" />
 		<attribute key="absorbPercentIce" value="-3" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="weight" value="1850" />
 	</item>
 	<item id="11119" article="a" name="heart backpack">
@@ -19547,7 +19548,7 @@
 		<attribute key="armor" value="3" />
 		<attribute key="absorbPercentPhysical" value="2" />
 		<attribute key="absorbPercentHoly" value="-2" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="weight" value="2250" />
 	</item>
 	<item id="11241" article="an" name="expedition backpack">
@@ -19809,7 +19810,7 @@
 	<item id="11303" article="a" name="Zaoan shoes">
 		<attribute key="weight" value="700" />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="speed" value="10" />
 	</item>
 	<item id="11304" article="a" name="Zaoan legs">
@@ -21259,7 +21260,7 @@
 		<attribute key="armor" value="3" />
 		<attribute key="speed" value="30" />
 		<attribute key="weight" value="2500" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="12647" article="a" name="snake god's wristguard">
 		<attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
@@ -23715,7 +23716,7 @@
 	<item id="15410" article="a" name="depth calcei">
 		<attribute key="weight" value="3700" />
 		<attribute key="armor" value="3" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="speed" value="-10" />
 		<attribute key="absorbPercentPhysical" value="5" />
 		<attribute key="showattributes" value="1" />
@@ -25145,7 +25146,7 @@
 	<item id="18406" name="prismatic boots">
 		<attribute key="weight" value="1800" />
 		<attribute key="armor" value="3" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="speed" value="30" />
 		<attribute key="absorbPercentDeath" value="3" />
 		<attribute key="showattributes" value="1" />
@@ -30781,7 +30782,7 @@
 	<item id="23540" article="a" name="metal spats">
 		<attribute key="description" value="It can only be wielded properly by knights and paladins of level 50 or higher." />
 		<attribute key="armor" value="1" />
-		<attribute key="slotType" value="feet" />
+		<attribute key="slotType" value="pokeball" />
 		<attribute key="absorbPercentPhysical" value="1" />
 		<attribute key="weight" value="1800" />
 	</item>

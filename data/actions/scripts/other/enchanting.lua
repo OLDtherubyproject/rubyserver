@@ -69,7 +69,7 @@ local items = {
 		},
 		[10022] = { -- worn firewalker boots
 			[COMBAT_FIREDAMAGE] = {id = 9933, say = {text = "Take the boots off first."}},
-			slot = {type = CONST_SLOT_FEET, check = true}
+			slot = {type = CONST_SLOT_POKEBALL, check = true}
 		},
 		[24716] = { -- werewolf amulet
 			[COMBAT_NONE] = {

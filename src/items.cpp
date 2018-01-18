@@ -342,7 +342,7 @@ void Items::buildInventoryList()
 			type.slotPosition & SLOTP_NECKLACE ||
 			type.slotPosition & SLOTP_RING ||
 			type.slotPosition & SLOTP_AMMO ||
-			type.slotPosition & SLOTP_FEET ||
+			type.slotPosition & SLOTP_POKEBALL ||
 			type.slotPosition & SLOTP_HEAD ||
 			type.slotPosition & SLOTP_ARMOR ||
 			type.slotPosition & SLOTP_LEGS)
@@ -564,8 +564,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.slotPosition |= SLOTP_ARMOR;
 			} else if (tmpStrValue == "legs") {
 				it.slotPosition |= SLOTP_LEGS;
-			} else if (tmpStrValue == "feet") {
-				it.slotPosition |= SLOTP_FEET;
+			} else if (tmpStrValue == "pokeball") {
+				it.slotPosition |= SLOTP_POKEBALL;
 			} else if (tmpStrValue == "backpack") {
 				it.slotPosition |= SLOTP_BACKPACK;
 			} else if (tmpStrValue == "two-handed") {

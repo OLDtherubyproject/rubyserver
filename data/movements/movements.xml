@@ -288,77 +288,77 @@
 	<movevent event="StepOut" itemid="5405" script="drowning.lua" />
 
 	<!-- Boots -->
-	<movevent event="Equip" itemid="2195" slot="feet" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="2195" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="6132" slot="feet" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="6132" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="2640" slot="feet" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="2640" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="7886" slot="feet" level="35" function="onEquipItem">
+	<movevent event="Equip" itemid="2195" slot="pokeball" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="2195" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="6132" slot="pokeball" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="6132" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="2640" slot="pokeball" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="2640" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7886" slot="pokeball" level="35" function="onEquipItem">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" showInDescription="0" />
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="7886" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="7891" slot="feet" level="35" function="onEquipItem">
+	<movevent event="DeEquip" itemid="7886" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7891" slot="pokeball" level="35" function="onEquipItem">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" showInDescription="0" />
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="7891" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="7892" slot="feet" level="35" function="onEquipItem">
+	<movevent event="DeEquip" itemid="7891" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7892" slot="pokeball" level="35" function="onEquipItem">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" showInDescription="0" />
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="7892" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="7893" slot="feet" level="35" function="onEquipItem">
+	<movevent event="DeEquip" itemid="7892" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7893" slot="pokeball" level="35" function="onEquipItem">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" showInDescription="0" />
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="7893" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="9932" slot="feet" level="130" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="9932" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="9933" slot="feet" level="130" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="9933" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" fromid="11117" toid="11118" slot="feet" level="70" function="onEquipItem">
+	<movevent event="DeEquip" itemid="7893" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="9932" slot="pokeball" level="130" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="9932" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="9933" slot="pokeball" level="130" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="9933" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" fromid="11117" toid="11118" slot="pokeball" level="70" function="onEquipItem">
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" showInDescription="0" />
 		<vocation name="Paladin" />
 		<vocation name="Royal Paladin" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" fromid="11117" toid="11118" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="11240" slot="feet" level="70" function="onEquipItem">
+	<movevent event="DeEquip" fromid="11117" toid="11118" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="11240" slot="pokeball" level="70" function="onEquipItem">
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" showInDescription="0" />
 		<vocation name="Paladin" />
 		<vocation name="Royal Paladin" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="11240" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="11303" slot="feet" function="onEquipItem" />
-	<movevent event="DeEquip" itemid="11303" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="12646" slot="feet" level="80" function="onEquipItem">
+	<movevent event="DeEquip" itemid="11240" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="11303" slot="pokeball" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="11303" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="12646" slot="pokeball" level="80" function="onEquipItem">
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" showInDescription="0" />
 		<vocation name="Paladin" />
 		<vocation name="Royal Paladin" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="12646" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="15410" slot="feet" level="150" function="onEquipItem">
+	<movevent event="DeEquip" itemid="12646" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="15410" slot="pokeball" level="150" function="onEquipItem">
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="15410" slot="feet" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="18406" slot="feet" level="150" function="onEquipItem">
+	<movevent event="DeEquip" itemid="15410" slot="pokeball" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="18406" slot="pokeball" level="150" function="onEquipItem">
 		<vocation name="Paladin" />
 		<vocation name="Royal Paladin" showInDescription="0" />
 	</movevent>
-	<movevent event="DeEquip" itemid="18406" slot="feet" function="onDeEquipItem" />
+	<movevent event="DeEquip" itemid="18406" slot="pokeball" function="onDeEquipItem" />
 
 	<!-- Amulets -->
 	<movevent event="Equip" itemid="2161" slot="necklace" function="onEquipItem" />
