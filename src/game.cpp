@@ -5721,3 +5721,67 @@ bool Game::reload(ReloadTypes_t reloadType)
 		}
 	}
 }
+
+Position Game::getClosestFreeTile(Creature* creature, Position centerPos, bool extendedPos/* = false*/)
+{
+	bool foundTile;
+
+	Tile* tile = g_game.map.getTile(centerPos.x, centerPos.y, centerPos.z);
+	if (tile) {
+		ReturnValue ret;
+
+		if (creature->isSummon()) {
+			ret = tile->queryAdd(0, *creature->getMaster(), 1, FLAG_IGNOREBLOCKITEM);
+		} else{
+			ret = tile->queryAdd(0, *creature, 1, FLAG_IGNOREBLOCKITEM);
+		}
+
+		foundTile = (ret == RETURNVALUE_NOERROR) || (ret == RETURNVALUE_PLAYERISNOTINVITED);
+	} else {
+		foundTile = false;
+	}
+
+	if (!foundTile) {
+		static std::vector<std::pair<int32_t, int32_t>> extendedRelList {
+			                   {0, -2},
+			         {-1, -1}, {0, -1}, {1, -1},
+			{-2, 0}, {-1,  0},          {1,  0}, {2, 0},
+			         {-1,  1}, {0,  1}, {1,  1},
+			                   {0,  2}
+		};
+
+		static std::vector<std::pair<int32_t, int32_t>> normalRelList {
+			{-1, -1}, {0, -1}, {1, -1},
+			{-1,  0},          {1,  0},
+			{-1,  1}, {0,  1}, {1,  1}
+		};
+
+		std::vector<std::pair<int32_t, int32_t>>& relList = (extendedPos ? extendedRelList : normalRelList);
+
+		if (extendedPos) {
+			std::shuffle(relList.begin(), relList.begin() + 4, getRandomGenerator());
+			std::shuffle(relList.begin() + 4, relList.end(), getRandomGenerator());
+		} else {
+			std::shuffle(relList.begin(), relList.end(), getRandomGenerator());
+		}
+
+		for (const auto& it : relList) {
+			Position tryPos(centerPos.x + it.first, centerPos.y + it.second, centerPos.z);
+
+			tile = g_game.map.getTile(tryPos.x, tryPos.y, tryPos.z);
+			if (!tile) {
+				continue;
+			}
+
+			if (tile->queryAdd(0, *creature, 1, 0) == RETURNVALUE_NOERROR) {
+				if (g_game.map.isSightClear(centerPos, tryPos, false)) {
+					return tryPos;
+				}
+			}
+		}
+
+		return Position(0, 0, 0);
+	}
+
+	return centerPos;
+}

@@ -499,6 +499,8 @@ class Game
 
 		bool reload(ReloadTypes_t reloadType);
 
+		Position getClosestFreeTile(Creature* creature, Position pos, bool extended/* = false*/);
+
 		Groups groups;
 		Map map;
 		Mounts mounts;
