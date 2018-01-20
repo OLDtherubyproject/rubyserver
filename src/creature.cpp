@@ -469,18 +469,19 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 		}
 
 		if (!summons.empty()) {
-			//check if any of our summons is out of range (+/- 2 floors or 30 tiles away)
-			std::forward_list<Creature*> despawnList;
-			for (Creature* summon : summons) {
-				const Position& pos = summon->getPosition();
-				if (Position::getDistanceZ(newPos, pos) > 2 || (std::max<int32_t>(Position::getDistanceX(newPos, pos), Position::getDistanceY(newPos, pos)) > 30)) {
-					despawnList.push_front(summon);
+			if (creature->getPlayer()) {
+				//check if any of player pokemon is out of range configured in config.lua)
+				for (Creature* summon : summons) {
+					const Position& pos = summon->getPosition();
+					if (Position::getDistanceZ(newPos, pos) >= g_config.getNumber(ConfigManager::TELEPORT_TO_PLAYER_FLOOR) || (std::max<int32_t>(Position::getDistanceX(newPos, pos), Position::getDistanceY(newPos, pos)) >= g_config.getNumber(ConfigManager::TELEPORT_TO_PLAYER_TILES))) {
+						Pokemon* pokemon = summon->getPokemon();
+						
+						if (pokemon && !pokemon->teleportToPlayer()) {
+							pokemon->needTeleportToPlayer = true;
+						}
+					}
 				}
-			}
-
-			for (Creature* despawnCreature : despawnList) {
-				g_game.removeCreature(despawnCreature, true);
-			}
+			}			
 		}
 
 		if (newTile->getZone() != oldTile->getZone()) {

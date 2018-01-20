@@ -727,6 +727,9 @@ void Pokemon::onThink(uint32_t interval)
 			addEventWalk();
 
 			if (isSummon()) {
+				if(needTeleportToPlayer && teleportToPlayer())
+					needTeleportToPlayer = false;
+
 				if (!attackedCreature) {
 					if (getMaster() && getMaster()->getAttackedCreature()) {
 						//This happens if the pokemon is summoned during combat

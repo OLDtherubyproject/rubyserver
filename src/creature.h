@@ -458,6 +458,8 @@ class Creature : virtual public Thing
 			}
 		}
 
+		bool needTeleportToPlayer = false;
+
 	protected:
 		virtual bool useCacheMap() const {
 			return false;
