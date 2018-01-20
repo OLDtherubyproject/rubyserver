@@ -86,6 +86,8 @@ rateSpawn = 1
 -- Pokemon
 deSpawnRange = 2
 deSpawnRadius = 50
+teleportToPlayerFloor = 1
+teleportToPlayerTiles = 8
 
 -- Stamina
 staminaSystem = true
