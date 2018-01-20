@@ -1765,6 +1765,21 @@ bool Pokemon::canWalkTo(Position pos, Direction direction) const
 	return false;
 }
 
+bool Pokemon::teleportToPlayer()
+{
+	Position pokemonPosition = getPosition();
+	Position trainerPosition = getMaster()->getPosition();
+	if (g_game.internalTeleport(this, g_game.getClosestFreeTile(this, trainerPosition, false)) != RETURNVALUE_NOERROR) {
+		return false;
+	}
+
+	g_game.addMagicEffect(pokemonPosition, CONST_ME_POFF);
+	g_game.addMagicEffect(getPosition(), CONST_ME_TELEPORT);
+	isMasterInRange = true;
+	needTeleportToPlayer = false;
+	return true;
+}
+
 void Pokemon::death(Creature*)
 {
 	setAttackedCreature(nullptr);

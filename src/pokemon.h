@@ -175,6 +175,8 @@ class Pokemon final : public Creature
 			return ignoreFieldDamage;
 		}
 
+		bool teleportToPlayer();
+
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
 		                     bool checkDefense = false, bool checkArmor = false, bool field = false) override;
 
