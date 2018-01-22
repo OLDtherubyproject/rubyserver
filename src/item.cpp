@@ -1558,6 +1558,21 @@ std::string Item::getWeightDescription() const
 	return getWeightDescription(weight);
 }
 
+/* function used to convert a double to string 
+   without scientific notation or trailing zeros */
+static std::string dbl2str(double d)
+{
+    size_t len = std::snprintf(0, 0, "%.10f", d);
+    std::string s(len+1, 0);
+    std::snprintf(&s[0], len+1, "%.10f", d);
+    s.pop_back();
+    s.erase(s.find_last_not_of('0') + 1, std::string::npos);
+    if(s.back() == '.') {
+        s.pop_back();
+    }
+    return s;
+}
+
 std::string Item::getPriceDescription(const ItemType& it, int32_t price, uint32_t count /*= 1*/)
 {
 	std::ostringstream ss;
@@ -1566,8 +1581,9 @@ std::string Item::getPriceDescription(const ItemType& it, int32_t price, uint32_
 	if (price == 0) {
 		ss << "Unsellable";
 	} else {
+		double finalPrice = price / 100.0;
 		ss << "$";
-		ss << price / 100.0;
+		ss << dbl2str(finalPrice);
 	}
 
 	ss << ".";
