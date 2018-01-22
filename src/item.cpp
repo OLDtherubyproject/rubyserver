@@ -570,6 +570,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_PRICE: {
+			int32_t price;
+			if (!propStream.read<int32_t>(price)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_PRICE, price);
+			break;
+		}
+
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -775,6 +785,11 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_SHOOTRANGE));
 	}
 
+	if (hasAttribute(ITEM_ATTRIBUTE_PRICE)) {
+		propWriteStream.write<uint8_t>(ATTR_PRICE);
+		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_PRICE));
+	}
+
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
 		const ItemAttributes::CustomAttributeMap* customAttrMap = attributes->getCustomAttributeMap();
 		propWriteStream.write<uint8_t>(ATTR_CUSTOM_ATTRIBUTES);
@@ -816,6 +831,15 @@ uint32_t Item::getWeight() const
 		return weight * std::max<uint32_t>(1, getItemCount());
 	}
 	return weight;
+}
+
+int32_t Item::getPrice() const
+{
+	int32_t price = getBasePrice();
+	if (isStackable()) {
+		return price * std::max<uint32_t>(1, getItemCount());
+	}
+	return price;
 }
 
 std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
@@ -1438,6 +1462,17 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			s << '\n' << *text;
 		}
 	}
+
+	// Item Price
+	if (item) {
+		const int32_t price = item->getPrice();
+		if (price >= 0 && it.pickupable) {
+			s << ' ' << getPriceDescription(it, price, item->getItemCount());
+		}
+	} else if (it.price >= 0 && it.pickupable){
+		s << ' ' << getPriceDescription(it, it.price);
+	}
+
 	return s.str();
 }
 
@@ -1521,6 +1556,46 @@ std::string Item::getWeightDescription() const
 		return std::string();
 	}
 	return getWeightDescription(weight);
+}
+
+std::string Item::getPriceDescription(const ItemType& it, int32_t price, uint32_t count /*= 1*/)
+{
+	std::ostringstream ss;
+	ss << "Price: ";
+
+	if (price == 0) {
+		ss << "Unsellable";
+	} else {
+		ss << "$";
+	}
+
+	if (price < 10) {
+		ss << "0.0" << price;
+	} else if (price < 100) {
+		ss << "0." << price;
+	} else {
+		std::string priceString = std::to_string(price);
+		priceString.insert(priceString.end() - 2, '.');
+		ss << priceString;
+	}
+
+	ss << ".";
+	return ss.str();
+}
+
+std::string Item::getPriceDescription(int32_t price) const
+{
+	const ItemType& it = Item::items[id];
+	return getPriceDescription(it, price, getItemCount());
+}
+
+std::string Item::getPriceDescription() const
+{
+	int32_t price = getPrice();
+	if (price < 0) {
+		return std::string();
+	}
+	return getPriceDescription(price);
 }
 
 void Item::setUniqueId(uint16_t n)

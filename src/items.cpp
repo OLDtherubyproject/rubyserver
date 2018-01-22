@@ -449,6 +449,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.allowPickupable = valueAttribute.as_bool();
 		} else if (tmpStrValue == "forceserialize" || tmpStrValue == "forcesave") {
 			it.forceSerialize = valueAttribute.as_bool();
+		} else if (tmpStrValue == "price") {
+			it.price = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "floorchange") {
 			tmpStrValue = asLowerCaseString(valueAttribute.as_string());
 			if (tmpStrValue == "down") {

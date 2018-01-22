@@ -103,7 +103,8 @@ enum AttrTypes_t {
 	ATTR_ARMOR = 31,
 	ATTR_HITCHANCE = 32,
 	ATTR_SHOOTRANGE = 33,
-	ATTR_CUSTOM_ATTRIBUTES = 34
+	ATTR_CUSTOM_ATTRIBUTES = 34,
+	ATTR_PRICE = 35,
 };
 
 enum Attr_ReadValue {
@@ -762,10 +763,14 @@ class Item : virtual public Thing
 		static std::string getDescription(const ItemType& it, int32_t lookDistance, const Item* item = nullptr, int32_t subType = -1, bool addArticle = true);
 		static std::string getNameDescription(const ItemType& it, const Item* item = nullptr, int32_t subType = -1, bool addArticle = true);
 		static std::string getWeightDescription(const ItemType& it, uint32_t weight, uint32_t count = 1);
+		static std::string getPriceDescription(const ItemType& it, int32_t price, uint32_t count = 1);
+
 
 		std::string getDescription(int32_t lookDistance) const override final;
 		std::string getNameDescription() const;
 		std::string getWeightDescription() const;
+		std::string getPriceDescription() const;
+
 
 		//serialization
 		virtual Attr_ReadValue readAttr(AttrTypes_t attr, PropStream& propStream);
@@ -811,6 +816,13 @@ class Item : virtual public Thing
 				return getIntAttr(ITEM_ATTRIBUTE_WEIGHT);
 			}
 			return items[id].weight;
+		}
+		virtual int32_t getPrice() const;
+		int32_t getBasePrice() const {
+			if (hasAttribute(ITEM_ATTRIBUTE_PRICE)) {
+				return getIntAttr(ITEM_ATTRIBUTE_PRICE);
+			}
+			return items[id].price;
 		}
 		int32_t getAttack() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_ATTACK)) {
@@ -997,6 +1009,7 @@ class Item : virtual public Thing
 
 	private:
 		std::string getWeightDescription(uint32_t weight) const;
+		std::string getPriceDescription(int32_t price) const;
 
 		std::unique_ptr<ItemAttributes> attributes;
 
