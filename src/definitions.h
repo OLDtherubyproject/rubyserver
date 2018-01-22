@@ -23,7 +23,7 @@
 
 static constexpr auto STATUS_SERVER_NAME = "The Ruby Server";
 static constexpr auto STATUS_SERVER_VERSION = "0.1";
-static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman (TFS) (TFS) and Leandro Matheus";
+static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman (TFS) and Leandro Matheus";
 
 static constexpr auto CLIENT_VERSION_MIN = 1097;
 static constexpr auto CLIENT_VERSION_MAX = 1098;
