@@ -1567,16 +1567,7 @@ std::string Item::getPriceDescription(const ItemType& it, int32_t price, uint32_
 		ss << "Unsellable";
 	} else {
 		ss << "$";
-	}
-
-	if (price < 10) {
-		ss << "0.0" << price;
-	} else if (price < 100) {
-		ss << "0." << price;
-	} else {
-		std::string priceString = std::to_string(price);
-		priceString.insert(priceString.end() - 2, '.');
-		ss << priceString;
+		ss << price / 100.0;
 	}
 
 	ss << ".";
