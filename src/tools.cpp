@@ -998,6 +998,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_DOORID;
 	} else if (str == "price") {
 		return ITEM_ATTRIBUTE_PRICE;
+	} else if (str == "corpsegender") {
+		return ITEM_ATTRIBUTE_CORPSEGENDER;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

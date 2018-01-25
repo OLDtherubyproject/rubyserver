@@ -91,6 +91,7 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_FLUIDTYPE = 1 << 21,
 	ITEM_ATTRIBUTE_DOORID = 1 << 22,
 	ITEM_ATTRIBUTE_PRICE = 1 << 23,
+	ITEM_ATTRIBUTE_CORPSEGENDER = 1 << 24,
 
 	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
 };
@@ -493,6 +494,11 @@ struct Outfit_t {
 	uint8_t lookLegs = 0;
 	uint8_t lookFeet = 0;
 	uint8_t lookAddons = 0;
+};
+
+struct Gender_t {
+	uint8_t male = 0;
+	uint8_t female = 0;
 };
 
 struct LightInfo {

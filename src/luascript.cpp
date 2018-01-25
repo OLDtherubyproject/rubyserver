@@ -1439,6 +1439,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_FLUIDTYPE)
 	registerEnum(ITEM_ATTRIBUTE_DOORID)
 	registerEnum(ITEM_ATTRIBUTE_PRICE)
+	registerEnum(ITEM_ATTRIBUTE_CORPSEGENDER)
 
 	registerEnum(ITEM_TYPE_DEPOT)
 	registerEnum(ITEM_TYPE_MAILBOX)

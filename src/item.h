@@ -105,6 +105,7 @@ enum AttrTypes_t {
 	ATTR_SHOOTRANGE = 33,
 	ATTR_CUSTOM_ATTRIBUTES = 34,
 	ATTR_PRICE = 35,
+	ATTR_CORPSEGENDER = 36,
 };
 
 enum Attr_ReadValue {
@@ -195,6 +196,13 @@ class ItemAttributes
 		}
 		uint32_t getCorpseOwner() const {
 			return getIntAttr(ITEM_ATTRIBUTE_CORPSEOWNER);
+		}
+
+		void setCorpseGender(uint8_t corpseGender) {
+			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, corpseGender);
+		}
+		int8_t getCorpseGender() const {
+			return getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER);
 		}
 
 		void setDuration(int32_t time) {
@@ -499,7 +507,7 @@ class ItemAttributes
 
 	public:
 		static bool isIntAttrType(itemAttrTypes type) {
-			return (type & 0xFFFE13) != 0;
+			return (type & 0x1FFFE13) != 0;
 		}
 		static bool isStrAttrType(itemAttrTypes type) {
 			return (type & 0x1EC) != 0;
@@ -735,6 +743,16 @@ class Item : virtual public Thing
 				return 0;
 			}
 			return getIntAttr(ITEM_ATTRIBUTE_CORPSEOWNER);
+		}
+
+		void setCorpseGender(uint8_t corpseGender) {
+			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, corpseGender);
+		}
+		int8_t getCorpseGender() const {
+			if (!attributes) {
+				return 0;
+			}
+			return getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER);
 		}
 
 		void setDuration(int32_t time) {

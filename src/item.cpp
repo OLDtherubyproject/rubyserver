@@ -580,6 +580,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_CORPSEGENDER: {
+			uint8_t gender;
+			if (!propStream.read<uint8_t>(gender)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, gender);
+			break;
+		}
+
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -788,6 +798,11 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_PRICE)) {
 		propWriteStream.write<uint8_t>(ATTR_PRICE);
 		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_PRICE));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_CORPSEGENDER)) {
+		propWriteStream.write<uint8_t>(ATTR_CORPSEGENDER);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
