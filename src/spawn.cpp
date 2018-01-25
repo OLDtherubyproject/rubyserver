@@ -215,6 +215,7 @@ bool Spawn::spawnPokemon(uint32_t spawnId, PokemonType* mType, const Position& p
 	pokemon->setSpawn(this);
 	pokemon->setMasterPos(pos);
 	pokemon->incrementReferenceCounter();
+	pokemon->randomGender();
 
 	spawnedMap.insert(spawned_pair(spawnId, pokemon));
 	spawnMap[spawnId].lastSpawn = OTSYS_TIME();
