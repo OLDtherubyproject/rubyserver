@@ -88,6 +88,21 @@ class Pokemon final : public Creature
 		void setMasterPos(Position pos) {
 			masterPos = pos;
 		}
+		void randomGender() {
+			// set pokemon gender
+
+			if (mType->info.dittoChance != 0 && normal_random(1, 100) <= mType->info.dittoChance) {
+				isDitto = true;
+			} else{
+				if (mType->info.gender.male != 0 || mType->info.gender.female != 0) {
+					if (normal_random(1, 100) <= mType->info.gender.male) {
+						skull = SKULL_GREEN; // Male
+					} else{
+						skull = SKULL_RED; // Female
+					}
+				}
+			}
+		}
 
 		RaceType_t getRace() const override {
 			return mType->info.race;
