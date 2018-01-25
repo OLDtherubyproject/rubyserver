@@ -920,6 +920,13 @@ void LuaScriptInterface::pushOutfit(lua_State* L, const Outfit_t& outfit)
 	setField(L, "lookMount", outfit.lookMount);
 }
 
+void LuaScriptInterface::pushGenders(lua_State* L, const Gender_t& genders)
+{
+	lua_createtable(L, 0, 2);
+	setField(L, "male", genders.male);
+	setField(L, "female", genders.female);
+}
+
 #define registerEnum(value) { std::string enumName = #value; registerGlobalVariable(enumName.substr(enumName.find_last_of(':') + 1), value); }
 #define registerEnumIn(tableName, value) { std::string enumName = #value; registerVariable(tableName, enumName.substr(enumName.find_last_of(':') + 1), value); }
 
@@ -2607,6 +2614,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "isHostile", LuaScriptInterface::luaPokemonTypeIsHostile);
 	registerMethod("PokemonType", "isPushable", LuaScriptInterface::luaPokemonTypeIsPushable);
 	registerMethod("PokemonType", "isHealthShown", LuaScriptInterface::luaPokemonTypeIsHealthShown);
+
+	registerMethod("PokemonType", "getGenders", LuaScriptInterface::luaPokemonTypeGetGenders);
 
 	registerMethod("PokemonType", "canPushItems", LuaScriptInterface::luaPokemonTypeCanPushItems);
 	registerMethod("PokemonType", "canPushCreatures", LuaScriptInterface::luaPokemonTypeCanPushCreatures);
@@ -9709,6 +9718,18 @@ int LuaScriptInterface::luaPokemonGetType(lua_State* L)
 	if (pokemon) {
 		pushUserdata<PokemonType>(L, pokemon->mType);
 		setMetatable(L, -1, "PokemonType");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTypeGetGenders(lua_State* L)
+{
+	// pokemonType:getGenders()
+	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
+	if (pokemonType) {
+		pushGenders(L, pokemonType->info.gender);
 	} else {
 		lua_pushnil(L);
 	}

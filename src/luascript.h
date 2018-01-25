@@ -375,6 +375,7 @@ class LuaScriptInterface
 		static void pushInstantMove(lua_State* L, const InstantMove& move);
 		static void pushPosition(lua_State* L, const Position& position, int32_t stackpos = 0);
 		static void pushOutfit(lua_State* L, const Outfit_t& outfit);
+		static void pushGenders(lua_State* L, const Gender_t& genders);
 
 		//
 		static void setField(lua_State* L, const char* index, lua_Number value)
@@ -1222,6 +1223,8 @@ class LuaScriptInterface
 		static int luaPokemonTypeIsHostile(lua_State* L);
 		static int luaPokemonTypeIsPushable(lua_State* L);
 		static int luaPokemonTypeIsHealthShown(lua_State* L);
+
+		static int luaPokemonTypeGetGenders(lua_State* L);
 
 		static int luaPokemonTypeCanPushItems(lua_State* L);
 		static int luaPokemonTypeCanPushCreatures(lua_State* L);
