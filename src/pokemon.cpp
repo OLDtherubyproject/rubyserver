@@ -55,15 +55,6 @@ Pokemon::Pokemon(PokemonType* mType) :
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
 
-	// set pokemon gender
-	if (mType->info.gender.male != 0 || mType->info.gender.female != 0) {
-		if (normal_random(1, 100) <= mType->info.gender.male) {
-			skull = SKULL_GREEN; // Male
-		} else{
-			skull = SKULL_RED; // Female
-		}
-	}
-
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
 		if (!registerCreatureEvent(scriptName)) {
