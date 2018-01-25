@@ -217,6 +217,7 @@ class Pokemon final : public Creature
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
 		int32_t stepDuration = 0;
+		bool isDitto = false;
 
 		Position masterPos;
 

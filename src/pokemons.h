@@ -110,6 +110,8 @@ class PokemonType
 		RaceType_t race = RACE_BLOOD;
 
 		LightInfo light = {};
+		float dittoChance = 0;
+
 		uint16_t lookcorpse = 0;
 
 		uint64_t experience = 0;

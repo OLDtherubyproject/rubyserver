@@ -497,8 +497,8 @@ struct Outfit_t {
 };
 
 struct Gender_t {
-	uint8_t male = 0;
-	uint8_t female = 0;
+	float male = 0;
+	float female = 0;
 };
 
 struct LightInfo {

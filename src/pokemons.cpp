@@ -793,13 +793,21 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("dittochance"))) {
+		if ((attr = node.attribute("chance"))) {
+			mType->info.dittoChance = pugi::cast<float>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing dittochance chance. " << file << std::endl;
+		}
+	}
+
 	if ((node = pokemonNode.child("genders"))) {
-		uint16_t sum = 0;
+		float sum = 0;
 		for (auto genderNode : node.children()) {
 			if ((attr = genderNode.attribute("name"))) {
 				if ((strcasecmp(attr.value(), "male") == 0)) {
 					if ((attr = genderNode.attribute("percentage"))) {
-						uint16_t percentage = pugi::cast<uint16_t>(attr.value());;
+						float percentage = pugi::cast<float>(attr.value());;
 						sum += percentage;
 						mType->info.gender.male = percentage;
 					} else {
@@ -807,7 +815,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 					}
 				} else if (strcasecmp(attr.value(), "female") == 0) {
 					if ((attr = genderNode.attribute("percentage"))) {
-						uint16_t percentage = pugi::cast<uint16_t>(attr.value());;
+						float percentage = pugi::cast<float>(attr.value());;
 						sum += percentage;
 						mType->info.gender.female = percentage;
 					} else {
