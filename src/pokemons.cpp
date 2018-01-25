@@ -793,6 +793,41 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("genders"))) {
+		uint16_t sum = 0;
+		for (auto genderNode : node.children()) {
+			if ((attr = genderNode.attribute("name"))) {
+				if ((strcasecmp(attr.value(), "male") == 0)) {
+					if ((attr = genderNode.attribute("percentage"))) {
+						uint16_t percentage = pugi::cast<uint16_t>(attr.value());;
+						sum += percentage;
+						mType->info.gender.male = percentage;
+					} else {
+						std::cout << "[Warning - Pokemons::loadPokemon] Gender percentage is missing in: " << attr.value() << ". " << file << std::endl;	
+					}
+				} else if (strcasecmp(attr.value(), "female") == 0) {
+					if ((attr = genderNode.attribute("percentage"))) {
+						uint16_t percentage = pugi::cast<uint16_t>(attr.value());;
+						sum += percentage;
+						mType->info.gender.female = percentage;
+					} else {
+						std::cout << "[Warning - Pokemons::loadPokemon] Gender percentage is missing in: " << attr.value() << ". " << file << std::endl;
+					}
+				} else{
+					std::cout << "[Warning - Pokemons::loadPokemon] Unknown gender name: " << attr.value() << ". " << file << std::endl;
+				}
+			} else{
+				std::cout << "[Warning - Pokemons::loadPokemon] Gender name is missing in " << file << std::endl;
+			}			
+		}
+
+		if (sum > 100) {
+			std::cout << "[Warning - Pokemons::loadPokemon] Gender total percentage is greater than 100 in " << file << std::endl;
+		} else if (sum < 100) {
+			std::cout << "[Warning - Pokemons::loadPokemon] Gender total percentage is less than 100 in " << file << std::endl;
+		}
+	}
+
 	if ((node = pokemonNode.child("look"))) {
 		if ((attr = node.attribute("type"))) {
 			mType->info.outfit.lookType = pugi::cast<uint16_t>(attr.value());

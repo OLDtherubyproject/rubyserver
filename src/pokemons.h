@@ -104,8 +104,9 @@ class PokemonType
 		std::vector<moveBlock_t> defenseMoves;
 		std::vector<summonBlock_t> summons;
 
-		Skulls_t skull = SKULL_NONE;
+		Skulls_t skull = SKULL_ORANGE;
 		Outfit_t outfit = {};
+		Gender_t gender = {};
 		RaceType_t race = RACE_BLOOD;
 
 		LightInfo light = {};
