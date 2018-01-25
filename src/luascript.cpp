@@ -2364,6 +2364,10 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Pokemon", "isPokemon", LuaScriptInterface::luaPokemonIsPokemon);
 
+	registerMethod("Pokemon", "isMale", LuaScriptInterface::luaPokemonIsMale);
+	registerMethod("Pokemon", "isFemale", LuaScriptInterface::luaPokemonIsFemale);
+	registerMethod("Pokemon", "isUndefined", LuaScriptInterface::luaPokemonIsUndefined);
+
 	registerMethod("Pokemon", "getType", LuaScriptInterface::luaPokemonGetType);
 
 	registerMethod("Pokemon", "getSpawnPosition", LuaScriptInterface::luaPokemonGetSpawnPosition);
@@ -9659,6 +9663,42 @@ int LuaScriptInterface::luaPokemonIsPokemon(lua_State* L)
 {
 	// pokemon:isPokemon()
 	pushBoolean(L, getUserdata<const Pokemon>(L, 1) != nullptr);
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonIsMale(lua_State* L)
+{
+	// pokemon:isMale()
+	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
+	if (pokemon) {
+		pushBoolean(L, pokemon->getSkull() == SKULL_GREEN);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonIsFemale(lua_State* L)
+{
+	// pokemon:isFemale()
+	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
+	if (pokemon) {
+		pushBoolean(L, pokemon->getSkull() == SKULL_RED);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonIsUndefined(lua_State* L)
+{
+	// pokemon:isUndefined()
+	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
+	if (pokemon) {
+		pushBoolean(L, pokemon->getSkull() == SKULL_ORANGE);
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 

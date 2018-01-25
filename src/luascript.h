@@ -991,6 +991,10 @@ class LuaScriptInterface
 
 		static int luaPokemonIsPokemon(lua_State* L);
 
+		static int luaPokemonIsMale(lua_State* L);
+		static int luaPokemonIsFemale(lua_State* L);
+		static int luaPokemonIsUndefined(lua_State* L);
+
 		static int luaPokemonGetType(lua_State* L);
 
 		static int luaPokemonGetSpawnPosition(lua_State* L);
