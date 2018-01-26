@@ -10,6 +10,6 @@
 
 
 [GitHub](https://github.com/RubyServer/rubyserver)
-[Get Started](#rubyserver)
+[Get Started](#getting-started)
 
 ![color](#f0f0f0)
