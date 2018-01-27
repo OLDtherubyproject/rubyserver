@@ -1,6 +1,6 @@
 ![logo](https://avatars3.githubusercontent.com/u/35264907?s=100&v=4)
 
-# RubyServer <small>0.0.1</small>
+# RubyServer <small>0.1.0</small>
 
 > A free and open-source Pokémon MMORPG server.
 
