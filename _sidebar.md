@@ -6,6 +6,7 @@
 - Guide
 
 - Scripting Interface
+  - [Constants](constants.md)
 
 - [Changelog](changelog.md)
 
