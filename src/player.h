@@ -929,7 +929,7 @@ class Player final : public Creature, public Cylinder
 				client->sendIcons(getClientIcons());
 			}
 		}
-		void sendMagicEffect(const Position& pos, uint8_t type) const {
+		void sendMagicEffect(const Position& pos, uint16_t type) const {
 			if (client) {
 				client->sendMagicEffect(pos, type);
 			}
