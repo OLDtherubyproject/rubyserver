@@ -119,6 +119,7 @@ enum MagicEffectClasses : uint16_t {
 	CONST_ME_GOBACK_GREATBALL = 190,
 	CONST_ME_GOBACK_SUPERALL = 191,
 	CONST_ME_GOBACK_ULTRABALL = 192,
+	CONST_ME_GOBACK_MASTERBALL = 193,
 };
 
 enum ShootType_t : uint8_t {
