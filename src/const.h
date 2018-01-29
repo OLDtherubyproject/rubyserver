@@ -114,6 +114,8 @@ enum MagicEffectClasses : uint16_t {
 	CONST_ME_CRITICAL_DAMAGE = 173,
 	// 174 is empty
 	CONST_ME_PLUNGING_FISH = 175,
+	// goback effects
+	CONST_ME_GOBACK_POKEBALL = 189,
 };
 
 enum ShootType_t : uint8_t {
