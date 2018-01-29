@@ -1800,7 +1800,14 @@ void Pokemon::death(Creature*)
 
 Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 {
-	Item* corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature);
+	Item* corpse;
+
+	if (isDitto) {
+		corpse = Item::CreateItem(ITEM_DITTO_CORPSE);
+	} else{
+		corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature);
+	}
+
 	if (corpse) {
 		if (mostDamageCreature) {
 			if (mostDamageCreature->getPlayer()) {
