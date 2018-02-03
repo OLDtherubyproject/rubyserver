@@ -1064,23 +1064,7 @@ void Creature::onGainExperience(uint64_t gainExp, Creature* target)
 		return;
 	}
 
-	gainExp /= 2;
 	master->onGainExperience(gainExp, target);
-
-	SpectatorHashSet spectators;
-	g_game.map.getSpectators(spectators, position, false, true);
-	if (spectators.empty()) {
-		return;
-	}
-
-	TextMessage message(MESSAGE_EXPERIENCE_OTHERS, ucfirst(getNameDescription()) + " gained " + std::to_string(gainExp) + (gainExp != 1 ? " experience points." : " experience point."));
-	message.position = position;
-	message.primary.color = TEXTCOLOR_WHITE_EXP;
-	message.primary.value = gainExp;
-
-	for (Creature* spectator : spectators) {
-		spectator->getPlayer()->sendTextMessage(message);
-	}
 }
 
 bool Creature::setMaster(Creature* newMaster) {
