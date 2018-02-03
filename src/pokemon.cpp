@@ -1820,6 +1820,7 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 			}
 		}
 		corpse->setCorpseGender(getSkull());
+		corpse->setCorpseType(mType->typeName);
 	}
 	return corpse;
 }
