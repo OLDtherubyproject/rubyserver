@@ -162,6 +162,7 @@ class PokemonType
 
 		std::string name;
 		std::string nameDescription;
+		std::string typeName;
 
 		PokemonInfo info;
 

@@ -647,6 +647,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 	}
 
 	mType->name = attr.as_string();
+	mType->typeName = pokemonName;
 
 	if ((attr = pokemonNode.attribute("nameDescription"))) {
 		mType->nameDescription = attr.as_string();
