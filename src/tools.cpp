@@ -1000,6 +1000,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_PRICE;
 	} else if (str == "corpsegender") {
 		return ITEM_ATTRIBUTE_CORPSEGENDER;
+	} else if (str == "corpsetype") {
+		return ITEM_ATTRIBUTE_CORPSETYPE;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

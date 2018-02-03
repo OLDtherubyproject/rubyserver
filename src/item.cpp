@@ -590,6 +590,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_CORPSETYPE: {
+			std::string type;
+			if (!propStream.readString(type)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setStrAttr(ITEM_ATTRIBUTE_CORPSETYPE, type);
+			break;
+		}
+
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -803,6 +813,11 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_CORPSEGENDER)) {
 		propWriteStream.write<uint8_t>(ATTR_CORPSEGENDER);
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_CORPSETYPE)) {
+		propWriteStream.write<uint8_t>(ATTR_CORPSETYPE);
+		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {

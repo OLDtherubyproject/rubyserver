@@ -106,6 +106,7 @@ enum AttrTypes_t {
 	ATTR_CUSTOM_ATTRIBUTES = 34,
 	ATTR_PRICE = 35,
 	ATTR_CORPSEGENDER = 36,
+	ATTR_CORPSETYPE = 37,
 };
 
 enum Attr_ReadValue {
@@ -203,6 +204,13 @@ class ItemAttributes
 		}
 		int8_t getCorpseGender() const {
 			return getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER);
+		}
+
+		void setCorpseType(const std::string& type) {
+			setStrAttr(ITEM_ATTRIBUTE_CORPSETYPE, type);
+		}
+		const std::string& getCorpseType() const {
+			return getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE);
 		}
 
 		void setDuration(int32_t time) {
@@ -510,7 +518,7 @@ class ItemAttributes
 			return (type & 0x1FFFE13) != 0;
 		}
 		static bool isStrAttrType(itemAttrTypes type) {
-			return (type & 0x1EC) != 0;
+			return (type & 0x20001EC) != 0;
 		}
 		inline static bool isCustomAttrType(itemAttrTypes type) {
 			return (type & 0x80000000) != 0;
@@ -753,6 +761,13 @@ class Item : virtual public Thing
 				return 0;
 			}
 			return getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER);
+		}
+
+		void setCorpseType(const std::string& type) {
+			setStrAttr(ITEM_ATTRIBUTE_CORPSETYPE, type);
+		}
+		const std::string& getCorpseType() const {
+			return getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE);
 		}
 
 		void setDuration(int32_t time) {
