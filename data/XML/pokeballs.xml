@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pokeballs>
+	<pokeball id="2149" name="poke ball" charged="2147" discharged="2148" goback="189" catchSuccess="100" catchFail="4">
+		<rate type="all" multiplier="1" />
+	</pokeball>
+</pokeballs>

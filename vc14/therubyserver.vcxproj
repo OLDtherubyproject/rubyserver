@@ -202,6 +202,7 @@
     <ClCompile Include="..\src\tools.cpp" />
     <ClCompile Include="..\src\trashholder.cpp" />
     <ClCompile Include="..\src\vocation.cpp" />
+    <ClCompile Include="..\src\pokeball.cpp" />
     <ClCompile Include="..\src\waitlist.cpp" />
     <ClCompile Include="..\src\weapons.cpp" />
     <ClCompile Include="..\src\wildcardtree.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="..\src\town.h" />
     <ClInclude Include="..\src\trashholder.h" />
     <ClInclude Include="..\src\vocation.h" />
+    <ClInclude Include="..\src\pokeball.h" />
     <ClInclude Include="..\src\waitlist.h" />
     <ClInclude Include="..\src\weapons.h" />
     <ClInclude Include="..\src\wildcardtree.h" />

@@ -21,6 +21,7 @@
 #include "otpch.h"
 
 #include "actions.h"
+#include "pokeball.h"
 #include "bed.h"
 #include "configmanager.h"
 #include "container.h"

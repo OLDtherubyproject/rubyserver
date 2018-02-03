@@ -45,6 +45,7 @@ Game g_game;
 ConfigManager g_config;
 Pokemons g_pokemons;
 Vocations g_vocations;
+Pokeballs g_pokeballs;
 RSA g_RSA;
 
 std::mutex g_loaderLock;
@@ -189,6 +190,13 @@ void mainLoader(int, char*[], ServiceManager* services)
 	std::cout << ">> Loading vocations" << std::endl;
 	if (!g_vocations.loadFromXml()) {
 		startupErrorMessage("Unable to load vocations!");
+		return;
+	}
+
+	//load pokeballs
+	std::cout << ">> Loading pokeballs" << std::endl;
+	if (!g_pokeballs.loadFromXml()) {
+		startupErrorMessage("Unable to load pokeballs!");
 		return;
 	}
 

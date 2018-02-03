@@ -27,6 +27,7 @@
 #include "outfit.h"
 #include "enums.h"
 #include "vocation.h"
+#include "pokeball.h"
 #include "protocolgame.h"
 #include "ioguild.h"
 #include "party.h"

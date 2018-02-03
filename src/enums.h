@@ -508,6 +508,12 @@ struct LightInfo {
 	constexpr LightInfo(uint8_t level, uint8_t color) : level(level), color(color) {}
 };
 
+struct Rates_t {
+	float all = 0;
+	float grass = 0;
+	float bug = 0;
+};
+
 struct ShopInfo {
 	uint16_t itemId;
 	int32_t subType;

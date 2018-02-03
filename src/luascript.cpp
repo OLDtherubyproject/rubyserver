@@ -42,6 +42,7 @@ extern Game g_game;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 extern Vocations g_vocations;
+extern Pokeballs g_pokeballs;
 extern Moves* g_moves;
 
 ScriptEnvironment::DBResultMap ScriptEnvironment::tempResults;
@@ -2470,6 +2471,13 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Vocation", "getDemotion", LuaScriptInterface::luaVocationGetDemotion);
 	registerMethod("Vocation", "getPromotion", LuaScriptInterface::luaVocationGetPromotion);
+
+	// Pokeball
+	registerClass("Pokeball", "", LuaScriptInterface::luaPokeballCreate);
+	registerMetaMethod("Pokeball", "__eq", LuaScriptInterface::luaUserdataCompare);
+
+	registerMethod("Pokeball", "getId", LuaScriptInterface::luaPokeballGetId);
+	registerMethod("Pokeball", "getName", LuaScriptInterface::luaPokeballGetName);
 
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
@@ -10350,6 +10358,51 @@ int LuaScriptInterface::luaGroupHasFlag(lua_State* L)
 	if (group) {
 		PlayerFlags flag = getNumber<PlayerFlags>(L, 2);
 		pushBoolean(L, (group->flags & flag) != 0);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// Pokeball
+int LuaScriptInterface::luaPokeballCreate(lua_State* L)
+{
+	// Pokeball(id or name)
+	uint32_t id;
+	if (isNumber(L, 2)) {
+		id = getNumber<uint32_t>(L, 2);
+	} else {
+		id = g_pokeballs.getPokeballId(getString(L, 2));
+	}
+
+	Pokeball* pokeball = g_pokeballs.getPokeball(id);
+	if (pokeball) {
+		pushUserdata<Pokeball>(L, pokeball);
+		setMetatable(L, -1, "Pokeball");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetId(lua_State* L)
+{
+	// pokeball:getId()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getId());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetName(lua_State* L)
+{
+	// pokeball:getName()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		pushString(L, pokeball->getName());
 	} else {
 		lua_pushnil(L);
 	}
