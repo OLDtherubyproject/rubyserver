@@ -91,14 +91,14 @@ class Pokemon final : public Creature
 		void randomGender() {
 			// set pokemon gender
 
-			if (mType->info.dittoChance != 0 && normal_random(1, 100) <= mType->info.dittoChance) {
+			if (mType->info.dittoChance > 0 && boolean_random(mType->info.dittoChance / 100) == 1) {
 				isDitto = true;
 			} else{
-				if (mType->info.gender.male != 0 || mType->info.gender.female != 0) {
-					if (normal_random(1, 100) <= mType->info.gender.male) {
-						skull = SKULL_GREEN; // Male
+				if (mType->info.gender.male > 0 || mType->info.gender.female > 0) {
+					if (boolean_random(mType->info.gender.male / 100) == 1) {
+						setSkull(SKULL_GREEN); // Male
 					} else{
-						skull = SKULL_RED; // Female
+						setSkull(SKULL_RED); // Female
 					}
 				}
 			}
