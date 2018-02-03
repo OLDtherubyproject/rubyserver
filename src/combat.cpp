@@ -341,6 +341,10 @@ ReturnValue Combat::canDoCombat(Creature* attacker, Creature* target)
 				return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
 			}
 
+			if (target->isSummon() && target->getMaster() == attacker) {
+				return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
+			}
+
 			if (target->isSummon() && target->getMaster()->getPlayer() && target->getZone() == ZONE_NOPVP) {
 				return RETURNVALUE_ACTIONNOTPERMITTEDINANOPVPZONE;
 			}
