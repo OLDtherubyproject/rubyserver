@@ -2619,6 +2619,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "isAttackable", LuaScriptInterface::luaPokemonTypeIsAttackable);
 	registerMethod("PokemonType", "isConvinceable", LuaScriptInterface::luaPokemonTypeIsConvinceable);
 	registerMethod("PokemonType", "isSummonable", LuaScriptInterface::luaPokemonTypeIsSummonable);
+	registerMethod("PokemonType", "isCatchable", LuaScriptInterface::luaPokemonTypeIsCatchable);
 	registerMethod("PokemonType", "isIllusionable", LuaScriptInterface::luaPokemonTypeIsIllusionable);
 	registerMethod("PokemonType", "isHostile", LuaScriptInterface::luaPokemonTypeIsHostile);
 	registerMethod("PokemonType", "isPushable", LuaScriptInterface::luaPokemonTypeIsPushable);
@@ -12122,6 +12123,18 @@ int LuaScriptInterface::luaPokemonTypeIsSummonable(lua_State* L)
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
 		pushBoolean(L, pokemonType->info.isSummonable);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTypeIsCatchable(lua_State* L)
+{
+	// pokemonType:isCatchable()
+	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
+	if (pokemonType) {
+		pushBoolean(L, pokemonType->info.isCatchable);
 	} else {
 		lua_pushnil(L);
 	}

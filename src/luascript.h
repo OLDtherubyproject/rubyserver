@@ -1225,6 +1225,7 @@ class LuaScriptInterface
 		static int luaPokemonTypeIsAttackable(lua_State* L);
 		static int luaPokemonTypeIsConvinceable(lua_State* L);
 		static int luaPokemonTypeIsSummonable(lua_State* L);
+		static int luaPokemonTypeIsCatchable(lua_State* L);
 		static int luaPokemonTypeIsIllusionable(lua_State* L);
 		static int luaPokemonTypeIsHostile(lua_State* L);
 		static int luaPokemonTypeIsPushable(lua_State* L);
