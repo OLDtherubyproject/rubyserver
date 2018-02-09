@@ -174,6 +174,28 @@ enum RaceType_t : uint8_t {
 	RACE_ENERGY,
 };
 
+enum PokemonType_t : uint8_t {
+	TYPE_NONE,
+	TYPE_NORMAL,
+	TYPE_FIRE,
+	TYPE_FIGHTING,
+	TYPE_WATER,
+	TYPE_FLYING,
+	TYPE_GRASS,
+	TYPE_ELECTRIC,
+	TYPE_POISON,
+	TYPE_GROUND,
+	TYPE_PSYCHIC,
+	TYPE_ROCK,
+	TYPE_ICE,
+	TYPE_BUG,
+	TYPE_DRAGON,
+	TYPE_GHOST,
+	TYPE_DARK,
+	TYPE_STEEL,
+	TYPE_FAIRY,
+};
+
 enum CombatType_t : uint16_t {
 	COMBAT_NONE = 0,
 
