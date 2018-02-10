@@ -5,6 +5,8 @@
 
 - Guide
   - [Creating God Account](creating-god-account.md)
+  - [Creating Item](creating-item.md)
+  - [Creating Pokémon](creating-pokemon.md)
 
 - Scripting Interface
   - [Constants](constants.md)
