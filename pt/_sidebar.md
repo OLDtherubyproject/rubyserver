@@ -5,6 +5,8 @@
 
 - Guias
   - [Criando Conta God](pt/creating-god-account.md)
+  - [Creating Item](pt/creating-item.md)
+  - [Creating Pokémon](pt/creating-pokemon.md)
 
 - Interface de Script
 
