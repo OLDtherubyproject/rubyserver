@@ -1139,7 +1139,7 @@ class LuaScriptInterface
 		static int luaItemTypeIsContainer(lua_State* L);
 		static int luaItemTypeIsFluidContainer(lua_State* L);
 		static int luaItemTypeIsMovable(lua_State* L);
-		static int luaItemTypeIsRune(lua_State* L);
+		static int luaItemTypeIsPokeball(lua_State* L);
 		static int luaItemTypeIsStackable(lua_State* L);
 		static int luaItemTypeIsReadable(lua_State* L);
 		static int luaItemTypeIsWritable(lua_State* L);

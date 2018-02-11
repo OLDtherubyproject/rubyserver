@@ -2528,7 +2528,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "isContainer", LuaScriptInterface::luaItemTypeIsContainer);
 	registerMethod("ItemType", "isFluidContainer", LuaScriptInterface::luaItemTypeIsFluidContainer);
 	registerMethod("ItemType", "isMovable", LuaScriptInterface::luaItemTypeIsMovable);
-	registerMethod("ItemType", "isPokeball", LuaScriptInterface::luaItemTypeIsRune);
+	registerMethod("ItemType", "isPokeball", LuaScriptInterface::luaItemTypeIsPokeball);
 	registerMethod("ItemType", "isStackable", LuaScriptInterface::luaItemTypeIsStackable);
 	registerMethod("ItemType", "isReadable", LuaScriptInterface::luaItemTypeIsReadable);
 	registerMethod("ItemType", "isWritable", LuaScriptInterface::luaItemTypeIsWritable);
@@ -11186,7 +11186,7 @@ int LuaScriptInterface::luaItemTypeIsMovable(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaItemTypeIsRune(lua_State* L)
+int LuaScriptInterface::luaItemTypeIsPokeball(lua_State* L)
 {
 	// itemType:isPokeball()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
