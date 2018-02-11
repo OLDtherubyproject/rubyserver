@@ -29,10 +29,10 @@
 	<pokemon name="Raichu" file="Kanto/raichu.xml" />
 	<pokemon name="Sandshrew" file="Kanto/sandshrew.xml" />
 	<pokemon name="Sandslash" file="Kanto/sandslash.xml" />
-	<pokemon name="Nidoran" file="Kanto/nidoranF.xml" />
+	<pokemon name="NidoranF" file="Kanto/nidoranF.xml" />
 	<pokemon name="Nidorina" file="Kanto/nidorina.xml" />
 	<pokemon name="Nidoqueen" file="Kanto/nidoqueen.xml" />
-	<pokemon name="Nidoran" file="Kanto/nidoranM.xml" />
+	<pokemon name="NidoranM" file="Kanto/nidoranM.xml" />
 	<pokemon name="Nidorino" file="Kanto/nidorino.xml" />
 	<pokemon name="Nidoking" file="Kanto/nidoking.xml" />
 	<pokemon name="Clefairy" file="Kanto/clefairy.xml" />
