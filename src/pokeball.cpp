@@ -50,26 +50,51 @@ bool Pokeballs::loadFromXml()
 
 		if ((attr = pokeballNode.attribute("name"))) {
 			ball.name = attr.as_string();
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball name" << std::endl;
+			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("charged"))) {
 			ball.charged = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball charged id" << std::endl;
+			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("discharged"))) {
 			ball.discharged = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing discharged id" << std::endl;
+			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("goback"))) {
 			ball.goback = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball goback effect id" << std::endl;
+			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("catchSuccess"))) {
 			ball.catchSuccess = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball catchSuccess effect id" << std::endl;
+			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("catchFail"))) {
 			ball.catchFail = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball catchFail effect id" << std::endl;
+			continue;
+		}
+
+		if ((attr = pokeballNode.attribute("defaultMultiplier"))) {
+			ball.rates.all = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball defaultMultiplier percentage" << std::endl;
+			continue;
 		}
 
 		for (auto childNode : pokeballNode.children()) {
@@ -78,13 +103,41 @@ bool Pokeballs::loadFromXml()
                 pugi::xml_attribute attrRateMultiplier = childNode.attribute("multiplier");
 				if (attrRateType && attrRateMultiplier) {
                     std::string rateType = attrRateType.as_string();
-                    float rateMultiplier = pugi::cast<float>(attrRateMultiplier.value());
-					if (strcasecmp(rateType.c_str(), "all") == 0) {
-                        ball.rates.all = rateMultiplier;
-                    } else if (strcasecmp(rateType.c_str(), "grass") == 0) {
+                    double rateMultiplier = pugi::cast<double>(attrRateMultiplier.value());
+					if (strcasecmp(rateType.c_str(), "fire") == 0) {
+                        ball.rates.fire = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "fighting") == 0) {
+                        ball.rates.fighting = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "water") == 0) {
+                        ball.rates.water = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "flying") == 0) {
+                        ball.rates.flying = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "grass") == 0) {
                         ball.rates.grass = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "electric") == 0) {
+                        ball.rates.electric = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "poison") == 0) {
+                        ball.rates.poison = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "ground") == 0) {
+                        ball.rates.ground = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "psychic") == 0) {
+                        ball.rates.psychic = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "rock") == 0) {
+                        ball.rates.rock = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "ice") == 0) {
+                        ball.rates.ice = rateMultiplier;
 					} else if (strcasecmp(rateType.c_str(), "bug") == 0) {
-                        ball.rates.grass = rateMultiplier;
+                        ball.rates.bug = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "dragon") == 0) {
+                        ball.rates.dragon = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "ghost") == 0) {
+                        ball.rates.ghost = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "dark") == 0) {
+                        ball.rates.dark = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "steel") == 0) {
+                        ball.rates.steel = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "fairy") == 0) {
+                        ball.rates.fairy = rateMultiplier;
 					} else {
 						std::cout << "[Notice - Pokeballs::loadFromXml] No valid rate type: " << rateType << " for pokeball: " << ball.id << std::endl;
 					}
