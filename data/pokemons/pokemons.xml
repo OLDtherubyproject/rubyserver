@@ -119,7 +119,7 @@
 	<pokemon name="Seaking" file="Kanto/seaking.xml" />
 	<pokemon name="Staryu" file="Kanto/staryu.xml" />
 	<pokemon name="Starmie" file="Kanto/starmie.xml" />
-	<pokemon name="Mr.Mime" file="Kanto/mr mime.xml" />
+	<pokemon name="Mr. Mime" file="Kanto/mr mime.xml" />
 	<pokemon name="Scyther" file="Kanto/scyther.xml" />
 	<pokemon name="Jynx" file="Kanto/jynx.xml" />
 	<pokemon name="Electabuzz" file="Kanto/electabuzz.xml" />
