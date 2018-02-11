@@ -532,9 +532,24 @@ struct LightInfo {
 };
 
 struct Rates_t {
-	float all = 0;
-	float grass = 0;
-	float bug = 0;
+	double all = 0;
+	double fire = 0;
+	double fighting = 0;
+	double water = 0;
+	double flying = 0;
+	double grass = 0;
+	double electric = 0;
+	double poison = 0;
+	double ground = 0;
+	double psychic = 0;
+	double rock = 0;
+	double ice = 0;
+	double bug = 0;
+	double dragon = 0;
+	double ghost = 0;
+	double dark = 0;
+	double steel = 0;
+	double fairy = 0;
 };
 
 struct ShopInfo {
