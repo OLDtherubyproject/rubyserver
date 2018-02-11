@@ -884,7 +884,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		subType = item->getSubType();
 	}
 
-	if (it.isRune()) {
+	if (it.isPokeball()) {
 		if (it.runeLevel > 0 || it.runeMagLevel > 0) {
 			if (RuneMove* rune = g_moves->getRuneMove(it.id)) {
 				int32_t tmpSubType = subType;

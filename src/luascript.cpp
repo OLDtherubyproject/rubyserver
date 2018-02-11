@@ -1459,7 +1459,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_TYPE_TELEPORT)
 	registerEnum(ITEM_TYPE_BED)
 	registerEnum(ITEM_TYPE_KEY)
-	registerEnum(ITEM_TYPE_RUNE)
+	registerEnum(ITEM_TYPE_POKEBALL)
 
 	registerEnum(ITEM_BAG)
 	registerEnum(ITEM_GOLD_COIN)
@@ -2528,7 +2528,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "isContainer", LuaScriptInterface::luaItemTypeIsContainer);
 	registerMethod("ItemType", "isFluidContainer", LuaScriptInterface::luaItemTypeIsFluidContainer);
 	registerMethod("ItemType", "isMovable", LuaScriptInterface::luaItemTypeIsMovable);
-	registerMethod("ItemType", "isRune", LuaScriptInterface::luaItemTypeIsRune);
+	registerMethod("ItemType", "isPokeball", LuaScriptInterface::luaItemTypeIsRune);
 	registerMethod("ItemType", "isStackable", LuaScriptInterface::luaItemTypeIsStackable);
 	registerMethod("ItemType", "isReadable", LuaScriptInterface::luaItemTypeIsReadable);
 	registerMethod("ItemType", "isWritable", LuaScriptInterface::luaItemTypeIsWritable);
@@ -11188,10 +11188,10 @@ int LuaScriptInterface::luaItemTypeIsMovable(lua_State* L)
 
 int LuaScriptInterface::luaItemTypeIsRune(lua_State* L)
 {
-	// itemType:isRune()
+	// itemType:isPokeball()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
-		pushBoolean(L, itemType->isRune());
+		pushBoolean(L, itemType->isPokeball());
 	} else {
 		lua_pushnil(L);
 	}
