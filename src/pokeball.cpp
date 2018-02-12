@@ -97,6 +97,10 @@ bool Pokeballs::loadFromXml()
 			continue;
 		}
 
+		if ((attr = pokeballNode.attribute("level"))) {
+			ball.level = pugi::cast<uint32_t>(attr.value());
+		}
+
 		for (auto childNode : pokeballNode.children()) {
 			if (strcasecmp(childNode.name(), "rate") == 0) {
 				pugi::xml_attribute attrRateType = childNode.attribute("type");
