@@ -35,6 +35,7 @@
 extern Game g_game;
 extern Moves* g_moves;
 extern Vocations g_vocations;
+extern Pokeballs g_pokeballs;
 
 Items Item::items;
 
@@ -884,8 +885,20 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		subType = item->getSubType();
 	}
 
-	if (it.isPokeball()) {
-		if (it.runeLevel > 0 || it.runeMagLevel > 0) {
+	if (Pokeball* pokeball = g_pokeballs.getPokeball(it.id)) {
+		uint32_t pokeballLevel = pokeball->getLevel();
+		if (pokeballLevel > 0) {
+			int32_t tmpSubType = subType;
+			if (item) {
+				tmpSubType = item->getSubType();
+			}
+			s << ". \n" << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by trainers ";
+
+			if (pokeballLevel > 0) {
+				s << " level " << pokeballLevel << " or higher";
+			}
+
+			/*
 			if (RuneMove* rune = g_moves->getRuneMove(it.id)) {
 				int32_t tmpSubType = subType;
 				if (item) {
@@ -922,7 +935,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 				s << " with";
 
-				if (it.runeLevel > 0) {
+				if (pokeballLevel > 0) {
 					s << " level " << it.runeLevel;
 				}
 
@@ -936,6 +949,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 				s << " or higher";
 			}
+			*/
 		}
 	} else if (it.weaponType != WEAPON_NONE) {
 		bool begin = true;
