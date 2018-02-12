@@ -550,6 +550,7 @@ struct Rates_t {
 	double dark = 0;
 	double steel = 0;
 	double fairy = 0;
+	double normal = 0;
 };
 
 struct ShopInfo {
