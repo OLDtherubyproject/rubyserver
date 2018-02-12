@@ -11190,7 +11190,12 @@ int LuaScriptInterface::luaItemTypeIsPokeball(lua_State* L)
 	// itemType:isPokeball()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
-		pushBoolean(L, itemType->isPokeball());
+		const Pokeball* pokeball = g_pokeballs.getPokeball(itemType->id);
+		if (pokeball) {
+			pushBoolean(L, true);
+		} else {
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}
