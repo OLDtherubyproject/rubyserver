@@ -160,7 +160,6 @@ Pokeball* Pokeballs::getPokeball(uint16_t id)
 {
 	auto it = pokeballsMap.find(id);
 	if (it == pokeballsMap.end()) {
-		std::cout << "[Warning - Pokeballs::getPokeball] Pokeball " << id << " not found." << std::endl;
 		return nullptr;
 	}
 	return &it->second;
