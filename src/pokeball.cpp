@@ -138,6 +138,8 @@ bool Pokeballs::loadFromXml()
                         ball.rates.steel = rateMultiplier;
 					} else if (strcasecmp(rateType.c_str(), "fairy") == 0) {
                         ball.rates.fairy = rateMultiplier;
+					} else if (strcasecmp(rateType.c_str(), "normal") == 0) {
+                        ball.rates.normal = rateMultiplier;
 					} else {
 						std::cout << "[Notice - Pokeballs::loadFromXml] No valid rate type: " << rateType << " for pokeball: " << ball.id << std::endl;
 					}
