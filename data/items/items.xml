@@ -2644,46 +2644,28 @@
 		<attribute key="weight" value="980" />
 	</item>
 	<item id="2260" article="a" name="poke ball">
-		
 		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2261" article="a" name="destroy field rune">
-		
-		<attribute key="runeMoveName" value="adito grav" />
-		<attribute key="weight" value="70" />
-		<attribute key="charges" value="3" />
+	<item id="2261" article="a" name="great ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2262" article="an" name="energy bomb rune">
-		
-		<attribute key="runeMoveName" value="adevo mas vis" />
-		<attribute key="weight" value="105" />
-		<attribute key="charges" value="2" />
+	<item id="2262" article="an" name="ultra ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item fromid="2263" toid="2264" article="a" name="move rune">
-		
-		<attribute key="weight" value="120" />
+	<item id="2263" article="a" name="super ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2265" article="an" name="intense healing rune">
-		
-		<attribute key="runeMoveName" value="adura gran" />
-		<attribute key="weight" value="210" />
-		<attribute key="charges" value="1" />
+	<item id="2265" article="a" name="saffari ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2266" article="an" name="cure poison rune">
-		
-		<attribute key="runeMoveName" value="adana pox" />
-		<attribute key="weight" value="210" />
-		<attribute key="charges" value="1" />
+	<item id="2266" article="a" name="golden ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2267" article="a" name="move rune">
-		
-		<attribute key="weight" value="120" />
+	<item id="2267" article="a" name="dark ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="2268" article="a" name="sudden death rune">
-		
-		<attribute key="runeMoveName" value="adori gran mort" />
-		<attribute key="weight" value="70" />
-		<attribute key="charges" value="3" />
+	<item id="2268" article="a" name="fresh ball">
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="2269" article="a" name="wild growth rune">
 		
