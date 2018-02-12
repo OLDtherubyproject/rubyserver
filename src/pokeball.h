@@ -85,6 +85,8 @@ class Pokeballs
 
 		Pokeball* getPokeball(uint16_t id);
 		int32_t getPokeballId(const std::string& name) const;
+		void clear();
+		bool reload();
 
 	private:
 		std::map<uint16_t, Pokeball> pokeballsMap;

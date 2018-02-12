@@ -174,3 +174,19 @@ int32_t Pokeballs::getPokeballId(const std::string& name) const
 	}
 	return -1;
 }
+
+void Pokeballs::clear()
+{
+	pokeballsMap.clear();
+}
+
+bool Pokeballs::reload()
+{
+	clear();
+
+	if (!loadFromXml()) {
+		return false;
+	}
+
+	return true;
+}

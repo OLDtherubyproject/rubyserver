@@ -55,6 +55,7 @@ extern CreatureEvents* g_creatureEvents;
 extern Pokemons g_pokemons;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
+extern Pokeballs g_pokeballs;
 
 Game::Game()
 {
@@ -5691,6 +5692,8 @@ bool Game::reload(ReloadTypes_t reloadType)
 			g_weapons->loadDefaults();
 			return results;
 		}
+
+		case RELOAD_TYPE_POKEBALLS: return g_pokeballs.reload();
 
 		default: {
 			if (!g_moves->reload()) {
