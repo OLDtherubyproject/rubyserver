@@ -58,6 +58,10 @@ class Pokeball
 			return catchFail;
 		}
 
+		uint32_t getLevel() const {
+			return level;
+		}
+
 	private:
 		friend class Pokeballs;
 
@@ -69,6 +73,7 @@ class Pokeball
         uint16_t goback;
         uint16_t catchSuccess;
         uint16_t catchFail;
+		uint32_t level = 0;
 
         Rates_t rates = {};
 };
