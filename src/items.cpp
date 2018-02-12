@@ -418,8 +418,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.type = ITEM_TYPE_DOOR;
 			} else if (tmpStrValue == "bed") {
 				it.type = ITEM_TYPE_BED;
-			} else if (tmpStrValue == "pokeball") {
-				it.type = ITEM_TYPE_POKEBALL;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown type: " << valueAttribute.as_string() << std::endl;
 			}

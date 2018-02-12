@@ -54,7 +54,6 @@ enum ItemTypes_t {
 	ITEM_TYPE_TELEPORT,
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
-	ITEM_TYPE_POKEBALL,
 	ITEM_TYPE_LAST
 };
 
@@ -142,9 +141,6 @@ class ItemType
 		}
 		bool isBed() const {
 			return (type == ITEM_TYPE_BED);
-		}
-		bool isPokeball() const {
-			return (type == ITEM_TYPE_POKEBALL);
 		}
 		bool isPickupable() const {
 			return (allowPickupable || pickupable);
