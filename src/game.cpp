@@ -3299,9 +3299,9 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 
 	player->resetIdleTime();
 
-	if (playerSayMove(player, type, text)) {
-		return;
-	}
+  	if (playerSayMove(player, type, text)) { 
+    	return; 
+  	} 
 
 	uint32_t muteTime = player->isMuted();
 	if (muteTime > 0) {
@@ -3356,28 +3356,16 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 	}
 }
 
-bool Game::playerSayMove(Player* player, SpeakClasses type, const std::string& text)
-{
-	std::string words = text;
+bool Game::playerSayMove(Player* player, SpeakClasses type, const std::string& text) 
+{ 
+  	std::string words = text; 
+ 
+  	TalkActionResult_t result = g_talkActions->playerSayMove(player, type, words); 
+ 	if (result == TALKACTION_BREAK) { 
+    	return true; 
+  	}
 
-	TalkActionResult_t result = g_talkActions->playerSayMove(player, type, words);
-	if (result == TALKACTION_BREAK) {
-		return true;
-	}
-
-	result = g_moves->playerSayMove(player, words);
-	if (result == TALKACTION_BREAK) {
-		if (!g_config.getBoolean(ConfigManager::EMOTE_MOVES)) {
-			return internalCreatureSay(player, TALKTYPE_SAY, words, false);
-		} else {
-			return internalCreatureSay(player, TALKTYPE_POKEMON_SAY, words, false);
-		}
-
-	} else if (result == TALKACTION_FAILED) {
-		return true;
-	}
-
-	return false;
+  	return false; 
 }
 
 void Game::playerWhisper(Player* player, const std::string& text)

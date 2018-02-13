@@ -52,8 +52,6 @@ class Moves final : public BaseEvents
 
 		InstantMove* getInstantMoveById(uint32_t moveId);
 
-		TalkActionResult_t playerSayMove(Player* player, std::string& words);
-
 		static Position getCasterPosition(Creature* creature, Direction dir);
 		std::string getScriptBaseName() const override;
 
