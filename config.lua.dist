@@ -89,6 +89,9 @@ deSpawnRadius = 50
 teleportToPlayerFloor = 1
 teleportToPlayerTiles = 8
 
+--Player
+gainHP = 20
+
 -- Stamina
 staminaSystem = true
 

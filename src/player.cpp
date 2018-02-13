@@ -1618,8 +1618,8 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 	uint32_t prevLevel = level;
 	while (experience >= nextLevelExp) {
 		++level;
-		healthMax += vocation->getHPGain();
-		health += vocation->getHPGain();
+		healthMax += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
+		health += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
 		manaMax += vocation->getManaGain();
 		mana += vocation->getManaGain();
 		capacity += vocation->getCapGain();
@@ -1703,7 +1703,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 
 	while (level > 1 && experience < currLevelExp) {
 		--level;
-		healthMax = std::max<int32_t>(0, healthMax - vocation->getHPGain());
+		healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
 		manaMax = std::max<int32_t>(0, manaMax - vocation->getManaGain());
 		capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 		currLevelExp = Player::getExpForLevel(level);
@@ -1981,7 +1981,7 @@ void Player::death(Creature* lastHitCreature)
 
 			while (level > 1 && experience < Player::getExpForLevel(level)) {
 				--level;
-				healthMax = std::max<int32_t>(0, healthMax - vocation->getHPGain());
+				healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
 				manaMax = std::max<int32_t>(0, manaMax - vocation->getManaGain());
 				capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 			}

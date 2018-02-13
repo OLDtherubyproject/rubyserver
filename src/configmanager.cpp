@@ -174,6 +174,7 @@ bool ConfigManager::load()
 	integer[MAX_PACKETS_PER_SECOND] = getGlobalNumber(L, "maxPacketsPerSecond", 25);
 	integer[TELEPORT_TO_PLAYER_FLOOR] = getGlobalNumber(L, "teleportToPlayerFloor", 1);
 	integer[TELEPORT_TO_PLAYER_TILES] = getGlobalNumber(L, "teleportToPlayerTiles", 8);
+	integer[PLAYER_GAIN_HP] = getGlobalNumber(L, "gainHP", 20);
 
 	loaded = true;
 	lua_close(L);

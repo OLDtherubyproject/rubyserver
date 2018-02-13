@@ -102,6 +102,7 @@ class ConfigManager
 			MAX_PACKETS_PER_SECOND,
 			TELEPORT_TO_PLAYER_FLOOR,
 			TELEPORT_TO_PLAYER_TILES,
+			PLAYER_GAIN_HP,
 
 			LAST_INTEGER_CONFIG /* this must be the last one */
 		};
