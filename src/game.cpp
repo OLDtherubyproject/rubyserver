@@ -3299,7 +3299,7 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 
 	player->resetIdleTime();
 
-  	if (playerSayMove(player, type, text)) { 
+  	if (playerSayTalkAction(player, type, text)) { 
     	return; 
   	} 
 
@@ -3356,11 +3356,11 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type,
 	}
 }
 
-bool Game::playerSayMove(Player* player, SpeakClasses type, const std::string& text) 
+bool Game::playerSayTalkAction(Player* player, SpeakClasses type, const std::string& text) 
 { 
   	std::string words = text; 
  
-  	TalkActionResult_t result = g_talkActions->playerSayMove(player, type, words); 
+  	TalkActionResult_t result = g_talkActions->playerSayTalkAction(player, type, words); 
  	if (result == TALKACTION_BREAK) { 
     	return true; 
   	}

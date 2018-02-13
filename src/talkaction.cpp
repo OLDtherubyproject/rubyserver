@@ -67,44 +67,45 @@ bool TalkActions::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return true;
 }
 
-TalkActionResult_t TalkActions::playerSayMove(Player* player, SpeakClasses type, const std::string& words) const
-{
-	size_t wordsLength = words.length();
-	for (const TalkAction& talkAction : talkActions) {
-		const std::string& talkactionWords = talkAction.getWords();
-		size_t talkactionLength = talkactionWords.length();
-		if (wordsLength < talkactionLength || strncasecmp(words.c_str(), talkactionWords.c_str(), talkactionLength) != 0) {
-			continue;
-		}
+TalkActionResult_t TalkActions::playerSayTalkAction(Player* player, SpeakClasses type, const std::string& words) const 
+{ 
+  size_t wordsLength = words.length(); 
+  for (const TalkAction& talkAction : talkActions) { 
+    const std::string& talkactionWords = talkAction.getWords(); 
+    size_t talkactionLength = talkactionWords.length(); 
+    if (wordsLength < talkactionLength || strncasecmp(words.c_str(), talkactionWords.c_str(), talkactionLength) != 0) { 
+      continue; 
+    } 
+ 
+    std::string param; 
+    if (wordsLength != talkactionLength) { 
+      param = words.substr(talkactionLength); 
+      if (param.front() != ' ') { 
+        continue; 
+      } 
+      trim_left(param, ' '); 
+ 
+      char separator = talkAction.getSeparator(); 
+      if (separator != ' ') { 
+        if (!param.empty()) { 
+          if (param.front() != separator) { 
+            continue; 
+          } else { 
+            param.erase(param.begin()); 
+          } 
+        } 
+      } 
+    } 
+ 
+    if (talkAction.executeSay(player, param, type)) { 
+      return TALKACTION_CONTINUE; 
+    } else { 
+      return TALKACTION_BREAK; 
+    } 
+  } 
+  return TALKACTION_CONTINUE; 
+} 
 
-		std::string param;
-		if (wordsLength != talkactionLength) {
-			param = words.substr(talkactionLength);
-			if (param.front() != ' ') {
-				continue;
-			}
-			trim_left(param, ' ');
-
-			char separator = talkAction.getSeparator();
-			if (separator != ' ') {
-				if (!param.empty()) {
-					if (param.front() != separator) {
-						continue;
-					} else {
-						param.erase(param.begin());
-					}
-				}
-			}
-		}
-
-		if (talkAction.executeSay(player, param, type)) {
-			return TALKACTION_CONTINUE;
-		} else {
-			return TALKACTION_BREAK;
-		}
-	}
-	return TALKACTION_CONTINUE;
-}
 
 bool TalkAction::configureEvent(const pugi::xml_node& node)
 {
