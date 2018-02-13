@@ -76,9 +76,10 @@ bool Moves::registerEvent(Event_ptr event, const pugi::xml_node&)
 {
 	InstantMove* instant = dynamic_cast<InstantMove*>(event.get());
 	if (instant) {
-		auto result = instants.emplace(instant->getWords(), std::move(*instant));
+		std::string instantName = instant->getName();
+		auto result = instants.emplace(instantName, std::move(*instant));
 		if (!result.second) {
-			std::cout << "[Warning - Moves::registerEvent] Duplicate registered instant move with words: " << instant->getWords() << std::endl;
+			std::cout << "[Warning - Moves::registerEvent] Duplicate registered instant move with name: " << instantName << std::endl;
 		}
 		return result.second;
 	}
@@ -753,10 +754,6 @@ std::string InstantMove::getScriptEventName() const
 bool InstantMove::configureEvent(const pugi::xml_node& node)
 {
 	if (!Move::configureMove(node)) {
-		return false;
-	}
-
-	if (!TalkAction::configureEvent(node)) {
 		return false;
 	}
 
