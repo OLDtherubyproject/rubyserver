@@ -5386,6 +5386,40 @@ void Game::playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16
 	player->sendMarketAcceptOffer(offer);
 }
 
+void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const Position& toPos, Item* item, Pokeball* pokeball)
+{
+	Tile* tile = g_game.map.getTile(toPos);
+	if (!tile) {
+		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
+		return;
+	}
+
+	Item* corpse = tile->getTopDownItem();
+	if (!corpse) {
+		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
+		return;
+	}
+
+	PokemonType* pType = g_pokemons.getPokemonType(corpse->getCorpseType());
+	if (!pType) {
+		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
+		return;
+	}
+
+	if (!pType->info.isCatchable) {
+		player->sendCancelMessage(RETURNVALUE_CANNOTCAPTURETHISPOKEMON);
+		return;
+	}
+	
+	internalRemoveItem(item, 1);
+	internalRemoveItem(corpse, 1);
+	addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
+	//internalRemoveItem(item, 1);
+	//addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
+	
+	//g_scheduler.addEvent(createSchedulerTask(4000, std::bind((void(*)(MessageClasses)(std::string))&Player::sendTextMessage, player, 1, 1)));
+}
+
 void Game::parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer)
 {
 	Player* player = getPlayerByID(playerId);
