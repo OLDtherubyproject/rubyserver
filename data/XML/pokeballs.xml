@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pokeballs>
-	<pokeball id="2149" name="poke ball" charged="2147" discharged="2148" goback="189" catchSuccess="100" catchFail="4">
-		<rate type="all" multiplier="1" />
+	<pokeball id="2149" name="poke ball" charged="2147" discharged="2170" goback="189" catchSuccess="100" catchFail="101" defaultMultiplier="1" />
+	<pokeball id="2261" name="great ball" charged="2148" discharged="2171" goback="190" catchSuccess="102" catchFail="103" defaultMultiplier="2" />
+	<pokeball id="2262" name="super ball" charged="2149" discharged="2172" goback="191" catchSuccess="104" catchFail="105" defaultMultiplier="3" />
+	<pokeball id="2263" name="ultra ball" charged="2150" discharged="2173" goback="192" catchSuccess="106" catchFail="107" defaultMultiplier="4" />
+	<pokeball id="2264" name="yume ball" charged="2151" discharged="2174" goback="193" catchSuccess="108" catchFail="109" defaultMultiplier="1">
+		<rate type="normal" multiplier="8" />
+		<rate type="psychic" multiplier="8" />
 	</pokeball>
 </pokeballs>
+
