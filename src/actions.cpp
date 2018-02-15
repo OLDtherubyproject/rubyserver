@@ -33,6 +33,7 @@ extern Game g_game;
 extern Moves* g_moves;
 extern Actions* g_actions;
 extern ConfigManager g_config;
+extern Pokeballs g_pokeballs;
 
 Actions::Actions() :
 	scriptInterface("Action Interface")
@@ -255,8 +256,7 @@ Action* Actions::getAction(const Item* item)
 		return &it->second;
 	}
 
-	//rune items
-	return g_moves->getRuneMove(item->getID());
+	return nullptr;
 }
 
 ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_t index, Item* item, bool isHotkey)
@@ -369,6 +369,12 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 
 	Action* action = getAction(item);
 	if (!action) {
+		Pokeball* pokeball = g_pokeballs.getPokeball(item->getID());
+		if (pokeball) {
+			g_game.playerTryCatchPokemon(player, fromPos, toPos, item, pokeball);
+			return true;
+		}
+
 		player->sendCancelMessage(RETURNVALUE_CANNOTUSETHISOBJECT);
 		return false;
 	}
