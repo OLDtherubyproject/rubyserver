@@ -7,7 +7,7 @@ O login e senha é 1/1.
 A primeira coisa que você precisa fazer é criar uma conta, para isso vá até o seu phpmyadmin e selecione o banco de dados de seu servidor, clique na aba sql e cole o código abaixo e então clique no botão executar.
 
 ```sql
-INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`) VALUES ('1', '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, '3', '365', '0', '', '0');
+INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`) VALUES ('1', '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, '5', '365', '0', '', '0');
 ```
 
 Agora clique na aba sql mais uma vez e cole o código abaixo e então clique no botão executar.

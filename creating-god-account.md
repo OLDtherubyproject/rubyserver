@@ -7,7 +7,7 @@ The username and password is 1/1.
 First thing you want to do is create the account, go into your phpmyadmin and select your tfs database, click on the sql tab and paste this in the box then click the go button.
 
 ```sql
-INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`) VALUES ('1', '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, '3', '365', '0', '', '0');
+INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`) VALUES ('1', '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, '5', '365', '0', '', '0');
 ```
 
 Now click on the sql tab once more and paste this into the box then click the go button.
