@@ -1575,6 +1575,32 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKULL_BLACK)
 	registerEnum(SKULL_ORANGE)
 
+	registerEnum(NATURE_HARDY)
+	registerEnum(NATURE_LONELY)
+	registerEnum(NATURE_BRAVE)
+	registerEnum(NATURE_ADAMANT)
+	registerEnum(NATURE_NAUGHTY)
+	registerEnum(NATURE_BOLD)
+	registerEnum(NATURE_DOCILE)
+	registerEnum(NATURE_RELAXED)
+	registerEnum(NATURE_IMPISH)
+	registerEnum(NATURE_LAX)
+	registerEnum(NATURE_MODEST)
+	registerEnum(NATURE_MILD)
+	registerEnum(NATURE_QUIET)
+	registerEnum(NATURE_BASHFUL)
+	registerEnum(NATURE_RASH)
+	registerEnum(NATURE_CALM)
+	registerEnum(NATURE_GENTLE)
+	registerEnum(NATURE_SASSY)
+	registerEnum(NATURE_CAREFUL)
+	registerEnum(NATURE_QUIRKY)
+	registerEnum(NATURE_TIMID)
+	registerEnum(NATURE_HASTY)
+	registerEnum(NATURE_SERIOUS)
+	registerEnum(NATURE_JOLLY)
+	registerEnum(NATURE_NAIVE)
+
 	registerEnum(TALKTYPE_SAY)
 	registerEnum(TALKTYPE_WHISPER)
 	registerEnum(TALKTYPE_YELL)
@@ -2380,6 +2406,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "isUndefined", LuaScriptInterface::luaPokemonIsUndefined);
 
 	registerMethod("Pokemon", "getType", LuaScriptInterface::luaPokemonGetType);
+	registerMethod("Pokemon", "getNature", LuaScriptInterface::luaPokemonGetNature);
 
 	registerMethod("Pokemon", "getSpawnPosition", LuaScriptInterface::luaPokemonGetSpawnPosition);
 	registerMethod("Pokemon", "isInSpawnRange", LuaScriptInterface::luaPokemonIsInSpawnRange);
@@ -2660,6 +2687,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "getRace", LuaScriptInterface::luaPokemonTypeGetRace);
 	registerMethod("PokemonType", "getCorpseId", LuaScriptInterface::luaPokemonTypeGetCorpseId);
 	registerMethod("PokemonType", "getManaCost", LuaScriptInterface::luaPokemonTypeGetManaCost);
+	registerMethod("PokemonType", "getCatchRate", LuaScriptInterface::luaPokemonTypeGetCatchRate);
 	registerMethod("PokemonType", "getBaseSpeed", LuaScriptInterface::luaPokemonTypeGetBaseSpeed);
 	registerMethod("PokemonType", "getLight", LuaScriptInterface::luaPokemonTypeGetLight);
 
@@ -9742,6 +9770,18 @@ int LuaScriptInterface::luaPokemonGetType(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPokemonGetNature(lua_State* L)
+{
+	// pokemon:getNature()
+	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
+	if (pokemon) {
+		lua_pushnumber(L, pokemon->getNature());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaPokemonTypeGetGenders(lua_State* L)
 {
 	// pokemonType:getGenders()
@@ -12564,6 +12604,18 @@ int LuaScriptInterface::luaPokemonTypeGetManaCost(lua_State* L)
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
 		lua_pushnumber(L, pokemonType->info.manaCost);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTypeGetCatchRate(lua_State* L)
+{
+	// pokemonType:getCatchRate()
+	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
+	if (pokemonType) {
+		lua_pushnumber(L, pokemonType->info.catchRate);
 	} else {
 		lua_pushnil(L);
 	}

@@ -997,6 +997,7 @@ class LuaScriptInterface
 		static int luaPokemonIsUndefined(lua_State* L);
 
 		static int luaPokemonGetType(lua_State* L);
+		static int luaPokemonGetNature(lua_State* L);
 
 		static int luaPokemonGetSpawnPosition(lua_State* L);
 		static int luaPokemonIsInSpawnRange(lua_State* L);
@@ -1264,6 +1265,7 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetRace(lua_State* L);
 		static int luaPokemonTypeGetCorpseId(lua_State* L);
 		static int luaPokemonTypeGetManaCost(lua_State* L);
+		static int luaPokemonTypeGetCatchRate(lua_State* L);
 		static int luaPokemonTypeGetBaseSpeed(lua_State* L);
 		static int luaPokemonTypeGetLight(lua_State* L);
 
