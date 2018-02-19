@@ -371,6 +371,10 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 	if (!action) {
 		Pokeball* pokeball = g_pokeballs.getPokeball(item->getID());
 		if (pokeball) {
+			if (isHotkey) {
+				showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
+			}
+
 			g_game.playerTryCatchPokemon(player, fromPos, toPos, item, pokeball);
 			return true;
 		}
