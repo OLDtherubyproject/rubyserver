@@ -1322,6 +1322,10 @@ class Player final : public Creature, public Cylinder
 			}
 		}
 
+		Creature* const getHisPokemon() const {
+			return summons.front();
+		}
+
 		bool isPromoted() const;
 
 		uint32_t getAttackSpeed() const {
