@@ -5388,6 +5388,10 @@ void Game::playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16
 
 void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const Position& toPos, Item* item, Pokeball* pokeball)
 {
+	if (!player) {
+		return;
+	}
+
 	Tile* tile = g_game.map.getTile(toPos);
 	if (!tile) {
 		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
@@ -5413,7 +5417,21 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 
 	internalRemoveItem(item, 1);
 	internalRemoveItem(corpse, 1);
+	std::ostringstream message;
+	MagicEffectClasses effect;
+
+	if (boolean_random(pType->info.catchRate / 100) != 1) {
+		message << "Oh, no! Your pokeball broke!";
+		addMagicEffect(toPos, CONST_ME_CATCH_FAIL_POKEBALL);
+		effect = CONST_ME_EMOT_THREE_POINTS;
+	} else {
+		message << "Gotcha! " << pType->name << " was caught!";
+		effect = CONST_ME_EMOT_EXCLAMATION;
 		addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
+	}
+
+	g_scheduler.addEvent(createSchedulerTask(3000, std::bind(&Game::pokemonPlayerSendEmot, this, player, effect)));
+	g_scheduler.addEvent(createSchedulerTask(3000, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
 }
 
 void Game::pokemonPlayerSendEmot(Player* player, uint16_t effect) {
