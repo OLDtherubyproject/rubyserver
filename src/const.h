@@ -102,10 +102,14 @@ enum MagicEffectClasses : uint16_t {
 	CONST_ME_FERUMBRAS = 74,
 	CONST_ME_CONFETTI_HORIZONTAL = 75,
 	CONST_ME_CONFETTI_VERTICAL = 76,
-	// 77-99 are empty
+	// emots effects
+	CONST_ME_EMOT_THREE_POINTS = 77,
+	CONST_ME_EMOT_EXCLAMATION = 78,
+	CONST_ME_EMOT_MONEY = 79,
 	// catch success effects
 	CONST_ME_CATCH_SUCCESS_POKEBALL = 100,
 	// catch fail effects
+	CONST_ME_CATCH_FAIL_POKEBALL = 101,
 
 	CONST_ME_BLACKSMOKE = 158,
 	// 159-166 are empty
