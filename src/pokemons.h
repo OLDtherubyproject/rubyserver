@@ -111,6 +111,7 @@ class PokemonType
 
 		LightInfo light = {};
 		float dittoChance = 0;
+		double catchRate = 0;
 
 		uint16_t lookcorpse = 0;
 

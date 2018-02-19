@@ -90,7 +90,6 @@ class Pokemon final : public Creature
 		}
 		void randomGender() {
 			// set pokemon gender
-
 			if (mType->info.dittoChance > 0 && boolean_random(mType->info.dittoChance / 100) == 1) {
 				isDitto = true;
 			} else{
@@ -135,6 +134,12 @@ class Pokemon final : public Creature
 		}
 		uint32_t getManaCost() const {
 			return mType->info.manaCost;
+		}
+		double getCatchRate() const {
+			return mType->info.catchRate;
+		}
+		Natures_t getNature() const {
+			return nature;
 		}
 		void setSpawn(Spawn* spawn) {
 			this->spawn = spawn;
@@ -206,6 +211,8 @@ class Pokemon final : public Creature
 		PokemonType* mType;
 		Spawn* spawn = nullptr;
 
+		Natures_t nature = static_cast<Natures_t>(uniform_random(1, 25));;
+
 		int64_t lastMeleeAttack = 0;
 
 		uint32_t attackTicks = 0;
@@ -217,10 +224,10 @@ class Pokemon final : public Creature
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
 		int32_t stepDuration = 0;
-		bool isDitto = false;
 
 		Position masterPos;
 
+		bool isDitto = false;
 		bool isIdle = true;
 		bool extraMeleeAttack = false;
 		bool isMasterInRange = false;
