@@ -526,6 +526,33 @@ struct Gender_t {
 	float female = 0;
 };
 
+struct PokemonBaseStats {
+	uint8_t hp = 0;
+	uint8_t attack = 0;
+	uint8_t defense = 0;
+	uint8_t special_attack = 0;
+	uint8_t special_defense = 0;
+	uint8_t speed = 0;
+};
+
+struct PokemonIVs {
+	uint8_t hp = 0;
+	uint8_t attack = 0;
+	uint8_t defense = 0;
+	uint8_t special_attack = 0;
+	uint8_t special_defense = 0;
+	uint8_t speed = 0;
+};
+
+struct PokemonEVs {
+	uint8_t hp = 0;
+	uint8_t attack = 0;
+	uint8_t defense = 0;
+	uint8_t special_attack = 0;
+	uint8_t special_defense = 0;
+	uint8_t speed = 0;
+};
+
 struct LightInfo {
 	uint8_t level = 0;
 	uint8_t color = 0;
