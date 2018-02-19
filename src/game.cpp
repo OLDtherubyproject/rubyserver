@@ -1531,6 +1531,9 @@ void Game::addMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*/)
 			internalAddItem(cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
 		}
 	}
+
+	Player* player = static_cast<Player*>(cylinder);
+	pokemonPlayerSendEmot(player, CONST_ME_EMOT_MONEY);
 }
 
 Item* Game::transformItem(Item* item, uint16_t newId, int32_t newCount /*= -1*/)
