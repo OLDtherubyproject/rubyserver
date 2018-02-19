@@ -1,5 +1,5 @@
 /**
- * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * * The Ruby Server - a free and open-source PokÃ©mon MMORPG server emulator
  * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
  *                     Leandro Matheus <kesuhige@gmail.com>
  *
@@ -1222,10 +1222,10 @@ const char* getReturnMessage(ReturnValue value)
 			return "You can not trade this house.";
 
 		case RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON:
-			return "You can only use a pokeball in a fainted Pokémon.";
+			return "You can only use a pokeball in a fainted Pokemon.";
 
 		case RETURNVALUE_CANNOTCAPTURETHISPOKEMON:
-			return "You can not capture this Pokémon.";
+			return "You can not capture this Pokemon.";
 
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";
