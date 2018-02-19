@@ -5410,14 +5410,20 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 		player->sendCancelMessage(RETURNVALUE_CANNOTCAPTURETHISPOKEMON);
 		return;
 	}
-	
+
 	internalRemoveItem(item, 1);
 	internalRemoveItem(corpse, 1);
-	addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
-	//internalRemoveItem(item, 1);
-	//addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
-	
-	//g_scheduler.addEvent(createSchedulerTask(4000, std::bind((void(*)(MessageClasses)(std::string))&Player::sendTextMessage, player, 1, 1)));
+		addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
+}
+
+void Game::pokemonPlayerSendEmot(Player* player, uint16_t effect) {
+	if (!player) {
+		return;
+	}
+
+	if (Creature* pokemonPlayer = player->getHisPokemon()) {
+		addMagicEffect(pokemonPlayer->getPosition(), effect);
+	}
 }
 
 void Game::parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer)
