@@ -171,6 +171,12 @@ pip-log.txt
 .*.swp
 .*.swo
 
+# Compiled source #
+###################
+
+*.dll
+*.exe
+
 #############
 ## TFS / OT
 #############
