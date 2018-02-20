@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Victreebel" nameDescription="a victreebel" race="blood" experience="23" speed="150" manacost="300">
+<pokemon name="Victreebel" nameDescription="a victreebel" race="blood" experience="23" speed="150" manacost="300" catchRate="50">
 	<health now="80" max="80" />
 	<look type="71" corpse="6049" />
 	<targetchange interval="4000" chance="0" />
+	<genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<flags>
+		<flag catchable="1" />
 		<flag summonable="1" />
 		<flag attackable="1" />
 		<flag hostile="1" />
