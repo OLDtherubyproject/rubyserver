@@ -107,6 +107,7 @@ enum AttrTypes_t {
 	ATTR_PRICE = 35,
 	ATTR_CORPSEGENDER = 36,
 	ATTR_CORPSETYPE = 37,
+	ATTR_POKEMONID = 38,
 };
 
 enum Attr_ReadValue {
@@ -211,6 +212,13 @@ class ItemAttributes
 		}
 		const std::string& getCorpseType() const {
 			return getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE);
+		}
+
+		void setPokemonId(uint32_t pokemonId) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
+		}
+		int32_t getPokemonId() const {
+			return getIntAttr(ITEM_ATTRIBUTE_POKEMONID);
 		}
 
 		void setDuration(int32_t time) {
@@ -515,7 +523,7 @@ class ItemAttributes
 
 	public:
 		static bool isIntAttrType(itemAttrTypes type) {
-			return (type & 0x1FFFE13) != 0;
+			return (type & 0x5FFFE13) != 0;
 		}
 		static bool isStrAttrType(itemAttrTypes type) {
 			return (type & 0x20001EC) != 0;
@@ -768,6 +776,16 @@ class Item : virtual public Thing
 		}
 		const std::string& getCorpseType() const {
 			return getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE);
+		}
+
+		void setPokemonId(uint32_t pokemonId) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
+		}
+		int32_t getPokemonId() const {
+			if (!attributes) {
+				return 0;
+			}
+			return getIntAttr(ITEM_ATTRIBUTE_POKEMONID);
 		}
 
 		void setDuration(int32_t time) {

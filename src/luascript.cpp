@@ -1449,6 +1449,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_PRICE)
 	registerEnum(ITEM_ATTRIBUTE_CORPSEGENDER)
 	registerEnum(ITEM_ATTRIBUTE_CORPSETYPE)
+	registerEnum(ITEM_ATTRIBUTE_POKEMONID)
 
 	registerEnum(ITEM_TYPE_DEPOT)
 	registerEnum(ITEM_TYPE_MAILBOX)

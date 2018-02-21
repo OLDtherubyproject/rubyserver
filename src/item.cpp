@@ -601,6 +601,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_POKEMONID: {
+			uint32_t pokemonid;
+			if (!propStream.read<uint32_t>(pokemonid)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonid);
+			break;
+		}
+
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -819,6 +829,11 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_CORPSETYPE)) {
 		propWriteStream.write<uint8_t>(ATTR_CORPSETYPE);
 		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
+		propWriteStream.write<uint32_t>(ATTR_POKEMONID);
+		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONID));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {

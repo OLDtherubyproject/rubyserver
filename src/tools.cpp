@@ -1002,6 +1002,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_CORPSEGENDER;
 	} else if (str == "corpsetype") {
 		return ITEM_ATTRIBUTE_CORPSETYPE;
+	} else if (str == "pokemonid") {
+		return ITEM_ATTRIBUTE_POKEMONID;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }
