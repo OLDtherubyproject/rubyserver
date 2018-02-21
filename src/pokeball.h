@@ -62,6 +62,10 @@ class Pokeball
 			return level;
 		}
 
+		uint8_t getDefaultMultiplier() const {
+			return rates.all;
+		}
+
 	private:
 		friend class Pokeballs;
 
