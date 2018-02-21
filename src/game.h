@@ -482,6 +482,7 @@ class Game
 
 		void addPokemon(Pokemon* pokemon);
 		void removePokemon(Pokemon* pokemon);
+		uint32_t savePokemon(Pokemon* pokemon);
 
 		Guild* getGuild(uint32_t id) const;
 		void addGuild(Guild* guild);

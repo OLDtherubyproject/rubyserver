@@ -308,7 +308,7 @@ class Pokemon final : public Creature
 		}
 
 		friend class LuaScriptInterface;
-		friend class IOLoginData;
+		friend class Game;
 };
 
 #endif

@@ -5413,6 +5413,11 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 		return;
 	}
 
+	if (pokeball->getLevel() > player->getLevel()) {
+		player->sendCancelMessage(RETURNVALUE_NOTENOUGHLEVEL);
+		return;
+	}
+
 	if (!pType->info.isCatchable) {
 		player->sendCancelMessage(RETURNVALUE_CANNOTCAPTURETHISPOKEMON);
 		return;
@@ -5423,14 +5428,27 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 	std::ostringstream message;
 	MagicEffectClasses effect;
 
-	if (boolean_random(pType->info.catchRate / 100) != 1) {
+	if (boolean_random((pType->info.catchRate * pokeball->getDefaultMultiplier()) / 100) != 1) {
 		message << "Oh, no! Your pokeball broke!";
-		addMagicEffect(toPos, CONST_ME_CATCH_FAIL_POKEBALL);
+		addMagicEffect(toPos, pokeball->getCatchFail());
 		effect = CONST_ME_EMOT_THREE_POINTS;
 	} else {
 		message << "Gotcha! " << pType->name << " was caught!";
 		effect = CONST_ME_EMOT_EXCLAMATION;
-		addMagicEffect(toPos, CONST_ME_CATCH_SUCCESS_POKEBALL);
+		addMagicEffect(toPos, pokeball->getCatchSuccess());
+
+		Pokemon* pokemon = Pokemon::createPokemon(pType->typeName);
+		if (pokemon) {
+			std::ostringstream description;
+			uint32_t pokemonId = savePokemon(pokemon);
+			Item* item = Item::CreateItem(pokeball->getCharged(), 1);
+			if (item) {
+				description << "Its contains " << pType->nameDescription << ".";
+				item->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
+				item->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description.str());
+				g_scheduler.addEvent(createSchedulerTask(3000, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, item, INDEX_WHEREEVER, 0, false)));
+			}
+		}
 	}
 
 	g_scheduler.addEvent(createSchedulerTask(3000, std::bind(&Game::pokemonPlayerSendEmot, this, player, effect)));
@@ -5601,6 +5619,54 @@ void Game::addPokemon(Pokemon* pokemon)
 void Game::removePokemon(Pokemon* pokemon)
 {
 	pokemons.erase(pokemon->getID());
+}
+
+uint32_t Game::savePokemon(Pokemon* pokemon)
+{
+	Database& db = Database::getInstance();
+
+	//serialize conditions
+	PropWriteStream propWriteStream;
+	for (Condition* condition : pokemon->conditions) {
+		if (condition->isPersistent()) {
+			condition->serialize(propWriteStream);
+			propWriteStream.write<uint8_t>(CONDITIONATTR_END);
+		}
+	}
+
+	size_t conditionsSize;
+	const char* conditions = propWriteStream.getStream(conditionsSize);
+
+	// create
+	std::ostringstream query;
+	query << "SELECT `type` FROM `pokemon` WHERE `id` = " << pokemon->getGUID();
+	DBResult_ptr result = db.storeQuery(query.str());
+	query.str(std::string());
+	if (!result) {
+		DBInsert pokemonQuery("INSERT INTO `pokemon` (`type`, `nickname`, `gender`, `nature`, `conditions`) VALUES ");
+		query << "'" << pokemon->mType->typeName << "', ";
+		query << "'" << pokemon->mType->name << "', ";
+		query << pokemon->getSkull() << ", ";
+		query << pokemon->getNature() << ", ";
+		query << db.escapeBlob(conditions, conditionsSize);
+		pokemonQuery.addRow(query);
+		pokemonQuery.execute();
+		return db.getLastInsertId();
+	} else {
+		// update
+		query << "UPDATE `pokemon` SET ";
+		query << "`type` = '" << pokemon->mType->typeName << "' ,";
+		query << "`nickname` = '" << pokemon->mType->name << "' ,";
+		query << "`gender` = " << pokemon->getSkull() << " ,";
+		query << "`nature` = " << pokemon->getNature() << " ,";
+		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize) << ',';
+		query << " WHERE `id` = " << pokemon->getGUID();
+		if (db.executeQuery(query.str())) {
+			return pokemon->getGUID();
+		}
+		
+		return 0;
+	}
 }
 
 Guild* Game::getGuild(uint32_t id) const
