@@ -215,6 +215,7 @@ class Pokemon final : public Creature
 
 		int64_t lastMeleeAttack = 0;
 
+		uint32_t guid = 0;
 		uint32_t attackTicks = 0;
 		uint32_t targetTicks = 0;
 		uint32_t targetChangeTicks = 0;
@@ -295,12 +296,19 @@ class Pokemon final : public Creature
 		uint32_t getConditionImmunities() const override {
 			return mType->info.conditionImmunities;
 		}
+		void setGUID(uint32_t guid) {
+			this->guid = guid;
+		}
+		uint32_t getGUID() const {
+			return guid;
+		}
 		void getPathSearchParams(const Creature* creature, FindPathParams& fpp) const override;
 		bool useCacheMap() const override {
 			return !randomStepping;
 		}
 
 		friend class LuaScriptInterface;
+		friend class IOLoginData;
 };
 
 #endif
