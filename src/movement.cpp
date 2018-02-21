@@ -307,6 +307,18 @@ uint32_t MoveEvents::onCreatureMove(Creature* creature, const Tile* tile, MoveEv
 
 uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, bool isCheck)
 {
+	// portrait appear
+	if (slot == CONST_SLOT_POKEBALL) {
+		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
+
+		if (portrait) {
+			g_game.transformItem(portrait, 2488, 0);
+		} else {
+			Item* item = Item::CreateItem(2488, 1);
+			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
+		}
+	}
+
 	MoveEvent* moveEvent = getEvent(item, MOVE_EVENT_EQUIP, slot);
 	if (!moveEvent) {
 		return 1;
@@ -316,6 +328,15 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 
 uint32_t MoveEvents::onPlayerDeEquip(Player* player, Item* item, slots_t slot)
 {
+	// portrait disappear
+	if (slot == CONST_SLOT_POKEBALL) {
+		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
+
+		if (portrait) {
+			g_game.internalRemoveItem(portrait, 1);
+		}
+	}
+
 	MoveEvent* moveEvent = getEvent(item, MOVE_EVENT_DEEQUIP, slot);
 	if (!moveEvent) {
 		return 1;
