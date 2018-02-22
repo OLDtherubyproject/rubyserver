@@ -1,4 +1,6 @@
 dofile('data/lib/lib.lua')
+dofile('data/balls.lua')
+
 
 STORAGEVALUE_PROMOTION = 30018
 
