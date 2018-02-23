@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Bulbasaur" nameDescription="a bulbasaur" race="blood" experience="23" speed="150" manacost="300" catchRate="60">
+<pokemon name="Bulbasaur" nameDescription="a bulbasaur" blood="green" experience="23" speed="150" manacost="300" catchRate="10">
 	<health now="80" max="80" />
 	<look type="1" corpse="6049" />
 	<targetchange interval="4000" chance="0" />

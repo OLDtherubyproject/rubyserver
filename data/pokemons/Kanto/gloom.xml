@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Gloom" nameDescription="a gloom" race="blood" experience="23" speed="150" manacost="300">
+<pokemon name="Gloom" nameDescription="a gloom" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
 	<look type="44" corpse="6049" />
 	<targetchange interval="4000" chance="0" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Tangela" nameDescription="a tangela" race="blood" experience="23" speed="150" manacost="300" catchRate="50">
+<pokemon name="Tangela" nameDescription="a tangela" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<health now="80" max="80" />
 	<look type="114" corpse="6049" />
 	<targetchange interval="4000" chance="0" />

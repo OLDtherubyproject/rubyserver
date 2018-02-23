@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Weedle" nameDescription="a weedle" race="blood" experience="23" speed="150" manacost="300">
+<pokemon name="Weedle" nameDescription="a weedle" blood="green" experience="23" speed="150" manacost="300" catchRate="1">
 	<health now="80" max="80" />
 	<look type="13" corpse="6049" />
 	<targetchange interval="4000" chance="0" />
+	<genders>
+		<gender name="male" percentage="86" />
+		<gender name="female" percentage="14" />
+	</genders>
 	<flags>
+		<flag catchable="1" />
 		<flag summonable="1" />
 		<flag attackable="1" />
 		<flag hostile="1" />
