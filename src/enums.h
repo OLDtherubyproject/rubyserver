@@ -166,13 +166,13 @@ enum AccountType_t : uint8_t {
 	ACCOUNT_TYPE_GOD = 5
 };
 
-enum RaceType_t : uint8_t {
-	RACE_NONE,
-	RACE_VENOM,
-	RACE_BLOOD,
-	RACE_UNDEAD,
-	RACE_FIRE,
-	RACE_ENERGY,
+enum BloodType_t : uint8_t {
+	BLOOD_NONE,
+	BLOOD_RED,
+	BLOOD_GREEN,
+	BLOOD_GRAY,
+	BLOOD_BLUE,
+	BLOOD_PURPLE,
 };
 
 enum PokemonType_t : uint8_t {

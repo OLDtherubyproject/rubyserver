@@ -418,6 +418,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.type = ITEM_TYPE_DOOR;
 			} else if (tmpStrValue == "bed") {
 				it.type = ITEM_TYPE_BED;
+			} else if (tmpStrValue == "corpse") {
+				it.type = ITEM_TYPE_CORPSE;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown type: " << valueAttribute.as_string() << std::endl;
 			}
@@ -467,21 +469,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.floorChange = TILESTATE_FLOORCHANGE_EAST_ALT;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown floorChange: " << valueAttribute.as_string() << std::endl;
-			}
-		} else if (tmpStrValue == "corpsetype") {
-			tmpStrValue = asLowerCaseString(valueAttribute.as_string());
-			if (tmpStrValue == "venom") {
-				it.corpseType = RACE_VENOM;
-			} else if (tmpStrValue == "blood") {
-				it.corpseType = RACE_BLOOD;
-			} else if (tmpStrValue == "undead") {
-				it.corpseType = RACE_UNDEAD;
-			} else if (tmpStrValue == "fire") {
-				it.corpseType = RACE_FIRE;
-			} else if (tmpStrValue == "energy") {
-				it.corpseType = RACE_ENERGY;
-			} else {
-				std::cout << "[Warning - Items::parseItemNode] Unknown corpseType: " << valueAttribute.as_string() << std::endl;
 			}
 		} else if (tmpStrValue == "containersize") {
 			it.maxItems = pugi::cast<uint16_t>(valueAttribute.value());

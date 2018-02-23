@@ -140,7 +140,7 @@ enum MagicEffectClasses : uint16_t {
 	CONST_ME_GOBACK_MOONBALL = 194,
 };
 
-enum ShootType_t : uint8_t {
+enum ShootType_t : uint16_t {
 	CONST_ANI_NONE,
 
 	CONST_ANI_SPEAR = 1,

@@ -517,8 +517,8 @@ class Player final : public Creature, public Cylinder
 		bool canWalkthrough(const Creature* creature) const;
 		bool canWalkthroughEx(const Creature* creature) const;
 
-		RaceType_t getRace() const override {
-			return RACE_BLOOD;
+		BloodType_t getBlood() const override {
+			return BLOOD_RED;
 		}
 
 		uint64_t getMoney() const;

@@ -1459,6 +1459,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_TYPE_MAGICFIELD)
 	registerEnum(ITEM_TYPE_TELEPORT)
 	registerEnum(ITEM_TYPE_BED)
+	registerEnum(ITEM_TYPE_CORPSE)
 	registerEnum(ITEM_TYPE_KEY)
 
 	registerEnum(ITEM_BAG)
@@ -2601,7 +2602,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getDecayId", LuaScriptInterface::luaItemTypeGetDecayId);
 	registerMethod("ItemType", "getRequiredLevel", LuaScriptInterface::luaItemTypeGetRequiredLevel);
 	registerMethod("ItemType", "getAmmoType", LuaScriptInterface::luaItemTypeGetAmmoType);
-	registerMethod("ItemType", "getCorpseType", LuaScriptInterface::luaItemTypeGetCorpseType);
 
 	registerMethod("ItemType", "hasSubType", LuaScriptInterface::luaItemTypeHasSubType);
 
@@ -2685,7 +2685,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "getArmor", LuaScriptInterface::luaPokemonTypeGetArmor);
 	registerMethod("PokemonType", "getDefense", LuaScriptInterface::luaPokemonTypeGetDefense);
 	registerMethod("PokemonType", "getOutfit", LuaScriptInterface::luaPokemonTypeGetOutfit);
-	registerMethod("PokemonType", "getRace", LuaScriptInterface::luaPokemonTypeGetRace);
+	registerMethod("PokemonType", "getBlood", LuaScriptInterface::luaPokemonTypeGetBlood);
 	registerMethod("PokemonType", "getCorpseId", LuaScriptInterface::luaPokemonTypeGetCorpseId);
 	registerMethod("PokemonType", "getManaCost", LuaScriptInterface::luaPokemonTypeGetManaCost);
 	registerMethod("PokemonType", "getCatchRate", LuaScriptInterface::luaPokemonTypeGetCatchRate);
@@ -11174,7 +11174,7 @@ int LuaScriptInterface::luaItemTypeIsCorpse(lua_State* L)
 	// itemType:isCorpse()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
-		pushBoolean(L, itemType->corpseType != RACE_NONE);
+		pushBoolean(L, itemType->isCorpse());
 	} else {
 		lua_pushnil(L);
 	}
@@ -11596,18 +11596,6 @@ int LuaScriptInterface::luaItemTypeGetAmmoType(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		lua_pushnumber(L, itemType->ammoType);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetCorpseType(lua_State* L)
-{
-	// itemType:getCorpseType()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		lua_pushnumber(L, itemType->corpseType);
 	} else {
 		lua_pushnil(L);
 	}
@@ -12575,12 +12563,12 @@ int LuaScriptInterface::luaPokemonTypeGetOutfit(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPokemonTypeGetRace(lua_State* L)
+int LuaScriptInterface::luaPokemonTypeGetBlood(lua_State* L)
 {
-	// pokemonType:getRace()
+	// pokemonType:getBlood()
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
-		lua_pushnumber(L, pokemonType->info.race);
+		lua_pushnumber(L, pokemonType->info.blood);
 	} else {
 		lua_pushnil(L);
 	}

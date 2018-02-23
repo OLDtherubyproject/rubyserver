@@ -103,8 +103,8 @@ class Pokemon final : public Creature
 			}
 		}
 
-		RaceType_t getRace() const override {
-			return mType->info.race;
+		BloodType_t getBlood() const override {
+			return mType->info.blood;
 		}
 		int32_t getArmor() const override {
 			return mType->info.armor;

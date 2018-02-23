@@ -655,21 +655,21 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		mType->nameDescription = "a " + asLowerCaseString(mType->name);
 	}
 
-	if ((attr = pokemonNode.attribute("race"))) {
+	if ((attr = pokemonNode.attribute("blood"))) {
 		std::string tmpStrValue = asLowerCaseString(attr.as_string());
 		uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
-		if (tmpStrValue == "venom" || tmpInt == 1) {
-			mType->info.race = RACE_VENOM;
-		} else if (tmpStrValue == "blood" || tmpInt == 2) {
-			mType->info.race = RACE_BLOOD;
-		} else if (tmpStrValue == "undead" || tmpInt == 3) {
-			mType->info.race = RACE_UNDEAD;
-		} else if (tmpStrValue == "fire" || tmpInt == 4) {
-			mType->info.race = RACE_FIRE;
-		} else if (tmpStrValue == "energy" || tmpInt == 5) {
-			mType->info.race = RACE_ENERGY;
+		if (tmpStrValue == "red" || tmpInt == 1) {
+			mType->info.blood = BLOOD_RED;
+		} else if (tmpStrValue == "green" || tmpInt == 2) {
+			mType->info.blood = BLOOD_GREEN;
+		} else if (tmpStrValue == "gray" || tmpInt == 3) {
+			mType->info.blood = BLOOD_GRAY;
+		} else if (tmpStrValue == "blue" || tmpInt == 4) {
+			mType->info.blood = BLOOD_BLUE;
+		} else if (tmpStrValue == "purple" || tmpInt == 5) {
+			mType->info.blood = BLOOD_PURPLE;
 		} else {
-			std::cout << "[Warning - Pokemons::loadPokemon] Unknown race type " << attr.as_string() << ". " << file << std::endl;
+			std::cout << "[Warning - Pokemons::loadPokemon] Unknown blood type " << attr.as_string() << ". " << file << std::endl;
 		}
 	}
 

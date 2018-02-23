@@ -3734,24 +3734,24 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 {
 	switch (combatType) {
 		case COMBAT_PHYSICALDAMAGE: {
-			switch (target->getRace()) {
-				case RACE_VENOM:
-					color = TEXTCOLOR_LIGHTGREEN;
-					effect = CONST_ME_HITBYPOISON;
-					break;
-				case RACE_BLOOD:
+			switch (target->getBlood()) {
+				case BLOOD_RED:
 					color = TEXTCOLOR_RED;
 					effect = CONST_ME_DRAWBLOOD;
 					break;
-				case RACE_UNDEAD:
+				case BLOOD_GREEN:
+					color = TEXTCOLOR_LIGHTGREEN;
+					effect = CONST_ME_HITBYPOISON;
+					break;
+				case BLOOD_GRAY:
 					color = TEXTCOLOR_LIGHTGREY;
 					effect = CONST_ME_HITAREA;
 					break;
-				case RACE_FIRE:
-					color = TEXTCOLOR_ORANGE;
+				case BLOOD_BLUE:
+					color = TEXTCOLOR_BLUE;
 					effect = CONST_ME_DRAWBLOOD;
 					break;
-				case RACE_ENERGY:
+				case BLOOD_PURPLE:
 					color = TEXTCOLOR_ELECTRICPURPLE;
 					effect = CONST_ME_ENERGYHIT;
 					break;

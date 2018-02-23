@@ -54,6 +54,7 @@ enum ItemTypes_t {
 	ITEM_TYPE_TELEPORT,
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
+	ITEM_TYPE_CORPSE,
 	ITEM_TYPE_LAST
 };
 
@@ -148,6 +149,9 @@ class ItemType
 		bool isUseable() const {
 			return (useable);
 		}
+		bool isCorpse() const {
+			return (type == ITEM_TYPE_CORPSE);
+		}
 		bool hasSubType() const {
 			return (isFluidContainer() || isSplash() || stackable || charges != 0);
 		}
@@ -229,7 +233,6 @@ class ItemType
 		WeaponType_t weaponType = WEAPON_NONE;
 		Ammo_t ammoType = AMMO_NONE;
 		ShootType_t shootType = CONST_ANI_NONE;
-		RaceType_t corpseType = RACE_NONE;
 		FluidTypes_t fluidSource = FLUID_NONE;
 
 		uint8_t floorChange = 0;

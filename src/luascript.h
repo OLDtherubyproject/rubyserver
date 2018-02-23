@@ -1262,7 +1262,7 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetArmor(lua_State* L);
 		static int luaPokemonTypeGetDefense(lua_State* L);
 		static int luaPokemonTypeGetOutfit(lua_State* L);
-		static int luaPokemonTypeGetRace(lua_State* L);
+		static int luaPokemonTypeGetBlood(lua_State* L);
 		static int luaPokemonTypeGetCorpseId(lua_State* L);
 		static int luaPokemonTypeGetManaCost(lua_State* L);
 		static int luaPokemonTypeGetCatchRate(lua_State* L);
