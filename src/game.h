@@ -452,8 +452,8 @@ class Game
 		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
 		void addMagicEffect(const Position& pos, uint16_t effect);
 		static void addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
-		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint8_t effect);
-		static void addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint8_t effect);
+		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect);
+		static void addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t effect);
 
 		void startDecay(Item* item);
 		int32_t getLightHour() const {

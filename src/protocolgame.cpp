@@ -2241,13 +2241,13 @@ void ProtocolGame::sendPingBack()
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendDistanceShoot(const Position& from, const Position& to, uint8_t type)
+void ProtocolGame::sendDistanceShoot(const Position& from, const Position& to, uint16_t type)
 {
 	NetworkMessage msg;
 	msg.addByte(0x85);
 	msg.addPosition(from);
 	msg.addPosition(to);
-	msg.addByte(type);
+	msg.add<uint16_t>(type);
 	writeToOutputBuffer(msg);
 }
 

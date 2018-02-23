@@ -4337,7 +4337,7 @@ void Game::addMagicEffect(const SpectatorHashSet& spectators, const Position& po
 	}
 }
 
-void Game::addDistanceEffect(const Position& fromPos, const Position& toPos, uint8_t effect)
+void Game::addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect)
 {
 	SpectatorHashSet spectators;
 	map.getSpectators(spectators, fromPos, false, true);
@@ -4345,7 +4345,7 @@ void Game::addDistanceEffect(const Position& fromPos, const Position& toPos, uin
 	addDistanceEffect(spectators, fromPos, toPos, effect);
 }
 
-void Game::addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint8_t effect)
+void Game::addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t effect)
 {
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {

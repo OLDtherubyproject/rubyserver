@@ -177,7 +177,7 @@ class ProtocolGame final : public Protocol
 		void sendIcons(uint16_t icons);
 		void sendFYIBox(const std::string& message);
 
-		void sendDistanceShoot(const Position& from, const Position& to, uint8_t type);
+		void sendDistanceShoot(const Position& from, const Position& to, uint16_t type);
 		void sendMagicEffect(const Position& pos, uint16_t type);
 		void sendCreatureHealth(const Creature* creature);
 		void sendSkills();

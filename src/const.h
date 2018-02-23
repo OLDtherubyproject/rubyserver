@@ -198,7 +198,7 @@ enum ShootType_t : uint16_t {
 	CONST_ANI_SIMPLEARROW = 54,
 
 	// for internal use, don't send to client
-	CONST_ANI_WEAPONTYPE = 0xFE, // 254
+	CONST_ANI_WEAPONTYPE = 0xFFFE, // 65534
 };
 
 enum SpeakClasses : uint8_t {
