@@ -5,7 +5,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalLibraryDirectories>$(TFS_LIBS64)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TRS_LIBS64)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

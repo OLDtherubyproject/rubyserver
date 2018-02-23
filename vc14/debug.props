@@ -14,7 +14,7 @@
       <ObjectFileName>$(IntDir)\obj_d\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(TFS_LIBDEPS_D)</AdditionalDependencies>
+      <AdditionalDependencies>$(TRS_LIBDEPS_D)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

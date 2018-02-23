@@ -178,7 +178,7 @@ pip-log.txt
 *.exe
 
 #############
-## TFS / OT
+## TRS / OT
 #############
 config.lua
 trs
