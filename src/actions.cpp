@@ -367,18 +367,26 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	player->stopWalk();
 
-	Action* action = getAction(item);
-	if (!action) {
-		Pokeball* pokeball = g_pokeballs.getPokeball(item->getID());
-		if (pokeball) {
-			if (isHotkey) {
-				showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
-			}
-
-			g_game.playerTryCatchPokemon(player, fromPos, toPos, item, pokeball);
-			return true;
+	// stackable pokeball usage
+	Pokeball* pokeball = g_pokeballs.getPokeball(item->getID());
+	if (pokeball) {
+		if (isHotkey) {
+			showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
 		}
 
+		ReturnValue ret = g_actions->canUseFar(player, toPos, true, true);
+		if (ret != RETURNVALUE_NOERROR) {
+			player->sendCancelMessage(ret);
+			return false;
+		}
+
+		g_game.playerTryCatchPokemon(player, fromPos, toPos, item, pokeball);
+		return true;
+	}
+
+	// action usage
+	Action* action = getAction(item);
+	if (!action) {
 		player->sendCancelMessage(RETURNVALUE_CANNOTUSETHISOBJECT);
 		return false;
 	}

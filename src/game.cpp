@@ -5428,14 +5428,26 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 	std::ostringstream message;
 	MagicEffectClasses effect;
 
+	uint8_t delay = 0;
+	uint8_t dis1 = Position::getDistanceX(player->getPosition(), toPos);
+	uint8_t dis2 = Position::getDistanceY(player->getPosition(), toPos);
+
+	if (dis1 >= dis2) {
+		delay = dis1 * 40;
+	} else{
+		delay = dis2 * 40;
+	}
+
+	g_game.addDistanceEffect(player->getPosition(), toPos, CONST_ANI_SNOWBALL);
+
 	if (boolean_random((pType->info.catchRate * pokeball->getDefaultMultiplier()) / 100) != 1) {
 		message << "Oh, no! Your pokeball broke!";
-		addMagicEffect(toPos, pokeball->getCatchFail());
+		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeball->getCatchFail())));
 		effect = CONST_ME_EMOT_THREE_POINTS;
 	} else {
 		message << "Gotcha! " << pType->name << " was caught!";
 		effect = CONST_ME_EMOT_EXCLAMATION;
-		addMagicEffect(toPos, pokeball->getCatchSuccess());
+		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeball->getCatchSuccess())));
 
 		Pokemon* pokemon = Pokemon::createPokemon(pType->typeName);
 		if (pokemon) {
@@ -5446,13 +5458,13 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 				description << "Its contains " << pType->nameDescription << ".";
 				item->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
 				item->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description.str());
-				g_scheduler.addEvent(createSchedulerTask(3000, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, item, INDEX_WHEREEVER, 0, false)));
+				g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, item, INDEX_WHEREEVER, 0, false)));
 			}
 		}
 	}
 
-	g_scheduler.addEvent(createSchedulerTask(3000, std::bind(&Game::pokemonPlayerSendEmot, this, player, effect)));
-	g_scheduler.addEvent(createSchedulerTask(3000, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
+	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::pokemonPlayerSendEmot, this, player, effect)));
+	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
 }
 
 void Game::pokemonPlayerSendEmot(Player* player, uint16_t effect) {
