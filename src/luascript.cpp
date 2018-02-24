@@ -2510,6 +2510,12 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Pokeball", "getId", LuaScriptInterface::luaPokeballGetId);
 	registerMethod("Pokeball", "getName", LuaScriptInterface::luaPokeballGetName);
+	registerMethod("Pokeball", "getCharged", LuaScriptInterface::luaPokeballGetCharged);
+	registerMethod("Pokeball", "getDischarged", LuaScriptInterface::luaPokeballGetDischarged);
+	registerMethod("Pokeball", "getGoback", LuaScriptInterface::luaPokeballGetGoback);
+	registerMethod("Pokeball", "getCatchSuccess", LuaScriptInterface::luaPokeballGetCatchSuccess);
+	registerMethod("Pokeball", "getCatchFail", LuaScriptInterface::luaPokeballGetCatchFail);
+	registerMethod("Pokeball", "getRates", LuaScriptInterface::LuaPokeballGetRates);
 
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
@@ -10453,6 +10459,98 @@ int LuaScriptInterface::luaPokeballGetName(lua_State* L)
 	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
 	if (pokeball) {
 		pushString(L, pokeball->getName());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetCharged(lua_State* L)
+{
+	// pokeball:getCharged()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getCharged());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetDischarged(lua_State* L)
+{
+	// pokeball:getDischarged()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getDischarged());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetGoback(lua_State* L)
+{
+	// pokeball:getGoback()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getGoback());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetCatchSuccess(lua_State* L)
+{
+	// pokeball:getCatchSuccess()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getCatchSuccess());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballGetCatchFail(lua_State* L)
+{
+	// pokeball:getCatchFail()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		lua_pushnumber(L, pokeball->getCatchFail());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::LuaPokeballGetRates(lua_State* L)
+{
+	// pokeball:getRates()
+	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
+	if (pokeball) {
+		Rates_t rates = pokeball->getRates();
+		lua_createtable(L, 0, 19);
+		setField(L, "all", rates.all);
+		setField(L, "fire", rates.fire);
+		setField(L, "fighting", rates.fighting);
+		setField(L, "water", rates.water);
+		setField(L, "flying", rates.flying);
+		setField(L, "grass", rates.grass);
+		setField(L, "electric", rates.electric);
+		setField(L, "poison", rates.poison);
+		setField(L, "ground", rates.ground);
+		setField(L, "psychic", rates.psychic);
+		setField(L, "rock", rates.rock);
+		setField(L, "ice", rates.ice);
+		setField(L, "bug", rates.bug);
+		setField(L, "dragon", rates.dragon);
+		setField(L, "ghost", rates.ghost);
+		setField(L, "dark", rates.dark);
+		setField(L, "steel", rates.steel);
+		setField(L, "fairy", rates.fairy);
+		setField(L, "normal", rates.normal);
 	} else {
 		lua_pushnil(L);
 	}
