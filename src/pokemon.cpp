@@ -1772,7 +1772,7 @@ bool Pokemon::teleportToPlayer()
 {
 	Position pokemonPosition = getPosition();
 	Position trainerPosition = getMaster()->getPosition();
-	if (g_game.internalTeleport(this, g_game.getClosestFreeTile(this, trainerPosition, false)) != RETURNVALUE_NOERROR) {
+	if (g_game.internalTeleport(this, trainerPosition) != RETURNVALUE_NOERROR) {
 		return false;
 	}
 
