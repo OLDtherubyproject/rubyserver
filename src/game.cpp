@@ -5459,6 +5459,7 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 				item->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
 				item->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description.str());
 				g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, item, INDEX_WHEREEVER, 0, false)));
+				g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnCatchPokemon, g_events, player, pType, pokeball, item)));
 			}
 		}
 	}

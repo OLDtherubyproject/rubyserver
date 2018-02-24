@@ -273,3 +273,6 @@ function Player:onGainSkillTries(skill, tries)
 	end
 	return tries * configManager.getNumber(configKeys.RATE_SKILL)
 end
+
+function Player:onCatchPokemon(pokemonType, pokeballType, pokeball)
+end

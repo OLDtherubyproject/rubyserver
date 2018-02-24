@@ -24,6 +24,8 @@
 #include "tools.h"
 #include "item.h"
 #include "player.h"
+#include "pokemons.h"
+#include "pokeball.h"
 
 #include <set>
 
@@ -113,6 +115,8 @@ bool Events::load()
 				info.playerOnLoseExperience = event;
 			} else if (methodName == "onGainSkillTries") {
 				info.playerOnGainSkillTries = event;
+			} else if (methodName == "onCatchPokemon") {
+				info.playerOnCatchPokemon = event;
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
 			}
@@ -787,4 +791,36 @@ void Events::eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_
 	}
 
 	scriptInterface.resetScriptEnv();
+}
+
+bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item) {
+	// Player:onCatchPokemon(player, pokemonType, pokeball, item) or Player.onMoveItem(self, player, pokemonType, pokeball, item)
+	if (info.playerOnCatchPokemon == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnMoveItem] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnCatchPokemon, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnCatchPokemon);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<PokemonType>(L, pType);
+	LuaScriptInterface::setMetatable(L, -1, "PokemonType");
+
+	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeball);
+	LuaScriptInterface::setMetatable(L, -1, "Pokeball");
+
+	LuaScriptInterface::pushUserdata<Item>(L, item);
+	LuaScriptInterface::setItemMetatable(L, -1, item);
+
+	return scriptInterface.callFunction(4);
 }
