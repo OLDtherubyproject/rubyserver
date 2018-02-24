@@ -66,6 +66,10 @@ class Pokeball
 			return rates.all;
 		}
 
+		Rates_t getRates() const {
+			return rates;
+		}
+
 	private:
 		friend class Pokeballs;
 
