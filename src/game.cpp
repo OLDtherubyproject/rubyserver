@@ -5443,6 +5443,7 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 	if (boolean_random((pType->info.catchRate * pokeball->getDefaultMultiplier()) / 100) != 1) {
 		message << "Oh, no! Your pokeball broke!";
 		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeball->getCatchFail())));
+		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnDontCatchPokemon, g_events, player, pType, pokeball, item)));
 		effect = CONST_ME_EMOT_THREE_POINTS;
 	} else {
 		message << "Gotcha! " << pType->name << " was caught!";

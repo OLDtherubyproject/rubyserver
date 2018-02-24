@@ -276,3 +276,6 @@ end
 
 function Player:onCatchPokemon(pokemonType, pokeballType, pokeball)
 end
+
+function Player:onDontCatchPokemon(pokemonType, pokeballType, pokeball)
+end

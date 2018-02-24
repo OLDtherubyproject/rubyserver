@@ -59,6 +59,7 @@ class Events
 		int32_t playerOnLoseExperience = -1;
 		int32_t playerOnGainSkillTries = -1;
 		int32_t playerOnCatchPokemon = -1;
+		int32_t playerOnDontCatchPokemon = -1;
 	};
 
 	public:
@@ -93,6 +94,7 @@ class Events
 		void eventPlayerOnLoseExperience(Player* player, uint64_t& exp);
 		void eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_t& tries);
 		bool eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item);
+		bool eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item);
 
 	private:
 		LuaScriptInterface scriptInterface;

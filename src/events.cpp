@@ -117,6 +117,8 @@ bool Events::load()
 				info.playerOnGainSkillTries = event;
 			} else if (methodName == "onCatchPokemon") {
 				info.playerOnCatchPokemon = event;
+			} else if (methodName == "onDontCatchPokemon") {
+				info.playerOnDontCatchPokemon = event;
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
 			}
@@ -809,6 +811,38 @@ bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeb
 
 	lua_State* L = scriptInterface.getLuaState();
 	scriptInterface.pushFunction(info.playerOnCatchPokemon);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<PokemonType>(L, pType);
+	LuaScriptInterface::setMetatable(L, -1, "PokemonType");
+
+	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeball);
+	LuaScriptInterface::setMetatable(L, -1, "Pokeball");
+
+	LuaScriptInterface::pushUserdata<Item>(L, item);
+	LuaScriptInterface::setItemMetatable(L, -1, item);
+
+	return scriptInterface.callFunction(4);
+}
+
+bool Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item) {
+	// Player:onDontCatchPokemon(player, pokemonType, pokeball, item) or Player.onMoveItem(self, player, pokemonType, pokeball, item)
+	if (info.playerOnDontCatchPokemon == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnMoveItem] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnDontCatchPokemon, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnDontCatchPokemon);
 
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
