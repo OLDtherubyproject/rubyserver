@@ -30,3 +30,5 @@ We use the [issue tracker on GitHub](https://github.com/rubyserver/rubyserver/is
 
 * Leonardo Viera (Deadpool)
 * Guilherme Leandro (Kurral)
+* João Medeiros (joaotmed)
+* Mateus (Majesty)
