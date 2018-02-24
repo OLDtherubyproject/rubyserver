@@ -75,7 +75,12 @@ class Pokemon final : public Creature
 			return mType->nameDescription;
 		}
 		std::string getDescription(int32_t) const override {
-			return strDescription + '.';
+			Creature* creature = getMaster();
+
+			if (creature) {
+				return strDescription + ". It belongs to " + creature->getName() + ".";
+			}
+			return strDescription + '.';			
 		}
 
 		CreatureType_t getType() const override {
