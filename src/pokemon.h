@@ -95,15 +95,15 @@ class Pokemon final : public Creature
 		}
 		void randomGender() {
 			// set pokemon gender
-			if (mType->info.dittoChance > 0 && boolean_random(mType->info.dittoChance / 100) == 1) {
-				isDitto = true;
-			} else{
-				if (mType->info.gender.male > 0 || mType->info.gender.female > 0) {
-					if (boolean_random(mType->info.gender.male / 100) == 1) {
-						setSkull(SKULL_GREEN); // Male
-					} else{
-						setSkull(SKULL_RED); // Female
-					}
+			if (isDitto) {
+				return;
+			}
+
+			if (mType->info.gender.male > 0 || mType->info.gender.female > 0) {
+				if (boolean_random(mType->info.gender.male / 100) == 1) {
+					setSkull(SKULL_GREEN); // Male
+				} else{
+					setSkull(SKULL_RED); // Female
 				}
 			}
 		}
@@ -233,7 +233,8 @@ class Pokemon final : public Creature
 
 		Position masterPos;
 
-		bool isDitto = false;
+		bool isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
+		bool isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
 		bool isIdle = true;
 		bool extraMeleeAttack = false;
 		bool isMasterInRange = false;

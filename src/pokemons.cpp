@@ -1031,6 +1031,58 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("shiny"))) {
+		pugi::xml_node auxNode;
+
+		if ((attr = node.attribute("chance"))) {
+			mType->info.shiny.chance = pugi::cast<double>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny chance. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("look"))) {
+			if ((attr = auxNode.attribute("type"))) {
+				mType->info.shiny.outfit.lookType = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny look type. " << file << std::endl;
+			}
+
+			if ((attr = auxNode.attribute("corpse"))) {
+				mType->info.shiny.corpse = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny look corpse. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny look. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("portrait"))) {
+			if ((attr = auxNode.attribute("id"))) {
+				mType->info.shiny.portrait = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny portrait id. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny portrait. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("icon"))) {
+			if ((attr = auxNode.attribute("charged"))) {
+				mType->info.shiny.iconCharged = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny icon charged. " << file << std::endl;
+			}
+
+			if ((attr = auxNode.attribute("discharged"))) {
+				mType->info.shiny.iconDischarged = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny icon discharged. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny icon. " << file << std::endl;
+		}
+	}
+
 	if ((node = pokemonNode.child("voices"))) {
 		if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
 			mType->info.yellSpeedTicks = pugi::cast<uint32_t>(attr.value());

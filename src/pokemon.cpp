@@ -46,14 +46,16 @@ Pokemon::Pokemon(PokemonType* mType) :
 	strDescription(mType->nameDescription),
 	mType(mType)
 {
-	defaultOutfit = mType->info.outfit;
-	currentOutfit = mType->info.outfit;
+	defaultOutfit = ((isShiny) ? mType->info.shiny.outfit : mType->info.outfit);
+	currentOutfit = ((isShiny) ? mType->info.shiny.outfit : mType->info.outfit);
 	skull = mType->info.skull;
 	health = mType->info.health;
 	healthMax = mType->info.healthMax;
 	baseSpeed = mType->info.baseSpeed;
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
+
+	randomGender();
 
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
@@ -1803,9 +1805,17 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 	Item* corpse;
 
 	if (isDitto) {
-		corpse = Item::CreateItem(ITEM_DITTO_CORPSE);
+		if (isShiny) {
+			corpse = Item::CreateItem(ITEM_DITTO_CORPSE); // Shiny Ditto Corpse
+		} else {
+			corpse = Item::CreateItem(ITEM_DITTO_CORPSE); // Ditto Corpse
+		}
 	} else{
-		corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature);
+		if (isShiny) {
+			corpse = Item::CreateItem(mType->info.shiny.corpse); // Shiny Corpse
+		} else {
+			corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature); // Normal Corpse
+		}
 	}
 
 	if (corpse) {
@@ -1822,6 +1832,9 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 		corpse->setCorpseGender(getSkull());
 		corpse->setCorpseType(mType->typeName);
 	}
+
+	std::cout << sizeof(this) << std::endl;
+
 	return corpse;
 }
 

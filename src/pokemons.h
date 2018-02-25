@@ -107,6 +107,7 @@ class PokemonType
 		Skulls_t skull = SKULL_ORANGE;
 		Outfit_t outfit = {};
 		Gender_t gender = {};
+		Shiny_t shiny = {};
 		BloodType_t blood = BLOOD_RED;
 
 		LightInfo light = {};

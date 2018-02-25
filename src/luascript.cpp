@@ -4244,7 +4244,7 @@ int LuaScriptInterface::luaGameCreateContainer(lua_State* L)
 
 int LuaScriptInterface::luaGameCreatePokemon(lua_State* L)
 {
-	// Game.createPokemon(pokemonName, position[, extended = false[, force = false[, gender = false]]])
+	// Game.createPokemon(pokemonName, position[, extended = false[, force = false]])
 	Pokemon* pokemon = Pokemon::createPokemon(getString(L, 1));
 	if (!pokemon) {
 		lua_pushnil(L);
@@ -4254,11 +4254,6 @@ int LuaScriptInterface::luaGameCreatePokemon(lua_State* L)
 	const Position& position = getPosition(L, 2);
 	bool extended = getBoolean(L, 3, false);
 	bool force = getBoolean(L, 4, false);
-	bool gender = getBoolean(L, 5, true);
-
-	if (gender) {
-		pokemon->randomGender();
-	}
 
 	if (g_game.placeCreature(pokemon, position, extended, force)) {
 		pushUserdata<Pokemon>(L, pokemon);

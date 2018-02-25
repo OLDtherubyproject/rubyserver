@@ -527,6 +527,15 @@ struct Gender_t {
 	float female = 0;
 };
 
+struct Shiny_t {
+	double chance = 0;
+	Outfit_t outfit = {};
+	uint16_t corpse = 0;
+	uint16_t portrait = 0;
+	uint16_t iconCharged = 0;
+	uint16_t iconDischarged = 0;
+};
+
 struct PokemonBaseStats {
 	uint8_t hp = 0;
 	uint8_t attack = 0;

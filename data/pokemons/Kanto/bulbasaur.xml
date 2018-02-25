@@ -46,6 +46,11 @@
 		<voice sentence="Bulbasaur" />
 		<voice sentence="Saur" />
 	</voices>
+  	<shiny chance="50">
+        <look type="150" corpse="6047" />
+        <portrait id="7002" />
+        <icon charged="900" discharged="901" />
+    </shiny>
 	<loot>
 	</loot>
 </pokemon>
