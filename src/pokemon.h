@@ -133,6 +133,9 @@ class Pokemon final : public Creature
 		bool isHostile() const {
 			return mType->info.isHostile;
 		}
+		bool isGhost() const {
+			return mType->info.isGhost;
+		}
 		bool canSee(const Position& pos) const override;
 		bool canSeeInvisibility() const override {
 			return isImmune(CONDITION_INVISIBLE);

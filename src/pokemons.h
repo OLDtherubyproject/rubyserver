@@ -150,6 +150,7 @@ class PokemonType
 		bool isConvinceable = false;
 		bool isAttackable = true;
 		bool isHostile = true;
+		bool isGhost = false;
 		bool hiddenHealth = false;
 		bool canWalkOnEnergy = true;
 		bool canWalkOnFire = true;

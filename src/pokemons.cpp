@@ -740,6 +740,8 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				mType->info.isAttackable = attr.as_bool();
 			} else if (strcasecmp(attrName, "hostile") == 0) {
 				mType->info.isHostile = attr.as_bool();
+			} else if (strcasecmp(attrName, "ghost") == 0) {
+				mType->info.isGhost = attr.as_bool();
 			} else if (strcasecmp(attrName, "illusionable") == 0) {
 				mType->info.isIllusionable = attr.as_bool();
 			} else if (strcasecmp(attrName, "convinceable") == 0) {
