@@ -5452,13 +5452,17 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 
 		Pokemon* pokemon = Pokemon::createPokemon(pType->typeName);
 		if (pokemon) {
-			std::ostringstream description;
 			uint32_t pokemonId = savePokemon(pokemon);
+
+			if (pokemonId == 0) {
+				return;
+			}
+			
 			Item* item = Item::CreateItem(pokeball->getCharged(), 1);
 			if (item) {
-				description << "Its contains " << pType->nameDescription << ".";
 				item->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
-				item->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description.str());
+				item->setIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY, corpse->getPokemonIsShiny());
+				item->setStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE, corpse->getCorpseType());
 				g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, item, INDEX_WHEREEVER, 0, false)));
 				g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnCatchPokemon, g_events, player, pType, pokeball, item)));
 			}
@@ -5656,6 +5660,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	query << "SELECT `type` FROM `pokemon` WHERE `id` = " << pokemon->getGUID();
 	DBResult_ptr result = db.storeQuery(query.str());
 	query.str(std::string());
+
 	if (!result) {
 		DBInsert pokemonQuery("INSERT INTO `pokemon` (`type`, `nickname`, `gender`, `nature`, `conditions`) VALUES ");
 		query << "'" << pokemon->mType->typeName << "', ";
@@ -5663,8 +5668,15 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << pokemon->getSkull() << ", ";
 		query << pokemon->getNature() << ", ";
 		query << db.escapeBlob(conditions, conditionsSize);
-		pokemonQuery.addRow(query);
-		pokemonQuery.execute();
+
+		if (!pokemonQuery.addRow(query)) {
+			return 0;
+		}
+
+		if (!pokemonQuery.execute()) {
+			return 0;
+		}
+
 		return db.getLastInsertId();
 	} else {
 		// update
@@ -5675,6 +5687,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "`nature` = " << pokemon->getNature() << " ,";
 		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize) << ',';
 		query << " WHERE `id` = " << pokemon->getGUID();
+
 		if (db.executeQuery(query.str())) {
 			return pokemon->getGUID();
 		}
