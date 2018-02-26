@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Bulbasaur" nameDescription="a bulbasaur" blood="green" experience="23" speed="150" manacost="300" catchRate="10">
+<pokemon name="Bulbasaur" nameDescription="a bulbasaur" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<health now="80" max="80" />
 	<look type="1" corpse="6049" />
 	<targetchange interval="4000" chance="0" />
+	<portrait id="2376" />
+	<icon charged="2143" discharged="2144" />
 	<genders>
 		<gender name="male" percentage="87.5" />
 		<gender name="female" percentage="12.5" />

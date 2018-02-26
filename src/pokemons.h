@@ -127,6 +127,9 @@ class PokemonType
 		uint32_t conditionImmunities = 0;
 		uint32_t damageImmunities = 0;
 		uint32_t baseSpeed = 200;
+		uint32_t iconCharged = 0;
+		uint32_t iconDischarged = 0;
+		uint32_t portrait = 0;
 
 		int32_t creatureAppearEvent = -1;
 		int32_t creatureDisappearEvent = -1;

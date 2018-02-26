@@ -788,6 +788,32 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("portrait"))) {
+		if ((attr = node.attribute("id"))) {
+			mType->info.portrait = pugi::cast<uint32_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing portrait id. " << file << std::endl;
+		}
+	} else{
+		std::cout << "[Warning - Pokemons::loadPokemon] Missing portrait. " << file << std::endl;
+	}
+
+	if ((node = pokemonNode.child("icon"))) {
+		if ((attr = node.attribute("charged"))) {
+			mType->info.iconCharged = pugi::cast<uint32_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing icon charged id. " << file << std::endl;
+		}
+
+		if ((attr = node.attribute("discharged"))) {
+			mType->info.iconDischarged = pugi::cast<int32_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing icon discharged id. " << file << std::endl;
+		}
+	} else{
+		std::cout << "[Warning - Pokemons::loadPokemon] Missing icon. " << file << std::endl;
+	}
+
 	if ((node = pokemonNode.child("targetchange"))) {
 		if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
 			mType->info.changeTargetSpeed = pugi::cast<uint32_t>(attr.value());
