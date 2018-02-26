@@ -480,6 +480,12 @@ void Tile::onUpdateTile(const SpectatorHashSet& spectators)
 ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags, Creature*) const
 {
 	if (const Creature* creature = thing.getCreature()) {
+		if (const Pokemon* pokemon = creature->getPokemon()) {
+			if (pokemon->isGhost()){
+				//return RETURNVALUE_NOERROR;
+			}
+		}
+
 		if (hasBitSet(FLAG_NOLIMIT, flags)) {
 			return RETURNVALUE_NOERROR;
 		}
@@ -493,7 +499,13 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 		}
 
 		if (const Pokemon* pokemon = creature->getPokemon()) {
-			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
+			if (hasFlag(TILESTATE_PROTECTIONZONE)) {
+				if (!(pokemon->isSummon() && pokemon->getMaster()->getPlayer())) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
+			}
+
+			if (hasFlag(TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
 				return RETURNVALUE_NOTPOSSIBLE;
 			}
 
