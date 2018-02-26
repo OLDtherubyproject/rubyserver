@@ -206,7 +206,6 @@ class ItemType
 		int32_t price = -1;
 		int32_t maxHitChance = -1;
 		int32_t decayTo = -1;
-		int32_t attack = 0;
 		int32_t defense = 0;
 		int32_t extraDefense = 0;
 		int32_t armor = 0;

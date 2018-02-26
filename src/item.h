@@ -97,7 +97,7 @@ enum AttrTypes_t {
 	ATTR_ARTICLE = 25,
 	ATTR_PLURALNAME = 26,
 	ATTR_WEIGHT = 27,
-	ATTR_ATTACK = 28,
+	ATTR_POKEBALLISCHARGED = 28,
 	ATTR_DEFENSE = 29,
 	ATTR_EXTRADEFENSE = 30,
 	ATTR_ARMOR = 31,
@@ -108,6 +108,8 @@ enum AttrTypes_t {
 	ATTR_CORPSEGENDER = 36,
 	ATTR_CORPSETYPE = 37,
 	ATTR_POKEMONID = 38,
+	ATTR_POKEMONTYPE = 39,
+	ATTR_POKEMONISSHINY = 40,
 };
 
 enum Attr_ReadValue {
@@ -203,7 +205,7 @@ class ItemAttributes
 		void setCorpseGender(uint8_t corpseGender) {
 			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, corpseGender);
 		}
-		int8_t getCorpseGender() const {
+		uint8_t getCorpseGender() const {
 			return getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER);
 		}
 
@@ -217,8 +219,29 @@ class ItemAttributes
 		void setPokemonId(uint32_t pokemonId) {
 			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
 		}
-		int32_t getPokemonId() const {
+		uint32_t getPokemonId() const {
 			return getIntAttr(ITEM_ATTRIBUTE_POKEMONID);
+		}
+
+		void setPokemonType(const std::string& type) {
+			setStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE, type);
+		}
+		const std::string& getPokemonType() const {
+			return getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE);
+		}
+
+		void setPokemonIsShiny(uint8_t pokemonIsShiny) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY, pokemonIsShiny);
+		}
+		uint8_t getPokemonIsShiny() const {
+			return getIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY);
+		}
+
+		void setPokeballIsCharged(uint8_t pokeballIsCharged) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED, pokeballIsCharged);
+		}
+		uint8_t getPokeballIsCharged() const {
+			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED);
 		}
 
 		void setDuration(int32_t time) {
@@ -523,10 +546,10 @@ class ItemAttributes
 
 	public:
 		static bool isIntAttrType(itemAttrTypes type) {
-			return (type & 0x5FFFE13) != 0;
+			return (type & 0x15FFFE13) != 0;
 		}
 		static bool isStrAttrType(itemAttrTypes type) {
-			return (type & 0x20001EC) != 0;
+			return (type & 0xA0001EC) != 0;
 		}
 		inline static bool isCustomAttrType(itemAttrTypes type) {
 			return (type & 0x80000000) != 0;
@@ -764,7 +787,7 @@ class Item : virtual public Thing
 		void setCorpseGender(uint8_t corpseGender) {
 			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, corpseGender);
 		}
-		int8_t getCorpseGender() const {
+		uint8_t getCorpseGender() const {
 			if (!attributes) {
 				return 0;
 			}
@@ -781,11 +804,38 @@ class Item : virtual public Thing
 		void setPokemonId(uint32_t pokemonId) {
 			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
 		}
-		int32_t getPokemonId() const {
+		uint32_t getPokemonId() const {
 			if (!attributes) {
 				return 0;
 			}
 			return getIntAttr(ITEM_ATTRIBUTE_POKEMONID);
+		}
+
+		void setPokemonType(const std::string& type) {
+			setStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE, type);
+		}
+		const std::string& getPokemonType() const {
+			return getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE);
+		}
+
+		void setPokemonIsShiny(uint8_t pokemonIsShiny) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY, pokemonIsShiny);
+		}
+		uint8_t getPokemonIsShiny() const {
+			if (!attributes) {
+				return 0;
+			}
+			return getIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY);
+		}
+
+		void setPokeballIsCharged(uint8_t pokemonIsCharged) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED, pokemonIsCharged);
+		}
+		uint8_t getPokeballIsCharged() const {
+			if (!attributes) {
+				return 0;
+			}
+			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED);
 		}
 
 		void setDuration(int32_t time) {
@@ -874,12 +924,6 @@ class Item : virtual public Thing
 				return getIntAttr(ITEM_ATTRIBUTE_PRICE);
 			}
 			return items[id].price;
-		}
-		int32_t getAttack() const {
-			if (hasAttribute(ITEM_ATTRIBUTE_ATTACK)) {
-				return getIntAttr(ITEM_ATTRIBUTE_ATTACK);
-			}
-			return items[id].attack;
 		}
 		int32_t getArmor() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_ARMOR)) {

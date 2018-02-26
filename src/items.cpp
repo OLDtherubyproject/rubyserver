@@ -337,7 +337,7 @@ void Items::buildInventoryList()
 	inventory.reserve(items.size());
 	for (const auto& type: items) {
 		if (type.weaponType != WEAPON_NONE || type.ammoType != AMMO_NONE ||
-			type.attack != 0 || type.defense != 0 ||
+			type.defense != 0 ||
 			type.extraDefense != 0 || type.armor != 0 ||
 			type.slotPosition & SLOTP_NECKLACE ||
 			type.slotPosition & SLOTP_RING ||
@@ -437,8 +437,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.defense = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "extradef") {
 			it.extraDefense = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "attack") {
-			it.attack = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "rotateto") {
 			it.rotateTo = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "moveable" || tmpStrValue == "movable") {

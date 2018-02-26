@@ -574,7 +574,7 @@ int32_t WeaponMelee::getElementDamage(const Player* player, const Creature*, con
 int32_t WeaponMelee::getWeaponDamage(const Player* player, const Creature*, const Item* item, bool maxDamage /*= false*/) const
 {
 	int32_t attackSkill = player->getWeaponSkill(item);
-	int32_t attackValue = std::max<int32_t>(0, item->getAttack());
+	int32_t attackValue = std::max<int32_t>(0, 0);
 	float attackFactor = player->getAttackFactor();
 
 	int32_t maxValue = static_cast<int32_t>(Weapons::getMaxWeaponDamage(player->getLevel(), attackSkill, attackValue, attackFactor) * player->getVocation()->meleeDamageMultiplier);
@@ -778,7 +778,7 @@ int32_t WeaponDistance::getElementDamage(const Player* player, const Creature* t
 	if (item->getWeaponType() == WEAPON_AMMO) {
 		Item* weapon = player->getWeapon(true);
 		if (weapon) {
-			attackValue += weapon->getAttack();
+			attackValue += 0;
 		}
 	}
 
@@ -800,12 +800,12 @@ int32_t WeaponDistance::getElementDamage(const Player* player, const Creature* t
 
 int32_t WeaponDistance::getWeaponDamage(const Player* player, const Creature* target, const Item* item, bool maxDamage /*= false*/) const
 {
-	int32_t attackValue = item->getAttack();
+	int32_t attackValue = 0;
 
 	if (item->getWeaponType() == WEAPON_AMMO) {
 		Item* weapon = player->getWeapon(true);
 		if (weapon) {
-			attackValue += weapon->getAttack();
+			attackValue += 0;
 		}
 	}
 

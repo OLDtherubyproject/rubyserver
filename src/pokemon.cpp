@@ -1831,9 +1831,8 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 		}
 		corpse->setCorpseGender(getSkull());
 		corpse->setCorpseType(mType->typeName);
+		corpse->setPokemonIsShiny(isShiny);
 	}
-
-	std::cout << sizeof(this) << std::endl;
 
 	return corpse;
 }

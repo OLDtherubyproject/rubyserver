@@ -970,8 +970,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_PLURALNAME;
 	} else if (str == "weight") {
 		return ITEM_ATTRIBUTE_WEIGHT;
-	} else if (str == "attack") {
-		return ITEM_ATTRIBUTE_ATTACK;
+	} else if (str == "pokeballischarged") {
+		return ITEM_ATTRIBUTE_POKEBALLISCHARGED;
 	} else if (str == "defense") {
 		return ITEM_ATTRIBUTE_DEFENSE;
 	} else if (str == "extradefense") {
@@ -1004,6 +1004,10 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_CORPSETYPE;
 	} else if (str == "pokemonid") {
 		return ITEM_ATTRIBUTE_POKEMONID;
+	} else if (str == "pokemontype") {
+		return ITEM_ATTRIBUTE_POKEMONTYPE;
+	} else if (str == "pokemonisshiny") {
+		return ITEM_ATTRIBUTE_POKEMONISSHINY;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

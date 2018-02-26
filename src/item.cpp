@@ -511,13 +511,13 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_ATTACK: {
-			int32_t attack;
-			if (!propStream.read<int32_t>(attack)) {
+		case ATTR_POKEBALLISCHARGED: {
+			uint8_t attack;
+			if (!propStream.read<uint8_t>(attack)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setIntAttr(ITEM_ATTRIBUTE_ATTACK, attack);
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED, attack);
 			break;
 		}
 
@@ -608,6 +608,26 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			}
 
 			setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonid);
+			break;
+		}
+
+		case ATTR_POKEMONTYPE: {
+			std::string type;
+			if (!propStream.readString(type)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE, type);
+			break;
+		}
+
+		case ATTR_POKEMONISSHINY: {
+			uint8_t pokemonisshiny;
+			if (!propStream.read<uint8_t>(pokemonisshiny)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY, pokemonisshiny);
 			break;
 		}
 
@@ -786,9 +806,9 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_WEIGHT));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_ATTACK)) {
-		propWriteStream.write<uint8_t>(ATTR_ATTACK);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_ATTACK));
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEBALLISCHARGED)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEBALLISCHARGED);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_DEFENSE)) {
@@ -832,8 +852,18 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
-		propWriteStream.write<uint32_t>(ATTR_POKEMONID);
+		propWriteStream.write<uint8_t>(ATTR_POKEMONID);
 		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONID));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEMONTYPE);
+		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEMONISSHINY);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
@@ -898,6 +928,10 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 	if (item) {
 		subType = item->getSubType();
+	}
+
+	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)) {
+		s << ". \nIt contains a " << item->getPokemonType();
 	}
 
 	if (Pokeball* pokeball = g_pokeballs.getPokeball(it.id)) {
@@ -974,10 +1008,10 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			int32_t attack;
 			int8_t hitChance;
 			if (item) {
-				attack = item->getAttack();
-				hitChance = item->getHitChance();
+				attack = 0;
+				hitChance = 0;
 			} else {
-				attack = it.attack;
+				attack = 0;
 				hitChance = it.hitChance;
 			}
 
@@ -994,11 +1028,11 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 			int32_t attack, defense, extraDefense;
 			if (item) {
-				attack = item->getAttack();
+				attack = 0;
 				defense = item->getDefense();
 				extraDefense = item->getExtraDefense();
 			} else {
-				attack = it.attack;
+				attack = 0;
 				defense = it.defense;
 				extraDefense = it.extraDefense;
 			}

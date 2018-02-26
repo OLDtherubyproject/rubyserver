@@ -940,11 +940,11 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool u
 
 			int32_t attackValue = 7;
 			if (weapon) {
-				attackValue = tool->getAttack();
+				attackValue = 0;
 				if (tool->getWeaponType() == WEAPON_AMMO) {
 					Item* item = player->getWeapon(true);
 					if (item) {
-						attackValue += item->getAttack();
+						attackValue += 0;
 					}
 				}
 
