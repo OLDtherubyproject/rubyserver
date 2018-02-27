@@ -2390,7 +2390,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 			writeToOutputBuffer(msg);
 		}
 
-		if (isLogin) {
+		if (isLogin && !(creature->isSummon() && creature->getMaster()->getPlayer())) {
 			sendMagicEffect(pos, CONST_ME_TELEPORT);
 		}
 		return;
