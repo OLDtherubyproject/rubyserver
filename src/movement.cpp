@@ -26,8 +26,11 @@
 
 #include "movement.h"
 
+#include "pokemon.h"
+
 extern Game g_game;
 extern Vocations g_vocations;
+extern Pokemons g_pokemons;
 
 MoveEvents::MoveEvents() :
 	scriptInterface("MoveEvents Interface")
@@ -308,13 +311,18 @@ uint32_t MoveEvents::onCreatureMove(Creature* creature, const Tile* tile, MoveEv
 uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, bool isCheck)
 {
 	// portrait appear
-	if (slot == CONST_SLOT_POKEBALL) {
-		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
+	if ((item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)
+    && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) && (slot == CONST_SLOT_POKEBALL)) {
+		PokemonType* pType = g_pokemons.getPokemonType(item->getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE));
+		if (!pType) {
+			return 1;
+		}
 
+		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 		if (portrait) {
-			g_game.transformItem(portrait, 2488, 0);
+			g_game.transformItem(portrait, pType->info.portrait);
 		} else {
-			Item* item = Item::CreateItem(2488, 1);
+			Item* item = Item::CreateItem(pType->info.portrait, 1);
 			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
 		}
 	}
@@ -329,7 +337,8 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 uint32_t MoveEvents::onPlayerDeEquip(Player* player, Item* item, slots_t slot)
 {
 	// portrait disappear
-	if (slot == CONST_SLOT_POKEBALL) {
+	if ((item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)
+    && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) && (slot == CONST_SLOT_POKEBALL)) {
 		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 
 		if (portrait) {
