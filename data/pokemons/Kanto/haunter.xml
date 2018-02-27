@@ -3,6 +3,8 @@
 	<health now="80" max="80" />
 	<look type="93" corpse="6049" />
 	<targetchange interval="4000" chance="0" />
+	<portrait id="2459" />
+	<icon charged="2143" discharged="2144" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
@@ -22,6 +24,7 @@
 		<flag runonhealth="15" />
 		<flag canwalkonenergy="0" />
 		<flag canwalkonfire="0" />
+		<flag ghost="1" />
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-20" />
