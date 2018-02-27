@@ -482,7 +482,10 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 	if (const Creature* creature = thing.getCreature()) {
 		if (const Pokemon* pokemon = creature->getPokemon()) {
 			if (pokemon->isGhost()){
-				//return RETURNVALUE_NOERROR;
+				if ((!pokemon->isSummon() && !hasFlag(TILESTATE_PROTECTIONZONE)) || 
+				    (pokemon->isSummon() && pokemon->getMaster()->getPlayer())) {
+					return RETURNVALUE_NOERROR;
+				}
 			}
 		}
 
