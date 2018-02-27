@@ -98,7 +98,7 @@ enum AttrTypes_t {
 	ATTR_PLURALNAME = 26,
 	ATTR_WEIGHT = 27,
 	ATTR_POKEBALLISCHARGED = 28,
-	ATTR_DEFENSE = 29,
+	ATTR_POKEBALLID = 29,
 	ATTR_EXTRADEFENSE = 30,
 	ATTR_ARMOR = 31,
 	ATTR_HITCHANCE = 32,
@@ -242,6 +242,13 @@ class ItemAttributes
 		}
 		uint8_t getPokeballIsCharged() const {
 			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED);
+		}
+
+		void setPokeballId(uint32_t pokeballId) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLID, pokeballId);
+		}
+		uint32_t getPokeballId() const {
+			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLID);
 		}
 
 		void setDuration(int32_t time) {
@@ -838,6 +845,16 @@ class Item : virtual public Thing
 			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED);
 		}
 
+		void setPokeballId(uint32_t pokeballId) {
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLID, pokeballId);
+		}
+		uint32_t getPokeballId() const {
+			if (!attributes) {
+				return 0;
+			}
+			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLID);
+		}
+
 		void setDuration(int32_t time) {
 			setIntAttr(ITEM_ATTRIBUTE_DURATION, time);
 		}
@@ -930,12 +947,6 @@ class Item : virtual public Thing
 				return getIntAttr(ITEM_ATTRIBUTE_ARMOR);
 			}
 			return items[id].armor;
-		}
-		int32_t getDefense() const {
-			if (hasAttribute(ITEM_ATTRIBUTE_DEFENSE)) {
-				return getIntAttr(ITEM_ATTRIBUTE_DEFENSE);
-			}
-			return items[id].defense;
 		}
 		int32_t getExtraDefense() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_EXTRADEFENSE)) {

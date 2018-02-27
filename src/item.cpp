@@ -521,13 +521,13 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_DEFENSE: {
-			int32_t defense;
-			if (!propStream.read<int32_t>(defense)) {
+		case ATTR_POKEBALLID: {
+			uint32_t pokeballId;
+			if (!propStream.read<uint32_t>(pokeballId)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setIntAttr(ITEM_ATTRIBUTE_DEFENSE, defense);
+			setIntAttr(ITEM_ATTRIBUTE_POKEBALLID, pokeballId);
 			break;
 		}
 
@@ -811,9 +811,9 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_DEFENSE)) {
-		propWriteStream.write<uint8_t>(ATTR_DEFENSE);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_DEFENSE));
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEBALLID)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEBALLID);
+		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_POKEBALLID));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_EXTRADEFENSE)) {
@@ -1029,7 +1029,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			int32_t attack, defense, extraDefense;
 			if (item) {
 				attack = 0;
-				defense = item->getDefense();
+				defense = 0;
 				extraDefense = item->getExtraDefense();
 			} else {
 				attack = 0;

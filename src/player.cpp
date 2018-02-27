@@ -320,7 +320,7 @@ void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 				break;
 
 			case WEAPON_SHIELD: {
-				if (!shield || item->getDefense() > shield->getDefense()) {
+				if (!shield || 0 > 0) {
 					shield = item;
 				}
 				break;
@@ -343,12 +343,12 @@ int32_t Player::getDefense() const
 	getShieldAndWeapon(shield, weapon);
 
 	if (weapon) {
-		defenseValue = weapon->getDefense() + weapon->getExtraDefense();
+		defenseValue = 0 + weapon->getExtraDefense();
 		defenseSkill = getWeaponSkill(weapon);
 	}
 
 	if (shield) {
-		defenseValue = weapon != nullptr ? shield->getDefense() + weapon->getExtraDefense() : shield->getDefense();
+		defenseValue = weapon != nullptr ? 0 + weapon->getExtraDefense() : 0;
 		defenseSkill = getSkillLevel(SKILL_SHIELD);
 	}
 

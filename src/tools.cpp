@@ -972,8 +972,8 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_WEIGHT;
 	} else if (str == "pokeballischarged") {
 		return ITEM_ATTRIBUTE_POKEBALLISCHARGED;
-	} else if (str == "defense") {
-		return ITEM_ATTRIBUTE_DEFENSE;
+	} else if (str == "pokeballid") {
+		return ITEM_ATTRIBUTE_POKEBALLID;
 	} else if (str == "extradefense") {
 		return ITEM_ATTRIBUTE_EXTRADEFENSE;
 	} else if (str == "armor") {
