@@ -26,6 +26,7 @@
 #include "configmanager.h"
 #include "container.h"
 #include "game.h"
+#include "pokemon.h"
 #include "pugicast.h"
 #include "moves.h"
 
@@ -34,6 +35,7 @@ extern Moves* g_moves;
 extern Actions* g_actions;
 extern ConfigManager g_config;
 extern Pokeballs g_pokeballs;
+extern Pokemons g_pokemons;
 
 Actions::Actions() :
 	scriptInterface("Action Interface")
@@ -351,6 +353,60 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 
 	if (isHotkey) {
 		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
+	}
+
+	// Goback system
+	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)
+    && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) {
+		if (player->getInventoryItem(CONST_SLOT_POKEBALL) != item) {
+			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must put your pokeball on right place.");
+			return false;
+		}
+
+		PokemonType* pType = g_pokemons.getPokemonType(item->getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE));
+		if (!pType) {
+			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokémon Type not found! Please contact an administrator.");
+			return false;
+		}
+
+		Pokemon* pokemon;
+
+		// Discharged
+		if (pType->info.iconDischarged == item->getID()) {
+			pokemon = static_cast<Pokemon*>(player->getHisPokemon());
+			if (!pokemon) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must have a Pokémon first.");
+				return false;
+			}
+
+			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pType->typeName + ", nice work.", false);
+			g_game.addMagicEffect(pokemon->getPosition(), CONST_ME_GOBACK_POKEBALL);
+			g_game.removeCreature(pokemon, false);
+			g_game.transformItem(item, pType->info.iconCharged);
+			return true;
+		}
+
+		// Charged
+		if (pType->info.iconCharged == item->getID()) {
+			if (player->getHisPokemon()) {
+				return false;
+			}
+
+			pokemon = Pokemon::createPokemon(pType->typeName);
+			if (!pokemon) {
+				return false;
+			}
+
+			pokemon->setMaster(player);
+			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pType->typeName + ", I choose you!", false);
+			g_game.placeCreature(pokemon, player->getPosition());
+			g_game.addMagicEffect(pokemon->getPosition(), CONST_ME_GOBACK_POKEBALL);
+			g_game.transformItem(item, pType->info.iconDischarged);
+			return true;
+		}
+
+		g_game.transformItem(item, pType->info.iconCharged);
+		return true;
 	}
 
 	ReturnValue ret = internalUseItem(player, pos, index, item, isHotkey);
