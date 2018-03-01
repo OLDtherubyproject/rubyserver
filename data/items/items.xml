@@ -3927,13 +3927,11 @@
 	<item id="2805" article="a" name="troll green">
 		<attribute key="weight" value="100" />
 	</item>
-	<item id="2806" article="a" name="dead troll">
-		<attribute key="weight" value="60000" />
+	<item id="2806" article="a" name="fainted bulbasaur">
 		<attribute key="containerSize" value="10" />
-		<attribute key="decayTo" value="2810" />
-		<attribute key="duration" value="600" />
+		<attribute key="decayTo" value="0" />
+		<attribute key="duration" value="30" />
 		<attribute key="type" value="corpse" />
-		<attribute key="fluidSource" value="blood" />
 	</item>
 	<item id="2807" article="a" name="dead spider">
 		<attribute key="weight" value="4600" />
