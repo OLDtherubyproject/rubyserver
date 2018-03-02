@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Charizard" nameDescription="a charizard" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
-	<look type="6" corpse="6049" />
+	<look type="6" corpse="2930" />
 	<targetchange interval="4000" chance="0" />
-		<portrait id="2381" />
+	<portrait id="2381" />
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />

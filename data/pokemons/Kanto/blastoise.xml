@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Blastoise" nameDescription="a blastoise" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
-	<look type="7" corpse="6049" />
+	<look type="9" corpse="2817" />
 	<targetchange interval="4000" chance="0" />
-			<portrait id="2384" />
+	<portrait id="2384" />
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />

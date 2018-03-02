@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Beedrill" nameDescription="a beedrill" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
-	<look type="15" corpse="6049" />
+	<look type="15" corpse="2823" />
 	<targetchange interval="4000" chance="0" />
 			<portrait id="2390" />
 	<flags>

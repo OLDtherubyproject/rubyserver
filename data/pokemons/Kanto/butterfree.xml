@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Butterfree" nameDescription="a butterfree" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
-	<look type="12" corpse="6049" />
+	<look type="12" corpse="2820" />
 	<targetchange interval="4000" chance="0" />
-			<portrait id="2387" />
+	<portrait id="2387" />
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />

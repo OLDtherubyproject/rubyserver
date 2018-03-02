@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Dodrio" nameDescription="a dodrio" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<health now="80" max="80" />
-	<look type="85" corpse="6049" />
+	<look type="85" corpse="2902" />
 	<targetchange interval="4000" chance="0" />
 	<genders>
 		<gender name="male" percentage="50" />

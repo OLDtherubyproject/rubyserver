@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Caterpie" nameDescription="a caterpie" blood="green" experience="23" speed="150" manacost="300">
 	<health now="80" max="80" />
-	<look type="10" corpse="6049" />
+	<look type="10" corpse="2818" />
 	<targetchange interval="4000" chance="0" />
-			<portrait id="2385" />
+	<portrait id="2385" />
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />

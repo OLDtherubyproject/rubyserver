@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Rhydon" nameDescription="a rhydon" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<health now="80" max="80" />
-	<look type="112" corpse="6049" />
+	<look type="112" corpse="2997" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2478" />
 	<genders>

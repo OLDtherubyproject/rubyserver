@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pokemon name="Weedle" nameDescription="a weedle" blood="green" experience="23" speed="150" manacost="300" catchRate="1">
 	<health now="80" max="80" />
-	<look type="13" corpse="6049" />
+	<look type="13" corpse="2821" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2388" />
 	<genders>
