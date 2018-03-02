@@ -3,6 +3,7 @@
 	<health now="80" max="80" />
 	<look type="126" corpse="6049" />
 	<targetchange interval="4000" chance="0" />
+	<portrait id="2492" />
 	<genders>
         <gender name="male" percentage="75" />
         <gender name="female" percentage="25" />
