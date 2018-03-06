@@ -27,6 +27,7 @@
 class Creature;
 class Game;
 class Spawn;
+class Pokeball;
 
 using CreatureHashSet = std::unordered_set<Creature*>;
 using CreatureList = std::list<Creature*>;
@@ -69,7 +70,7 @@ class Pokemon final : public Creature
 		void addList() override;
 
 		const std::string& getName() const override {
-			return mType->name;
+			return name;
 		}
 		const std::string& getNameDescription() const override {
 			return mType->nameDescription;
@@ -140,17 +141,47 @@ class Pokemon final : public Creature
 		bool canSeeInvisibility() const override {
 			return isImmune(CONDITION_INVISIBLE);
 		}
-		uint32_t getManaCost() const {
-			return mType->info.manaCost;
-		}
 		double getCatchRate() const {
 			return mType->info.catchRate;
 		}
 		Natures_t getNature() const {
 			return nature;
 		}
+		uint16_t getHPNow() const {
+			return ivs.hp * 30;
+		}
+		uint16_t getHP() const {
+			return ivs.hp;
+		}
+		uint16_t getAtk() const {
+			return ivs.attack;
+		}
+		uint16_t getDef() const {
+			return ivs.defense;
+		}
+		uint16_t getSpeed() const {
+			return ivs.speed;
+		}
+		uint16_t getSpAtk() const {
+			return ivs.special_attack;
+		}
+		uint16_t getSpDef() const {
+			return ivs.special_defense;
+		}
 		void setSpawn(Spawn* spawn) {
 			this->spawn = spawn;
+		}
+		void setNature(Natures_t nature) {
+			this->nature = nature;
+		}
+		void setName(std::string name) {
+			this->name = name;
+		}
+		void setMaxHealth(int32_t healthMax) {
+			this->healthMax = health;
+		}
+		void setHealth(int32_t health) {
+			this->health = health;
 		}
 		bool canWalkOnFieldType(CombatType_t combatType) const;
 
@@ -203,6 +234,10 @@ class Pokemon final : public Creature
 			return ignoreFieldDamage;
 		}
 
+		Pokeball* getPokeballType() const {
+			return pokeballType;
+		}
+
 		bool teleportToPlayer();
 
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
@@ -214,12 +249,16 @@ class Pokemon final : public Creature
 		CreatureHashSet friendList;
 		CreatureList targetList;
 
+		std::string name;
 		std::string strDescription;
 
 		PokemonType* mType;
 		Spawn* spawn = nullptr;
+		Pokeball* pokeballType = nullptr;
 
-		Natures_t nature = static_cast<Natures_t>(uniform_random(1, 25));;
+		Natures_t nature = static_cast<Natures_t>(uniform_random(1, 25));
+		PokemonEVs evs = {};
+		PokemonIVs ivs = {};
 
 		int64_t lastMeleeAttack = 0;
 

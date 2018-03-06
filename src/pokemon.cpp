@@ -54,6 +54,13 @@ Pokemon::Pokemon(PokemonType* mType) :
 	baseSpeed = mType->info.baseSpeed;
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
+	name = mType->name;
+	ivs.hp = uniform_random(1, 31);
+	ivs.attack = uniform_random(1, 31);
+	ivs.defense = uniform_random(1, 31);
+	ivs.speed = uniform_random(1, 31);
+	ivs.special_attack = uniform_random(1, 31);
+	ivs.special_defense = uniform_random(1, 31);
 
 	randomGender();
 
@@ -1802,6 +1809,11 @@ void Pokemon::death(Creature*)
 
 Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 {
+	if(isSummon() && getMaster()->getPlayer()) {
+		g_game.addMagicEffect(getPosition(), pokeballType->getGoback());
+		return nullptr;
+	}
+
 	Item* corpse;
 
 	if (isDitto) {

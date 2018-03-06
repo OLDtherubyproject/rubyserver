@@ -548,12 +548,16 @@ struct PokemonBaseStats {
 };
 
 struct PokemonIVs {
-	uint8_t hp = 0;
-	uint8_t attack = 0;
-	uint8_t defense = 0;
-	uint8_t special_attack = 0;
-	uint8_t special_defense = 0;
-	uint8_t speed = 0;
+	uint16_t hp = 0;
+	uint16_t attack = 0;
+	uint16_t defense = 0;
+	uint16_t speed = 0;
+	uint16_t special_attack = 0;
+	uint16_t special_defense = 0;
+	constexpr PokemonIVs() = default;
+	constexpr PokemonIVs(uint8_t hp, uint8_t attack, uint8_t defense, uint8_t speed, uint8_t special_attack, 
+	                     uint8_t special_defense) : hp(hp), attack(attack), defense(defense), speed(speed), 
+						 special_attack(special_attack), special_defense(special_defense) {}
 };
 
 struct PokemonEVs {
