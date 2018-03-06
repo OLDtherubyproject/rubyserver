@@ -48,6 +48,13 @@ bool Pokeballs::loadFromXml()
                                         std::forward_as_tuple(id));
 		Pokeball& ball = res.first->second;
 
+		if ((attr = pokeballNode.attribute("serverid"))) {
+			ball.serverid = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball serverid" << std::endl;
+			continue;
+		}
+
 		if ((attr = pokeballNode.attribute("name"))) {
 			ball.name = attr.as_string();
 		} else {
@@ -87,6 +94,13 @@ bool Pokeballs::loadFromXml()
 			ball.catchFail = pugi::cast<uint16_t>(attr.value());
 		} else {
 			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball catchFail effect id" << std::endl;
+			continue;
+		}
+
+		if ((attr = pokeballNode.attribute("shotEffect"))) {
+			ball.shotEffect = pugi::cast<uint16_t>(attr.value());
+		} else {
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing shot effect id" << std::endl;
 			continue;
 		}
 
@@ -163,6 +177,16 @@ Pokeball* Pokeballs::getPokeball(uint16_t id)
 		return nullptr;
 	}
 	return &it->second;
+}
+
+Pokeball* Pokeballs::getPokeballByServerId(uint16_t id)
+{
+	for (auto& it : pokeballsMap) {
+		if (it.second.serverid == id) {
+			return &it.second;
+		}
+	}
+	return nullptr;
 }
 
 int32_t Pokeballs::getPokeballId(const std::string& name) const

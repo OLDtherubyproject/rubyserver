@@ -30,6 +30,10 @@ class Pokeball
 	public:
 		explicit Pokeball(uint16_t id) : id(id) {}
 
+		uint16_t getServerId() const {
+			return serverid;
+		}
+
 		uint16_t getId() const {
 			return id;
 		}
@@ -58,6 +62,10 @@ class Pokeball
 			return catchFail;
 		}
 
+		uint16_t getShotEffect() const {
+			return shotEffect;
+		}
+
 		uint32_t getLevel() const {
 			return level;
 		}
@@ -75,12 +83,14 @@ class Pokeball
 
 		std::string name = "none";
 
+		uint16_t serverid;
 		uint16_t id;
         uint16_t charged;
         uint16_t discharged;
         uint16_t goback;
         uint16_t catchSuccess;
         uint16_t catchFail;
+		uint16_t shotEffect;
 		uint32_t level = 0;
 
         Rates_t rates = {};
@@ -92,6 +102,7 @@ class Pokeballs
 		bool loadFromXml();
 
 		Pokeball* getPokeball(uint16_t id);
+		Pokeball* getPokeballByServerId(uint16_t id);
 		int32_t getPokeballId(const std::string& name) const;
 		void clear();
 		bool reload();
