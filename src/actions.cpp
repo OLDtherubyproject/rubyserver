@@ -356,56 +356,69 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 	}
 
 	// Goback system
-	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)
-    && item->hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) {
+	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
 		if (player->getInventoryItem(CONST_SLOT_POKEBALL) != item) {
 			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must put your pokeball on right place.");
 			return false;
 		}
 
-		PokemonType* pType = g_pokemons.getPokemonType(item->getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE));
-		if (!pType) {
-			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokémon Type not found! Please contact an administrator.");
+		PokemonType* pokemonType = g_game.loadPokemonTypeById(item->getPokemonId());
+		if (!pokemonType) {
+			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon Type not found! Please contact an administrator.");
 			return false;
 		}
 
 		Pokemon* pokemon;
-
 		// Discharged
-		if (pType->info.iconDischarged == item->getID()) {
+		if (pokemonType->info.iconDischarged == item->getID()) {
 			pokemon = static_cast<Pokemon*>(player->getHisPokemon());
 			if (!pokemon) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must have a Pokémon first.");
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must have a Pokemon first.");
 				return false;
 			}
 
-			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pType->typeName + ", nice work.", false);
-			g_game.addMagicEffect(pokemon->getPosition(), CONST_ME_GOBACK_POKEBALL);
+			Pokeball* pokeballType = pokemon->getPokeballType();
+			if (!pokeballType) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Invalid pokeball.");
+				return false;
+			}
+
+			g_game.savePokemon(pokemon, pokeballType);
+			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemonType->name + ", nice work.", false);
+			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
 			g_game.removeCreature(pokemon, false);
-			g_game.transformItem(item, pType->info.iconCharged);
+			g_game.transformItem(item, pokemonType->info.iconCharged);
 			return true;
 		}
 
 		// Charged
-		if (pType->info.iconCharged == item->getID()) {
+		if (pokemonType->info.iconCharged == item->getID()) {
 			if (player->getHisPokemon()) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You already have a Pokemon.");
 				return false;
 			}
 
-			pokemon = Pokemon::createPokemon(pType->typeName);
+			pokemon = g_game.loadPokemonById(item->getIntAttr(ITEM_ATTRIBUTE_POKEMONID));
 			if (!pokemon) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon not found! Please contact an administrator.");
+				return false;
+			}
+
+			Pokeball* pokeballType = pokemon->getPokeballType();
+			if (!pokeballType) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Invalid pokeball.");
 				return false;
 			}
 
 			pokemon->setMaster(player);
-			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pType->typeName + ", I choose you!", false);
+			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemonType->name + ", I choose you!", false);
 			g_game.placeCreature(pokemon, player->getPosition());
-			g_game.addMagicEffect(pokemon->getPosition(), CONST_ME_GOBACK_POKEBALL);
-			g_game.transformItem(item, pType->info.iconDischarged);
+			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
+			g_game.transformItem(item, pokemonType->info.iconDischarged);
 			return true;
 		}
 
-		g_game.transformItem(item, pType->info.iconCharged);
+		g_game.transformItem(item, pokemonType->info.iconCharged);
 		return true;
 	}
 
