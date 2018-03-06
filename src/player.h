@@ -1144,6 +1144,10 @@ class Player final : public Creature, public Cylinder
 		void forgetInstantMove(const std::string& moveName);
 		bool hasLearnedInstantMove(const std::string& moveName) const;
 
+		Creature* const getHisPokemon() const {
+			return summons.front();
+		}
+
 	private:
 		std::forward_list<Condition*> getMuteConditions() const;
 
@@ -1320,10 +1324,6 @@ class Player final : public Creature, public Cylinder
 			} else {
 				baseSpeed = PLAYER_MAX_SPEED;
 			}
-		}
-
-		Creature* const getHisPokemon() const {
-			return summons.front();
 		}
 
 		bool isPromoted() const;
