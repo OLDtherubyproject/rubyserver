@@ -795,7 +795,7 @@ void Events::eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_
 	scriptInterface.resetScriptEnv();
 }
 
-bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item) {
+bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType, Pokeball* pokeballType, Item* pokeball) {
 	// Player:onCatchPokemon(player, pokemonType, pokeball, item) or Player.onMoveItem(self, player, pokemonType, pokeball, item)
 	if (info.playerOnCatchPokemon == -1) {
 		return true;
@@ -803,6 +803,10 @@ bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeb
 
 	if (!scriptInterface.reserveScriptEnv()) {
 		std::cout << "[Error - Events::eventPlayerOnMoveItem] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	if(!player || !pokemonType || !pokeballType || !pokeball){
 		return false;
 	}
 
@@ -815,19 +819,19 @@ bool Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeb
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 
-	LuaScriptInterface::pushUserdata<PokemonType>(L, pType);
+	LuaScriptInterface::pushUserdata<PokemonType>(L, pokemonType);
 	LuaScriptInterface::setMetatable(L, -1, "PokemonType");
 
-	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeball);
+	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeballType);
 	LuaScriptInterface::setMetatable(L, -1, "Pokeball");
 
-	LuaScriptInterface::pushUserdata<Item>(L, item);
-	LuaScriptInterface::setItemMetatable(L, -1, item);
+	LuaScriptInterface::pushUserdata<Item>(L, pokeball);
+	LuaScriptInterface::setItemMetatable(L, -1, pokeball);
 
 	return scriptInterface.callFunction(4);
 }
 
-bool Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item) {
+bool Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonType, Pokeball* pokeballType) {
 	// Player:onDontCatchPokemon(player, pokemonType, pokeball, item) or Player.onMoveItem(self, player, pokemonType, pokeball, item)
 	if (info.playerOnDontCatchPokemon == -1) {
 		return true;
@@ -835,6 +839,10 @@ bool Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, P
 
 	if (!scriptInterface.reserveScriptEnv()) {
 		std::cout << "[Error - Events::eventPlayerOnMoveItem] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	if(!player || !pokemonType || !pokeballType){
 		return false;
 	}
 
@@ -847,14 +855,11 @@ bool Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, P
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 
-	LuaScriptInterface::pushUserdata<PokemonType>(L, pType);
+	LuaScriptInterface::pushUserdata<PokemonType>(L, pokemonType);
 	LuaScriptInterface::setMetatable(L, -1, "PokemonType");
 
-	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeball);
+	LuaScriptInterface::pushUserdata<Pokeball>(L, pokeballType);
 	LuaScriptInterface::setMetatable(L, -1, "Pokeball");
 
-	LuaScriptInterface::pushUserdata<Item>(L, item);
-	LuaScriptInterface::setItemMetatable(L, -1, item);
-
-	return scriptInterface.callFunction(4);
+	return scriptInterface.callFunction(3);
 }

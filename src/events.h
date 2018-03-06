@@ -93,8 +93,8 @@ class Events
 		void eventPlayerOnGainExperience(Player* player, Creature* source, uint64_t& exp, uint64_t rawExp);
 		void eventPlayerOnLoseExperience(Player* player, uint64_t& exp);
 		void eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_t& tries);
-		bool eventPlayerOnCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item);
-		bool eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pType, Pokeball* pokeball, Item* item);
+		bool eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType, Pokeball* pokeballType, Item* pokeball);
+		bool eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonType, Pokeball* pokeballType);
 
 	private:
 		LuaScriptInterface scriptInterface;
