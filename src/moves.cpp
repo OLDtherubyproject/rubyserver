@@ -525,12 +525,6 @@ bool Move::playerMoveCheck(Player* player) const
 		return false;
 	}
 
-	if (player->getMana() < getManaCost(player) && !player->hasFlag(PlayerFlag_HasInfiniteMana)) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHMANA);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
 	if (player->getSoul() < soul && !player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
 		player->sendCancelMessage(RETURNVALUE_NOTENOUGHSOUL);
 		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
@@ -713,15 +707,15 @@ void Move::postCastMove(Player* player, bool finishedCast /*= true*/, bool payCo
 	}
 
 	if (payCost) {
-		Move::postCastMove(player, getManaCost(player), getSoulCost());
+		Move::postCastMove(player, 0, getSoulCost());
 	}
 }
 
 void Move::postCastMove(Player* player, uint32_t manaCost, uint32_t soulCost)
 {
-	if (manaCost > 0) {
-		player->addManaSpent(manaCost);
-		player->changeMana(-static_cast<int32_t>(manaCost));
+	if (0 > 0) {
+		player->addManaSpent(0);
+		player->changeMana(-static_cast<int32_t>(0));
 	}
 
 	if (!player->hasFlag(PlayerFlag_HasInfiniteSoul)) {

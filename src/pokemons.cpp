@@ -681,10 +681,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		mType->info.baseSpeed = pugi::cast<int32_t>(attr.value());
 	}
 
-	if ((attr = pokemonNode.attribute("manacost"))) {
-		mType->info.manaCost = pugi::cast<uint32_t>(attr.value());
-	}
-
 	if ((attr = pokemonNode.attribute("catchRate"))) {
 		mType->info.catchRate = pugi::cast<double>(attr.value());
 	}

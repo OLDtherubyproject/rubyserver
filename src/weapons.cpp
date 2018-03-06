@@ -288,7 +288,7 @@ int32_t Weapon::playerWeaponCheck(Player* player, Creature* target, uint8_t shoo
 			return 0;
 		}
 
-		if (player->getMana() < getManaCost(player)) {
+		if (player->getMana() < 0) {
 			return 0;
 		}
 
@@ -411,7 +411,7 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 		}
 	}
 
-	uint32_t manaCost = getManaCost(player);
+	uint32_t manaCost = 0;
 	if (manaCost != 0) {
 		player->addManaSpent(manaCost);
 		player->changeMana(-static_cast<int32_t>(manaCost));

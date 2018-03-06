@@ -1269,7 +1269,6 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetOutfit(lua_State* L);
 		static int luaPokemonTypeGetBlood(lua_State* L);
 		static int luaPokemonTypeGetCorpseId(lua_State* L);
-		static int luaPokemonTypeGetManaCost(lua_State* L);
 		static int luaPokemonTypeGetCatchRate(lua_State* L);
 		static int luaPokemonTypeGetBaseSpeed(lua_State* L);
 		static int luaPokemonTypeGetLight(lua_State* L);
@@ -1308,7 +1307,6 @@ class LuaScriptInterface
 		// Moves
 		static int luaMoveCreate(lua_State* L);
 
-		static int luaMoveGetManaCost(lua_State* L);
 		static int luaMoveGetSoulCost(lua_State* L);
 
 		static int luaMoveIsPremium(lua_State* L);

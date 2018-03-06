@@ -118,7 +118,6 @@ class PokemonType
 
 		uint64_t experience = 0;
 
-		uint32_t manaCost = 0;
 		uint32_t yellChance = 0;
 		uint32_t yellSpeedTicks = 0;
 		uint32_t staticAttackChance = 95;

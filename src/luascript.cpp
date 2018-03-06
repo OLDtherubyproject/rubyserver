@@ -2694,7 +2694,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "getOutfit", LuaScriptInterface::luaPokemonTypeGetOutfit);
 	registerMethod("PokemonType", "getBlood", LuaScriptInterface::luaPokemonTypeGetBlood);
 	registerMethod("PokemonType", "getCorpseId", LuaScriptInterface::luaPokemonTypeGetCorpseId);
-	registerMethod("PokemonType", "getManaCost", LuaScriptInterface::luaPokemonTypeGetManaCost);
 	registerMethod("PokemonType", "getCatchRate", LuaScriptInterface::luaPokemonTypeGetCatchRate);
 	registerMethod("PokemonType", "getBaseSpeed", LuaScriptInterface::luaPokemonTypeGetBaseSpeed);
 	registerMethod("PokemonType", "getLight", LuaScriptInterface::luaPokemonTypeGetLight);
@@ -2736,7 +2735,6 @@ void LuaScriptInterface::registerFunctions()
 	registerClass("Move", "", LuaScriptInterface::luaMoveCreate);
 	registerMetaMethod("Move", "__eq", LuaScriptInterface::luaUserdataCompare);
 
-	registerMethod("Move", "getManaCost", LuaScriptInterface::luaMoveGetManaCost);
 	registerMethod("Move", "getSoulCost", LuaScriptInterface::luaMoveGetSoulCost);
 
 	registerMethod("Move", "isPremium", LuaScriptInterface::luaMoveIsPremium);
@@ -12674,18 +12672,6 @@ int LuaScriptInterface::luaPokemonTypeGetCorpseId(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPokemonTypeGetManaCost(lua_State* L)
-{
-	// pokemonType:getManaCost()
-	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
-	if (pokemonType) {
-		lua_pushnumber(L, pokemonType->info.manaCost);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaPokemonTypeGetCatchRate(lua_State* L)
 {
 	// pokemonType:getCatchRate()
@@ -13048,19 +13034,6 @@ int LuaScriptInterface::luaMoveCreate(lua_State* L)
 
 	if (move) {
 		pushInstantMove(L, *move);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaMoveGetManaCost(lua_State* L)
-{
-	// move:getManaCost(player)
-	InstantMove* move = getUserdata<InstantMove>(L, 1);
-	Player* player = getUserdata<Player>(L, 2);
-	if (move && player) {
-		lua_pushnumber(L, move->getManaCost(player));
 	} else {
 		lua_pushnil(L);
 	}
