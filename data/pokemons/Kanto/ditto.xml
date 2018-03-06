@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Ditto" nameDescription="a ditto" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
+<pokemon name="Ditto" nameDescription="a ditto" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="132" corpse="2813" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2498" />
+	<icon charged="26497" discharged="26717" />
+	<genders>
+		<gender name="male" percentage="0" />
+		<gender name="female" percentage="0" />
+	</genders>
+	<basestats>
+		<hp value= "45" />
+		<attack value="49" />
+		<defense value="49" />
+		<specialAttack value="65" />
+		<specialDefense value="65" />
+		<speed value="45" />
+	</basestats>
 	<flags>
 		<flag catchable="1" />
 		<flag summonable="1" />

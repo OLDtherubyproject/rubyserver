@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Jigglypuff" nameDescription="a jigglypuff" blood="green" experience="23" speed="150" manacost="300">
+<pokemon name="Jigglypuff" nameDescription="a jigglypuff" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="39" corpse="2848" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2414" />
+	<icon charged="26427" discharged="26646" />
+	<genders>
+        <gender name="female" percentage="100" />
+    </genders>
+	<basestats>
+		<hp value= "45" />
+		<attack value="49" />
+		<defense value="49" />
+		<specialAttack value="65" />
+		<specialDefense value="65" />
+		<speed value="45" />
+	</basestats>
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />

@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Meowth" nameDescription="a meowth" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
+<pokemon name="Meowth" nameDescription="a meowth" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="52" corpse="2857" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2427" />
+	<icon charged="26530" discharged="26751" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
 	</genders>
+	<basestats>
+		<hp value= "45" />
+		<attack value="49" />
+		<defense value="49" />
+		<specialAttack value="65" />
+		<specialDefense value="65" />
+		<speed value="45" />
+	</basestats>
 	<flags>
 		<flag catchable="1" />
 		<flag summonable="1" />
