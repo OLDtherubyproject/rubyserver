@@ -651,14 +651,14 @@ void Game::playerMoveThing(uint32_t playerId, const Position& fromPos,
 		} else {
 			playerMoveCreature(player, movingCreature, movingCreature->getPosition(), tile);
 		}
-	} else if (thing->getItem()) {
+	} else if (Item* item = thing->getItem()) {
 		Cylinder* toCylinder = internalGetCylinder(player, toPos);
 		if (!toCylinder) {
 			player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
 			return;
 		}
 
-		playerMoveItem(player, fromPos, spriteId, fromStackPos, toPos, count, thing->getItem(), toCylinder);
+		playerMoveItem(player, fromPos, spriteId, fromStackPos, toPos, count, item, toCylinder);
 	}
 }
 
@@ -5468,7 +5468,7 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 
 		pokeball->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
 		pokeball->setStrAttr(ITEM_ATTRIBUTE_NAME, pokeballType->getName());
-		pokeball->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, pokemonType->name);
+		pokeball->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, "It contains " + pokemonType->nameDescription + ".");
 		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<ReturnValue(Game::*)(Cylinder*, Item*, int32_t, uint32_t, bool)>(&Game::internalAddItem), this, player, pokeball, INDEX_WHEREEVER, 0, false)));
 		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnCatchPokemon, g_events, player, pokemonType, pokeballType, pokeball)));
 	}
@@ -5482,7 +5482,7 @@ void Game::pokemonPlayerSendEmot(Player* player, uint16_t effect) {
 		return;
 	}
 
-	if (Creature* pokemonPlayer = player->getHisPokemon()) {
+	if (Pokemon* pokemonPlayer = player->getHisPokemon()) {
 		addMagicEffect(pokemonPlayer->getPosition(), effect);
 	}
 }
@@ -5782,6 +5782,20 @@ PokemonType* Game::loadPokemonTypeById(uint32_t id)
 	}
 
 	return g_pokemons.getPokemonType(result->getString("type"));
+}
+
+Pokeball* Game::loadPokemonPokeballById(uint32_t id)
+{
+	Database& db = Database::getInstance();
+	std::ostringstream query;
+	query << "SELECT `id`, `pokeball` FROM `pokemon` WHERE `id` = " << id;
+	DBResult_ptr result = db.storeQuery(query.str());
+
+	if (!result) {
+		return nullptr;
+	}
+
+	return g_pokeballs.getPokeballByServerId(result->getNumber<uint16_t>("pokeball"));
 }
 
 Guild* Game::getGuild(uint32_t id) const

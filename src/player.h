@@ -22,6 +22,7 @@
 #define FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
 
 #include "creature.h"
+#include "pokemon.h"
 #include "container.h"
 #include "cylinder.h"
 #include "outfit.h"
@@ -1144,8 +1145,9 @@ class Player final : public Creature, public Cylinder
 		void forgetInstantMove(const std::string& moveName);
 		bool hasLearnedInstantMove(const std::string& moveName) const;
 
-		Creature* const getHisPokemon() const {
-			return summons.front();
+		Pokemon* getHisPokemon() {
+			Creature* creature = summons.front();
+			return static_cast<Pokemon*>(creature);
 		}
 
 	private:

@@ -238,6 +238,10 @@ class Pokemon final : public Creature
 			return pokeballType;
 		}
 
+		PokemonType* getPokemonType() const {
+			return mType;
+		}
+
 		bool teleportToPlayer();
 
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,

@@ -231,6 +231,25 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 		}
 	}
 
+	if (Pokemon* pokemon = player->getHisPokemon()) {
+		Item* pokeball = player->getInventoryItem(CONST_SLOT_POKEBALL);
+		if (!pokeball) {
+			return;
+		}
+
+		if (pokemon->getPokeballType()) {
+			g_game.addMagicEffect(pokemon->getPosition(), pokemon->getPokeballType()->getGoback());
+		} else {
+			g_game.addMagicEffect(pokemon->getPosition(), CONST_ME_GOBACK_POKEBALL);
+		}
+
+		pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
+		g_game.transformItem(pokeball, pokemon->getPokemonType()->info.iconCharged);
+		g_game.savePokemon(pokemon, pokemon->getPokeballType());
+		g_game.removeCreature(pokemon);
+		g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemon->getPokemonType()->name + ", nice work.", false);
+	}
+
 	disconnect();
 
 	g_game.removeCreature(player);

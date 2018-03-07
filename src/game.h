@@ -485,6 +485,7 @@ class Game
 		uint32_t savePokemon(Pokemon* pokemon, Pokeball* pokeballType);
 		Pokemon* loadPokemonById(uint32_t id);
 		PokemonType* loadPokemonTypeById(uint32_t id);
+		Pokeball* loadPokemonPokeballById(uint32_t id);
 
 		Guild* getGuild(uint32_t id) const;
 		void addGuild(Guild* guild);

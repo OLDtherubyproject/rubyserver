@@ -371,7 +371,7 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 		Pokemon* pokemon;
 		// Discharged
 		if (pokemonType->info.iconDischarged == item->getID()) {
-			pokemon = static_cast<Pokemon*>(player->getHisPokemon());
+			pokemon = player->getHisPokemon();
 			if (!pokemon) {
 				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must have a Pokemon first.");
 				return false;
@@ -388,6 +388,7 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
 			g_game.removeCreature(pokemon, false);
 			g_game.transformItem(item, pokemonType->info.iconCharged);
+			item->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
 			return true;
 		}
 
@@ -415,6 +416,7 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 			g_game.placeCreature(pokemon, player->getPosition());
 			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
 			g_game.transformItem(item, pokemonType->info.iconDischarged);
+			item->setIntAttr(ITEM_ATTRIBUTE_UNIQUEID, 1);
 			return true;
 		}
 
