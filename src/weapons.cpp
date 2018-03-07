@@ -288,7 +288,7 @@ int32_t Weapon::playerWeaponCheck(Player* player, Creature* target, uint8_t shoo
 			return 0;
 		}
 
-		if (player->getMana() < 0) {
+		if (player->getMana() < 10) {
 			return 0;
 		}
 
