@@ -1146,8 +1146,14 @@ class Player final : public Creature, public Cylinder
 		bool hasLearnedInstantMove(const std::string& moveName) const;
 
 		Pokemon* getHisPokemon() {
-			Creature* creature = summons.front();
-			return static_cast<Pokemon*>(creature);
+			if (summons.size()) {
+				Creature* creature = summons.front();
+				if (creature) {
+					return creature->getPokemon();
+				}
+			}
+
+			return nullptr;
 		}
 
 	private:
