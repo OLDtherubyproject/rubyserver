@@ -2553,6 +2553,10 @@ ReturnValue Player::queryRemove(const Thing& thing, uint32_t count, uint32_t fla
 		return RETURNVALUE_NOTMOVEABLE;
 	}
 
+	if (item->getUniqueId() == 1) {
+		return RETURNVALUE_NOTMOVEABLE;
+	}
+
 	return RETURNVALUE_NOERROR;
 }
 
