@@ -112,7 +112,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 		} else if (vocation->getId() != VOCATION_NONE) {
 			s << " You are " << vocation->getVocDescription() << '.';
 		} else {
-			s << " You have no vocation.";
+			s << " You are a Pokemon Trainer.";
 		}
 	} else {
 		s << name;
@@ -132,7 +132,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 		} else if (vocation->getId() != VOCATION_NONE) {
 			s << " is " << vocation->getVocDescription() << '.';
 		} else {
-			s << " has no vocation.";
+			s << " is a Pokemon Trainer.";
 		}
 	}
 
