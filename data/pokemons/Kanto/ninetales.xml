@@ -2,6 +2,7 @@
 <pokemon name="Ninetales" nameDescription="a ninetales" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="38" corpse="2987" />
+	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2413" />
 	<icon charged="26490" discharged="26710" />

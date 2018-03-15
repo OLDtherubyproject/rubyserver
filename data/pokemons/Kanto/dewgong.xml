@@ -2,6 +2,7 @@
 <pokemon name="Dewgong" nameDescription="a dewgong" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="87" corpse="2904" />
+	<type first="water" second="ice" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3965" />
 	<icon charged="26460" discharged="26680" />

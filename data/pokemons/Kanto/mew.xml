@@ -2,6 +2,7 @@
 <pokemon name="Mew" nameDescription="a mew" blood="green" experience="23" speed="150" catchRate="0">
 	<health now="80" max="80" />
 	<look type="151" corpse="2970" />
+	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2511" />
 		<icon charged="26426" discharged="26645" />

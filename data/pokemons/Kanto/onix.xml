@@ -2,6 +2,7 @@
 <pokemon name="Onix" nameDescription="a onix" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="95" corpse="2912" />
+	<type first="rock" second="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2461" />
 		 <icon charged="26514" discharged="26734" />

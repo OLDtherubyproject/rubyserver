@@ -2,6 +2,7 @@
 <pokemon name="Gastly" nameDescription="a gastly" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="92" corpse="2909" />
+	<type first="ghost" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2458" />
 	<icon charged="26487" discharged="26707" />

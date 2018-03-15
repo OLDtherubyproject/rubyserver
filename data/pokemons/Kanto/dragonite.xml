@@ -2,6 +2,7 @@
 <pokemon name="Dragonite" nameDescription="a dragonite" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="149" corpse="2968" />
+	<type first="dragon" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2509" />
 	<icon charged="26453" discharged="26673" />

@@ -2,6 +2,7 @@
 <pokemon name="Kabutops" nameDescription="a kabutops" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="141" corpse="2959" />
+	<type first="rock" second="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2507" />
 	<icon charged="26577" discharged="26798" />

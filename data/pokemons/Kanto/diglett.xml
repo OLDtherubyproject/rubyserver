@@ -2,6 +2,7 @@
 <pokemon name="Diglett" nameDescription="a diglett" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="50" corpse="2856" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2425" />
 		<icon charged="26495" discharged="26715" />

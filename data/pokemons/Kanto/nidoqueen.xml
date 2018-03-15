@@ -2,6 +2,7 @@
 <pokemon name="Nidoqueen" nameDescription="a nidoqueen" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="31" corpse="2840" />
+	<type first="poison" second="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2406" />
 	<icon charged="26403" discharged="26622" />

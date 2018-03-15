@@ -2,6 +2,7 @@
 <pokemon name="Ivysaur" nameDescription="a ivysaur" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="2" corpse="2807" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2377" />
 		<icon charged="26392" discharged="26611" />

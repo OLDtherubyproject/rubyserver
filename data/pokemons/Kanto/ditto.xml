@@ -2,6 +2,7 @@
 <pokemon name="Ditto" nameDescription="a ditto" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="132" corpse="2813" />
+	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2498" />
 	<icon charged="26497" discharged="26717" />

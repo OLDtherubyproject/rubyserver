@@ -2,6 +2,7 @@
 <pokemon name="Omastar" nameDescription="a omastar" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="139" corpse="6049" />
+	<type first="rock" second="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2505" />
 	<icon charged="26559" discharged="26780" />

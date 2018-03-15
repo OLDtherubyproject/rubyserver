@@ -2,6 +2,7 @@
 <pokemon name="Kingler" nameDescription="a kingler" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="99" corpse="2985" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2465" />
 	<icon charged="26540" discharged="26758" />

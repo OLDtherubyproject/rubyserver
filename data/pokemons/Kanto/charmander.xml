@@ -2,6 +2,7 @@
 <pokemon name="Charmander" nameDescription="a charmander" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="4" corpse="2809" />
+	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2379" />
 		<icon charged="26412" discharged="26630" />

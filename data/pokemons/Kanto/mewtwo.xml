@@ -2,6 +2,7 @@
 <pokemon name="Mewtwo" nameDescription="a mewtwo" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="150" corpse="2969" />
+	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2510" />
 	<icon charged="26416" discharged="26635" />

@@ -2,6 +2,7 @@
 <pokemon name="Magikarp" nameDescription="a magikarp" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="129" corpse="2979" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2495" />
 	<icon charged="26518" discharged="26620" />

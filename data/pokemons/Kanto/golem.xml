@@ -2,6 +2,7 @@
 <pokemon name="Golem" nameDescription="a golem" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="76" corpse="2892" />
+	<type first="rock" second="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2448" />
 	<icon charged="26569" discharged="26790" />

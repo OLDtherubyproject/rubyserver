@@ -2,6 +2,7 @@
 <pokemon name="Beedrill" nameDescription="a beedrill" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="15" corpse="2823" />
+	<type first="bug" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2390" />
 	 <icon charged="26512" discharged="26704" />

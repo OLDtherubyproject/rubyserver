@@ -2,6 +2,7 @@
 <pokemon name="Aerodactyl" nameDescription="a aerodactyl" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="142" corpse="2978" />
+	<type first="rock" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2508" />
 	<icon charged="26586" discharged="26807" />

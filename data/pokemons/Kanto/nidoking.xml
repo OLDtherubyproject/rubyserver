@@ -2,6 +2,7 @@
 <pokemon name="Nidoking" nameDescription="a nidoking" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="34" corpse="2843" />
+	<type first="poison" second="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2409" />
 	<icon charged="26423" discharged="26642" />

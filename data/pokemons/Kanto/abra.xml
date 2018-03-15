@@ -2,6 +2,7 @@
 <pokemon name="Abra" nameDescription="a abra" blood="green" experience="23" speed="150" catchRate="50" price="500000">
 	<health now="80" max="80" />
 	<look type="63" corpse="2871" />
+	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2438" />
 	<icon charged="26498" discharged="26718" />	

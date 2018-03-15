@@ -2,6 +2,7 @@
 <pokemon name="Caterpie" nameDescription="a caterpie" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="10" corpse="2818" />
+	<type first="bug" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2385" />
 	<icon charged="26476" discharged="26696" />

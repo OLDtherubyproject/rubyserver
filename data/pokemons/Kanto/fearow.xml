@@ -2,6 +2,7 @@
 <pokemon name="Fearow" nameDescription="a fearow" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="22" corpse="2831" />
+	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2397" />
 	<icon charged="26574" discharged="26795" />

@@ -2,6 +2,7 @@
 <pokemon name="Muk" nameDescription="a muk" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="89" corpse="2906" />
+	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2455" />
 	<icon charged="26448" discharged="26667" />

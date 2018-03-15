@@ -2,6 +2,7 @@
 <pokemon name="Butterfree" nameDescription="a butterfree" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="12" corpse="2820" />
+	<type first="bug" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2387" />
 	<icon charged="26485" discharged="26695" />

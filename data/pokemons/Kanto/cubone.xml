@@ -2,6 +2,7 @@
 <pokemon name="Cubone" nameDescription="a cubone" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="104" corpse="2922" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2470" />
 	<icon charged="26576" discharged="26797" />

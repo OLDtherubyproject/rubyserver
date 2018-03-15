@@ -2,6 +2,7 @@
 <pokemon name="Blastoise" nameDescription="a blastoise" blood="green" experience="23" speed="150"  catchRate="50">
 	<health now="80" max="80" />
 	<look type="9" corpse="2817" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2384" />
 	<icon charged="26458" discharged="26678" />

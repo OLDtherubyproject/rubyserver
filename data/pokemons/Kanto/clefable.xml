@@ -2,6 +2,7 @@
 <pokemon name="Clefable" nameDescription="a clefable" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="36" corpse="2845" />
+	<type first="fairy" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2411" />
 	    <icon charged="26442" discharged="26661" />

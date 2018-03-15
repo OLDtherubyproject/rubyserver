@@ -2,6 +2,7 @@
 <pokemon name="Eevee" nameDescription="a eevee" blood="green" experience="23" speed="150" catchRate="0">
 	<health now="80" max="80" />
 	<look type="133" corpse="2951" />
+	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2499" />
 	 <icon charged="26506" discharged="26726" />
