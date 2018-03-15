@@ -2,6 +2,7 @@
 <pokemon name="Raichu" nameDescription="a raichu" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="26" corpse="2835" />
+	<type first="electric" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2401" />
 	<icon charged="26454" discharged="26674" />

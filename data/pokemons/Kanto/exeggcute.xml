@@ -2,6 +2,7 @@
 <pokemon name="Exeggcute" nameDescription="a exeggcute" blood="green" experience="23" speed="150" catchRate="50"> 
 	<health now="80" max="80" />
 	<look type="102" corpse="2920" />
+	<type first="grass" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2468" />
 	<icon charged="26558" discharged="26779" />

@@ -2,6 +2,7 @@
 <pokemon name="Meowth" nameDescription="a meowth" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="52" corpse="2857" />
+	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2427" />
 	<icon charged="26530" discharged="26751" />

@@ -2,6 +2,7 @@
 <pokemon name="Alakazam" nameDescription="a alakazam" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="65" corpse="2876" />
+	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2512" />
 	<icon charged="26516" discharged="26736" />

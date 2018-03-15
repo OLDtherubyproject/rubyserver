@@ -2,6 +2,7 @@
 <pokemon name="Exeggutor" nameDescription="a exeggutor" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="103" corpse="2921" />
+	<type first="grass" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2469" />
 	<icon charged="26567" discharged="26788" />

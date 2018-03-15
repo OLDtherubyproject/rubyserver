@@ -2,6 +2,7 @@
 <pokemon name="Koffing" nameDescription="a koffing" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="109" corpse="2927" />
+	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2475" />
 	<icon charged="26480" discharged="26700" />

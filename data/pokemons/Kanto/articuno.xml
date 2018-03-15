@@ -2,6 +2,7 @@
 <pokemon name="Articuno" nameDescription="an articuno" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="144" corpse="2963" />
+	<type first="ice" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3968" />
 	<icon charged="26396" discharged="26615" />

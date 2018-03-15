@@ -2,6 +2,7 @@
 <pokemon name="Weezing" nameDescription="a weezing" blood="purple" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="110" corpse="2928" />
+	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2476" />
 	<icon charged="26489" discharged="26709" />

@@ -2,6 +2,7 @@
 <pokemon name="Seel" nameDescription="a seel" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="86" corpse="2903" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3964" />
 	<icon charged="26832" discharged="26671" />

@@ -2,6 +2,7 @@
 <pokemon name="Starmie" nameDescription="a starmie" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="121" corpse="2939" />
+	<type first="water" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2487" />
 	<icon charged="26398" discharged="26617" />

@@ -2,6 +2,7 @@
 <pokemon name="Dodrio" nameDescription="a dodrio" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="85" corpse="2902" />
+	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2439" />
 	 <icon charged="26508" discharged="26728" />

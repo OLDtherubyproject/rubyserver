@@ -2,6 +2,7 @@
 <pokemon name="Nidoran" nameDescription="a nidoran" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="32" corpse="2841" />
+	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2407" />
 	<icon charged="26413" discharged="" />

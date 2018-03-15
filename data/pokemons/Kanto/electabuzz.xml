@@ -2,6 +2,7 @@
 <pokemon name="Electabuzz" nameDescription="a electabuzz" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="125" corpse="6049" />
+	<type first="electric" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2491" />
 	<icon charged="26429" discharged="26648" />

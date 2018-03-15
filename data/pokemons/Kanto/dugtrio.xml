@@ -2,6 +2,7 @@
 <pokemon name="Dugtrio" nameDescription="a dugtrio" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="51" corpse="12661" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2426" />
 	<icon charged="26504" discharged="" />

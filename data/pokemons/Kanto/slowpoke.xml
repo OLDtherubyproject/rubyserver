@@ -2,6 +2,7 @@
 <pokemon name="Slowpoke" nameDescription="a slowpoke" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="79" corpse="2896" />
+	<type first="water" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2451" />
 	<icon charged="26424" discharged="26643" />

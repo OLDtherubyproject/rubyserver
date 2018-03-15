@@ -2,6 +2,7 @@
 <pokemon name="Paras" nameDescription="a paras" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="46" corpse="2976" />
+	<type first="bug" second="grass" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2421" />
 	<icon charged="26459" discharged="26677" />

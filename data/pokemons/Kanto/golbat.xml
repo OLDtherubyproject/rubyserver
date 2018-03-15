@@ -2,6 +2,7 @@
 <pokemon name="Golbat" nameDescription="a golbat" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="42" corpse="2852" />
+	<type first="poison" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2417" />
 	<icon charged="26397" discharged="26616" />

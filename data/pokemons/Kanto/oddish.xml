@@ -2,6 +2,7 @@
 <pokemon name="Oddish" nameDescription="a oddish" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="43" corpse="2973" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2418" />
 	<icon charged="26389" discharged="26608" />

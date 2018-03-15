@@ -2,6 +2,7 @@
 <pokemon name="Scyther" nameDescription="a scyther" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="123" corpse="2941" />
+	<type first="bug" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2489" />
 	<icon charged="26409" discharged="26610" />

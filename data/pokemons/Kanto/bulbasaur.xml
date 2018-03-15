@@ -2,6 +2,7 @@
 <pokemon name="Bulbasaur" nameDescription="a bulbasaur" blood="green" experience="23" speed="150" catchRate="100">
 	<health now="80" max="80" />
 	<look type="1" corpse="2806" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2376" />
 	<icon charged="26382" discharged="26601" />

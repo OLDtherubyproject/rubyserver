@@ -2,6 +2,7 @@
 <pokemon name="Farfetch'd" nameDescription="a farfetch'd" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="83" corpse="6049" />
+	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2411" />
 	<icon charged="26443" discharged="26662" />

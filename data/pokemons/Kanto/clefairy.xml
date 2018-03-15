@@ -2,6 +2,7 @@
 <pokemon name="Clefairy" nameDescription="a clefairy" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="35" corpse="2844" />
+	<type first="fairy" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2410" />
 	<icon charged="26451" discharged="26670" />

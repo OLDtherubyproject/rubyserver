@@ -2,6 +2,7 @@
 <pokemon name="Poliwhirl" nameDescription="a poliwhirl" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="61" corpse="2866" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2436" />
 	<icon charged="26575" discharged="26796" />

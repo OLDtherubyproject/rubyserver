@@ -2,6 +2,7 @@
 <pokemon name="Porygon" nameDescription="a porygon" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="137" corpse="2985" />
+	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2503" />
 	<icon charged="26541" discharged="26762" />

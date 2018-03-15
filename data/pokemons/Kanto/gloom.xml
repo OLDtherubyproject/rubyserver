@@ -2,6 +2,7 @@
 <pokemon name="Gloom" nameDescription="a gloom" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="44" corpse="2974" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2419" />
 	<icon charged="26533" discharged="26754" />

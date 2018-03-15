@@ -2,6 +2,7 @@
 <pokemon name="Omanyte" nameDescription="a omanyte" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="138" corpse="6049" />
+	<type first="rock" second="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2504" />
 	<icon charged="26550" discharged="26771" />

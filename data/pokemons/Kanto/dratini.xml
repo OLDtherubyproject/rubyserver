@@ -2,6 +2,7 @@
 <pokemon name="Dratini" nameDescription="a dratini" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="147" corpse="2966" />
+	<type first="dragon" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3971" />
 	<icon charged="26436" discharged="26775" />

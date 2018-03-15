@@ -2,6 +2,7 @@
 <pokemon name="Slowbro" nameDescription="a slowbro" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="80" corpse="2897" />
+	<type first="water" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2452" />
 	<icon charged="26434" discharged="26653" />

@@ -2,6 +2,7 @@
 <pokemon name="Moltres" nameDescription="a moltres" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="146" corpse="6049" />
+	<type first="fire" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3970" />
 	<icon charged="26386" discharged="26605" />

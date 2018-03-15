@@ -2,6 +2,7 @@
 <pokemon name="Weedle" nameDescription="a weedle" blood="green" experience="23" speed="150" catchRate="1">
 	<health now="80" max="80" />
 	<look type="13" corpse="2821" />
+	<type first="bug" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2388" />
 	<icon charged="26503" discharged="26723" />

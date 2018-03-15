@@ -2,6 +2,7 @@
 <pokemon name="Marowak" nameDescription="a marowak" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="105" corpse="2923" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2471" />
 	<icon charged="26585" discharged="26806" />

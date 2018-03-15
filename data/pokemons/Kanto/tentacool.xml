@@ -2,6 +2,7 @@
 <pokemon name="Tentacool" nameDescription="a tentacool" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="72" corpse="2887" />
+	<type first="water" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2444" />
 	<icon charged="26407" discharged="26626" />
