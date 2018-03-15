@@ -125,6 +125,13 @@ class Pokemon final : public Creature
 			return mType->info.isAttackable;
 		}
 
+		PokemonType_t getFirstType() const {
+			return mType->info.firstType;
+		}
+		PokemonType_t getSecondType() const {
+			return mType->info.secondType;
+		}
+
 		bool canPushItems() const {
 			return mType->info.canPushItems;
 		}

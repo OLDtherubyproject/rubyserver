@@ -728,6 +728,20 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("type"))) {
+		if ((attr = node.attribute("first"))) {
+			mType->info.firstType = getPokemonElementType(asLowerCaseString(attr.as_string()));
+		} else {
+			std::cout << "[Error - Pokemons::loadPokemon] Missing first type. " << file << std::endl;
+		}
+
+		if ((attr = node.attribute("second"))) {
+			mType->info.secondType = getPokemonElementType(asLowerCaseString(attr.as_string()));
+		}
+	} else {
+		std::cout << "[Error - Pokemons::loadPokemon] Missing type(s). " << file << std::endl;
+	}
+
 	if ((node = pokemonNode.child("flags"))) {
 		for (auto flagNode : node.children()) {
 			attr = flagNode.first_attribute();

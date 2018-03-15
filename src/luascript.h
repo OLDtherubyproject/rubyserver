@@ -1245,6 +1245,9 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetRunHealth(lua_State* L);
 		static int luaPokemonTypeGetExperience(lua_State* L);
 
+		static int luaPokemonTypeGetFirstType(lua_State* L);
+		static int luaPokemonTypeGetSecondType(lua_State* L);
+
 		static int luaPokemonTypeGetCombatImmunities(lua_State* L);
 		static int luaPokemonTypeGetConditionImmunities(lua_State* L);
 

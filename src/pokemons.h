@@ -109,6 +109,8 @@ class PokemonType
 		Gender_t gender = {};
 		Shiny_t shiny = {};
 		BloodType_t blood = BLOOD_RED;
+		PokemonType_t firstType = TYPE_NONE;
+		PokemonType_t secondType = TYPE_NONE;
 
 		LightInfo light = {};
 		float dittoChance = 0;

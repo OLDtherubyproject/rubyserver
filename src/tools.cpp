@@ -504,6 +504,7 @@ using CombatTypeNames = std::unordered_map<CombatType_t, std::string, std::hash<
 using AmmoTypeNames = std::unordered_map<std::string, Ammo_t>;
 using WeaponActionNames = std::unordered_map<std::string, WeaponAction_t>;
 using SkullNames = std::unordered_map<std::string, Skulls_t>;
+using PokemonTypeNames = std::unordered_map<std::string, PokemonType_t>;
 
 MagicEffectNames magicEffectNames = {
 	{"redspark",		CONST_ME_DRAWBLOOD},
@@ -699,6 +700,28 @@ SkullNames skullNames = {
 	{"orange",	SKULL_ORANGE},
 };
 
+PokemonTypeNames pokemonTypes = {
+	{"none",		TYPE_NONE},
+	{"normal",		TYPE_NORMAL},
+	{"fire",		TYPE_FIRE},
+	{"fighting",	TYPE_FIGHTING},
+	{"water",		TYPE_WATER},
+	{"flying",		TYPE_FLYING},
+	{"grass",		TYPE_GRASS},
+	{"electric",	TYPE_ELECTRIC},
+	{"poison",		TYPE_POISON},
+	{"ground",		TYPE_GROUND},
+	{"psychic",		TYPE_PSYCHIC},
+	{"rock",		TYPE_ROCK},
+	{"ice",			TYPE_ICE},
+	{"bug",			TYPE_BUG},
+	{"dragon",		TYPE_DRAGON},
+	{"ghost",		TYPE_GHOST},
+	{"dark",		TYPE_DARK},
+	{"steel",		TYPE_STEEL},
+	{"fairy",		TYPE_FAIRY},
+};
+
 MagicEffectClasses getMagicEffect(const std::string& strValue)
 {
 	auto magicEffect = magicEffectNames.find(strValue);
@@ -751,6 +774,15 @@ Skulls_t getSkullType(const std::string& strValue)
 		return skullType->second;
 	}
 	return SKULL_NONE;
+}
+
+PokemonType_t getPokemonElementType(const std::string& strValue)
+{
+	auto pokemonType = pokemonTypes.find(strValue);
+	if (pokemonType != pokemonTypes.end()) {
+		return pokemonType->second;
+	}
+	return TYPE_NONE;
 }
 
 std::string getSpecialSkillName(uint8_t skillid)

@@ -2670,6 +2670,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "getRunHealth", LuaScriptInterface::luaPokemonTypeGetRunHealth);
 	registerMethod("PokemonType", "getExperience", LuaScriptInterface::luaPokemonTypeGetExperience);
 
+	registerMethod("PokemonType", "getFirstType", LuaScriptInterface::luaPokemonTypeGetFirstType);
+	registerMethod("PokemonType", "getSecondType", LuaScriptInterface::luaPokemonTypeGetSecondType);
+
 	registerMethod("PokemonType", "getCombatImmunities", LuaScriptInterface::luaPokemonTypeGetCombatImmunities);
 	registerMethod("PokemonType", "getConditionImmunities", LuaScriptInterface::luaPokemonTypeGetConditionImmunities);
 
@@ -12322,6 +12325,30 @@ int LuaScriptInterface::luaPokemonTypeGetExperience(lua_State* L)
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
 		lua_pushnumber(L, pokemonType->info.experience);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTypeGetFirstType(lua_State* L)
+{
+	// pokemonType:getFirstType()
+	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
+	if (pokemonType) {
+		lua_pushnumber(L, pokemonType->info.firstType);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTypeGetSecondType(lua_State* L)
+{
+	// pokemonType:getSecondType()
+	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
+	if (pokemonType) {
+		lua_pushnumber(L, pokemonType->info.secondType);
 	} else {
 		lua_pushnil(L);
 	}
