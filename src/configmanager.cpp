@@ -1,5 +1,5 @@
 /**
- * * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
+ * The Ruby Server - a free and open-source Pokémon MMORPG server emulator
  * Copyright (C) 2018  Mark Samman (TFS) <mark.samman@gmail.com>
  *                     Leandro Matheus <kesuhige@gmail.com>
  *
