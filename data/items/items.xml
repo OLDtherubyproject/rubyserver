@@ -2317,7 +2317,6 @@
 		<attribute key="description" value="It unleashes the very fires of hell." />
 		<attribute key="weight" value="2700" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="2188" article="a" name="wand of decay">
@@ -2331,21 +2330,18 @@
 		<attribute key="description" value="The energy of a radiant star is trapped inside its globe." />
 		<attribute key="weight" value="2500" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="2190" article="a" name="wand of vortex">
 		<attribute key="description" value="Surges of energy rush through the tip of this wand." />
 		<attribute key="weight" value="1900" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="2191" article="a" name="wand of dragonbreath">
 		<attribute key="description" value="Legends say that this wand holds the soul of a young dragon." />
 		<attribute key="weight" value="2100" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="2192" article="a" name="crystal ball">
@@ -3111,13 +3107,8 @@
 		<attribute key="description" value="It is the djinn leader's sleeping lamp." />
 		<attribute key="weight" value="1300" />
 	</item>
-	<item fromid="2376" toid="2512" article="a" name="portrait">
+	<item fromid="2376" toid="2513" article="a" name="portrait">
 		<attribute key="slotType" value="portrait" />
-	</item>
-	<item id="2513" article="a" name="battle shield">
-		<attribute key="weight" value="6200" />
-		<attribute key="defense" value="23" />
-		<attribute key="weaponType" value="shield" />
 	</item>
 	<item id="2514" article="a" name="mastermind shield">
 		<attribute key="description" value="It's an enchanted shield." />
@@ -3279,7 +3270,6 @@
 		
 		<attribute key="weaponType" value="ammunition" />
 		<attribute key="ammoType" value="bolt" />
-		<attribute key="shootType" value="bolt" />
 		<attribute key="maxHitChance" value="87" />
 	</item>
 	<item id="2544" article="an" name="arrow">
@@ -3288,7 +3278,6 @@
 		
 		<attribute key="weaponType" value="ammunition" />
 		<attribute key="ammoType" value="arrow" />
-		<attribute key="shootType" value="arrow" />
 		<attribute key="maxHitChance" value="91" />
 	</item>
 	<item id="2545" article="a" name="poison arrow">
@@ -15175,14 +15164,12 @@
 		<attribute key="description" value="It is sparkling with universal energy." />
 		<attribute key="weight" value="2550" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="8921" article="a" name="wand of draconia">
 		<attribute key="description" value="This wand holds the spirit and soul of a dragon lord." />
 		<attribute key="weight" value="2700" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="8922" article="a" name="wand of voodoo">
@@ -21742,7 +21729,6 @@
 		<attribute key="weight" value="3100" />
 		<attribute key="description" value="It feels cold and smooth." />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="4" />
 		<attribute key="decayTo" value="0" />
 		<attribute key="duration" value="604800" />
@@ -24142,7 +24128,6 @@
 		<attribute key="description" value="It reveals devastating energy arcs." />
 		<attribute key="weight" value="3700" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="4" />
 		<attribute key="magiclevelpoints" value="1" />
 	</item>
@@ -24270,7 +24255,6 @@
 		<attribute key="description" value="It contains the everblazing fire." />
 		<attribute key="weight" value="3700" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="4" />
 		<attribute key="magiclevelpoints" value="1" />
 	</item>
@@ -30090,7 +30074,6 @@
 		<attribute key="description" value="It's warm to the touch." />
 		<attribute key="weight" value="1500" />
 		<attribute key="weaponType" value="wand" />
-		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
 	</item>
 	<item id="23721" article="the" name="chiller">
@@ -30308,4 +30291,74 @@
 	<item id="30028" name="swamp" />
 	<item id="30035" name="tea" />
 	<item id="30043" name="mead" />
+	<item id="27220" name="floor" />
+	<item id="27774" name="Market" />
+	<item id="27206" name="floor" />
+	<item id="27775" name="Market Stash" />
+	<item fromid="27765" toid="27766" name="Poke Mart shelf" />
+	<item id="27487" name="Cerulean flowers">
+		<attribute key="price" value="200000" />
+	</item>
+	<item fromid="27731" toid="27733" article="a" name="balcony" />
+	<item id ="27762" name="cash register" />
+	<item fromid="27767" toid="27768" article="a" name="Poke Ball showcase" />
+	<item id="27488" name="Poke Mart" />
+	<item id="26872" name="wall" />
+	<item id="26873" name="wall" />
+	<item id="26875" name="wall" />
+	<item id="27637" name="wall" />
+	<item id="27613" name="wall" />
+	<item id="27615" name="wall" />
+	<item id="27616" name="wall" />
+	<item id="27772" name="wall" />
+	<item id="27773" name="wall" />
+	<item id="27639" name="wall" />
+	<item id="27643" name="roof" />
+	<item id="27220" name="roof" />
+	<item id="27457" name="dustbin" />
+	<item fromid="27734" toid="27738" article="a" name="glass roof" />
+	<item fromid="27656" toid="27657" article="a" name="glass roof" />
+	<item fromid="27192" toid="27421" name="floor" />
+	<item fromid="27489" toid="27562" name="floor" />
+	<item fromid="26837" toid="27191" name="floor" />
+	<item id="27776" article="a" name="poke ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27777" article="a" name="great ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27778" article="a" name="ultra ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27779" article="a" name="master ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27780" article="a" name="saffari ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27781" article="a" name="discharged poke ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27782" article="a" name="discharged great ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27783" article="a" name="discharged ultra ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27784" article="a" name="discharged saffari ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27785" article="a" name="discharged master ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27786" article="a" name="poke ball">
+	</item>
+	<item id="27787" article="a" name="great ball">
+	</item>
+	<item id="27788" article="a" name="ultra ball">
+	</item>
+	<item id="27789" article="a" name="saffari ball">
+	</item>
+	<item id="27790" article="a" name="master ball">
+	</item>
 </items>
