@@ -2,6 +2,7 @@
 <pokemon name="Pinsir" nameDescription="a pinsir" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="127" corpse="2946" />
+	<type first="bug" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2493" />
 	<icon charged="26428" discharged="26647" />

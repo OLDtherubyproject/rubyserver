@@ -2,6 +2,7 @@
 <pokemon name="Pidgeotto" nameDescription="a pidgeotto" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="17" corpse="2825" />
+	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2392" />
 	<icon charged="26565" discharged="26786" />

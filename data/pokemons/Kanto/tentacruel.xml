@@ -2,6 +2,7 @@
 <pokemon name="Tentacruel" nameDescription="a tentacruel" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="73" corpse="2888" />
+	<type first="water" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2445" />
 		<icon charged="26417" discharged="26636"/>

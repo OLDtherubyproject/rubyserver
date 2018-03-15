@@ -2,6 +2,7 @@
 <pokemon name="Weepinbell" nameDescription="a weepinbell" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="70" corpse="2984" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2442" />
 	<icon charged="26384" discharged="26603" />

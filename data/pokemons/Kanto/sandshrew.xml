@@ -2,6 +2,7 @@
 <pokemon name="Sandshrew" nameDescription="a sandshrew" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="27" corpse="2836" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2402" />
 	<icon charged="26408" discharged="26627" />

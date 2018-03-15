@@ -2,6 +2,7 @@
 <pokemon name="Zapdos" nameDescription="a zapdos" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="145" corpse="2964" />
+	<type first="electric" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3969" />
 	<icon charged="26406" discharged="26625" />

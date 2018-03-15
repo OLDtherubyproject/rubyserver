@@ -2,6 +2,7 @@
 <pokemon name="Shellder" nameDescription="a shellder" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="90" corpse="2907" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2456" />
 	<icon charged="26478" discharged="26698" />

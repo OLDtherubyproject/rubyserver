@@ -2,6 +2,7 @@
 <pokemon name="Pidgey" nameDescription="a pidgey" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="16" corpse="2824" />
+	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2391" />	
 	<icon charged="26520" discharged="26750" />

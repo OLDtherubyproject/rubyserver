@@ -2,6 +2,7 @@
 <pokemon name="Zubat" nameDescription="a zubat" blood="green" experience="23" speed="150" catchRate="50"> 
 	<health now="80" max="80" />
 	<look type="41" corpse="2850" />
+	<type first="poison" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2416" />
 	<icon charged="26387" discharged="26606" />

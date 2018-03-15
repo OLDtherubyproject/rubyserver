@@ -2,6 +2,7 @@
 <pokemon name="Venusaur" nameDescription="a venusaur" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="3" corpse="2808" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 		<portrait id="2378" />
 	<icon charged="26402" discharged="26621" />

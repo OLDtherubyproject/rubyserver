@@ -2,6 +2,7 @@
 <pokemon name="Ponyta" nameDescription="a ponyta" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="77" corpse="2893" />
+	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2449" />
 	<icon charged="26404" discharged="" />

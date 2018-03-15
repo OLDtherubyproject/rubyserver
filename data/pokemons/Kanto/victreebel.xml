@@ -2,6 +2,7 @@
 <pokemon name="Victreebel" nameDescription="a victreebel" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="71" corpse="2886" />
+	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2443" />
 	<icon charged="26394" discharged="26613" />

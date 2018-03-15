@@ -2,6 +2,7 @@
 <pokemon name="Sandslash" nameDescription="a sandslash" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="28" corpse="2837" />
+	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2403" />
 	    <icon charged="26418" discharged="26637" />

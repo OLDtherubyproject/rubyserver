@@ -2,6 +2,7 @@
 <pokemon name="Poliwag" nameDescription="a poliwag" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="60" corpse="2865" />
+	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2435" />
 	<icon charged="26539" discharged="26760" />

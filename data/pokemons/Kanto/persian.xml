@@ -2,6 +2,7 @@
 <pokemon name="Persian" nameDescription="a persian" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="53" corpse="2858" />
+	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2428" />
 	<icon charged="26521" discharged="26742" />
