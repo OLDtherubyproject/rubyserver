@@ -46,8 +46,10 @@ Pokemon::Pokemon(PokemonType* mType) :
 	strDescription(mType->nameDescription),
 	mType(mType)
 {
-	defaultOutfit = ((isShiny) ? mType->info.shiny.outfit : mType->info.outfit);
-	currentOutfit = ((isShiny) ? mType->info.shiny.outfit : mType->info.outfit);
+	isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
+	isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
+	defaultOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
+	currentOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
 	skull = mType->info.skull;
 	health = mType->info.health;
 	healthMax = mType->info.healthMax;

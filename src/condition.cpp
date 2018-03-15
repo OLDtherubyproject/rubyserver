@@ -424,7 +424,7 @@ void ConditionAttributes::updatePercentStats(Player* player)
 				break;
 
 			case STAT_MAXMANAPOINTS:
-				stats[i] = static_cast<int32_t>(player->getMaxMana() * ((statsPercent[i] - 100) / 100.f));
+				stats[i] = static_cast<int32_t>(player->getPokemonHealthMax() * ((statsPercent[i] - 100) / 100.f));
 				break;
 
 			case STAT_MAGICPOINTS:
@@ -783,9 +783,9 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 		internalManaTicks = 0;
 
 		if (Player* player = creature->getPlayer()) {
-			int32_t realManaGain = player->getMana();
-			player->changeMana(manaGain);
-			realManaGain = player->getMana() - realManaGain;
+			int32_t realManaGain = player->getPokemonHealth();
+			player->changePokemonHealth(manaGain);
+			realManaGain = player->getPokemonHealth() - realManaGain;
 
 			if (isBuff && realManaGain > 0) {
 				std::string manaGainString = std::to_string(realManaGain);
@@ -880,7 +880,7 @@ bool ConditionSoul::executeCondition(Creature* creature, int32_t interval)
 		if (player->getZone() != ZONE_PROTECTION) {
 			if (internalSoulTicks >= soulTicks) {
 				internalSoulTicks = 0;
-				player->changeSoul(soulGain);
+				//player->changePokemonCapacity(soulGain);
 			}
 		}
 	}

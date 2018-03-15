@@ -890,7 +890,7 @@ void LuaScriptInterface::pushInstantMove(lua_State* L, const InstantMove& move)
 	setField(L, "words", move.getWords());
 	setField(L, "level", move.getLevel());
 	setField(L, "mlevel", move.getMagicLevel());
-	setField(L, "mana", move.getMana());
+	setField(L, "mana", move.getPokemonHealth());
 	setField(L, "manapercent", move.getManaPercent());
 
 	setMetatable(L, -1, "Move");
@@ -1286,11 +1286,11 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONST_ME_PLUNGING_FISH)
 
 	registerEnum(CONST_ANI_NONE)
-	registerEnum(CONST_ANI_SPEAR)
-	registerEnum(CONST_ANI_BOLT)
-	registerEnum(CONST_ANI_ARROW)
-	registerEnum(CONST_ANI_FIRE)
-	registerEnum(CONST_ANI_ENERGY)
+	registerEnum(CONST_ANI_POKEBALL)
+	registerEnum(CONST_ANI_GREATBALL)
+	registerEnum(CONST_ANI_ULTRABALL)
+	registerEnum(CONST_ANI_SAFFARIBALL)
+	registerEnum(CONST_ANI_MASTERBALL)
 	registerEnum(CONST_ANI_POISONARROW)
 	registerEnum(CONST_ANI_BURSTARROW)
 	registerEnum(CONST_ANI_THROWINGSTAR)
@@ -2266,12 +2266,9 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "getMagicLevel", LuaScriptInterface::luaPlayerGetMagicLevel);
 	registerMethod("Player", "getBaseMagicLevel", LuaScriptInterface::luaPlayerGetBaseMagicLevel);
-	registerMethod("Player", "getMana", LuaScriptInterface::luaPlayerGetMana);
-	registerMethod("Player", "addMana", LuaScriptInterface::luaPlayerAddMana);
-	registerMethod("Player", "getMaxMana", LuaScriptInterface::luaPlayerGetMaxMana);
-	registerMethod("Player", "setMaxMana", LuaScriptInterface::luaPlayerSetMaxMana);
-	registerMethod("Player", "getManaSpent", LuaScriptInterface::luaPlayerGetManaSpent);
-	registerMethod("Player", "addManaSpent", LuaScriptInterface::luaPlayerAddManaSpent);
+	registerMethod("Player", "getPokemonHealth", LuaScriptInterface::luaPlayerGetPokemonHealth);
+	registerMethod("Player", "getPokemonHealthMax", LuaScriptInterface::luaPlayerGetPokemonHealthMax);
+	registerMethod("Player", "setPokemonHealthMax", LuaScriptInterface::luaPlayerSetPokemonHealthMax);
 
 	registerMethod("Player", "getBaseMaxHealth", LuaScriptInterface::luaPlayerGetBaseMaxHealth);
 	registerMethod("Player", "getBaseMaxMana", LuaScriptInterface::luaPlayerGetBaseMaxMana);
@@ -2318,9 +2315,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getStamina", LuaScriptInterface::luaPlayerGetStamina);
 	registerMethod("Player", "setStamina", LuaScriptInterface::luaPlayerSetStamina);
 
-	registerMethod("Player", "getSoul", LuaScriptInterface::luaPlayerGetSoul);
-	registerMethod("Player", "addSoul", LuaScriptInterface::luaPlayerAddSoul);
-	registerMethod("Player", "getMaxSoul", LuaScriptInterface::luaPlayerGetMaxSoul);
+	registerMethod("Player", "getPokemonCapacity", LuaScriptInterface::luaPlayerGetPokemonCapacity);
+	registerMethod("Player", "addPokemonCapacity", LuaScriptInterface::luaPlayerAddPokemonCapacity);
 
 	registerMethod("Player", "getBankBalance", LuaScriptInterface::luaPlayerGetBankBalance);
 	registerMethod("Player", "setBankBalance", LuaScriptInterface::luaPlayerSetBankBalance);
@@ -2485,7 +2481,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Vocation", "getDescription", LuaScriptInterface::luaVocationGetDescription);
 
 	registerMethod("Vocation", "getRequiredSkillTries", LuaScriptInterface::luaVocationGetRequiredSkillTries);
-	registerMethod("Vocation", "getRequiredManaSpent", LuaScriptInterface::luaVocationGetRequiredManaSpent);
 
 	registerMethod("Vocation", "getCapacityGain", LuaScriptInterface::luaVocationGetCapacityGain);
 
@@ -7952,86 +7947,38 @@ int LuaScriptInterface::luaPlayerGetBaseMagicLevel(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetMana(lua_State* L)
+int LuaScriptInterface::luaPlayerGetPokemonHealth(lua_State* L)
 {
-	// player:getMana()
+	// player:getPokemonHealth()
 	const Player* player = getUserdata<const Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->getMana());
+		lua_pushnumber(L, player->getPokemonHealth());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerAddMana(lua_State* L)
+int LuaScriptInterface::luaPlayerGetPokemonHealthMax(lua_State* L)
 {
-	// player:addMana(manaChange[, animationOnLoss = false])
-	Player* player = getUserdata<Player>(L, 1);
-	if (!player) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	int32_t manaChange = getNumber<int32_t>(L, 2);
-	bool animationOnLoss = getBoolean(L, 3, false);
-	if (!animationOnLoss && manaChange < 0) {
-		player->changeMana(manaChange);
-	} else {
-		CombatDamage damage;
-		damage.primary.value = manaChange;
-		damage.origin = ORIGIN_NONE;
-		g_game.combatChangeMana(nullptr, player, damage);
-	}
-	pushBoolean(L, true);
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetMaxMana(lua_State* L)
-{
-	// player:getMaxMana()
+	// player:getPokemonHealthMax()
 	const Player* player = getUserdata<const Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->getMaxMana());
+		lua_pushnumber(L, player->getPokemonHealthMax());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerSetMaxMana(lua_State* L)
+int LuaScriptInterface::luaPlayerSetPokemonHealthMax(lua_State* L)
 {
-	// player:setMaxMana(maxMana)
+	// player:setPokemonHealthMax(maxHealth)
 	Player* player = getPlayer(L, 1);
 	if (player) {
-		player->manaMax = getNumber<int32_t>(L, 2);
-		player->mana = std::min<int32_t>(player->mana, player->manaMax);
+		player->pokemonHealthMax = getNumber<int32_t>(L, 2);
+		player->pokemonHealth = std::min<int32_t>(player->pokemonHealth, player->pokemonHealthMax);
 		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetManaSpent(lua_State* L)
-{
-	// player:getManaSpent()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getSpentMana());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddManaSpent(lua_State* L)
-{
-	// player:addManaSpent(amount)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->addManaSpent(getNumber<uint64_t>(L, 2));
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -8056,7 +8003,7 @@ int LuaScriptInterface::luaPlayerGetBaseMaxMana(lua_State* L)
 	// player:getBaseMaxMana()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->manaMax);
+		lua_pushnumber(L, player->pokemonHealth);
 	} else {
 		lua_pushnil(L);
 	}
@@ -8522,38 +8469,26 @@ int LuaScriptInterface::luaPlayerSetStamina(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetSoul(lua_State* L)
+int LuaScriptInterface::luaPlayerGetPokemonCapacity(lua_State* L)
 {
-	// player:getSoul()
+	// player:getPokemonCapacity()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->getSoul());
+		lua_pushnumber(L, player->getPokemonCapacity());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerAddSoul(lua_State* L)
+int LuaScriptInterface::luaPlayerAddPokemonCapacity(lua_State* L)
 {
-	// player:addSoul(soulChange)
-	int32_t soulChange = getNumber<int32_t>(L, 2);
+	// player:addPokemonCapacity(capacityChange)
+	int32_t capacityChange = getNumber<int32_t>(L, 2);
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		player->changeSoul(soulChange);
+		player->changePokemonCapacity(capacityChange);
 		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetMaxSoul(lua_State* L)
-{
-	// player:getMaxSoul()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player && player->vocation) {
-		lua_pushnumber(L, player->vocation->getSoulMax());
 	} else {
 		lua_pushnil(L);
 	}
@@ -10628,19 +10563,6 @@ int LuaScriptInterface::luaVocationGetRequiredSkillTries(lua_State* L)
 		skills_t skillType = getNumber<skills_t>(L, 2);
 		uint16_t skillLevel = getNumber<uint16_t>(L, 3);
 		lua_pushnumber(L, vocation->getReqSkillTries(skillType, skillLevel));
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetRequiredManaSpent(lua_State* L)
-{
-	// vocation:getRequiredManaSpent(magicLevel)
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		uint32_t magicLevel = getNumber<uint32_t>(L, 2);
-		lua_pushnumber(L, vocation->getReqMana(magicLevel));
 	} else {
 		lua_pushnil(L);
 	}

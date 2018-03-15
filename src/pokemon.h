@@ -144,6 +144,12 @@ class Pokemon final : public Creature
 		double getCatchRate() const {
 			return mType->info.catchRate;
 		}
+		uint32_t getPrice() const {
+			return price;
+		}
+		uint32_t getBasePrice() const {
+			return mType->info.price;
+		}
 		Natures_t getNature() const {
 			return nature;
 		}
@@ -182,6 +188,9 @@ class Pokemon final : public Creature
 		}
 		void setHealth(int32_t health) {
 			this->health = health;
+		}
+		void setPrice(uint32_t price) {
+			this->price = price;
 		}
 		bool canWalkOnFieldType(CombatType_t combatType) const;
 
@@ -267,6 +276,7 @@ class Pokemon final : public Creature
 		int64_t lastMeleeAttack = 0;
 
 		uint32_t guid = 0;
+		uint32_t price = 0;
 		uint32_t attackTicks = 0;
 		uint32_t targetTicks = 0;
 		uint32_t targetChangeTicks = 0;
@@ -279,8 +289,8 @@ class Pokemon final : public Creature
 
 		Position masterPos;
 
-		bool isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
-		bool isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
+		bool isDitto = false;
+		bool isShiny = false;
 		bool isIdle = true;
 		bool extraMeleeAttack = false;
 		bool isMasterInRange = false;

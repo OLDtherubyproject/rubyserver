@@ -258,6 +258,15 @@ class Game
 		Item* findItemOfType(Cylinder* cylinder, uint16_t itemId,
 		                     bool depthSearch = true, int32_t subType = -1) const;
 
+
+		/**
+		  * Find all pokeballs with Pokemon
+		  * \param cylinder to search the item
+		  * \param bool option param to serach until 7 Pokemon
+		  * \returns the quantity of found pokeballs
+		  */
+		uint16_t findQuantityOfPokeballs(const Cylinder* cylinder, bool limited = true) const;
+
 		/**
 		  * Remove/Add item(s) with a monetary value
 		  * \param cylinder to remove the money from
@@ -403,6 +412,7 @@ class Game
 		void playerTryCatchPokemon(Player* player, const Position& fromPos, const Position& toPos, Item* item, Pokeball* pokeball);
 
 		void pokemonPlayerSendEmot(Player* player, uint16_t effect);
+		void playerSendPokemon(Player* player, Item* item);
 
 		void parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer);
 
@@ -507,6 +517,8 @@ class Game
 		bool reload(ReloadTypes_t reloadType);
 
 		Position getClosestFreeTile(Creature* creature, Position pos, bool extended/* = false*/);
+
+		void transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item* item);
 
 		Groups groups;
 		Map map;

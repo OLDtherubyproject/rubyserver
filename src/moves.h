@@ -142,7 +142,7 @@ class Move : public BaseMove
 		uint32_t getMagicLevel() const {
 			return magLevel;
 		}
-		uint32_t getMana() const {
+		uint32_t getPokemonHealth() const {
 			return mana;
 		}
 		uint32_t getManaPercent() const {

@@ -853,12 +853,9 @@ class LuaScriptInterface
 
 		static int luaPlayerGetMagicLevel(lua_State* L);
 		static int luaPlayerGetBaseMagicLevel(lua_State* L);
-		static int luaPlayerGetMana(lua_State* L);
-		static int luaPlayerAddMana(lua_State* L);
-		static int luaPlayerGetMaxMana(lua_State* L);
-		static int luaPlayerSetMaxMana(lua_State* L);
-		static int luaPlayerGetManaSpent(lua_State* L);
-		static int luaPlayerAddManaSpent(lua_State* L);
+		static int luaPlayerGetPokemonHealth(lua_State* L);
+		static int luaPlayerGetPokemonHealthMax(lua_State* L);
+		static int luaPlayerSetPokemonHealthMax(lua_State* L);
 
 		static int luaPlayerGetBaseMaxHealth(lua_State* L);
 		static int luaPlayerGetBaseMaxMana(lua_State* L);
@@ -905,9 +902,8 @@ class LuaScriptInterface
 		static int luaPlayerGetStamina(lua_State* L);
 		static int luaPlayerSetStamina(lua_State* L);
 
-		static int luaPlayerGetSoul(lua_State* L);
-		static int luaPlayerAddSoul(lua_State* L);
-		static int luaPlayerGetMaxSoul(lua_State* L);
+		static int luaPlayerGetPokemonCapacity(lua_State* L);
+		static int luaPlayerAddPokemonCapacity(lua_State* L);
 
 		static int luaPlayerGetBankBalance(lua_State* L);
 		static int luaPlayerSetBankBalance(lua_State* L);
@@ -1068,7 +1064,6 @@ class LuaScriptInterface
 		static int luaVocationGetDescription(lua_State* L);
 
 		static int luaVocationGetRequiredSkillTries(lua_State* L);
-		static int luaVocationGetRequiredManaSpent(lua_State* L);
 
 		static int luaVocationGetCapacityGain(lua_State* L);
 

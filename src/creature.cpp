@@ -741,6 +741,13 @@ void Creature::changeHealth(int32_t healthChange, bool sendHealthChange/* = true
 		health = std::max<int32_t>(0, health + healthChange);
 	}
 
+	if (isSummon() && getMaster()->getPlayer()) {
+		Player* player = getMaster()->getPlayer();
+
+		player->setPokemonHealth(health);
+		player->sendStats();
+	}
+
 	if (sendHealthChange && oldHealth != health) {
 		g_game.addCreatureHealth(this);
 	}

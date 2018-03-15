@@ -297,10 +297,6 @@ class Player final : public Creature, public Cylinder
 
 		GuildEmblems_t getGuildEmblem(const Player* player) const;
 
-		uint64_t getSpentMana() const {
-			return manaSpent;
-		}
-
 		bool hasFlag(PlayerFlags value) const {
 			return (group->flags & value) != 0;
 		}
@@ -360,6 +356,13 @@ class Player final : public Creature, public Cylinder
 			return inMarket;
 		}
 
+		void setPokemonHealthMax(uint32_t health) {
+			pokemonHealthMax = health;
+		}
+		void setPokemonHealth(uint32_t health) {
+			pokemonHealth = health;
+		}
+
 		void setLastDepotId(int16_t newId) {
 			lastDepotId = newId;
 		}
@@ -399,8 +402,8 @@ class Player final : public Creature, public Cylinder
 		uint8_t getMagicLevelPercent() const {
 			return magLevelPercent;
 		}
-		uint8_t getSoul() const {
-			return soul;
+		uint8_t getPokemonCapacity() const {
+			return pokemonCapacity;
 		}
 		bool isAccessPlayer() const {
 			return group->access;
@@ -477,11 +480,11 @@ class Player final : public Creature, public Cylinder
 		int32_t getMaxHealth() const override {
 			return std::max<int32_t>(1, healthMax + varStats[STAT_MAXHITPOINTS]);
 		}
-		uint32_t getMana() const {
-			return mana;
+		uint32_t getPokemonHealth() const {
+			return pokemonHealth;
 		}
-		uint32_t getMaxMana() const {
-			return std::max<int32_t>(0, manaMax + varStats[STAT_MAXMANAPOINTS]);
+		uint32_t getPokemonHealthMax() const {
+			return std::max<int32_t>(0, pokemonHealthMax + varStats[STAT_MAXMANAPOINTS]);
 		}
 
 		Item* getInventoryItem(slots_t slot) const;
@@ -596,8 +599,8 @@ class Player final : public Creature, public Cylinder
 		static bool lastHitIsPlayer(Creature* lastHitCreature);
 
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) override;
-		void changeMana(int32_t manaChange);
-		void changeSoul(int32_t soulChange);
+		void changePokemonHealth(int32_t manaChange);
+		void changePokemonCapacity(int32_t soulChange);
 
 		bool isPzLocked() const {
 			return pzLocked;
@@ -637,7 +640,6 @@ class Player final : public Creature, public Cylinder
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void drainMana(Creature* attacker, int32_t manaLoss);
-		void addManaSpent(uint64_t amount);
 		void addSkillAdvance(skills_t skill, uint64_t count);
 
 		int32_t getArmor() const override;
@@ -1233,7 +1235,6 @@ class Player final : public Creature, public Cylinder
 		time_t lastLogout = 0;
 
 		uint64_t experience = 0;
-		uint64_t manaSpent = 0;
 		uint64_t lastAttack = 0;
 		uint64_t bankBalance = 0;
 		uint64_t lastQuestlogUpdate = 0;
@@ -1278,8 +1279,8 @@ class Player final : public Creature, public Cylinder
 		uint32_t guid = 0;
 		uint32_t windowTextId = 0;
 		uint32_t editListId = 0;
-		uint32_t mana = 0;
-		uint32_t manaMax = 0;
+		uint32_t pokemonHealth = 0;
+		uint32_t pokemonHealthMax = 0;
 		int32_t varSkills[SKILL_LAST + 1] = {};
 		int32_t varSpecialSkills[SPECIALSKILL_LAST + 1] = {};
 		int32_t varStats[STAT_LAST + 1] = {};
@@ -1298,7 +1299,7 @@ class Player final : public Creature, public Cylinder
 		uint16_t maxWriteLen = 0;
 		int16_t lastDepotId = -1;
 
-		uint8_t soul = 0;
+		uint8_t pokemonCapacity = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
 		uint8_t magLevelPercent = 0;

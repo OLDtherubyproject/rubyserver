@@ -590,25 +590,25 @@ MagicEffectNames magicEffectNames = {
 };
 
 ShootTypeNames shootTypeNames = {
-	{"spear",		CONST_ANI_SPEAR},
-	{"bolt",		CONST_ANI_BOLT},
-	{"arrow",		CONST_ANI_ARROW},
-	{"fire",		CONST_ANI_FIRE},
-	{"energy",		CONST_ANI_ENERGY},
+	{"pokeball",		CONST_ANI_POKEBALL},
+	{"greatball",		CONST_ANI_GREATBALL},
+	{"ultraball",		CONST_ANI_ULTRABALL},
+	{"saffariball",		CONST_ANI_SAFFARIBALL},
+	{"masterball",		CONST_ANI_MASTERBALL},
 	{"poisonarrow",		CONST_ANI_POISONARROW},
 	{"burstarrow",		CONST_ANI_BURSTARROW},
 	{"throwingstar",	CONST_ANI_THROWINGSTAR},
 	{"throwingknife",	CONST_ANI_THROWINGKNIFE},
 	{"smallstone",		CONST_ANI_SMALLSTONE},
-	{"death",		CONST_ANI_DEATH},
+	{"death",			CONST_ANI_DEATH},
 	{"largerock",		CONST_ANI_LARGEROCK},
 	{"snowball",		CONST_ANI_SNOWBALL},
 	{"powerbolt",		CONST_ANI_POWERBOLT},
-	{"poison",		CONST_ANI_POISON},
+	{"poison",			CONST_ANI_POISON},
 	{"infernalbolt",	CONST_ANI_INFERNALBOLT},
 	{"huntingspear",	CONST_ANI_HUNTINGSPEAR},
 	{"enchantedspear",	CONST_ANI_ENCHANTEDSPEAR},
-	{"redstar",		CONST_ANI_REDSTAR},
+	{"redstar",			CONST_ANI_REDSTAR},
 	{"greenstar",		CONST_ANI_GREENSTAR},
 	{"royalspear",		CONST_ANI_ROYALSPEAR},
 	{"sniperarrow",		CONST_ANI_SNIPERARROW},
@@ -1232,6 +1232,9 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_CANNOTCAPTURETHISPOKEMON:
 			return "You can not capture this Pokemon.";
+
+		case RETURNVALUE_MAXPOKEMONINBAG:
+			return "You can only have 6 Pokemon.";
 
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";

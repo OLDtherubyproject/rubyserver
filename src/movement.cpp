@@ -324,6 +324,12 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 			Item* item = Item::CreateItem(pokemonType->info.portrait, 1);
 			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
 		}
+
+		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId());
+
+		player->setPokemonHealthMax(pokemon->getMaxHealth());
+		player->setPokemonHealth(pokemon->getHealth());
+		player->sendStats();
 	}
 
 	MoveEvent* moveEvent = getEvent(item, MOVE_EVENT_EQUIP, slot);
@@ -340,8 +346,15 @@ uint32_t MoveEvents::onPlayerDeEquip(Player* player, Item* item, slots_t slot)
 		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 
 		if (portrait) {
-			g_game.internalRemoveItem(portrait, 1);
+			g_game.transformItem(portrait, 2513);
+		} else {
+			Item* item = Item::CreateItem(2513, 1);
+			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
 		}
+
+		player->setPokemonHealthMax(0);
+		player->setPokemonHealth(0);
+		player->sendStats();
 	}
 
 	MoveEvent* moveEvent = getEvent(item, MOVE_EVENT_DEEQUIP, slot);

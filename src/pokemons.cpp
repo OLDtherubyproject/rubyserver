@@ -685,6 +685,10 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		mType->info.catchRate = pugi::cast<double>(attr.value());
 	}
 
+	if ((attr = pokemonNode.attribute("price"))) {
+		mType->info.price = pugi::cast<int32_t>(attr.value());
+	}
+
 	if ((attr = pokemonNode.attribute("skull"))) {
 		mType->info.skull = getSkullType(asLowerCaseString(attr.as_string()));
 	}

@@ -505,8 +505,8 @@ void Player::setVarStats(stats_t stat, int32_t modifier)
 		}
 
 		case STAT_MAXMANAPOINTS: {
-			if (getMana() > getMaxMana()) {
-				changeMana(getMaxMana() - getMana());
+			if (getPokemonHealth() > getPokemonHealthMax()) {
+				changePokemonHealth(getPokemonHealthMax() - getPokemonHealth());
 			}
 			break;
 		}
@@ -521,7 +521,7 @@ int32_t Player::getDefaultStats(stats_t stat) const
 {
 	switch (stat) {
 		case STAT_MAXHITPOINTS: return healthMax;
-		case STAT_MAXMANAPOINTS: return manaMax;
+		case STAT_MAXMANAPOINTS: return pokemonHealthMax;
 		case STAT_MAGICPOINTS: return getBaseMagicLevel();
 		default: return 0;
 	}
@@ -1509,70 +1509,13 @@ void Player::drainHealth(Creature* attacker, int32_t damage)
 void Player::drainMana(Creature* attacker, int32_t manaLoss)
 {
 	onAttacked();
-	changeMana(-manaLoss);
+	changePokemonHealth(-manaLoss);
 
 	if (attacker) {
 		addDamagePoints(attacker, manaLoss);
 	}
 
 	sendStats();
-}
-
-void Player::addManaSpent(uint64_t amount)
-{
-	if (hasFlag(PlayerFlag_NotGainMana)) {
-		return;
-	}
-
-	uint64_t currReqMana = vocation->getReqMana(magLevel);
-	uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-	if (currReqMana >= nextReqMana) {
-		//player has reached max magic level
-		return;
-	}
-
-	g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, amount);
-	if (amount == 0) {
-		return;
-	}
-
-	bool sendUpdateStats = false;
-	while ((manaSpent + amount) >= nextReqMana) {
-		amount -= nextReqMana - manaSpent;
-
-		magLevel++;
-		manaSpent = 0;
-
-		std::ostringstream ss;
-		ss << "You advanced to magic level " << magLevel << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-
-		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-		sendUpdateStats = true;
-		currReqMana = nextReqMana;
-		nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (currReqMana >= nextReqMana) {
-			return;
-		}
-	}
-
-	manaSpent += amount;
-
-	uint8_t oldPercent = magLevelPercent;
-	if (nextReqMana > currReqMana) {
-		magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-	} else {
-		magLevelPercent = 0;
-	}
-
-	if (oldPercent != magLevelPercent) {
-		sendUpdateStats = true;
-	}
-
-	if (sendUpdateStats) {
-		sendStats();
-	}
 }
 
 void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = false*/)
@@ -1620,8 +1563,6 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		++level;
 		healthMax += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
 		health += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
-		manaMax += vocation->getManaGain();
-		mana += vocation->getManaGain();
 		capacity += vocation->getCapGain();
 
 		currLevelExp = nextLevelExp;
@@ -1634,7 +1575,6 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 	if (prevLevel != level) {
 		health = healthMax;
-		mana = manaMax;
 
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
@@ -1704,14 +1644,13 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 	while (level > 1 && experience < currLevelExp) {
 		--level;
 		healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-		manaMax = std::max<int32_t>(0, manaMax - vocation->getManaGain());
+		pokemonHealthMax = std::max<int32_t>(0, pokemonHealthMax - vocation->getManaGain());
 		capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 		currLevelExp = Player::getExpForLevel(level);
 	}
 
 	if (oldLevel != level) {
 		health = healthMax;
-		mana = manaMax;
 
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
@@ -1912,30 +1851,17 @@ void Player::death(Creature* lastHitCreature)
 
 		//Magic level loss
 		uint64_t sumMana = 0;
-		uint64_t lostMana = 0;
 
 		//sum up all the mana
 		for (uint32_t i = 1; i <= magLevel; ++i) {
 			sumMana += vocation->getReqMana(i);
 		}
 
-		sumMana += manaSpent;
-
 		double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
-
-		lostMana = static_cast<uint64_t>(sumMana * deathLossPercent);
-
-		while (lostMana > manaSpent && magLevel > 0) {
-			lostMana -= manaSpent;
-			manaSpent = vocation->getReqMana(magLevel);
-			magLevel--;
-		}
-
-		manaSpent -= lostMana;
 
 		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
 		if (nextReqMana > vocation->getReqMana(magLevel)) {
-			magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
+			magLevelPercent = Player::getPercentLevel(0, nextReqMana);
 		} else {
 			magLevelPercent = 0;
 		}
@@ -1982,7 +1908,7 @@ void Player::death(Creature* lastHitCreature)
 			while (level > 1 && experience < Player::getExpForLevel(level)) {
 				--level;
 				healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-				manaMax = std::max<int32_t>(0, manaMax - vocation->getManaGain());
+				pokemonHealthMax = std::max<int32_t>(0, pokemonHealthMax - vocation->getManaGain());
 				capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 			}
 
@@ -2019,10 +1945,8 @@ void Player::death(Creature* lastHitCreature)
 
 		if (getSkull() == SKULL_BLACK) {
 			health = 40;
-			mana = 0;
 		} else {
 			health = healthMax;
-			mana = manaMax;
 		}
 
 		auto it = conditions.begin(), end = conditions.end();
@@ -2250,6 +2174,18 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
 
+	if (item->getPokemonId() && (item->getTopParent() != this)) {
+		if (getPokemonCapacity() >= 6 ) {
+			return RETURNVALUE_MAXPOKEMONINBAG;
+		}
+	} else if (item->getContainer() && (item->getTopParent() != this)) {
+		uint16_t pkmCount = g_game.findQuantityOfPokeballs(item->getContainer());
+
+		if ((getPokemonCapacity() + pkmCount) > 6) {
+			return RETURNVALUE_MAXPOKEMONINBAG;
+		}
+	}
+
 	bool childIsOwner = hasBitSet(FLAG_CHILDISOWNER, flags);
 	if (childIsOwner) {
 		//a child container is querying the player, just check if enough capacity
@@ -2425,7 +2361,10 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 			break;
 		}
 
-		case CONST_SLOT_WHEREEVER:
+		case CONST_SLOT_WHEREEVER: {
+			ret = RETURNVALUE_NOERROR;
+			break;
+		}
 		case -1:
 			ret = RETURNVALUE_NOTENOUGHROOM;
 			break;
@@ -2928,6 +2867,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 	bool requireListUpdate = true;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
+		bool updatedStatus = false;
 		const Item* i = (oldParent ? oldParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
@@ -2942,7 +2882,21 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 
 		updateInventoryWeight();
 		updateItemsLight();
-		sendStats();
+
+		if (const Item* item = thing->getItem()) {
+			if (item->getPokemonId()) {
+				changePokemonCapacity(1);
+				updatedStatus = true;
+			} else if (const Container* container = item->getContainer()) {
+				uint16_t count = g_game.findQuantityOfPokeballs(container);
+				changePokemonCapacity(getPokemonCapacity() + count);
+				updatedStatus = true;
+			}
+		}
+
+		if (!updatedStatus) {
+			sendStats();
+		}
 	}
 
 	if (const Item* item = thing->getItem()) {
@@ -2982,6 +2936,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 	bool requireListUpdate = true;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
+		bool updatedStatus = false;
 		const Item* i = (newParent ? newParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
@@ -2996,7 +2951,21 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 
 		updateInventoryWeight();
 		updateItemsLight();
-		sendStats();
+
+		if (const Item* item = thing->getItem()) {
+			if (item->getPokemonId()) {
+				changePokemonCapacity(-1);
+				updatedStatus = true;
+			} else if (const Container* container = item->getContainer()) {
+				uint16_t count = g_game.findQuantityOfPokeballs(container);
+				changePokemonCapacity(count * -1);
+				updatedStatus = true;
+			}
+		}
+
+		if (!updatedStatus) {
+			sendStats();
+		}
 	}
 
 	if (const Item* item = thing->getItem()) {
@@ -3549,25 +3518,23 @@ void Player::changeHealth(int32_t healthChange, bool sendHealthChange/* = true*/
 	sendStats();
 }
 
-void Player::changeMana(int32_t manaChange)
+void Player::changePokemonHealth(int32_t healthChange)
 {
-	if (!hasFlag(PlayerFlag_HasInfiniteMana)) {
-		if (manaChange > 0) {
-			mana += std::min<int32_t>(manaChange, getMaxMana() - mana);
-		} else {
-			mana = std::max<int32_t>(0, mana + manaChange);
-		}
+	if (healthChange > 0) {
+		pokemonHealth += std::min<int32_t>(healthChange, getPokemonHealthMax() - pokemonHealth);
+	} else {
+		pokemonHealth = std::max<int32_t>(0, pokemonHealth + healthChange);
 	}
 
 	sendStats();
 }
 
-void Player::changeSoul(int32_t soulChange)
+void Player::changePokemonCapacity(int32_t capacityChange)
 {
-	if (soulChange > 0) {
-		soul += std::min<int32_t>(soulChange, vocation->getSoulMax() - soul);
+	if (capacityChange > 0) {
+		pokemonCapacity = std::min<uint32_t>(6, pokemonCapacity + capacityChange);
 	} else {
-		soul = std::max<int32_t>(0, soul + soulChange);
+		pokemonCapacity = std::max<uint32_t>(0, pokemonCapacity + capacityChange);
 	}
 
 	sendStats();
@@ -4212,30 +4179,10 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 		}
 
 		oldSkillValue = magLevel;
-		oldPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
+		oldPercentToNextLevel = 0;
 
 		g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, tries);
 		uint32_t currMagLevel = magLevel;
-
-		while ((manaSpent + tries) >= nextReqMana) {
-			tries -= nextReqMana - manaSpent;
-
-			magLevel++;
-			manaSpent = 0;
-
-			g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-			sendUpdate = true;
-			currReqMana = nextReqMana;
-			nextReqMana = vocation->getReqMana(magLevel + 1);
-
-			if (currReqMana >= nextReqMana) {
-				tries = 0;
-				break;
-			}
-		}
-
-		manaSpent += tries;
 
 		if (magLevel != currMagLevel) {
 			std::ostringstream ss;
@@ -4245,8 +4192,8 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 
 		uint8_t newPercent;
 		if (nextReqMana > currReqMana) {
-			newPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-			newPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
+			newPercent = Player::getPercentLevel(0, nextReqMana);
+			newPercentToNextLevel = 0;
 		} else {
 			newPercent = 0;
 			newPercentToNextLevel = 0;

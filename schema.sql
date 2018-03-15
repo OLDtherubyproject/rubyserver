@@ -29,9 +29,6 @@ CREATE TABLE IF NOT EXISTS `players` (
   `looktype` int(11) NOT NULL DEFAULT '136',
   `lookaddons` int(11) NOT NULL DEFAULT '0',
   `maglevel` int(11) NOT NULL DEFAULT '0',
-  `mana` int(11) NOT NULL DEFAULT '0',
-  `manamax` int(11) NOT NULL DEFAULT '0',
-  `manaspent` int(11) unsigned NOT NULL DEFAULT '0',
   `soul` int(10) unsigned NOT NULL DEFAULT '0',
   `town_id` int(11) NOT NULL DEFAULT '1',
   `posx` int(11) NOT NULL DEFAULT '0',
@@ -322,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `server_config` (
   PRIMARY KEY `config` (`config`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '21'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
+INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
 
 CREATE TABLE IF NOT EXISTS `tile_store` (
   `house_id` int(11) NOT NULL,
@@ -344,6 +341,7 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pokeball` int(11) NOT NULL,
   `type` varchar(255) NOT NULL,
+  `shiny` boolean NOT NULL DEFAULT 0,
   `nickname` varchar(255) NOT NULL,
   `gender` int(1) NOT NULL DEFAULT '0',
   `nature` int(2) NOT NULL DEFAULT '0',

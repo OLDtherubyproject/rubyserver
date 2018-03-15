@@ -236,11 +236,10 @@ void BedItem::regeneratePlayer(Player* player) const
 		}
 
 		player->changeHealth(regen, false);
-		player->changeMana(regen);
 	}
 
-	const int32_t soulRegen = sleptTime / (60 * 15);
-	player->changeSoul(soulRegen);
+	//const int32_t soulRegen = sleptTime / (60 * 15);
+	//player->changePokemonCapacity(soulRegen);
 }
 
 void BedItem::updateAppearance(const Player* player)

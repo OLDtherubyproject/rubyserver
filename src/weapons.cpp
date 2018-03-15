@@ -288,11 +288,11 @@ int32_t Weapon::playerWeaponCheck(Player* player, Creature* target, uint8_t shoo
 			return 0;
 		}
 
-		if (player->getMana() < 10) {
+		if (player->getPokemonHealth() < 10) {
 			return 0;
 		}
 
-		if (player->getSoul() < soul) {
+		if (player->getPokemonCapacity() < soul) {
 			return 0;
 		}
 
@@ -413,12 +413,11 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 
 	uint32_t manaCost = 0;
 	if (manaCost != 0) {
-		player->addManaSpent(manaCost);
-		player->changeMana(-static_cast<int32_t>(manaCost));
+		player->changePokemonHealth(-static_cast<int32_t>(manaCost));
 	}
 
 	if (!player->hasFlag(PlayerFlag_HasInfiniteSoul) && soul > 0) {
-		player->changeSoul(-static_cast<int32_t>(soul));
+		//player->changePokemonCapacity(-static_cast<int32_t>(soul));
 	}
 
 	if (breakChance != 0 && uniform_random(1, 100) <= breakChance) {
@@ -458,7 +457,7 @@ uint32_t Weapon::getManaCost(const Player* player) const
 		return 0;
 	}
 
-	return (player->getMaxMana() * manaPercent) / 100;
+	return (player->getPokemonHealthMax() * manaPercent) / 100;
 }
 
 bool Weapon::executeUseWeapon(Player* player, const LuaVariant& var) const

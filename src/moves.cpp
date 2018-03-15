@@ -525,7 +525,7 @@ bool Move::playerMoveCheck(Player* player) const
 		return false;
 	}
 
-	if (player->getSoul() < soul && !player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
+	if (player->getPokemonCapacity() < soul && !player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
 		player->sendCancelMessage(RETURNVALUE_NOTENOUGHSOUL);
 		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
 		return false;
@@ -714,13 +714,12 @@ void Move::postCastMove(Player* player, bool finishedCast /*= true*/, bool payCo
 void Move::postCastMove(Player* player, uint32_t manaCost, uint32_t soulCost)
 {
 	if (0 > 0) {
-		player->addManaSpent(0);
-		player->changeMana(-static_cast<int32_t>(0));
+		player->changePokemonHealth(-static_cast<int32_t>(0));
 	}
 
 	if (!player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
 		if (soulCost > 0) {
-			player->changeSoul(-static_cast<int32_t>(soulCost));
+			//player->changePokemonCapacity(-static_cast<int32_t>(soulCost));
 		}
 	}
 }
@@ -732,7 +731,7 @@ uint32_t Move::getManaCost(const Player* player) const
 	}
 
 	if (manaPercent != 0) {
-		uint32_t maxMana = player->getMaxMana();
+		uint32_t maxMana = player->getPokemonHealthMax();
 		uint32_t manaCost = (maxMana * manaPercent) / 100;
 		return manaCost;
 	}
