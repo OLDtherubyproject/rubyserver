@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pokeballs>
-	<pokeball serverid="2" id="2149" name="poke ball" charged="2260" discharged="2170" goback="189" catchSuccess="100" catchFail="101" shotEffect="40" defaultMultiplier="1" />
-	<pokeball serverid="1" id="2261" name="great ball" charged="2148" discharged="2171" goback="190" catchSuccess="102" catchFail="103" shotEffect="41" defaultMultiplier="2" />
-	<pokeball serverid="3" id="2262" name="super ball" charged="2149" discharged="2172" goback="191" catchSuccess="104" catchFail="105" shotEffect="42" defaultMultiplier="3" />
-	<pokeball serverid="4" id="2263" name="ultra ball" charged="2150" discharged="2173" goback="192" catchSuccess="106" catchFail="107" shotEffect="43" defaultMultiplier="4" />
-	<pokeball serverid="5" id="2264" name="yume ball" charged="2151" discharged="2174" goback="193" catchSuccess="108" catchFail="109" shotEffect="44" defaultMultiplier="1">
-		<rate type="normal" multiplier="8" />
-		<rate type="psychic" multiplier="8" />
-	</pokeball>
+	<pokeball serverid="1" id="27786" name="poke ball" charged="27776" discharged="27781" goback="189" catchSuccess="100" catchFail="101" shotEffect="1" defaultMultiplier="1" />
+	<pokeball serverid="2" id="27787" name="great ball" charged="27777" discharged="27782" goback="190" catchSuccess="102" catchFail="103" shotEffect="2" defaultMultiplier="2" />
+	<pokeball serverid="3" id="27788" name="ultra ball" charged="27778" discharged="27783" goback="192" catchSuccess="106" catchFail="107" shotEffect="3" defaultMultiplier="4" />
+	<pokeball serverid="4" id="27789" name="saffari ball" charged="27780" discharged="27784" goback="194" catchSuccess="108" catchFail="109" shotEffect="4" defaultMultiplier="1" />
+	<pokeball serverid="5" id="27790" name="master ball" charged="27779" discharged="27785" goback="193" catchSuccess="110" shotEffect="44" shotEffect="5" defaultMultiplier="1000000" />
 </pokeballs>
 
