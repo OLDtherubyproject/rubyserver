@@ -30272,55 +30272,141 @@
 	<item fromid="26382" toid="26836" article="a" name="pokeicon">
 		<attribute key="slotType" value="pokeball" />
 	</item>
-	<item id="30001" name="water" />
-	<item id="30002" name="blood" />
-	<item id="30003" name="beer" />
-	<item id="30004" name="slime" />
-	<item id="30005" name="lemonade" />
-	<item id="30006" name="milk" />
-	<item id="30007" name="manafluid" />
-	<item id="30010" name="lifefluid" />
-	<item id="30011" name="oil" />
-	<item id="30013" name="urine" />
-	<item id="30014" name="coconut milk" />
-	<item id="30015" name="wine" />
-	<item id="30019" name="mud" />
-	<item id="30021" name="fruit juice" />
-	<item id="30026" name="lava" />
-	<item id="30027" name="rum" />
-	<item id="30028" name="swamp" />
-	<item id="30035" name="tea" />
-	<item id="30043" name="mead" />
-	<item id="27220" name="floor" />
-	<item id="27774" name="Market" />
-	<item id="27206" name="floor" />
-	<item id="27775" name="Market Stash" />
-	<item fromid="27765" toid="27766" name="Poke Mart shelf" />
-	<item id="27487" name="Cerulean flowers">
-		<attribute key="price" value="200000" />
-	</item>
+
+	<item fromid="26837" toid="26858" article="a" name="wall" />
+	<item fromid="26859" toid="26860" article="a" name="bookcase" />
+	<item fromid="26861" toid="26863" article="a" name="wall" />
+	<item fromid="26864" toid="26866" article="a" name="television" />
+	<item fromid="26867" toid="26885" article="a" name="wall" />
+	<item fromid="26886" toid="26889" article="a" name="window" />
+	<item fromid="26890" toid="26893" article="a" name="wall" />
+	<item fromid="26894" toid="26897" article="a" name="window" />
+	<item fromid="26898" toid="26901" article="a" name="wall" />
+	<item fromid="26902" toid="26905" article="a" name="window" />
+	<item fromid="26906" toid="26909" article="a" name="wall" />
+	<item fromid="26910" toid="26917" article="a" name="railing" />
+	<item id="26918" article="an" name="open door" />
+	<item id="26919" article="a" name="closed door" />
+	<item id="26920" article="an" name="open door" />
+	<item id="26921" article="a" name="closed door" />
+	<item id="26922" article="a" name="stairs" />
+	<item id="26923" article="a" name="wall" />
+	<item id="26924" article="a" name="stairs" />
+	<item id="26925" article="an" name="open door" />
+	<item id="26926" article="a" name="closed door" />
+	<item id="26927" article="an" name="open door" />
+	<item id="26928" article="a" name="closed door" />
+	<item fromid="26929" toid="26940" article="a" name="wall" />
+	<item fromid="26941" toid="26944" article="a" name="bench" />
+	<item fromid="26945" toid="26956" article="a" name="wall" />
+	<item fromid="26957" toid="26962" article="a" name="railing" />
+	<item fromid="26963" toid="26968" article="a" name="wall" />
+	<item fromid="26969" toid="26978" article="a" name="railing" />
+	<item fromid="26979" toid="26994" article="a" name="window" />
+	<item fromid="26995" toid="27007" article="a" name="wall" />
+	<item fromid="27008" toid="27013" article="a" name="railing" />
+	<item fromid="27014" toid="27019" article="a" name="wall" />
+	<item fromid="27020" toid="27029" article="a" name="railing" />
+	<item fromid="27030" toid="27045" article="a" name="window" />
+	<item fromid="27046" toid="27074" article="a" name="wall" />
+	<item fromid="27075" toid="27090" article="a" name="window" />
+	<item fromid="27091" toid="27124" article="a" name="wall" />
+	<item fromid="27125" toid="27140" article="a" name="window" />
+	<item fromid="27141" toid="27154" article="a" name="wall" />
+	<item id="27155" article="a" name="closed door" />
+	<item id="27156" article="an" name="open door" />
+	<item id="27157" article="a" name="closed door" />
+	<item id="27158" article="an" name="open door" />
+	<item id="27159" article="a" name="closed door" />
+	<item id="27160" article="an" name="open door" />
+	<item id="27161" article="a" name="closed door" />
+	<item id="27162" article="an" name="open door" />
+	<item fromid="27163" toid="27167" article="a" name="wall" />
+	<item fromid="27168" toid="27175" article="a" name="railing" />
+	<item id="27176" article="a" name="closed door" />
+	<item id="27177" article="an" name="open door" />
+	<item id="27178" article="a" name="closed door" />
+	<item id="27179" article="an" name="open door" />
+	<item id="27180" article="a" name="closed door" />
+	<item id="27181" article="an" name="open door" />
+	<item id="27182" article="a" name="closed door" />
+	<item id="27183" article="an" name="open door" />
+	<item id="27184" article="a" name="closed door" />
+	<item id="27185" article="an" name="open door" />
+	<item id="27186" article="a" name="closed door" />
+	<item id="27187" article="an" name="open door" />
+	<item id="27188" article="a" name="closed door" />
+	<item id="27199" article="an" name="open door" />
+	<item id="27190" article="a" name="closed door" />
+	<item id="27191" article="an" name="open door" />
+	<item fromid="27192" toid="27421" article="a" name="floor" />
+	<item fromid="27422" toid="27423" article="a" name="closed door" />
+	<item id="27424" article="an" name="open door" />
+	<item fromid="27425" toid="27426" article="a" name="closed door" />
+	<item id="27427" article="an" name="open door" />
+	<item id="27428" article="a" name="closed door" />
+	<item id="27429" article="an" name="open door" />
+	<item id="27430" article="a" name="closed door" />
+	<item id="27431" article="an" name="open door" />
+	<item id="27432" article="a" name="closed door" />
+	<item id="27433" article="an" name="open door" />
+	<item id="27434" article="a" name="closed door" />
+	<item id="27435" article="an" name="open door" />
+	<item id="27436" article="a" name="gate" />
+	<item id="27437" article="a" name="wall" />
+	<item fromid="27438" toid="27453" article="a" name="Locker" />
+	<item fromid="27454" toid="27458" article="a" name="dustbin" />
+	<item fromid="27459" toid="27473" article="a" name="floor" />
+	<item fromid="27474" toid="27475" article="a" name="wall lamp" />
+	<item id="27476" article="a" name="book" />
+	<item fromid="27477" toid="27478" article="a" name="gate" />
+	<item id="27479" article="a" name="Trade Center portal" />
+	<item id="27480" article="a" name="Training Room portal" />
+	<item id="27481" article="a" name="book" />
+	<item id="27482" article="a" name="picture" />
+	<item id="27483" article="an" name="indoor plant" />
+	<item id="27484" article="a" name="" />
+	<item id="27485" article="an" name="exotic plant" />
+	<item id="27486" article="a" name="bonsai tree" />
+	<item id="27487" article="a" name="Cerulean flowers" />
+	<item id="27488" article="a" name="wall" />
+	<item fromid="27489" toid="27562" article="a" name="floor" />
+	<item fromid="27563" toid="27564" article="a" name="glass table" />
+	<item fromid="27565" toid="27569" article="a" name="black leather sofa" />
+	<item id="27570" article="a" name="wall" />
+	<item fromid="27571" toid="27572" article="a" name="bookcase" />
+	<item fromid="27573" toid="27575" article="a" name="wall" />
+	<item fromid="27576" toid="27578" article="a" name="television" />
+	<item id="27581" article="a" name="floor" />
+	<item fromid="27582" toid="27584" article="a" name="window" />
+	<item fromid="27585" toid="27591" article="a" name="PC balcony" />
+	<item fromid="27592" toid="27594" article="a" name="computer" />
+	<item fromid="27595" toid="27598" article="a" name="healing machine" />
+	<item fromid="27599" toid="27608" article="a" name="wall" />
+	<item fromid="27609" toid="27611" article="a" name="window" />
+	<item fromid="27612" toid="27626" article="a" name="wall" />
+	<item fromid="27627" toid="27629" article="a" name="window" />
+	<item id="27630" article="a" name="wall" />
+	<item fromid="27631" toid="27632" article="a" name="window" />
+	<item fromid="27633" toid="27639" article="a" name="wall" />
+	<item fromid="27640" toid="27642" article="a" name="window" />
+	<item id="27643" article="a" name="roof" />
+	<item fromid="27644" toid="27658" article="a" name="glass" />
+	<item fromid="27659" toid="27722" article="a" name="roof" />
+	<item id="27723" article="a" name="red table" />
+	<item id="27724" article="a" name="red chair" />
+	<item fromid="27725" toid="27726" article="a" name="glass table" />
+	<item fromid="27727" toid="27730" article="a" name="streetlamp" />
 	<item fromid="27731" toid="27733" article="a" name="balcony" />
-	<item id ="27762" name="cash register" />
+	<item fromid="27734" toid="27738" article="a" name="glass" />
+	<item fromid="27739" toid="27761" article="a" name="roof" />
+	<item id="27762" article="a" name="cash register" />
+	<item fromid="27763" toid="27766" article="a" name="Poke Mart shelf" />
 	<item fromid="27767" toid="27768" article="a" name="Poke Ball showcase" />
-	<item id="27488" name="Poke Mart" />
-	<item id="26872" name="wall" />
-	<item id="26873" name="wall" />
-	<item id="26875" name="wall" />
-	<item id="27637" name="wall" />
-	<item id="27613" name="wall" />
-	<item id="27615" name="wall" />
-	<item id="27616" name="wall" />
-	<item id="27772" name="wall" />
-	<item id="27773" name="wall" />
-	<item id="27639" name="wall" />
-	<item id="27643" name="roof" />
-	<item id="27220" name="roof" />
-	<item id="27457" name="dustbin" />
-	<item fromid="27734" toid="27738" article="a" name="glass roof" />
-	<item fromid="27656" toid="27657" article="a" name="glass roof" />
-	<item fromid="27192" toid="27421" name="floor" />
-	<item fromid="27489" toid="27562" name="floor" />
-	<item fromid="26837" toid="27191" name="floor" />
+	<item fromid="27769" toid="27773" article="a" name="wall" />
+	<item id="27774" article="a" name="Market" />
+	<item id="27775" article="a" name="Market Stash" />
+
 	<item id="27776" article="a" name="poke ball">
 		<attribute key="slotType" value="pokeball" />
 	</item>
@@ -30361,4 +30447,120 @@
 	</item>
 	<item id="27790" article="a" name="master ball">
 	</item>
+	<item id="27791" article="a" name="dusk ball">
+	</item>
+	<item id="27792" article="a" name="cherish ball">
+	</item>
+	<item id="27793" article="a" name="dive ball">
+	</item>
+	<item id="27794" article="a" name="love ball">
+	</item>
+	<item id="27795" article="a" name="fast ball">
+	</item>
+	<item id="27796" article="a" name="heavy ball">
+	</item>
+	<item id="27797" article="a" name="lure ball">
+	</item>
+	<item id="27798" article="a" name="moon ball">
+	</item>
+	<item id="27799" article="a" name="net ball">
+	</item>
+	<item id="27800" article="a" name="nest ball">
+	</item>
+	<item id="27801" article="a" name="premier ball">
+	</item>
+	<item id="27802" article="a" name="quick ball">
+	</item>
+	<item id="27803" article="a" name="dusk ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27804" article="a" name="cherish ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27805" article="a" name="dive ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27806" article="a" name="love ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27807" article="a" name="fast ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27808" article="a" name="heavy ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27809" article="a" name="lure ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27810" article="a" name="moon ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27811" article="a" name="net ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27812" article="a" name="nest ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27813" article="a" name="premier ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="27814" article="a" name="quick ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28512" article="a" name="discharged dusk ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28513" article="a" name="discharged cherish ball">
+		<attribute key="slotType" value="discharged pokeball" />
+	</item>
+	<item id="28514" article="a" name="discharged dive ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28515" article="a" name="discharged love ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28516" article="a" name="discharged fast ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28517" article="a" name="discharged heavy ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28518" article="a" name="discharged lure ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28519" article="a" name="discharged moon ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28520" article="a" name="discharged net ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28521" article="a" name="discharged nest ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28522" article="a" name="discharged premier ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+	<item id="28523" article="a" name="discharged quick ball">
+		<attribute key="slotType" value="pokeball" />
+	</item>
+
+	<item id="30001" name="water" />
+	<item id="30002" name="blood" />
+	<item id="30003" name="beer" />
+	<item id="30004" name="slime" />
+	<item id="30005" name="lemonade" />
+	<item id="30006" name="milk" />
+	<item id="30007" name="manafluid" />
+	<item id="30010" name="lifefluid" />
+	<item id="30011" name="oil" />
+	<item id="30013" name="urine" />
+	<item id="30014" name="coconut milk" />
+	<item id="30015" name="wine" />
+	<item id="30019" name="mud" />
+	<item id="30021" name="fruit juice" />
+	<item id="30026" name="lava" />
+	<item id="30027" name="rum" />
+	<item id="30028" name="swamp" />
+	<item id="30035" name="tea" />
+	<item id="30043" name="mead" />	
 </items>
