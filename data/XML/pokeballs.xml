@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pokeballs>
-	<pokeball serverid="1" id="27786" name="poke ball" charged="27776" discharged="27781" goback="214" catchSuccess="212" ccatchFail="213" shotEffect="1" defaultMultiplier="1" />
-	<pokeball serverid="2" id="27787" name="great ball" charged="27777" discharged="27782" goback="217" catchSuccess="215" ccatchFail="216" shotEffect="2" defaultMultiplier="2" />
-	<pokeball serverid="3" id="27788" name="ultra ball" charged="27778" discharged="27783" goback="220" catchSuccess="218" ccatchFail="219" shotEffect="3" defaultMultiplier="4" />
-	<pokeball serverid="4" id="27789" name="saffari ball" charged="27780" discharged="27784" goback="225" catchSuccess="223" ccatchFail="224" shotEffect="4" defaultMultiplier="1" />
-	<pokeball serverid="5" id="27790" name="master ball" charged="27779" discharged="27785" goback="222" catchSuccess="221" ccatchFail="0" shotEffect="5" defaultMultiplier="1000000" />
+	<pokeball serverid="1" id="27786" name="poke ball" charged="27776" discharged="27781" goback="214" catchSuccess="212" catchFail="213" shotEffect="1" defaultMultiplier="1" />
+	<pokeball serverid="2" id="27787" name="great ball" charged="27777" discharged="27782" goback="217" catchSuccess="215" catchFail="216" shotEffect="2" defaultMultiplier="2" />
+	<pokeball serverid="3" id="27788" name="ultra ball" charged="27778" discharged="27783" goback="220" catchSuccess="218" catchFail="219" shotEffect="3" defaultMultiplier="4" />
+	<pokeball serverid="4" id="27789" name="saffari ball" charged="27780" discharged="27784" goback="225" catchSuccess="223" catchFail="224" shotEffect="4" defaultMultiplier="1" />
+	<pokeball serverid="5" id="27790" name="master ball" charged="27779" discharged="27785" goback="222" catchSuccess="221" catchFail="0" shotEffect="5" defaultMultiplier="1000000" />
 	<pokeball serverid="6" id="27791" name="dusk ball" charged="27803" discharged="28512" goback="187" catchSuccess="185" catchFail="186" shotEffect="6" defaultMultiplier="2" />
 	<pokeball serverid="7" id="27792" name="cherish ball" charged="27804" discharged="28513" goback="178" catchSuccess="176" catchFail="177" shotEffect="7" defaultMultiplier="3" />
 	<pokeball serverid="8" id="27793" name="dive ball" charged="27805" discharged="28514" goback="181" catchSuccess="179" catchFail="180" shotEffect="8" defaultMultiplier="1" />
@@ -18,5 +18,3 @@
 	<pokeball serverid="16" id="27801" name="premier ball" charged="27813" discharged="28522" goback="208" catchSuccess="206" catchFail="207" shotEffect="16" defaultMultiplier="2" />
 	<pokeball serverid="17" id="27802" name="quick ball" charged="27814" discharged="28523" goback="211" catchSuccess="209" catchFail="210" shotEffect="17" defaultMultiplier="5" />
 </pokeballs>
-
-
