@@ -185,6 +185,9 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 		case CONDITION_MOVEGROUPCOOLDOWN:
 			return new ConditionMoveGroupCooldown(id, type, ticks, buff, subId);
 
+		case CONDITION_SLEEP:
+			return new ConditionSleep(id, type, ticks, buff, subId);
+
 		case CONDITION_INFIGHT:
 		case CONDITION_DRUNK:
 		case CONDITION_EXHAUST_WEAPON:
@@ -1693,4 +1696,41 @@ bool ConditionMoveGroupCooldown::startCondition(Creature* creature)
 		}
 	}
 	return true;
+}
+
+bool ConditionSleep::startCondition(Creature* creature)
+{
+	if (!Condition::startCondition(creature)) {
+		return false;
+	}
+	Outfit_t outfit = creature->getDefaultOutfit();
+	outfit.lookType = 0;
+	outfit.lookTypeEx = creature->getLookCorpse();
+
+	g_game.internalCreatureChangeOutfit(creature, outfit);
+	g_game.changeSpeed(creature, -creature->getBaseSpeed());
+	internalSleepTicks = 3000;
+	return true;
+}
+
+bool ConditionSleep::executeCondition(Creature* creature, int32_t interval)
+{
+	internalSleepTicks += interval;
+
+	if (internalSleepTicks >= 3000) {
+		internalSleepTicks = 0;
+
+		const Position& cPos = creature->getPosition();
+		const Position& ePos = Position(cPos.x, cPos.y - 1, cPos.z);
+
+		g_game.addMagicEffect(ePos, CONST_ME_SLEEP);
+	}
+
+	return Condition::executeCondition(creature, interval);
+}
+
+void ConditionSleep::endCondition(Creature* creature)
+{
+	g_game.internalCreatureChangeOutfit(creature, creature->getDefaultOutfit());
+	g_game.changeSpeed(creature, creature->getBaseSpeed());
 }

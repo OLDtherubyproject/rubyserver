@@ -377,6 +377,7 @@ enum ConditionType_t {
 	CONDITION_PACIFIED = 1 << 25,
 	CONDITION_MOVECOOLDOWN = 1 << 26,
 	CONDITION_MOVEGROUPCOOLDOWN = 1 << 27,
+	CONDITION_SLEEP = 1 << 28,
 };
 
 enum ConditionId_t : int8_t {

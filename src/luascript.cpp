@@ -1133,6 +1133,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PACIFIED)
 	registerEnum(CONDITION_MOVECOOLDOWN)
 	registerEnum(CONDITION_MOVEGROUPCOOLDOWN)
+	registerEnum(CONDITION_SLEEP)
 
 	registerEnum(CONDITIONID_DEFAULT)
 	registerEnum(CONDITIONID_COMBAT)

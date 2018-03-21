@@ -419,4 +419,22 @@ class ConditionMoveGroupCooldown final : public ConditionGeneric
 		}
 };
 
+class ConditionSleep final : public ConditionGeneric
+{
+	public:
+		ConditionSleep(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
+			ConditionGeneric(id, type, ticks, buff, subId) {}
+
+		bool startCondition(Creature* creature) override;
+		bool executeCondition(Creature* creature, int32_t interval) override;
+		void endCondition(Creature* creature) override;
+
+		ConditionSleep* clone() const override {
+			return new ConditionSleep(*this);
+		}
+
+	private:
+		int32_t internalSleepTicks;
+};
+
 #endif
