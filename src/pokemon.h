@@ -268,6 +268,7 @@ class Pokemon final : public Creature
 	private:
 		CreatureHashSet friendList;
 		CreatureList targetList;
+		std::forward_list<Condition*> storedConditionList; // TODO: This variable is only temporarily used when logging in, get rid of it somehow
 
 		std::string name;
 		std::string strDescription;

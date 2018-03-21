@@ -5852,7 +5852,7 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 	Condition* condition = Condition::createCondition(propStream);
 	while (condition) {
 		if (condition->unserialize(propStream)) {
-			pokemon->addCondition(condition);
+			pokemon->storedConditionList.push_front(condition);
 		} else {
 			delete condition;
 		}

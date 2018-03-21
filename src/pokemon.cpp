@@ -145,6 +145,11 @@ void Pokemon::onCreatureAppear(Creature* creature, bool isLogin)
 	}
 
 	if (creature == this) {
+		for (Condition* condition : storedConditionList) {
+			addCondition(condition);
+		}
+		storedConditionList.clear();
+
 		//We just spawned lets look around to see who is there.
 		if (isSummon()) {
 			isMasterInRange = canSee(getMaster()->getPosition());
