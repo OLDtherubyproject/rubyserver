@@ -5839,8 +5839,10 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 
 	if (pokemon->isShiny && (pokemon->mType->info.shiny.outfit.lookType)) {
 		pokemon->setCurrentOutfit(pokemon->mType->info.shiny.outfit);
+		pokemon->defaultOutfit = pokemon->mType->info.shiny.outfit;
 	} else {
 		pokemon->setCurrentOutfit(pokemon->mType->info.outfit);
+		pokemon->defaultOutfit = pokemon->mType->info.outfit;
 	}
 
 	// load conditions
