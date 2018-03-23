@@ -1958,6 +1958,11 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Game", "reload", LuaScriptInterface::luaGameReload);
 
+	registerMethod("Game", "isDay", LuaScriptInterface::luaGameIsDay);
+	registerMethod("Game", "isSunset", LuaScriptInterface::luaGameIsSunset);
+	registerMethod("Game", "isNight", LuaScriptInterface::luaGameIsNight);
+	registerMethod("Game", "isSunrise", LuaScriptInterface::luaGameIsSunrise);
+
 	// Variant
 	registerClass("Variant", "", LuaScriptInterface::luaVariantCreate);
 
@@ -2959,7 +2964,7 @@ int LuaScriptInterface::luaDebugPrint(lua_State* L)
 int LuaScriptInterface::luaGetWorldTime(lua_State* L)
 {
 	//getWorldTime()
-	uint32_t time = g_game.getLightHour();
+	int8_t time = g_game.getLightHour();
 	lua_pushnumber(L, time);
 	return 1;
 }
@@ -4356,6 +4361,34 @@ int LuaScriptInterface::luaGameReload(lua_State* L)
 		pushBoolean(L, g_game.reload(reloadType));
 	}
 	lua_gc(g_luaEnvironment.getLuaState(), LUA_GCCOLLECT, 0);
+	return 1;
+}
+
+int LuaScriptInterface::luaGameIsDay(lua_State* L)
+{
+	// Game.isDay()
+	pushBoolean(L, g_game.isDay());
+	return 1;
+}
+
+int LuaScriptInterface::luaGameIsSunset(lua_State* L)
+{
+	// Game.isSunset()
+	pushBoolean(L, g_game.isSunset());
+	return 1;
+}
+
+int LuaScriptInterface::luaGameIsNight(lua_State* L)
+{
+	// Game.isNight()
+	pushBoolean(L, g_game.isNight());
+	return 1;
+}
+
+int LuaScriptInterface::luaGameIsSunrise(lua_State* L)
+{
+	// Game.isSunrise()
+	pushBoolean(L, g_game.isSunrise());
 	return 1;
 }
 

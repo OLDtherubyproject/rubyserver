@@ -82,7 +82,7 @@ void Game::start(ServiceManager* manager)
 {
 	serviceManager = manager;
 
-	g_scheduler.addEvent(createSchedulerTask(EVENT_LIGHTINTERVAL, std::bind(&Game::checkLight, this)));
+	g_scheduler.addEvent(createSchedulerTask(0, std::bind(&Game::checkLight, this)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_CREATURE_THINK_INTERVAL, std::bind(&Game::checkCreatures, this, 0)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_DECAYINTERVAL, std::bind(&Game::checkDecay, this)));
 }
@@ -4493,51 +4493,38 @@ void Game::checkLight()
 {
 	g_scheduler.addEvent(createSchedulerTask(EVENT_LIGHTINTERVAL, std::bind(&Game::checkLight, this)));
 
-	lightHour += lightHourDelta;
-
-	if (lightHour > 1440) {
-		lightHour -= 1440;
-	}
-
-	if (std::abs(lightHour - SUNRISE) < 2 * lightHourDelta) {
-		lightState = LIGHT_STATE_SUNRISE;
-	} else if (std::abs(lightHour - SUNSET) < 2 * lightHourDelta) {
-		lightState = LIGHT_STATE_SUNSET;
-	}
-
-	int32_t newLightLevel = lightLevel;
+	time_t theTime = time(NULL);
+  	struct tm *aTime = localtime(&theTime);
+	int gameHour = aTime->tm_hour;
 	bool lightChange = false;
 
-	switch (lightState) {
-		case LIGHT_STATE_SUNRISE: {
-			newLightLevel += (LIGHT_LEVEL_DAY - LIGHT_LEVEL_NIGHT) / 30;
+	if (gameHour != lightHour) {
+		if (gameHour >= 5 && gameHour <= 10) {
+			lightLevel = LIGHT_LEVEL_SUNRISE;
+			lightState = LIGHT_STATE_SUNRISE;
 			lightChange = true;
-			break;
-		}
-		case LIGHT_STATE_SUNSET: {
-			newLightLevel -= (LIGHT_LEVEL_DAY - LIGHT_LEVEL_NIGHT) / 30;
+		} else if (gameHour > 10 && gameHour < 17) {
+			lightLevel = LIGHT_LEVEL_DAY;
+			lightState = LIGHT_STATE_DAY;
 			lightChange = true;
-			break;
+		} else if (gameHour >= 17 && gameHour < 20) {
+			lightLevel = LIGHT_LEVEL_SUNSET;
+			lightState = LIGHT_STATE_SUNSET;
+			lightChange = true;
+		} else if ((gameHour >= 20 && gameHour <= 23) || (gameHour >= 0 && gameHour < 5)) {
+			lightLevel = 20;
+			lightState = LIGHT_STATE_NIGHT;
+			lightChange = true;
 		}
-		default:
-			break;
-	}
 
-	if (newLightLevel <= LIGHT_LEVEL_NIGHT) {
-		lightLevel = LIGHT_LEVEL_NIGHT;
-		lightState = LIGHT_STATE_NIGHT;
-	} else if (newLightLevel >= LIGHT_LEVEL_DAY) {
-		lightLevel = LIGHT_LEVEL_DAY;
-		lightState = LIGHT_STATE_DAY;
-	} else {
-		lightLevel = newLightLevel;
-	}
+		// send the new light to the players
+		if (lightChange) {
+			lightHour = gameHour;
+			LightInfo lightInfo = getWorldLightInfo();
 
-	if (lightChange) {
-		LightInfo lightInfo = getWorldLightInfo();
-
-		for (const auto& it : players) {
-			it.second->sendWorldLight(lightInfo);
+			for (const auto& it : players) {
+				it.second->sendWorldLight(lightInfo);
+			}
 		}
 	}
 }
@@ -6151,4 +6138,42 @@ void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item*
 			}
 		}
 	}
+}
+
+bool Game::isDay()
+{
+	if (lightState == LIGHT_LEVEL_DAY) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Game::isSunset()
+{
+	if (lightState == LIGHT_LEVEL_SUNSET) {
+		return true;
+	}
+
+	return false;
+}
+
+
+bool Game::isNight()
+{
+	if (lightState == LIGHT_LEVEL_NIGHT) {
+		return true;
+	}
+
+	return false;
+}
+
+
+bool Game::isSunrise()
+{
+	if (lightState == LIGHT_LEVEL_SUNRISE) {
+		return true;
+	}
+
+	return false;
 }

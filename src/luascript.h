@@ -557,6 +557,11 @@ class LuaScriptInterface
 
 		static int luaGameReload(lua_State* L);
 
+		static int luaGameIsDay(lua_State* L);
+		static int luaGameIsSunset(lua_State* L);
+		static int luaGameIsNight(lua_State* L);
+		static int luaGameIsSunrise(lua_State* L);
+
 		// Variant
 		static int luaVariantCreate(lua_State* L);
 
