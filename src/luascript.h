@@ -1099,7 +1099,7 @@ class LuaScriptInterface
 		static int luaPokeballGetGoback(lua_State* L);
 		static int luaPokeballGetCatchSuccess(lua_State* L);
 		static int luaPokeballGetCatchFail(lua_State* L);
-		static int LuaPokeballGetRates(lua_State* L);
+		static int LuaPokeballGetRate(lua_State* L);
 
 		// Town
 		static int luaTownCreate(lua_State* L);

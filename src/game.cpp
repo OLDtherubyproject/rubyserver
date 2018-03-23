@@ -5484,7 +5484,7 @@ void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const 
 
 	g_game.addDistanceEffect(player->getPosition(), toPos, pokeballType->getShotEffect());
 
-	if (boolean_random((pokemonType->info.catchRate * pokeballType->getDefaultMultiplier()) / 100) != 1) {
+	if (boolean_random((pokemonType->info.catchRate * pokeballType->getRate()) / 100) != 1) {
 		message << "Oh, no! Your pokeball broke!";
 		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeballType->getCatchFail())));
 		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnDontCatchPokemon, g_events, player, pokemonType, pokeballType)));

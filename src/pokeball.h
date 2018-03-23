@@ -70,12 +70,8 @@ class Pokeball
 			return level;
 		}
 
-		uint8_t getDefaultMultiplier() const {
-			return rates.all;
-		}
-
-		Rates_t getRates() const {
-			return rates;
+		double getRate() const {
+			return rate;
 		}
 
 	private:
@@ -93,7 +89,7 @@ class Pokeball
 		uint16_t shotEffect;
 		uint32_t level = 0;
 
-        Rates_t rates = {};
+        double rate = 0;
 };
 
 class Pokeballs

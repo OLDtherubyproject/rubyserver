@@ -104,67 +104,15 @@ bool Pokeballs::loadFromXml()
 			continue;
 		}
 
-		if ((attr = pokeballNode.attribute("defaultMultiplier"))) {
-			ball.rates.all = pugi::cast<uint16_t>(attr.value());
+		if ((attr = pokeballNode.attribute("rate"))) {
+			ball.rate = pugi::cast<double>(attr.value());
 		} else {
-			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball defaultMultiplier percentage" << std::endl;
+			std::cout << "[Warning - Pokeballs::loadFromXml] Missing pokeball default rate value" << std::endl;
 			continue;
 		}
 
 		if ((attr = pokeballNode.attribute("level"))) {
 			ball.level = pugi::cast<uint32_t>(attr.value());
-		}
-
-		for (auto childNode : pokeballNode.children()) {
-			if (strcasecmp(childNode.name(), "rate") == 0) {
-				pugi::xml_attribute attrRateType = childNode.attribute("type");
-                pugi::xml_attribute attrRateMultiplier = childNode.attribute("multiplier");
-				if (attrRateType && attrRateMultiplier) {
-                    std::string rateType = attrRateType.as_string();
-                    double rateMultiplier = pugi::cast<double>(attrRateMultiplier.value());
-					if (strcasecmp(rateType.c_str(), "fire") == 0) {
-                        ball.rates.fire = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "fighting") == 0) {
-                        ball.rates.fighting = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "water") == 0) {
-                        ball.rates.water = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "flying") == 0) {
-                        ball.rates.flying = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "grass") == 0) {
-                        ball.rates.grass = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "electric") == 0) {
-                        ball.rates.electric = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "poison") == 0) {
-                        ball.rates.poison = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "ground") == 0) {
-                        ball.rates.ground = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "psychic") == 0) {
-                        ball.rates.psychic = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "rock") == 0) {
-                        ball.rates.rock = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "ice") == 0) {
-                        ball.rates.ice = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "bug") == 0) {
-                        ball.rates.bug = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "dragon") == 0) {
-                        ball.rates.dragon = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "ghost") == 0) {
-                        ball.rates.ghost = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "dark") == 0) {
-                        ball.rates.dark = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "steel") == 0) {
-                        ball.rates.steel = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "fairy") == 0) {
-                        ball.rates.fairy = rateMultiplier;
-					} else if (strcasecmp(rateType.c_str(), "normal") == 0) {
-                        ball.rates.normal = rateMultiplier;
-					} else {
-						std::cout << "[Notice - Pokeballs::loadFromXml] No valid rate type: " << rateType << " for pokeball: " << ball.id << std::endl;
-					}
-				} else {
-					std::cout << "[Notice - Pokeballs::loadFromXml] Missing rate type or multiplier for pokeball: " << ball.id << std::endl;
-				}
-			}
 		}
 	}
 	return true;

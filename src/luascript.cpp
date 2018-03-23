@@ -2515,7 +2515,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokeball", "getGoback", LuaScriptInterface::luaPokeballGetGoback);
 	registerMethod("Pokeball", "getCatchSuccess", LuaScriptInterface::luaPokeballGetCatchSuccess);
 	registerMethod("Pokeball", "getCatchFail", LuaScriptInterface::luaPokeballGetCatchFail);
-	registerMethod("Pokeball", "getRates", LuaScriptInterface::LuaPokeballGetRates);
+	registerMethod("Pokeball", "getRate", LuaScriptInterface::LuaPokeballGetRate);
 
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
@@ -10488,32 +10488,12 @@ int LuaScriptInterface::luaPokeballGetCatchFail(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::LuaPokeballGetRates(lua_State* L)
+int LuaScriptInterface::LuaPokeballGetRate(lua_State* L)
 {
-	// pokeball:getRates()
+	// pokeball:getRate()
 	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
 	if (pokeball) {
-		Rates_t rates = pokeball->getRates();
-		lua_createtable(L, 0, 19);
-		setField(L, "all", rates.all);
-		setField(L, "fire", rates.fire);
-		setField(L, "fighting", rates.fighting);
-		setField(L, "water", rates.water);
-		setField(L, "flying", rates.flying);
-		setField(L, "grass", rates.grass);
-		setField(L, "electric", rates.electric);
-		setField(L, "poison", rates.poison);
-		setField(L, "ground", rates.ground);
-		setField(L, "psychic", rates.psychic);
-		setField(L, "rock", rates.rock);
-		setField(L, "ice", rates.ice);
-		setField(L, "bug", rates.bug);
-		setField(L, "dragon", rates.dragon);
-		setField(L, "ghost", rates.ghost);
-		setField(L, "dark", rates.dark);
-		setField(L, "steel", rates.steel);
-		setField(L, "fairy", rates.fairy);
-		setField(L, "normal", rates.normal);
+		lua_pushnumber(L, pokeball->getRate());
 	} else {
 		lua_pushnil(L);
 	}
