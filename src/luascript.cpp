@@ -1661,6 +1661,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(TILESTATE_FLOORCHANGE_SOUTH_ALT)
 	registerEnum(TILESTATE_FLOORCHANGE_EAST_ALT)
 	registerEnum(TILESTATE_SUPPORTS_HANGABLE)
+	registerEnum(TILESTATE_CAVE)
 
 	registerEnum(WEAPON_NONE)
 	registerEnum(WEAPON_SWORD)
