@@ -705,6 +705,57 @@ void Pokemon::onEndCondition(ConditionType_t type)
 	updateIdleStatus();
 }
 
+void Pokemon::onAddCombatCondition(ConditionType_t type)
+{
+	if (isSummon() && getMaster()->getPlayer()) {
+		switch (type) {
+			case CONDITION_POISON:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "You are poisoned.");
+				break;
+
+			case CONDITION_DROWN:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "You are drowning.");
+				break;
+
+			case CONDITION_PARALYZE:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are paralyzed.");
+				break;
+
+			case CONDITION_DRUNK:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are confused.");
+				break;
+
+			case CONDITION_CURSED:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are cursed.");
+				break;
+
+			case CONDITION_FREEZING:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are freezing.");
+				break;
+
+			case CONDITION_DAZZLED:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are dazzled.");
+				break;
+
+			case CONDITION_BLEEDING:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are bleeding.");
+				break;
+
+			case CONDITION_SLEEP:
+				getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your Pokemon are sleeping.");
+				break;
+
+			default:
+				break;
+		}
+	}
+}
+
+void Pokemon::onCombatRemoveCondition(Condition* condition)
+{
+	Creature::onCombatRemoveCondition(condition);
+}
+
 void Pokemon::onThink(uint32_t interval)
 {
 	Creature::onThink(interval);

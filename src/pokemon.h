@@ -329,8 +329,11 @@ class Pokemon final : public Creature
 			return isIdle;
 		}
 
+		//combat event functions
 		void onAddCondition(ConditionType_t type) override;
+		void onAddCombatCondition(ConditionType_t type) override;
 		void onEndCondition(ConditionType_t type) override;
+		void onCombatRemoveCondition(Condition* condition) override;
 
 		bool canUseAttack(const Position& pos, const Creature* target) const;
 		bool canUseMove(const Position& pos, const Position& targetPos,
