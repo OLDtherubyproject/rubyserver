@@ -9784,17 +9784,6 @@
 	<item id="6258" article="an" name="open door">
 		<attribute key="type" value="door" />
 	</item>
-	<item id="6259" article="a" name="closed door">
-		<attribute key="type" value="door" />
-		<attribute key="blockprojectile" value="1" />
-	</item>
-	<item id="6260" article="an" name="open door">
-		<attribute key="type" value="door" />
-	</item>
-	<item id="6261" article="a" name="closed door">
-		<attribute key="type" value="door" />
-		<attribute key="blockprojectile" value="1" />
-	</item>
 	<item id="6262" article="an" name="open door">
 		<attribute key="type" value="door" />
 	</item>
@@ -14762,21 +14751,11 @@
 		<attribute key="description" value="There is cookie dough on it." />
 		<attribute key="weight" value="1200" />
 	</item>
-	<item id="8849" article="a" name="modified crossbow">
-		<attribute key="weight" value="3500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="range" value="5" />
-		<attribute key="hitChance" value="1" />
+	<item id="8849" article="a" name="magnet">
+		<attribute key="description" value="Increases the power of Electric-type moves." />
 	</item>
-	<item id="8850" article="a" name="chain bolter">
-		<attribute key="weight" value="5500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="range" value="3" />
-		
+	<item id="8850" article="a" name="hard stone">
+		<attribute key="description" value="Increases the power of Rock-type moves." />
 	</item>
 	<item id="8851" article="a" name="royal crossbow">
 		<attribute key="weight" value="12000" />
@@ -14787,68 +14766,29 @@
 		<attribute key="hitChance" value="3" />
 		
 	</item>
-	<item id="8852" name="the devileye">
-		<attribute key="weight" value="5500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="range" value="6" />
-		<attribute key="hitChance" value="-20" />
-		
+	<item id="8852" article="an" name="amulet coin">
+		<attribute key="description" value="An item to be held by a Pokemon. It doubles a battle's prize money if the holding Pokemon joins in." />		
 	</item>
-	<item id="8853" name="the ironworker">
-		<attribute key="weight" value="5500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="range" value="5" />
-		
+	<item id="8853" article="an" name="air balloon">
+		<attribute key="description" value="When held by a Pokemon, the Pokemon will float into the air. When the holder is attacked, this item will burst." />		
 	</item>
-	<item id="8854" article="a" name="warsinger bow">
-		<attribute key="weight" value="4500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="range" value="7" />
-		<attribute key="hitChance" value="5" />
-		
+	<item id="8854" article="a" name="adamant orb">
+		<attribute key="description" value="A brightly gleaming orb to be held by Dialga. It boosts the power of Dragon- and Steel-type moves." />		
 	</item>
-	<item id="8855" article="a" name="composite hornbow">
-		<attribute key="weight" value="5200" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="range" value="6" />
-		<attribute key="hitChance" value="2" />
-		
+	<item id="8855" article="a" name="mystic water">
+		<attribute key="description" value="Increases the power of Water-type moves." />		
 	</item>
-	<item id="8856" name="Yol's bow">
-		<attribute key="weight" value="3500" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="range" value="7" />
-		<attribute key="hitChance" value="7" />
+	<item id="8856" article="a" name="twisted spoon">
+		<attribute key="description" value="Increases the power of Psychic-type moves." />
 	</item>
-	<item id="8857" article="a" name="silkweaver bow">
-		<attribute key="weight" value="2200" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="range" value="6" />
-		<attribute key="hitChance" value="3" />
+	<item id="8857" article="a" name="spell tag">
+		<attribute key="description" value="Increases the power of Ghost-type moves." />
 	</item>
-	<item id="8858" name="Elethriel's elemental bow">
-		<attribute key="weight" value="4400" />
-		<attribute key="slotType" value="two-handed" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="range" value="4" />
-		
+	<item id="8858"  article="a" name="soft sand">
+		<attribute key="description" value="Increases the power of Ground-type moves." />
 	</item>
-	<item id="8859" name="spider fangs">
-		<attribute key="showcount" value="0" />
-		<attribute key="weight" value="50" />
+	<item id="8859" name="silk scarf">
+		<attribute key="description" value="Increases the power of Normal-type moves." />
 	</item>
 	<item id="8860" name="spiderwebs">
 		<attribute key="weight" value="5" />
@@ -14857,71 +14797,35 @@
 	<item fromid="8861" toid="8862" article="an" name="energy fence" />
 	<item id="8863" name="shallow water" />
 	<item id="8864" article="a" name="dead tree" />
-	<item id="8865" article="a" name="dark lord's cape">
-		<attribute key="description" value="There is a dark aura surrounding it." />
-		<attribute key="weight" value="2900" />
-		<attribute key="armor" value="11" />
-		<attribute key="absorbPercentDeath" value="8" />
-		<attribute key="absorbPercentHoly" value="-8" />
-		<attribute key="slotType" value="body" />
+	<item id="8865" article="a" name="sharp beak">
+		<attribute key="description" value="Increases the power of Flying-type moves." />
 	</item>
-	<item id="8866" name="the robe of the ice queen">
-		<attribute key="description" value="The soft tissue shimmers." />
-		<attribute key="weight" value="2950" />
-		<attribute key="armor" value="12" />
-		<attribute key="absorbPercentIce" value="12" />
-		<attribute key="absorbPercentEnergy" value="-12" />
-		<attribute key="slotType" value="body" />
+	<item id="8866" article="a" name="poison barb">
+		<attribute key="description" value="Increases the power of Poison-type moves." />
 	</item>
-	<item id="8867" article="a" name="dragon robe">
-		<attribute key="description" value="It is covered with runic symbols." />
-		<attribute key="weight" value="2850" />
-		<attribute key="slotType" value="body" />
-		<attribute key="armor" value="12" />
-		<attribute key="absorbPercentFire" value="12" />
-		<attribute key="absorbPercentIce" value="-12" />
+	<item id="8867" article="a" name="black belt">
+		<attribute key="description" value="Increases the power of Fighting-type moves." />
 	</item>
-	<item id="8868" article="a" name="velvet mantle">
-		<attribute key="description" value="The smooth tissue seems to sparkle." />
-		<attribute key="weight" value="2850" />
-		<attribute key="armor" value="12" />
-		<attribute key="absorbPercentEnergy" value="12" />
-		<attribute key="absorbPercentEarth" value="-12" />
-		<attribute key="slotType" value="body" />
+	<item id="8868" article="a" name="miracle seed">
+		<attribute key="description" value="Increases the power of Grass-type moves." />
 	</item>
-	<item id="8869" article="a" name="greenwood coat">
-		<attribute key="weight" value="2850" />
-		<attribute key="armor" value="12" />
-		<attribute key="absorbPercentEarth" value="12" />
-		<attribute key="absorbPercentFire" value="-12" />
-		<attribute key="slotType" value="body" />
+	<item id="8869" article="a" name="metal coat">
+		<attribute key="description" value="Increases the power of Steel-type moves." />
 	</item>
-	<item id="8870" article="a" name="spirit cloak">
-		<attribute key="armor" value="8" />
-		<attribute key="slotType" value="body" />
-		<attribute key="weight" value="2650" />
-		<attribute key="magiclevelpoints" value="1" />
+	<item id="8870" article="a" name="dragon fang">
+		<attribute key="description" value="Increases the power of Dragon-type moves." />
 	</item>
-	<item id="8871" article="a" name="focus cape">
-		<attribute key="weight" value="2100" />
-		<attribute key="armor" value="9" />
-		<attribute key="slotType" value="body" />
-		<attribute key="magiclevelpoints" value="1" />
+	<item id="8871" article="a" name="charcoal">
+		<attribute key="description" value="Increases the power of Fire-type moves." />
 	</item>
-	<item id="8872" article="a" name="belted cape">
-		<attribute key="weight" value="3500" />
-		<attribute key="armor" value="10" />
-		<attribute key="slotType" value="body" />
+	<item id="8872" article="a" name="black glasses">
+		<attribute key="description" value="Increases the power of Dark-type moves." />
 	</item>
-	<item id="8873" article="a" name="hibiscus dress">
-		<attribute key="weight" value="1900" />
-		<attribute key="armor" value="0" />
-		<attribute key="slotType" value="body" />
+	<item id="8873" article="a" name="never-melt ice">
+		<attribute key="description" value="Increases the power of Ice-type moves." />
 	</item>
-	<item id="8874" article="a" name="summer dress">
-		<attribute key="weight" value="1000" />
-		<attribute key="armor" value="0" />
-		<attribute key="slotType" value="body" />
+	<item id="8874" article="a" name="silver powder">
+		<attribute key="description" value="Increases the power of Bug-type moves." />
 	</item>
 	<item id="8875" article="a" name="tunic">
 		<attribute key="weight" value="1500" />
@@ -15179,73 +15083,55 @@
 		<attribute key="shootType" value="death" />
 		<attribute key="range" value="3" />
 	</item>
-	<item id="8923" name="ranger legs">
-		<attribute key="weight" value="3500" />
-		<attribute key="armor" value="4" />
-		<attribute key="slotType" value="portrait" />
+	<item id="8923" article="a" name="thunder stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="1000000" />
 	</item>
-	<item id="8924" article="a" name="hellforged axe">
-		<attribute key="weight" value="8800" />
-		<attribute key="defense" value="28" />
-		
-		<attribute key="weaponType" value="axe" />
-		<attribute key="extradef" value="2" />
+	<item id="8924" article="a" name="sun stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8925" article="a" name="solar axe">
-		<attribute key="weight" value="11000" />
-		<attribute key="defense" value="29" />
-		
-		<attribute key="weaponType" value="axe" />
-		<attribute key="extradef" value="3" />
+	<item id="8925" article="an" name="ice stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8926" article="a" name="demonwing axe">
-		<attribute key="weight" value="12000" />
-		<attribute key="defense" value="20" />
-		
-		<attribute key="weaponType" value="axe" />
-		<attribute key="slotType" value="two-handed" />
+	<item id="8926" article="a" name="fire stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8927" article="a" name="dark trinity mace">
-		<attribute key="weight" value="9900" />
-		<attribute key="defense" value="32" />
-		
-		<attribute key="weaponType" value="club" />
-		<attribute key="extradef" value="-1" />
+	<item id="8927" article="a" name="leaf stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8928" article="an" name="obsidian truncheon">
-		<attribute key="weight" value="6500" />
-		<attribute key="defense" value="30" />
-		
-		<attribute key="weaponType" value="club" />
-		<attribute key="extradef" value="2" />
+	<item id="8928" article="a" name="moon stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8929" name="the stomper">
-		<attribute key="weight" value="11500" />
-		<attribute key="defense" value="20" />
-		
-		<attribute key="weaponType" value="club" />
-		<attribute key="slotType" value="two-handed" />
+	<item id="8929" article="a" name="water stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8930" article="an" name="emerald sword">
-		<attribute key="weight" value="4100" />
-		<attribute key="defense" value="33" />
-		
-		<attribute key="weaponType" value="sword" />
-		<attribute key="extradef" value="3" />
+	<item id="8930" article="a" name="dusk stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8931" name="the epiphany">
-		<attribute key="weight" value="4500" />
-		<attribute key="defense" value="35" />
-		
-		<attribute key="weaponType" value="sword" />
-		<attribute key="extradef" value="3" />
+	<item id="8931" article="a" name="shiny stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
-	<item id="8932" name="the calamity">
-		<attribute key="weight" value="6800" />
-		<attribute key="defense" value="35" />
-		
-		<attribute key="weaponType" value="sword" />
-		<attribute key="slotType" value="two-handed" />
+	<item id="8932" article="a" name="dawn stone">
+		<attribute key="description" value="Evolves certain kinds of Pokemon." />
+		<attribute key="weight" value="3000" />
+		<attribute key="price" value="10000" />
 	</item>
 	<item id="8933" name="remains of an earth elemental">
 		<attribute key="weight" value="50000" />
@@ -30511,7 +30397,7 @@
 		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="28513" article="a" name="discharged cherish ball">
-		<attribute key="slotType" value="discharged pokeball" />
+		<attribute key="slotType" value="pokeball" />
 	</item>
 	<item id="28514" article="a" name="discharged dive ball">
 		<attribute key="slotType" value="pokeball" />
@@ -30543,6 +30429,28 @@
 	<item id="28523" article="a" name="discharged quick ball">
 		<attribute key="slotType" value="pokeball" />
 	</item>
+
+	<item fromid="27815" toid="27880" article="a" name="floor" />
+	<item fromid="27881" toid="27898" article="a" name="tapestry wall" />
+	<item fromid="27899" toid="27969" article="a" name="Unown Wall" />
+	<item fromid="27970" toid="28045" article="a" name="floor" />
+	<item fromid="28046" toid="28047" article="a" name="dimensional portal" />
+	<item fromid="28049" toid="28058" article="a" name="Unown Tower" />
+	
+	<item fromid="28524" toid="28527" article="a" name="glass wall" />
+	<item fromid="28528" toid="28572" article="a" name="blue train" />
+	<item fromid="28575" toid="28664" article="a" name="red train" />
+	<item id="28573" name="large trash" />
+	<item id="28665" name="subway board" />
+	<item fromid="28666" toid="28692" article="a" name="floor edge" />
+	<item fromid="28693" toid="28694" article="a" name="gyarados statue" />
+	<item fromid="28695" toid="28698" article="a" name="street lamp" />
+	<item fromid="28699" toid="28700" article="a" name="street garden" />
+	<item fromid="28701" toid="28763" article="a" name="floor edge" />
+	<item fromid="28764" toid="28767" article="a" name="street lamp" />
+	<item fromid="28768" toid="28771" article="a" name="cassino board" />
+	<item fromid="28772" toid="28777" article="a" name="decorate plant" />
+	<item fromid="28778" toid="28809" article="a" name="golden statue" />
 
 	<item id="30001" name="water" />
 	<item id="30002" name="blood" />
