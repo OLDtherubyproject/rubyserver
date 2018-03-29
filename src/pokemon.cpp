@@ -821,6 +821,14 @@ void Pokemon::onThink(uint32_t interval)
 				}
 			}
 
+			if (attackedCreature && !isSummon()) {
+				if (Player* player = attackedCreature->getPlayer()) {
+					if (player->getHisPokemon()) {
+						selectTarget(player->getHisPokemon());
+					}
+				}
+			}
+
 			onThinkTarget(interval);
 			onThinkYell(interval);
 			onThinkDefense(interval);
