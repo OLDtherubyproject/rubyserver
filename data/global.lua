@@ -24,7 +24,6 @@ end
 
 function getFormattedWorldTime()
 	local worldTime = getWorldTime()
-	print(worldTime)
 	local hours = math.floor(worldTime / 3600)
 
 	local minutes = (worldTime - (hours * 3600)) / 60
