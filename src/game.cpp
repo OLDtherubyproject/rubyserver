@@ -6136,7 +6136,7 @@ void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item*
 
 bool Game::isDay()
 {
-	if (lightState == LIGHT_LEVEL_DAY) {
+	if (lightState == LIGHT_STATE_DAY) {
 		return true;
 	}
 
@@ -6145,7 +6145,7 @@ bool Game::isDay()
 
 bool Game::isSunset()
 {
-	if (lightState == LIGHT_LEVEL_SUNSET) {
+	if (lightState == LIGHT_STATE_SUNSET) {
 		return true;
 	}
 
@@ -6155,7 +6155,7 @@ bool Game::isSunset()
 
 bool Game::isNight()
 {
-	if (lightState == LIGHT_LEVEL_NIGHT) {
+	if (lightState == LIGHT_STATE_NIGHT) {
 		return true;
 	}
 
@@ -6165,7 +6165,7 @@ bool Game::isNight()
 
 bool Game::isSunrise()
 {
-	if (lightState == LIGHT_LEVEL_SUNRISE) {
+	if (lightState == LIGHT_STATE_SUNRISE) {
 		return true;
 	}
 
