@@ -24,9 +24,10 @@ end
 
 function getFormattedWorldTime()
 	local worldTime = getWorldTime()
-	local hours = math.floor(worldTime / 60)
+	print(worldTime)
+	local hours = math.floor(worldTime / 3600)
 
-	local minutes = worldTime % 60
+	local minutes = (worldTime - (hours * 3600)) / 60
 	if minutes < 10 then
 		minutes = '0' .. minutes
 	end

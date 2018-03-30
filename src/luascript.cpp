@@ -2988,7 +2988,7 @@ int LuaScriptInterface::luaDebugPrint(lua_State* L)
 int LuaScriptInterface::luaGetWorldTime(lua_State* L)
 {
 	//getWorldTime()
-	int8_t time = g_game.getLightHour();
+	int32_t time = (g_game.getLightHour() * 3600) + (g_game.getLightMinutes() * 60);
 	lua_pushnumber(L, time);
 	return 1;
 }

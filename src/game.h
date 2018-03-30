@@ -470,6 +470,9 @@ class Game
 		int8_t getLightHour() const {
 			return lightHour;
 		}
+		int8_t getLightMinutes() const {
+			return lightMinutes;
+		}
 		
 		bool loadExperienceStages();
 		uint64_t getExperienceStage(uint32_t level);
@@ -582,6 +585,7 @@ class Game
 		LightState_t lightState = LIGHT_STATE_DAY;
 		uint8_t lightLevel = LIGHT_LEVEL_DAY;
 		int8_t lightHour = -1;
+		int8_t lightMinutes = -1;
 
 		ServiceManager* serviceManager = nullptr;
 

@@ -4502,6 +4502,7 @@ void Game::checkLight()
   	struct tm *aTime = localtime(&theTime);
 	int gameHour = aTime->tm_hour;
 	bool lightChange = false;
+	lightMinutes = aTime->tm_min;
 
 	if (gameHour != lightHour) {
 		if (gameHour >= 5 && gameHour <= 10) {
