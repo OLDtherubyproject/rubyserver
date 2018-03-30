@@ -202,7 +202,7 @@
     <ClCompile Include="..\src\tools.cpp" />
     <ClCompile Include="..\src\trashholder.cpp" />
     <ClCompile Include="..\src\vocation.cpp" />
-    <ClCompile Include="..\src\pokeball.cpp" />
+    <ClCompile Include="..\src\pokeballs.cpp" />
     <ClCompile Include="..\src\waitlist.cpp" />
     <ClCompile Include="..\src\weapons.cpp" />
     <ClCompile Include="..\src\wildcardtree.cpp" />
