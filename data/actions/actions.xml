@@ -36,6 +36,9 @@
 	<action fromid="9575" toid="9582" script="other/decayto.lua" />
 	<action fromid="9747" toid="9750" script="other/decayto.lua" />
 	<action fromid="19691" toid="19692" script="other/decayto.lua" />
+	<action fromid="27727" toid="27730" script="other/decayto.lua" />
+	<action fromid="28695" toid="28698" script="other/decayto.lua" />
+	<action fromid="28764" toid="28767" script="other/decayto.lua" />
 
 	<!-- Food -->
 	<action itemid="2362" script="other/food.lua" />
