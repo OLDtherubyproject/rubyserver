@@ -928,6 +928,14 @@ bool Pokemon::canUseMove(const Position& pos, const Position& targetPos,
 void Pokemon::onThinkTarget(uint32_t interval)
 {
 	if (!isSummon()) {
+		if (attackedCreature) {
+			if (Player* player = attackedCreature->getPlayer()) {
+				if (player->getHisPokemon()) {
+					selectTarget(player->getHisPokemon());
+				}
+			}
+		}
+
 		if (mType->info.changeTargetSpeed != 0) {
 			bool canChangeTarget = true;
 
