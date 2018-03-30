@@ -30171,10 +30171,20 @@
 	<item fromid="26902" toid="26905" article="a" name="window" />
 	<item fromid="26906" toid="26909" article="a" name="wall" />
 	<item fromid="26910" toid="26917" article="a" name="railing" />
-	<item id="26918" article="an" name="open door" />
-	<item id="26919" article="a" name="closed door" />
-	<item id="26920" article="an" name="open door" />
-	<item id="26921" article="a" name="closed door" />
+	<item id="26918" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="26919" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="26920" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="26921" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
 	<item id="26922" article="a" name="stairs">
 		<attribute key="floorchange" value="west" />
 	</item>
@@ -30182,10 +30192,20 @@
 	<item id="26924" article="a" name="stairs">
 		<attribute key="floorchange" value="north" />
 	</item>
-	<item id="26925" article="an" name="open door" />
-	<item id="26926" article="a" name="closed door" />
-	<item id="26927" article="an" name="open door" />
-	<item id="26928" article="a" name="closed door" />
+	<item id="26925" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="26926" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="26927" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="26928" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
 	<item fromid="26929" toid="26940" article="a" name="wall" />
 	<item fromid="26941" toid="26944" article="a" name="bench" />
 	<item fromid="26945" toid="26956" article="a" name="wall" />
@@ -30203,45 +30223,135 @@
 	<item fromid="27091" toid="27124" article="a" name="wall" />
 	<item fromid="27125" toid="27140" article="a" name="window" />
 	<item fromid="27141" toid="27154" article="a" name="wall" />
-	<item id="27155" article="a" name="closed door" />
-	<item id="27156" article="an" name="open door" />
-	<item id="27157" article="a" name="closed door" />
-	<item id="27158" article="an" name="open door" />
-	<item id="27159" article="a" name="closed door" />
-	<item id="27160" article="an" name="open door" />
-	<item id="27161" article="a" name="closed door" />
-	<item id="27162" article="an" name="open door" />
+	<item id="27155" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27156" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27157" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27158" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27159" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27160" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27161" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27162" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
 	<item fromid="27163" toid="27167" article="a" name="wall" />
 	<item fromid="27168" toid="27175" article="a" name="railing" />
-	<item id="27176" article="a" name="closed door" />
-	<item id="27177" article="an" name="open door" />
-	<item id="27178" article="a" name="closed door" />
-	<item id="27179" article="an" name="open door" />
-	<item id="27180" article="a" name="closed door" />
-	<item id="27181" article="an" name="open door" />
-	<item id="27182" article="a" name="closed door" />
-	<item id="27183" article="an" name="open door" />
-	<item id="27184" article="a" name="closed door" />
-	<item id="27185" article="an" name="open door" />
-	<item id="27186" article="a" name="closed door" />
-	<item id="27187" article="an" name="open door" />
-	<item id="27188" article="a" name="closed door" />
-	<item id="27199" article="an" name="open door" />
-	<item id="27190" article="a" name="closed door" />
-	<item id="27191" article="an" name="open door" />
+	<item id="27176" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27177" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27178" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27179" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27180" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27181" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27182" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27183" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27184" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27185" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27186" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27187" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27188" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27189" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27190" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27191" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
 	<item fromid="27192" toid="27421" article="a" name="floor" />
-	<item fromid="27422" toid="27423" article="a" name="closed door" />
-	<item id="27424" article="an" name="open door" />
-	<item fromid="27425" toid="27426" article="a" name="closed door" />
-	<item id="27427" article="an" name="open door" />
-	<item id="27428" article="a" name="closed door" />
-	<item id="27429" article="an" name="open door" />
-	<item id="27430" article="a" name="closed door" />
-	<item id="27431" article="an" name="open door" />
-	<item id="27432" article="a" name="closed door" />
-	<item id="27433" article="an" name="open door" />
-	<item id="27434" article="a" name="closed door" />
-	<item id="27435" article="an" name="open door" />
+	<item fromid="27422" toid="27423" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27424" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item fromid="27425" toid="27426" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27427" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27428" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27429" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27430" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27431" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27432" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27433" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
+	<item id="27434" article="a" name="closed door">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1" />
+	</item>
+	<item id="27435" article="an" name="open door">
+		<attribute key="type" value="door" />
+	</item>
 	<item id="27436" article="a" name="gate" />
 	<item id="27437" article="a" name="wall" />
 	<item fromid="27438" toid="27453" article="a" name="Locker" />
