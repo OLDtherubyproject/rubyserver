@@ -30175,9 +30175,13 @@
 	<item id="26919" article="a" name="closed door" />
 	<item id="26920" article="an" name="open door" />
 	<item id="26921" article="a" name="closed door" />
-	<item id="26922" article="a" name="stairs" />
+	<item id="26922" article="a" name="stairs">
+		<attribute key="floorchange" value="west" />
+	</item>
 	<item id="26923" article="a" name="wall" />
-	<item id="26924" article="a" name="stairs" />
+	<item id="26924" article="a" name="stairs">
+		<attribute key="floorchange" value="north" />
+	</item>
 	<item id="26925" article="an" name="open door" />
 	<item id="26926" article="a" name="closed door" />
 	<item id="26927" article="an" name="open door" />
