@@ -29,7 +29,6 @@
 #include "moves.h"
 #include "talkaction.h"
 #include "movement.h"
-#include "weapons.h"
 #include "pokeballs.h"
 #include "raids.h"
 #include "quests.h"
@@ -47,7 +46,6 @@ extern Pokemons g_pokemons;
 extern TalkActions* g_talkActions;
 extern MoveEvents* g_moveEvents;
 extern Moves* g_moves;
-extern Weapons* g_weapons;
 extern Pokeballs* g_pokeballs;
 extern Game g_game;
 extern CreatureEvents* g_creatureEvents;
@@ -154,10 +152,6 @@ void Signals::sighupHandler()
 
 	Item::items.reload();
 	std::cout << "Reloaded items." << std::endl;
-
-	g_weapons->reload();
-	g_weapons->loadDefaults();
-	std::cout << "Reloaded weapons." << std::endl;
 
 	g_pokeballs->reload();
 	std::cout << "Reloaded pokeballs." << std::endl;

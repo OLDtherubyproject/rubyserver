@@ -23,13 +23,11 @@
 #include "items.h"
 #include "moves.h"
 #include "movement.h"
-#include "weapons.h"
 #include "pokeballs.h"
 
 #include "pugicast.h"
 
 extern MoveEvents* g_moveEvents;
-extern Weapons* g_weapons;
 extern Pokeballs* g_pokeballs;
 
 Items::Items()
@@ -55,8 +53,6 @@ bool Items::reload()
 	}
 
 	g_moveEvents->reload();
-	g_weapons->reload();
-	g_weapons->loadDefaults();
 	return true;
 }
 

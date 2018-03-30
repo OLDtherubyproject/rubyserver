@@ -40,7 +40,6 @@
 #include "server.h"
 #include "moves.h"
 #include "talkaction.h"
-#include "weapons.h"
 #include "pokeballs.h"
 
 extern ConfigManager g_config;
@@ -55,7 +54,6 @@ extern Events* g_events;
 extern CreatureEvents* g_creatureEvents;
 extern Pokemons g_pokemons;
 extern MoveEvents* g_moveEvents;
-extern Weapons* g_weapons;
 extern Pokeballs* g_pokeballs;
 
 Game::Game()
@@ -6006,12 +6004,6 @@ bool Game::reload(ReloadTypes_t reloadType)
 
 		case RELOAD_TYPE_TALKACTIONS: return g_talkActions->reload();
 
-		case RELOAD_TYPE_WEAPONS: {
-			bool results = g_weapons->reload();
-			g_weapons->loadDefaults();
-			return results;
-		}
-
 		case RELOAD_TYPE_POKEBALLS: return g_pokeballs->reload();
 
 		default: {
@@ -6032,8 +6024,6 @@ bool Game::reload(ReloadTypes_t reloadType)
 			raids.reload() && raids.startup();
 			g_talkActions->reload();
 			Item::items.reload();
-			g_weapons->reload();
-			g_weapons->loadDefaults();
 			quests.reload();
 			mounts.reload();
 			g_globalEvents->reload();

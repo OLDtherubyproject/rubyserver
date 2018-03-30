@@ -23,12 +23,10 @@
 #include "combat.h"
 
 #include "game.h"
-#include "weapons.h"
 #include "configmanager.h"
 #include "events.h"
 
 extern Game g_game;
-extern Weapons* g_weapons;
 extern ConfigManager g_config;
 extern Events* g_events;
 
@@ -56,28 +54,10 @@ CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 					static_cast<int32_t>(levelFormula * maxa + maxb)
 				);
 			} else if (formulaType == COMBAT_FORMULA_SKILL) {
-				Item* tool = player->getWeapon();
-				const Weapon* weapon = g_weapons->getWeapon(tool);
-				if (weapon) {
-					damage.primary.value = normal_random(
-						static_cast<int32_t>(minb),
-						static_cast<int32_t>(weapon->getWeaponDamage(player, target, tool, true) * maxa + maxb)
-					);
-
-					damage.secondary.type = weapon->getElementType();
-					damage.secondary.value = weapon->getElementDamage(player, target, tool);
-					if (params.useCharges) {
-						uint16_t charges = tool->getCharges();
-						if (charges != 0) {
-							g_game.transformItem(tool, tool->getID(), charges - 1);
-						}
-					}
-				} else {
-					damage.primary.value = normal_random(
-						static_cast<int32_t>(minb),
-						static_cast<int32_t>(maxb)
-					);
-				}
+				damage.primary.value = normal_random(
+					static_cast<int32_t>(minb),
+					static_cast<int32_t>(maxb)
+				);
 			}
 		}
 	}
@@ -936,27 +916,8 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool u
 		case COMBAT_FORMULA_SKILL: {
 			//onGetPlayerMinMaxValues(player, attackSkill, attackValue, attackFactor)
 			Item* tool = player->getWeapon();
-			const Weapon* weapon = g_weapons->getWeapon(tool);
 
 			int32_t attackValue = 7;
-			if (weapon) {
-				attackValue = 0;
-				if (tool->getWeaponType() == WEAPON_AMMO) {
-					Item* item = player->getWeapon(true);
-					if (item) {
-						attackValue += 0;
-					}
-				}
-
-				damage.secondary.type = weapon->getElementType();
-				damage.secondary.value = weapon->getElementDamage(player, nullptr, tool);
-				if (useCharges) {
-					uint16_t charges = tool->getCharges();
-					if (charges != 0) {
-						g_game.transformItem(tool, tool->getID(), charges - 1);
-					}
-				}
-			}
 
 			lua_pushnumber(L, player->getWeaponSkill(tool));
 			lua_pushnumber(L, attackValue);

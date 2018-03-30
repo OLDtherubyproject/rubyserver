@@ -24,7 +24,6 @@
 #include "pokemon.h"
 #include "moves.h"
 #include "combat.h"
-#include "weapons.h"
 #include "pokeballs.h"
 #include "configmanager.h"
 #include "game.h"
@@ -333,7 +332,7 @@ bool Pokemons::deserializeMove(const pugi::xml_node& node, moveBlock_t& sb, cons
 			pugi::xml_attribute attackAttribute, skillAttribute;
 			if ((attackAttribute = node.attribute("attack")) && (skillAttribute = node.attribute("skill"))) {
 				sb.minCombatValue = 0;
-				sb.maxCombatValue = -Weapons::getMaxMeleeDamage(pugi::cast<int32_t>(skillAttribute.value()), pugi::cast<int32_t>(attackAttribute.value()));
+				sb.maxCombatValue = 0;
 			}
 
 			ConditionType_t conditionType = CONDITION_NONE;

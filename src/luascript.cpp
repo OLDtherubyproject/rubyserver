@@ -1850,7 +1850,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_RAIDS)
 	registerEnum(RELOAD_TYPE_MOVES)
 	registerEnum(RELOAD_TYPE_TALKACTIONS)
-	registerEnum(RELOAD_TYPE_WEAPONS)
 	registerEnum(RELOAD_TYPE_POKEBALLS)
 
 	registerEnum(ZONE_PROTECTION)

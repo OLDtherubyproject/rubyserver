@@ -204,7 +204,6 @@
     <ClCompile Include="..\src\vocation.cpp" />
     <ClCompile Include="..\src\pokeballs.cpp" />
     <ClCompile Include="..\src\waitlist.cpp" />
-    <ClCompile Include="..\src\weapons.cpp" />
     <ClCompile Include="..\src\wildcardtree.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -290,7 +289,6 @@
     <ClInclude Include="..\src\trashholder.h" />
     <ClInclude Include="..\src\vocation.h" />
     <ClInclude Include="..\src\waitlist.h" />
-    <ClInclude Include="..\src\weapons.h" />
     <ClInclude Include="..\src\wildcardtree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

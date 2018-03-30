@@ -33,7 +33,6 @@
 #include "pokemon.h"
 #include "movement.h"
 #include "scheduler.h"
-#include "weapons.h"
 #include "pokeballs.h"
 
 extern ConfigManager g_config;
@@ -41,7 +40,6 @@ extern Game g_game;
 extern Chat* g_chat;
 extern Vocations g_vocations;
 extern MoveEvents* g_moveEvents;
-extern Weapons* g_weapons;
 extern Pokeballs* g_pokeballs;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;

@@ -27,7 +27,6 @@
 #include "talkaction.h"
 #include "moves.h"
 #include "movement.h"
-#include "weapons.h"
 #include "pokeballs.h"
 #include "globalevent.h"
 #include "events.h"
@@ -40,7 +39,6 @@ GlobalEvents* g_globalEvents = nullptr;
 Moves* g_moves = nullptr;
 TalkActions* g_talkActions = nullptr;
 MoveEvents* g_moveEvents = nullptr;
-Weapons* g_weapons = nullptr;
 Pokeballs* g_pokeballs = nullptr;
 
 extern LuaEnvironment g_luaEnvironment;
@@ -48,7 +46,6 @@ extern LuaEnvironment g_luaEnvironment;
 ScriptingManager::~ScriptingManager()
 {
 	delete g_events;
-	delete g_weapons;
 	delete g_moves;
 	delete g_actions;
 	delete g_talkActions;
@@ -66,14 +63,6 @@ bool ScriptingManager::loadScriptSystems()
 	}
 
 	g_chat = new Chat();
-
-	g_weapons = new Weapons();
-	if (!g_weapons->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load weapons!" << std::endl;
-		return false;
-	}
-
-	g_weapons->loadDefaults();
 
 	g_pokeballs = new Pokeballs();
 	if (!g_pokeballs->loadFromXml()) {
