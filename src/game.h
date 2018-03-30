@@ -409,10 +409,11 @@ class Game
 		void playerCreateMarketOffer(uint32_t playerId, uint8_t type, uint16_t spriteId, uint16_t amount, uint32_t price, bool anonymous);
 		void playerCancelMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter);
 		void playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter, uint16_t amount);
-		void playerTryCatchPokemon(Player* player, const Position& fromPos, const Position& toPos, Item* item, Pokeball* pokeball);
 
-		void pokemonPlayerSendEmot(Player* player, uint16_t effect);
-		void playerSendPokemon(Player* player, Item* item);
+		void playerTryCatchPokemon(Player* player, const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
+		void sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corpse, const PokeballType* pokeballType);
+		void playerSendPokemonEmot(uint32_t playerGUID, uint16_t effect);
+
 
 		void parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer);
 
@@ -492,10 +493,10 @@ class Game
 
 		void addPokemon(Pokemon* pokemon);
 		void removePokemon(Pokemon* pokemon);
-		uint32_t savePokemon(Pokemon* pokemon, Pokeball* pokeballType);
+		uint32_t savePokemon(Pokemon* pokemon);
 		Pokemon* loadPokemonById(uint32_t id);
 		PokemonType* loadPokemonTypeById(uint32_t id);
-		Pokeball* loadPokemonPokeballById(uint32_t id);
+		PokeballType* loadPokemonPokeballById(uint32_t id);
 
 		Guild* getGuild(uint32_t id) const;
 		void addGuild(Guild* guild);
@@ -571,7 +572,7 @@ class Game
 		ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:" };
 
 		static constexpr int32_t LIGHT_LEVEL_DAY = 250;
-		static constexpr int32_t LIGHT_LEVEL_NIGHT = 40;
+		static constexpr int32_t LIGHT_LEVEL_NIGHT = 20;
 		static constexpr int32_t LIGHT_LEVEL_SUNSET = 120;
 		static constexpr int32_t LIGHT_LEVEL_SUNRISE = 200;
 

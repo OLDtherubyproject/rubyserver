@@ -1269,6 +1269,40 @@ const char* getReturnMessage(ReturnValue value)
 	}
 }
 
+const char* getCallPokemonMessage(CallPokemon value)
+{
+	switch (value) {
+		case CALLPOKEMON_MESSAGE_1:
+			return ", I need your Help!";
+
+		case CALLPOKEMON_MESSAGE_2:
+			return ", it's the battle time.";
+
+		case CALLPOKEMON_MESSAGE_3:
+			return ", I choose you!";
+
+		default:
+			return ", I choose you!";
+	}
+}
+
+const char* getCallbackPokemonMessage(CallbackPokemon value)
+{
+	switch (value) {
+		case CALLBACKPOKEMON_MESSAGE_1:
+			return ", thanks!";
+
+		case CALLBACKPOKEMON_MESSAGE_2:
+			return ", nice work.";
+
+		case CALLBACKPOKEMON_MESSAGE_3:
+			return ", that's enough. Come back!";
+
+		default:
+			return ", that's enough. Come back!";
+	}
+}
+
 int64_t OTSYS_TIME()
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();

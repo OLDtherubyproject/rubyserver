@@ -578,28 +578,6 @@ struct LightInfo {
 	constexpr LightInfo(uint8_t level, uint8_t color) : level(level), color(color) {}
 };
 
-struct Rates_t {
-	double all = 1;
-	double fire = 1;
-	double fighting = 1;
-	double water = 1;
-	double flying = 1;
-	double grass = 1;
-	double electric = 1;
-	double poison = 1;
-	double ground = 1;
-	double psychic = 1;
-	double rock = 1;
-	double ice = 1;
-	double bug = 1;
-	double dragon = 1;
-	double ghost = 1;
-	double dark = 1;
-	double steel = 1;
-	double fairy = 1;
-	double normal = 1;
-};
-
 struct ShopInfo {
 	uint16_t itemId;
 	int32_t subType;
@@ -702,6 +680,22 @@ struct CombatDamage
 		primary.type = secondary.type = COMBAT_NONE;
 		primary.value = secondary.value = 0;
 	}
+};
+
+enum CallPokemon {
+	CALLPOKEMON_MESSAGE_1,
+	CALLPOKEMON_MESSAGE_2,
+	CALLPOKEMON_MESSAGE_3,
+
+	CALLPOKEMON_MESSAGE_LAST,
+};
+
+enum CallbackPokemon {
+	CALLBACKPOKEMON_MESSAGE_1,
+	CALLBACKPOKEMON_MESSAGE_2,
+	CALLBACKPOKEMON_MESSAGE_3,
+
+	CALLBACKPOKEMON_MESSAGE_LAST,
 };
 
 using MarketOfferList = std::list<MarketOffer>;

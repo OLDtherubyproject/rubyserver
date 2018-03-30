@@ -251,6 +251,18 @@ class ItemAttributes
 			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLID);
 		}
 
+		void setName(const std::string& name) {
+			setStrAttr(ITEM_ATTRIBUTE_NAME, name);
+		}
+
+		void setDescription(const std::string& description) {
+			setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description);
+		}
+
+		void setPrice(const int32_t price) {
+			setIntAttr(ITEM_ATTRIBUTE_PRICE, price);
+		}
+
 		void setDuration(int32_t time) {
 			setIntAttr(ITEM_ATTRIBUTE_DURATION, time);
 		}
@@ -853,6 +865,18 @@ class Item : virtual public Thing
 				return 0;
 			}
 			return getIntAttr(ITEM_ATTRIBUTE_POKEBALLID);
+		}
+
+		void setName(const std::string& name) {
+			setStrAttr(ITEM_ATTRIBUTE_NAME, name);
+		}
+
+		void setDescription(const std::string& description) {
+			setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, description);
+		}
+
+		void setPrice(const int32_t price) {
+			setIntAttr(ITEM_ATTRIBUTE_PRICE, price);
 		}
 
 		void setDuration(int32_t time) {

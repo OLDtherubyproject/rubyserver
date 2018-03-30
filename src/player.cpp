@@ -34,6 +34,7 @@
 #include "movement.h"
 #include "scheduler.h"
 #include "weapons.h"
+#include "pokeballs.h"
 
 extern ConfigManager g_config;
 extern Game g_game;
@@ -41,8 +42,10 @@ extern Chat* g_chat;
 extern Vocations g_vocations;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
+extern Pokeballs* g_pokeballs;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
+extern Pokemons g_pokemons;
 
 MuteCountMap Player::muteCountMap;
 
@@ -1415,6 +1418,11 @@ void Player::setNextActionTask(SchedulerTask* task)
 uint32_t Player::getNextActionTime() const
 {
 	return std::max<int64_t>(SCHEDULER_MINTICKS, nextAction - OTSYS_TIME());
+}
+
+uint32_t Player::getNextGobackTime() const
+{
+	return std::max<int64_t>(SCHEDULER_MINTICKS, nextGoback - OTSYS_TIME());
 }
 
 void Player::onThink(uint32_t interval)
@@ -3829,6 +3837,111 @@ bool Player::hasLearnedInstantMove(const std::string& moveName) const
 		}
 	}
 	return false;
+}
+
+void Player::tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos)
+{
+	g_game.playerTryCatchPokemon(this, pokeballType, corpse, pokeball, rate, fromPos, toPos);
+}
+
+void Player::sendPokemonEmot(uint16_t pokemonEmot) const {
+	g_game.playerSendPokemonEmot(getGUID(), pokemonEmot);
+}
+
+bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransformPokeball) {
+	if (!pokeball || !pokeball->hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
+		return false;
+	}
+
+	if (!canDoGoback() && !ignoreDelay) {
+		return false;
+	}
+
+	setNextGoback(OTSYS_TIME() + g_config.getNumber(ConfigManager::GOBACK_DELAY_INTERVAL));
+	stopWalk();
+	
+	if (getInventoryItem(CONST_SLOT_POKEBALL) != pokeball) {
+		sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must put your pokeball on right place.");
+		return false;
+	}
+
+	const PokemonType* pType = g_game.loadPokemonTypeById(pokeball->getPokemonId());
+	if (!pType) {
+		sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon Type not found! Please contact an administrator.");
+		return false;
+	}
+
+	if (pokeball->getID() != pType->info.iconCharged && pokeball->getUniqueId() != 1) {
+		sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your Pokemon are fainted.");
+		return false;
+	}
+
+	const PokeballType* pokeballType = nullptr;
+	Pokemon* pokemon;
+	Position pos = getPosition();
+	std::string message;
+
+	if (getHisPokemon()) {
+		if (pokeball->getID() == pType->info.iconCharged) {
+			sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You already have a Pokemon.");
+			return false;
+		}
+
+		pokemon = getHisPokemon();
+		pokeballType = pokemon->getPokeballType();
+		message = pokemon->getName() + getCallbackPokemonMessage(CallbackPokemon(rand() % CALLBACKPOKEMON_MESSAGE_LAST));
+
+		g_game.savePokemon(pokemon);
+		g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, message, false);
+		g_game.removeCreature(pokemon, false);
+
+		if (!ignoreTransformPokeball){
+			g_game.transformItem(pokeball, pType->info.iconCharged);
+		}
+		
+		pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
+	} else {
+		pokemon = g_game.loadPokemonById(pokeball->getPokemonId());
+
+		if (!pokemon) {
+			sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon not found! Please contact an administrator.");
+			return false;
+		}
+
+		if (pokemon->getHealth() <= 0) {
+			if (pokeball->getID() != pType->info.iconDischarged) {
+				g_game.transformItem(pokeball, pType->info.iconDischarged);
+			}
+
+			sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your Pokemon are fainted.");
+			return false;
+		}
+
+		pokeballType = pokemon->getPokeballType();
+		pokemon->setMaster(this);
+		pokemon->setDropLoot(false);
+		pokemon->setSkillLoss(false);
+		message = pokemon->getName() + getCallPokemonMessage(CallPokemon(rand() % CALLPOKEMON_MESSAGE_LAST));
+
+		g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, message, false);
+		g_game.placeCreature(pokemon, pos);
+
+		if (!ignoreTransformPokeball){
+			g_game.transformItem(pokeball, pType->info.iconDischarged);
+		}
+
+		pokeball->setIntAttr(ITEM_ATTRIBUTE_UNIQUEID, 1);
+	}
+
+	pos = pokemon->getPosition();
+
+	if (!pokeballType) {
+		g_game.addMagicEffect(pos, CONST_ME_GOBACK_POKEBALL);
+		return true;
+	}
+
+	g_game.addMagicEffect(pos, pokeballType->getGobackEffect());
+	return true;
 }
 
 bool Player::isInWar(const Player* player) const

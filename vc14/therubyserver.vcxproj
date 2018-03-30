@@ -277,6 +277,7 @@
     <ClInclude Include="..\src\signals.h" />
     <ClInclude Include="..\src\spawn.h" />
     <ClInclude Include="..\src\moves.h" />
+    <ClInclude Include="..\src\pokeballs.h" />
     <ClInclude Include="..\src\protocolstatus.h" />
     <ClInclude Include="..\src\talkaction.h" />
     <ClInclude Include="..\src\tasks.h" />
@@ -288,7 +289,6 @@
     <ClInclude Include="..\src\town.h" />
     <ClInclude Include="..\src\trashholder.h" />
     <ClInclude Include="..\src\vocation.h" />
-    <ClInclude Include="..\src\pokeball.h" />
     <ClInclude Include="..\src\waitlist.h" />
     <ClInclude Include="..\src\weapons.h" />
     <ClInclude Include="..\src\wildcardtree.h" />

@@ -93,6 +93,8 @@ class Actions final : public BaseEvents
 		void clearMap(ActionUseMap& map);
 
 		LuaScriptInterface scriptInterface;
+
+		friend class PokeballType;
 };
 
 #endif

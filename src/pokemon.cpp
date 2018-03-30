@@ -1875,15 +1875,6 @@ void Pokemon::death(Creature*)
 
 Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 {
-	if(isSummon() && getMaster()->getPlayer()) {
-		g_game.addMagicEffect(getPosition(), pokeballType->getGoback());
-		Item* pokeball = getMaster()->getPlayer()->getInventoryItem(CONST_SLOT_POKEBALL);
-		if (pokeball) {
-			pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
-		}
-		return nullptr;
-	}
-
 	Item* corpse;
 
 	if (isDitto) {

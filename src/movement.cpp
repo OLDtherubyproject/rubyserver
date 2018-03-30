@@ -317,6 +317,11 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 			return 0;
 		}
 
+		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId());
+		if (!pokemon) {
+			return 0;
+		}
+
 		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 		if (portrait) {
 			g_game.transformItem(portrait, pokemonType->info.portrait);
@@ -324,8 +329,6 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 			Item* item = Item::CreateItem(pokemonType->info.portrait, 1);
 			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
 		}
-
-		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId());
 
 		player->setPokemonHealthMax(pokemon->getMaxHealth());
 		player->setPokemonHealth(pokemon->getHealth());

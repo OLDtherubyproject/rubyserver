@@ -36,13 +36,14 @@
 #include "pokemon.h"
 #include "scheduler.h"
 #include "databasetasks.h"
+#include "pokeballs.h"
 
 extern Chat* g_chat;
 extern Game g_game;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 extern Vocations g_vocations;
-extern Pokeballs g_pokeballs;
+extern Pokeballs* g_pokeballs;
 extern Moves* g_moves;
 
 ScriptEnvironment::DBResultMap ScriptEnvironment::tempResults;
@@ -514,6 +515,25 @@ bool LuaScriptInterface::callFunction(int params)
 		LuaScriptInterface::reportError(nullptr, LuaScriptInterface::getString(luaState, -1));
 	} else {
 		result = LuaScriptInterface::getBoolean(luaState, -1);
+	}
+
+	lua_pop(luaState, 1);
+	if ((lua_gettop(luaState) + params + 1) != size) {
+		LuaScriptInterface::reportError(nullptr, "Stack size changed!");
+	}
+
+	resetScriptEnv();
+	return result;
+}
+
+double LuaScriptInterface::callPokeballFunction(int params)
+{
+	double result = 0;
+	int size = lua_gettop(luaState);
+	if (protectedCall(luaState, params, 1) != 0) {
+		LuaScriptInterface::reportError(nullptr, LuaScriptInterface::getString(luaState, -1));
+	} else {
+		result = LuaScriptInterface::getNumber<double>(luaState, -1);
 	}
 
 	lua_pop(luaState, 1);
@@ -1901,6 +1921,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::MAX_MESSAGEBUFFER)
 	registerEnumIn("configKeys", ConfigManager::ACTIONS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::EX_ACTIONS_DELAY_INTERVAL)
+	registerEnumIn("configKeys", ConfigManager::POKEBALLS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::KICK_AFTER_MINUTES)
 	registerEnumIn("configKeys", ConfigManager::PROTECTION_LEVEL)
 	registerEnumIn("configKeys", ConfigManager::DEATH_LOSE_PERCENT)
@@ -2504,19 +2525,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Vocation", "getDemotion", LuaScriptInterface::luaVocationGetDemotion);
 	registerMethod("Vocation", "getPromotion", LuaScriptInterface::luaVocationGetPromotion);
 
-	// Pokeball
-	registerClass("Pokeball", "", LuaScriptInterface::luaPokeballCreate);
-	registerMetaMethod("Pokeball", "__eq", LuaScriptInterface::luaUserdataCompare);
-
-	registerMethod("Pokeball", "getId", LuaScriptInterface::luaPokeballGetId);
-	registerMethod("Pokeball", "getName", LuaScriptInterface::luaPokeballGetName);
-	registerMethod("Pokeball", "getCharged", LuaScriptInterface::luaPokeballGetCharged);
-	registerMethod("Pokeball", "getDischarged", LuaScriptInterface::luaPokeballGetDischarged);
-	registerMethod("Pokeball", "getGoback", LuaScriptInterface::luaPokeballGetGoback);
-	registerMethod("Pokeball", "getCatchSuccess", LuaScriptInterface::luaPokeballGetCatchSuccess);
-	registerMethod("Pokeball", "getCatchFail", LuaScriptInterface::luaPokeballGetCatchFail);
-	registerMethod("Pokeball", "getRate", LuaScriptInterface::LuaPokeballGetRate);
-
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
 	registerMetaMethod("Town", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2565,7 +2573,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "isContainer", LuaScriptInterface::luaItemTypeIsContainer);
 	registerMethod("ItemType", "isFluidContainer", LuaScriptInterface::luaItemTypeIsFluidContainer);
 	registerMethod("ItemType", "isMovable", LuaScriptInterface::luaItemTypeIsMovable);
-	registerMethod("ItemType", "isPokeball", LuaScriptInterface::luaItemTypeIsPokeball);
+	//registerMethod("ItemType", "isPokeball", LuaScriptInterface::luaItemTypeIsPokeball);
 	registerMethod("ItemType", "isStackable", LuaScriptInterface::luaItemTypeIsStackable);
 	registerMethod("ItemType", "isReadable", LuaScriptInterface::luaItemTypeIsReadable);
 	registerMethod("ItemType", "isWritable", LuaScriptInterface::luaItemTypeIsWritable);
@@ -2740,6 +2748,23 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Move", "isPremium", LuaScriptInterface::luaMoveIsPremium);
 	registerMethod("Move", "isLearnable", LuaScriptInterface::luaMoveIsLearnable);
+
+	// PokeballType
+	registerClass("PokeballType", "", LuaScriptInterface::luaPokeballTypeCreate);
+	registerMetaMethod("PokeballType", "__eq", LuaScriptInterface::luaUserdataCompare);
+
+	registerMethod("PokeballType", "getItemId", LuaScriptInterface::luaPokeballTypeGetItemId);
+	registerMethod("PokeballType", "getServerId", LuaScriptInterface::luaPokeballTypeGetServerId);
+	registerMethod("PokeballType", "getName", LuaScriptInterface::luaPokeballTypeGetName);
+	registerMethod("PokeballType", "getReqLevel", LuaScriptInterface::luaPokeballTypeGetReqLevel);
+	registerMethod("PokeballType", "getRate", LuaScriptInterface::luaPokeballTypeGetRate);
+	registerMethod("PokeballType", "getChargedId", LuaScriptInterface::luaPokeballTypeGetChargedId);
+	registerMethod("PokeballType", "getDischargedId", LuaScriptInterface::luaPokeballTypeGetDischargedId);
+	registerMethod("PokeballType", "getGobackEffect", LuaScriptInterface::luaPokeballTypeGetGobackEffect);
+	registerMethod("PokeballType", "getCatchSuccessEffect", LuaScriptInterface::luaPokeballTypeGetCatchSuccessEffect);
+	registerMethod("PokeballType", "getCatchFailEffect", LuaScriptInterface::luaPokeballTypeGetCatchFailEffect);
+	registerMethod("PokeballType", "getShotEffect", LuaScriptInterface::luaPokeballTypeGetShotEffect);
+	registerMethod("PokeballType", "isPremium", LuaScriptInterface::luaPokeballTypeIsPremium);
 }
 
 #undef registerEnum
@@ -10383,123 +10408,6 @@ int LuaScriptInterface::luaGroupHasFlag(lua_State* L)
 	return 1;
 }
 
-// Pokeball
-int LuaScriptInterface::luaPokeballCreate(lua_State* L)
-{
-	// Pokeball(id or name)
-	uint32_t id;
-	if (isNumber(L, 2)) {
-		id = getNumber<uint32_t>(L, 2);
-	} else {
-		id = g_pokeballs.getPokeballId(getString(L, 2));
-	}
-
-	Pokeball* pokeball = g_pokeballs.getPokeball(id);
-	if (pokeball) {
-		pushUserdata<Pokeball>(L, pokeball);
-		setMetatable(L, -1, "Pokeball");
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetId(lua_State* L)
-{
-	// pokeball:getId()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getId());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetName(lua_State* L)
-{
-	// pokeball:getName()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		pushString(L, pokeball->getName());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetCharged(lua_State* L)
-{
-	// pokeball:getCharged()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getCharged());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetDischarged(lua_State* L)
-{
-	// pokeball:getDischarged()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getDischarged());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetGoback(lua_State* L)
-{
-	// pokeball:getGoback()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getGoback());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetCatchSuccess(lua_State* L)
-{
-	// pokeball:getCatchSuccess()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getCatchSuccess());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokeballGetCatchFail(lua_State* L)
-{
-	// pokeball:getCatchFail()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getCatchFail());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::LuaPokeballGetRate(lua_State* L)
-{
-	// pokeball:getRate()
-	Pokeball* pokeball = getUserdata<Pokeball>(L, 1);
-	if (pokeball) {
-		lua_pushnumber(L, pokeball->getRate());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 // Vocation
 int LuaScriptInterface::luaVocationCreate(lua_State* L)
 {
@@ -11262,7 +11170,7 @@ int LuaScriptInterface::luaItemTypeIsMovable(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaItemTypeIsPokeball(lua_State* L)
+/*int LuaScriptInterface::luaItemTypeIsPokeball(lua_State* L)
 {
 	// itemType:isPokeball()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
@@ -11277,7 +11185,7 @@ int LuaScriptInterface::luaItemTypeIsPokeball(lua_State* L)
 		lua_pushnil(L);
 	}
 	return 1;
-}
+}*/
 
 int LuaScriptInterface::luaItemTypeIsStackable(lua_State* L)
 {
@@ -13027,6 +12935,170 @@ int LuaScriptInterface::luaMoveIsLearnable(lua_State* L)
 	// move:isLearnable()
 	if (InstantMove* move = getUserdata<InstantMove>(L, 1)) {
 		pushBoolean(L, move->isLearnable());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// PokeballType
+int LuaScriptInterface::luaPokeballTypeCreate(lua_State* L)
+{
+	// pokeballType(itemid or name)
+	const PokeballType* pokeballType;
+	if (isNumber(L, 2)) {
+		pokeballType = g_pokeballs->getPokeballTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else {
+		pokeballType = nullptr;
+	}
+
+	if (pokeballType) {
+		pushUserdata<const PokeballType>(L, pokeballType);
+		setMetatable(L, -1, "PokeballType");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetItemId(lua_State* L)
+{
+	// pokeballType:getItemId()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getItemId());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetServerId(lua_State* L)
+{
+	// pokeballType:getServerId()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getServerID());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetName(lua_State* L)
+{
+	// pokeballType:getName()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		pushString(L, pokeballType->getName());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetReqLevel(lua_State* L)
+{
+	// pokeballType:getReqLevel()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getReqLevel());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetRate(lua_State* L)
+{
+	// pokeballType:getRate()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getRate());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetChargedId(lua_State* L)
+{
+	// pokeballType:getChargedId()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getChargedID());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetDischargedId(lua_State* L)
+{
+	// pokeballType:getDischargedId()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getDischargedID());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetGobackEffect(lua_State* L)
+{
+	// pokeballType:getGobackEffect()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getGobackEffect());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetCatchSuccessEffect(lua_State* L)
+{
+	// pokeballType:getCatchSuccessEffect()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getCatchSuccessEffect());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetCatchFailEffect(lua_State* L)
+{
+	// pokeballType:getCatchFailEffect()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getCatchFailEffect());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeGetShotEffect(lua_State* L)
+{
+	// pokeballType:getShotEffect()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->getShotEffect());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokeballTypeIsPremium(lua_State* L)
+{
+	// pokeballType:isPremium()
+	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
+	if (pokeballType) {
+		lua_pushnumber(L, pokeballType->isPremium());
 	} else {
 		lua_pushnil(L);
 	}

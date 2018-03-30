@@ -27,7 +27,7 @@
 class Creature;
 class Game;
 class Spawn;
-class Pokeball;
+class PokeballType;
 
 using CreatureHashSet = std::unordered_set<Creature*>;
 using CreatureList = std::list<Creature*>;
@@ -199,6 +199,12 @@ class Pokemon final : public Creature
 		void setPrice(uint32_t price) {
 			this->price = price;
 		}
+		void setIsShiny(bool isShiny) {
+			this->isShiny = isShiny;
+		}
+		void setPokeballType(const PokeballType* pokeballType) {
+			this->pokeballType = pokeballType;
+		}
 		bool canWalkOnFieldType(CombatType_t combatType) const;
 
 
@@ -250,7 +256,7 @@ class Pokemon final : public Creature
 			return ignoreFieldDamage;
 		}
 
-		Pokeball* getPokeballType() const {
+		const PokeballType* getPokeballType() const {
 			return pokeballType;
 		}
 
@@ -275,7 +281,7 @@ class Pokemon final : public Creature
 
 		PokemonType* mType;
 		Spawn* spawn = nullptr;
-		Pokeball* pokeballType = nullptr;
+		const PokeballType* pokeballType = nullptr;
 
 		Natures_t nature = static_cast<Natures_t>(uniform_random(1, 25));
 		PokemonEVs evs = {};

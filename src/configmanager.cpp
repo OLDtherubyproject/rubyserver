@@ -160,6 +160,8 @@ bool ConfigManager::load()
 	integer[KILLS_TO_BLACK] = getGlobalNumber(L, "killsToBlackSkull", 6);
 	integer[ACTIONS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenActions", 200);
 	integer[EX_ACTIONS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenExActions", 1000);
+	integer[POKEBALLS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenPokeballs", 200);
+	integer[GOBACK_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenGoback", 500);
 	integer[MAX_MESSAGEBUFFER] = getGlobalNumber(L, "maxMessageBuffer", 4);
 	integer[KICK_AFTER_MINUTES] = getGlobalNumber(L, "kickIdlePlayerAfterMinutes", 15);
 	integer[PROTECTION_LEVEL] = getGlobalNumber(L, "protectionLevel", 1);

@@ -44,6 +44,10 @@ houseRentPeriod = "never"
 timeBetweenActions = 200
 timeBetweenExActions = 1000
 
+-- Pokeball Usage
+timeBetweenPokeballs = 200
+timeBetweenGoback = 500
+
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
 mapName = "forgotten"

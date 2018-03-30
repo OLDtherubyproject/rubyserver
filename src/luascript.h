@@ -244,6 +244,7 @@ class LuaScriptInterface
 
 		static int luaErrorHandler(lua_State* L);
 		bool callFunction(int params);
+		double callPokeballFunction(int params);
 		void callVoidFunction(int params);
 
 		//push/pop common structures
@@ -1089,18 +1090,6 @@ class LuaScriptInterface
 		static int luaVocationGetDemotion(lua_State* L);
 		static int luaVocationGetPromotion(lua_State* L);
 
-		// Pokeball
-		static int luaPokeballCreate(lua_State* L);
-
-		static int luaPokeballGetId(lua_State* L);
-		static int luaPokeballGetName(lua_State* L);
-		static int luaPokeballGetCharged(lua_State* L);
-		static int luaPokeballGetDischarged(lua_State* L);
-		static int luaPokeballGetGoback(lua_State* L);
-		static int luaPokeballGetCatchSuccess(lua_State* L);
-		static int luaPokeballGetCatchFail(lua_State* L);
-		static int LuaPokeballGetRate(lua_State* L);
-
 		// Town
 		static int luaTownCreate(lua_State* L);
 
@@ -1146,7 +1135,7 @@ class LuaScriptInterface
 		static int luaItemTypeIsContainer(lua_State* L);
 		static int luaItemTypeIsFluidContainer(lua_State* L);
 		static int luaItemTypeIsMovable(lua_State* L);
-		static int luaItemTypeIsPokeball(lua_State* L);
+		//static int luaItemTypeIsPokeball(lua_State* L);
 		static int luaItemTypeIsStackable(lua_State* L);
 		static int luaItemTypeIsReadable(lua_State* L);
 		static int luaItemTypeIsWritable(lua_State* L);
@@ -1314,6 +1303,22 @@ class LuaScriptInterface
 
 		static int luaMoveIsPremium(lua_State* L);
 		static int luaMoveIsLearnable(lua_State* L);
+
+		// PokeballType
+		static int luaPokeballTypeCreate(lua_State* L);
+
+		static int luaPokeballTypeGetItemId(lua_State* L);
+		static int luaPokeballTypeGetServerId(lua_State* L);
+		static int luaPokeballTypeGetName(lua_State* L);
+		static int luaPokeballTypeGetReqLevel(lua_State* L);
+		static int luaPokeballTypeGetRate(lua_State* L);
+		static int luaPokeballTypeGetChargedId(lua_State* L);
+		static int luaPokeballTypeGetDischargedId(lua_State* L);
+		static int luaPokeballTypeGetGobackEffect(lua_State* L);
+		static int luaPokeballTypeGetCatchSuccessEffect(lua_State* L);
+		static int luaPokeballTypeGetCatchFailEffect(lua_State* L);
+		static int luaPokeballTypeGetShotEffect(lua_State* L);
+		static int luaPokeballTypeIsPremium(lua_State* L);
 
 		//
 		std::string lastLuaError;

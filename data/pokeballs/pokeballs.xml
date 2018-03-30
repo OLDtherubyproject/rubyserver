@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pokeballs>
+	<pokeball2 serverid="1" itemid="27786" name="poke ball" charged="27776" discharged="27781" goback="214" catchSuccess="212" catchFail="213" shotEffect="1" rate="1" />
+	<pokeball serverid="2" itemid="27787" name="great ball" charged="27777" discharged="27782" goback="217" catchSuccess="215" catchFail="216" shotEffect="2" rate="2" />
+	<pokeball serverid="3" itemid="27788" name="ultra ball" charged="27778" discharged="27783" goback="220" catchSuccess="218" catchFail="219" shotEffect="3" rate="4" />
+	<pokeball serverid="4" itemid="27789" name="saffari ball" charged="27780" discharged="27784" goback="225" catchSuccess="223" catchFail="224" shotEffect="4" rate="1" />
+	<pokeball serverid="5" itemid="27790" name="master ball" charged="27779" discharged="27785" goback="222" catchSuccess="221" catchFail="0" shotEffect="5" rate="1000000" />
+	<pokeball serverid="6" itemid="27791" name="dusk ball" charged="27803" discharged="28512" goback="187" catchSuccess="185" catchFail="186" shotEffect="9" rate="1" />
+	<pokeball serverid="7" itemid="27792" name="cherish ball" charged="27804" discharged="28513" goback="178" catchSuccess="176" catchFail="177" shotEffect="8" rate="1" />
+	<pokeball serverid="8" itemid="27793" name="dive ball" charged="27805" discharged="28514" goback="181" catchSuccess="179" catchFail="180" shotEffect="7" rate="1" />
+	<pokeball serverid="9" itemid="27794" name="love ball" charged="27806" discharged="28515" goback="184" catchSuccess="182" catchFail="183" shotEffect="6" rate="4" />
+	<pokeball serverid="10" itemid="27795" name="fast ball" charged="27807" discharged="28516" goback="190" catchSuccess="188" catchFail="189" shotEffect="10" rate="5" />
+	<pokeball serverid="11" itemid="27796" name="heavy ball" charged="27808" discharged="28517" goback="193" catchSuccess="191" catchFail="192" shotEffect="11" rate="6" />
+	<pokeball serverid="12" itemid="27797" name="lure ball" charged="27809" discharged="28518" goback="196" catchSuccess="194" catchFail="195" shotEffect="12" rate="3" />
+	<pokeball serverid="13" itemid="27798" name="moon ball" charged="27810" discharged="28519" goback="199" catchSuccess="197" catchFail="198" shotEffect="13" rate="4" />
+	<pokeball serverid="14" itemid="27799" name="net ball" charged="27811" discharged="28520" goback="202" catchSuccess="200" catchFail="201" shotEffect="14" rate="5" />
+	<pokeball serverid="15" itemid="27800" name="nest ball" charged="27812" discharged="28521" goback="205" catchSuccess="203" catchFail="204" shotEffect="15" rate="6" />
+	<pokeball serverid="16" itemid="27801" name="premier ball" charged="27813" discharged="28522" goback="208" catchSuccess="206" catchFail="207" shotEffect="16" rate="2" />
+	<pokeball serverid="17" itemid="27802" name="quick ball" charged="27814" discharged="28523" goback="211" catchSuccess="209" catchFail="210" shotEffect="17" rate="5" />
+</pokeballs>

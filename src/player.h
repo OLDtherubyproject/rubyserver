@@ -28,7 +28,6 @@
 #include "outfit.h"
 #include "enums.h"
 #include "vocation.h"
-#include "pokeball.h"
 #include "protocolgame.h"
 #include "ioguild.h"
 #include "party.h"
@@ -1137,6 +1136,17 @@ class Player final : public Creature, public Cylinder
 		}
 		uint32_t getNextActionTime() const;
 
+
+		void setNextGoback(int64_t time) {
+			if (time > nextGoback) {
+				nextGoback = time;
+			}
+		}
+		bool canDoGoback() const {
+			return nextGoback <= OTSYS_TIME();
+		}
+		uint32_t getNextGobackTime() const;
+
 		Item* getWriteItem(uint32_t& windowTextId, uint16_t& maxWriteLen);
 		void setWriteItem(Item* item, uint16_t maxWriteLen = 0);
 
@@ -1147,7 +1157,7 @@ class Player final : public Creature, public Cylinder
 		void forgetInstantMove(const std::string& moveName);
 		bool hasLearnedInstantMove(const std::string& moveName) const;
 
-		Pokemon* getHisPokemon() {
+		Pokemon* getHisPokemon() const {
 			if (summons.size()) {
 				Creature* creature = summons.front();
 				if (creature) {
@@ -1157,6 +1167,10 @@ class Player final : public Creature, public Cylinder
 
 			return nullptr;
 		}
+
+		void tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
+		void sendPokemonEmot(uint16_t pokemonEmot) const;
+		bool gobackPokemon(Item* pokeball, bool ignoreDelay = false, bool ignoreTransformPokeball = false);
 
 	private:
 		std::forward_list<Condition*> getMuteConditions() const;
@@ -1245,6 +1259,7 @@ class Player final : public Creature, public Cylinder
 		int64_t lastPing;
 		int64_t lastPong;
 		int64_t nextAction = 0;
+		int64_t nextGoback = 0;
 
 		BedItem* bedItem = nullptr;
 		Guild* guild = nullptr;
@@ -1365,6 +1380,7 @@ class Player final : public Creature, public Cylinder
 		friend class Actions;
 		friend class IOLoginData;
 		friend class ProtocolGame;
+		friend class PokeballType;
 };
 
 #endif

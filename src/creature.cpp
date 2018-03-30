@@ -686,15 +686,18 @@ void Creature::onDeath()
 bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreature, bool lastHitUnjustified, bool mostDamageUnjustified)
 {
 	if (!lootDrop && getPokemon()) {
-		if (master) {
+		if (getMaster() && getMaster()->getPlayer()) {
+			Player* player = getMaster()->getPlayer();
+			player->gobackPokemon(player->getInventoryItem(CONST_SLOT_POKEBALL), true, true);
+
 			//scripting event - onDeath
 			const CreatureEventList& deathEvents = getCreatureEvents(CREATURE_EVENT_DEATH);
 			for (CreatureEvent* deathEvent : deathEvents) {
 				deathEvent->executeOnDeath(this, nullptr, lastHitCreature, mostDamageCreature, lastHitUnjustified, mostDamageUnjustified);
 			}
+		} else{
+			g_game.addMagicEffect(getPosition(), CONST_ME_POFF);
 		}
-
-		g_game.addMagicEffect(getPosition(), CONST_ME_POFF);
 	} else {
 		Tile* tile = getTile();
 

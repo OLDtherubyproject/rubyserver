@@ -41,6 +41,7 @@
 #include "moves.h"
 #include "talkaction.h"
 #include "weapons.h"
+#include "pokeballs.h"
 
 extern ConfigManager g_config;
 extern Actions* g_actions;
@@ -55,7 +56,7 @@ extern CreatureEvents* g_creatureEvents;
 extern Pokemons g_pokemons;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
-extern Pokeballs g_pokeballs;
+extern Pokeballs* g_pokeballs;
 
 Game::Game()
 {
@@ -1590,7 +1591,7 @@ void Game::addMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*/)
 	}
 
 	Player* player = static_cast<Player*>(cylinder);
-	pokemonPlayerSendEmot(player, CONST_ME_EMOT_MONEY);
+	player->sendPokemonEmot(CONST_ME_EMOT_MONEY);
 }
 
 Item* Game::transformItem(Item* item, uint16_t newId, int32_t newCount /*= -1*/)
@@ -2116,7 +2117,9 @@ void Game::playerUseItemEx(uint32_t playerId, const Position& fromPos, uint8_t f
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	g_actions->useItemEx(player, fromPos, toPos, toStackPos, item, isHotkey);
+	if (!g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+		g_actions->useItemEx(player, fromPos, toPos, toStackPos, item, isHotkey);
+	}
 }
 
 void Game::playerUseItem(uint32_t playerId, const Position& pos, uint8_t stackPos,
@@ -2176,7 +2179,9 @@ void Game::playerUseItem(uint32_t playerId, const Position& pos, uint8_t stackPo
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	g_actions->useItem(player, pos, index, item, isHotkey);
+	if (!player->gobackPokemon(item)) {
+		g_actions->useItem(player, pos, index, item, isHotkey);
+	}
 }
 
 void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uint8_t fromStackPos, uint32_t creatureId, uint16_t spriteId)
@@ -2271,7 +2276,9 @@ void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uin
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	g_actions->useItemEx(player, fromPos, creature->getPosition(), creature->getParent()->getThingIndex(creature), item, isHotkey, creature);
+	if (!g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+		g_actions->useItemEx(player, fromPos, creature->getPosition(), creature->getParent()->getThingIndex(creature), item, isHotkey, creature);
+	}
 }
 
 void Game::playerCloseContainer(uint32_t playerId, uint8_t cid)
@@ -4512,7 +4519,7 @@ void Game::checkLight()
 			lightState = LIGHT_STATE_SUNSET;
 			lightChange = true;
 		} else if ((gameHour >= 20 && gameHour <= 23) || (gameHour >= 0 && gameHour < 5)) {
-			lightLevel = 20;
+			lightLevel = LIGHT_LEVEL_NIGHT;
 			lightState = LIGHT_STATE_NIGHT;
 			lightChange = true;
 		}
@@ -5433,127 +5440,104 @@ void Game::playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16
 	player->sendMarketAcceptOffer(offer);
 }
 
-void Game::playerTryCatchPokemon(Player* player, const Position& fromPos, const Position& toPos, Item* pokeballUseable, Pokeball* pokeballType)
+void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos)
 {
-	if (!player) {
-		return;
-	}
-
-	Tile* tile = g_game.map.getTile(toPos);
-	if (!tile) {
-		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
-		return;
-	}
-
-	Item* corpse = tile->getTopDownItem();
-	if (!corpse) {
-		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
+	if (!player || !pokeballType || !corpse || !pokeball) {
 		return;
 	}
 
 	PokemonType* pokemonType = g_pokemons.getPokemonType(corpse->getCorpseType());
 	if (!pokemonType) {
-		player->sendCancelMessage(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON);
 		return;
 	}
 
-	if (pokeballType->getLevel() > player->getLevel()) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHLEVEL);
-		return;
-	}
-
-	if (!pokemonType->info.isCatchable) {
-		player->sendCancelMessage(RETURNVALUE_CANNOTCAPTURETHISPOKEMON);
-		return;
-	}
-
-	internalRemoveItem(pokeballUseable, 1);
-	internalRemoveItem(corpse, 1);
+	const Position& pos = pokeball->getTopParent()->getPosition();
+	uint16_t delay = 75 * (sqrt(pow((pos.x - toPos.x), 2) + pow((pos.y - toPos.y), 2)));
+	uint16_t tryEffect = pokeballType->getCatchFailEffect();
+	MagicEffectClasses pokemonEmot = CONST_ME_EMOT_THREE_POINTS;
 	std::ostringstream message;
-	MagicEffectClasses effect;
+	message << "Sorry, your pokeball broke.";
 
-	uint8_t delay = 0;
-	uint8_t dis1 = Position::getDistanceX(player->getPosition(), toPos);
-	uint8_t dis2 = Position::getDistanceY(player->getPosition(), toPos);
-
-	if (dis1 >= dis2) {
-		delay = dis1 * 40;
-	} else{
-		delay = dis2 * 40;
-	}
-
-	g_game.addDistanceEffect(player->getPosition(), toPos, pokeballType->getShotEffect());
-
-	if (boolean_random((pokemonType->info.catchRate * pokeballType->getRate()) / 100) != 1) {
-		message << "Oh, no! Your pokeball broke!";
-		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeballType->getCatchFail())));
-		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnDontCatchPokemon, g_events, player, pokemonType, pokeballType)));
-		effect = CONST_ME_EMOT_THREE_POINTS;
-	} else {
-		message << "Gotcha! " << pokemonType->name << " was caught!";
-		effect = CONST_ME_EMOT_EXCLAMATION;
-		g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, pokeballType->getCatchSuccess())));
-
+	if (boolean_random((pokemonType->info.catchRate * rate) / 100) == 1) {
+		tryEffect = pokeballType->getCatchSuccessEffect();
+		pokemonEmot = CONST_ME_EMOT_EXCLAMATION;
 		Pokemon* pokemon = Pokemon::createPokemon(pokemonType->typeName);
+
 		if (!pokemon) {
 			return;
 		}
 
-		// set pokemon info
-		pokemon->isShiny = corpse->getPokemonIsShiny();
-
-		uint32_t pokemonId = savePokemon(pokemon, pokeballType);
-
-		if (pokemonId == 0) {
-			return;
-		}
-			
-		Item* pokeball = Item::CreateItem(pokemonType->info.iconCharged, 1);
-		if (!pokeball) {
-			return;
-		}
-
-		pokeball->setIntAttr(ITEM_ATTRIBUTE_POKEMONID, pokemonId);
-		pokeball->setStrAttr(ITEM_ATTRIBUTE_NAME, pokeballType->getName());
-		pokeball->setIntAttr(ITEM_ATTRIBUTE_PRICE, pokemonType->info.price);
-		pokeball->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, "It contains " + pokemonType->nameDescription + ".");
-		//g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind()))
-		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<void(Game::*)(Player*, Item*)>(&Game::playerSendPokemon), this, player, pokeball)));
-		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnCatchPokemon, g_events, player, pokemonType, pokeballType, pokeball)));
+		message.str(std::string());
+		message << "You caught a Pokemon! (" + pokemon->getName() + ").";
+		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::sendPokemonToPlayer, this, player->getGUID(), pokemon, corpse->clone(), pokeballType)));
+	} else {
+		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnDontCatchPokemon, g_events, player, pokemonType, pokeballType)));
 	}
 
-	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::pokemonPlayerSendEmot, this, player, effect)));
-	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
+	internalRemoveItem(corpse, 1);
+	addDistanceEffect(player->getPosition(), toPos, pokeballType->getShotEffect());
+
+	g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, tryEffect)));
+	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::playerSendPokemonEmot, this, player->getGUID(), pokemonEmot)));
+	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnTryCatchPokemon, g_events, player, pokemonType, pokeballType)));
+	g_scheduler.addEvent(createSchedulerTask(2999 + delay, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
+	return;
 }
 
-void Game::pokemonPlayerSendEmot(Player* player, uint16_t effect) {
+void Game::playerSendPokemonEmot(uint32_t playerGUID, uint16_t pokemonEmot) {
+	Player* player = getPlayerByGUID(playerGUID);
 	if (!player) {
 		return;
 	}
 
 	if (Pokemon* pokemonPlayer = player->getHisPokemon()) {
-		addMagicEffect(pokemonPlayer->getPosition(), effect);
+		g_game.addMagicEffect(pokemonPlayer->getPosition(), pokemonEmot);
 	}
 }
 
-void Game::playerSendPokemon(Player* player, Item* item)
-{
+void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corpse, const PokeballType* pokeballType) {
+	if (!pokemon || !corpse || !pokeballType) {
+		return;
+	}
+
+	Player* player = getPlayerByGUID(playerGUID);
 	if (!player) {
 		return;
 	}
 
-	if (!item) {
+	pokemon->setIsShiny(corpse->getPokemonIsShiny());
+	pokemon->setPokeballType(pokeballType);
+
+	uint32_t pokemonID = savePokemon(pokemon);
+
+	if (!pokemonID) {
 		return;
 	}
 
-	if (player->queryAdd(CONST_SLOT_WHEREEVER, *item, 1, FLAG_NOLIMIT) != RETURNVALUE_NOERROR) {
-		player->sendCancelMessage(player->queryAdd(CONST_SLOT_WHEREEVER, *item, 1, FLAG_NOLIMIT));
-		player->getInbox()->internalAddThing(item);
-		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You already have six Pokemon. It was sended to the CP.");
-		return;
+	Item* pokeball = Item::CreateItem(pokemon->mType->info.iconCharged, 1);
+	std::ostringstream s;
+
+	pokeball->setPokemonId(pokemonID);
+	pokeball->setName(pokeballType->getName());
+	pokeball->setDescription("It contains " + pokemon->getNameDescription() + ".");
+	pokeball->setPrice(pokemon->getPrice());
+
+	g_events->eventPlayerOnCatchPokemon(player, pokemon->mType, pokeballType, pokeball);
+
+	if (player->getPokemonCapacity() >= 6) {
+		s << "You already hold six pokemon, your new pokemon will be teleported to the Pokemon Center!";
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, s.str());
+
+		internalAddItem(player->getInbox(), pokeball, INDEX_WHEREEVER, FLAG_NOLIMIT);
+	} else {
+		internalAddItem(player, pokeball, INDEX_WHEREEVER, 0);
 	}
 
-	g_game.internalAddItem(player, item, INDEX_WHEREEVER, 0, false);
+	pokemon->removeList();
+	pokemon->setRemoved();
+	ReleaseCreature(pokemon);
+	removeCreatureCheck(pokemon);
+	internalRemoveItem(corpse);
 }
 
 void Game::parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer)
@@ -5712,7 +5696,7 @@ void Game::removePokemon(Pokemon* pokemon)
 	pokemons.erase(pokemon->getID());
 }
 
-uint32_t Game::savePokemon(Pokemon* pokemon, Pokeball* pokeballType)
+uint32_t Game::savePokemon(Pokemon* pokemon)
 {
 	if (!pokemon) {
 		return 0;
@@ -5738,9 +5722,14 @@ uint32_t Game::savePokemon(Pokemon* pokemon, Pokeball* pokeballType)
 	DBResult_ptr result = db.storeQuery(query.str());
 	query.str(std::string());
 
+	uint16_t pbServerID = 0;
+	if (pokemon->getPokeballType()) {
+		pbServerID = pokemon->getPokeballType()->getServerID();
+	}
+
 	if (!result) {
-		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`) VALUES ");
-		query << "'" << pokeballType->getServerId() << "', ";
+		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`) VALUES ");		
+		query << "'" << pbServerID << "', ";
 		query << "'" << pokemon->mType->typeName << "', ";
 		query << "'" << pokemon->isShiny << "', ";
 		query << "'" << pokemon->mType->name << "', ";
@@ -5767,7 +5756,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon, Pokeball* pokeballType)
 	} else {
 		// update
 		query << "UPDATE `pokemon` SET ";
-		query << "`pokeball` = '" << pokeballType->getServerId() << "', ";
+		query << "`pokeball` = '" << pbServerID << "', ";
 		query << "`type` = '" << pokemon->mType->typeName << "', ";
 		query << "`shiny` = '" << pokemon->isShiny << "', ";
 		query << "`nickname` = '" << pokemon->mType->name << "', ";
@@ -5808,9 +5797,14 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 		return nullptr;
 	}
 
+	const PokeballType* pokeballType = g_pokeballs->getPokeballTypeByServerID(result->getNumber<uint16_t>("pokeball"));
+	if (!pokeballType) {
+		return nullptr;
+	}
+
 	// load general attributes
 	pokemon->setGUID(id);
-	pokemon->pokeballType = g_pokeballs.getPokeballByServerId(result->getNumber<uint16_t>("pokeball"));
+	pokemon->pokeballType = pokeballType;
 	pokemon->healthMax = result->getNumber<int32_t>("hp") * 30;
 	pokemon->health = result->getNumber<int32_t>("hpnow");
 	pokemon->setSkull(static_cast<Skulls_t>(result->getNumber<uint16_t>("gender")));
@@ -5865,7 +5859,7 @@ PokemonType* Game::loadPokemonTypeById(uint32_t id)
 	return g_pokemons.getPokemonType(result->getString("type"));
 }
 
-Pokeball* Game::loadPokemonPokeballById(uint32_t id)
+PokeballType* Game::loadPokemonPokeballById(uint32_t id)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
@@ -5876,7 +5870,7 @@ Pokeball* Game::loadPokemonPokeballById(uint32_t id)
 		return nullptr;
 	}
 
-	return g_pokeballs.getPokeballByServerId(result->getNumber<uint16_t>("pokeball"));
+	return g_pokeballs->getPokeballTypeByServerID(result->getNumber<uint16_t>("pokeball"));
 }
 
 Guild* Game::getGuild(uint32_t id) const
@@ -6018,7 +6012,7 @@ bool Game::reload(ReloadTypes_t reloadType)
 			return results;
 		}
 
-		case RELOAD_TYPE_POKEBALLS: return g_pokeballs.reload();
+		case RELOAD_TYPE_POKEBALLS: return g_pokeballs->reload();
 
 		default: {
 			if (!g_moves->reload()) {
@@ -6114,26 +6108,26 @@ Position Game::getClosestFreeTile(Creature* creature, Position centerPos, bool e
 	return centerPos;
 }
 
-void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item* item)
+void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item* pokeball)
 {
-	if (item->getPokemonId() && (fromCylinder != toCylinder) && !item->isStackable()) {
-		PokemonType* pokemonType = loadPokemonTypeById(item->getPokemonId());
-		Pokeball* pokeballType = loadPokemonPokeballById(item->getPokemonId());
+	if (pokeball->getPokemonId() && (fromCylinder != toCylinder) && !pokeball->isStackable()) {
+		PokemonType* pokemonType = loadPokemonTypeById(pokeball->getPokemonId());
+		const PokeballType* pokeballType = loadPokemonPokeballById(pokeball->getPokemonId());
 
 		if (pokemonType && pokeballType) {
-			Cylinder* parent = item->getParent();
+			Cylinder* parent = pokeball->getParent();
 
 			if (parent->getContainer() || parent->getCreature()) {
-				if (item->getID() == pokeballType->getCharged()){
-					transformItem(item, pokemonType->info.iconCharged);
-				} else if (item->getID() == pokeballType->getDischarged()){
-					transformItem(item, pokemonType->info.iconDischarged);
+				if (pokeball->getID() == pokeballType->getChargedID()){
+					transformItem(pokeball, pokemonType->info.iconCharged);
+				} else if (pokeball->getID() == pokeballType->getDischargedID()){
+					transformItem(pokeball, pokemonType->info.iconDischarged);
 				}
 			} else if (parent->getTile()) {
-				if (item->getID() == pokemonType->info.iconCharged){
-					transformItem(item, pokeballType->getCharged());
-				} else if (item->getID() == pokemonType->info.iconDischarged){
-					transformItem(item, pokeballType->getDischarged());
+				if (pokeball->getID() == pokemonType->info.iconCharged){
+					transformItem(pokeball, pokeballType->getChargedID());
+				} else if (pokeball->getID() == pokemonType->info.iconDischarged){
+					transformItem(pokeball, pokeballType->getDischargedID());
 				}
 			}
 		}

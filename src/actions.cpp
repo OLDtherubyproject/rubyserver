@@ -21,7 +21,6 @@
 #include "otpch.h"
 
 #include "actions.h"
-#include "pokeball.h"
 #include "bed.h"
 #include "configmanager.h"
 #include "container.h"
@@ -34,7 +33,6 @@ extern Game g_game;
 extern Moves* g_moves;
 extern Actions* g_actions;
 extern ConfigManager g_config;
-extern Pokeballs g_pokeballs;
 extern Pokemons g_pokemons;
 
 Actions::Actions() :
@@ -355,75 +353,6 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
 	}
 
-	// Goback system
-	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
-		if (player->getInventoryItem(CONST_SLOT_POKEBALL) != item) {
-			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must put your pokeball on right place.");
-			return false;
-		}
-
-		PokemonType* pokemonType = g_game.loadPokemonTypeById(item->getPokemonId());
-		if (!pokemonType) {
-			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon Type not found! Please contact an administrator.");
-			return false;
-		}
-
-		Pokemon* pokemon;
-		// Discharged
-		if (pokemonType->info.iconDischarged == item->getID()) {
-			pokemon = player->getHisPokemon();
-			if (!pokemon) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must have a Pokemon first.");
-				return false;
-			}
-
-			Pokeball* pokeballType = pokemon->getPokeballType();
-			if (!pokeballType) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Invalid pokeball.");
-				return false;
-			}
-
-			g_game.savePokemon(pokemon, pokeballType);
-			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemonType->name + ", nice work.", false);
-			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
-			g_game.removeCreature(pokemon, false);
-			g_game.transformItem(item, pokemonType->info.iconCharged);
-			item->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
-			return true;
-		}
-
-		// Charged
-		if (pokemonType->info.iconCharged == item->getID()) {
-			if (player->getHisPokemon()) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You already have a Pokemon.");
-				return false;
-			}
-
-			pokemon = g_game.loadPokemonById(item->getIntAttr(ITEM_ATTRIBUTE_POKEMONID));
-			if (!pokemon) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon not found! Please contact an administrator.");
-				return false;
-			}
-
-			Pokeball* pokeballType = pokemon->getPokeballType();
-			if (!pokeballType) {
-				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Invalid pokeball.");
-				return false;
-			}
-
-			pokemon->setMaster(player);
-			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemonType->name + ", I choose you!", false);
-			g_game.placeCreature(pokemon, player->getPosition());
-			g_game.addMagicEffect(pokemon->getPosition(), pokeballType->getGoback());
-			g_game.transformItem(item, pokemonType->info.iconDischarged);
-			item->setIntAttr(ITEM_ATTRIBUTE_UNIQUEID, 1);
-			return true;
-		}
-
-		g_game.transformItem(item, pokemonType->info.iconCharged);
-		return true;
-	}
-
 	ReturnValue ret = internalUseItem(player, pos, index, item, isHotkey);
 	if (ret != RETURNVALUE_NOERROR) {
 		player->sendCancelMessage(ret);
@@ -437,23 +366,6 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 {
 	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	player->stopWalk();
-
-	// stackable pokeball usage
-	Pokeball* pokeball = g_pokeballs.getPokeball(item->getID());
-	if (pokeball) {
-		if (isHotkey) {
-			showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
-		}
-
-		ReturnValue ret = g_actions->canUseFar(player, toPos, true, true);
-		if (ret != RETURNVALUE_NOERROR) {
-			player->sendCancelMessage(ret);
-			return false;
-		}
-
-		g_game.playerTryCatchPokemon(player, fromPos, toPos, item, pokeball);
-		return true;
-	}
 
 	// action usage
 	Action* action = getAction(item);

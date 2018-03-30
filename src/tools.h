@@ -94,6 +94,8 @@ uint8_t clientFluidToServer(uint8_t clientFluid);
 itemAttrTypes stringToItemAttribute(const std::string& str);
 
 const char* getReturnMessage(ReturnValue value);
+const char* getCallPokemonMessage(CallPokemon value);
+const char* getCallbackPokemonMessage(CallbackPokemon value);
 
 int64_t OTSYS_TIME();
 
