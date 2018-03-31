@@ -1139,7 +1139,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_DRUNK)
 	registerEnum(CONDITION_EXHAUST_WEAPON)
 	registerEnum(CONDITION_REGENERATION)
-	registerEnum(CONDITION_SOUL)
 	registerEnum(CONDITION_DROWN)
 	registerEnum(CONDITION_MUTED)
 	registerEnum(CONDITION_CHANNELMUTEDTICKS)
@@ -1178,8 +1177,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SPEED)
 	registerEnum(CONDITION_PARAM_LIGHT_LEVEL)
 	registerEnum(CONDITION_PARAM_LIGHT_COLOR)
-	registerEnum(CONDITION_PARAM_SOULGAIN)
-	registerEnum(CONDITION_PARAM_SOULTICKS)
 	registerEnum(CONDITION_PARAM_MINVALUE)
 	registerEnum(CONDITION_PARAM_MAXVALUE)
 	registerEnum(CONDITION_PARAM_STARTVALUE)
@@ -1519,7 +1516,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_IgnoredByPokemons)
 	registerEnum(PlayerFlag_NotGainInFight)
 	registerEnum(PlayerFlag_HasInfiniteMana)
-	registerEnum(PlayerFlag_HasInfiniteSoul)
 	registerEnum(PlayerFlag_HasNoExhaustion)
 	registerEnum(PlayerFlag_CannotUseMoves)
 	registerEnum(PlayerFlag_CannotPickupItem)
@@ -1798,7 +1794,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_NOTENOUGHLEVEL)
 	registerEnum(RETURNVALUE_NOTENOUGHMAGICLEVEL)
 	registerEnum(RETURNVALUE_NOTENOUGHMANA)
-	registerEnum(RETURNVALUE_NOTENOUGHSOUL)
 	registerEnum(RETURNVALUE_YOUAREEXHAUSTED)
 	registerEnum(RETURNVALUE_PLAYERISNOTREACHABLE)
 	registerEnum(RETURNVALUE_CANONLYUSETHISRUNEONCREATURES)
@@ -2506,9 +2501,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Vocation", "getManaGainTicks", LuaScriptInterface::luaVocationGetManaGainTicks);
 	registerMethod("Vocation", "getManaGainAmount", LuaScriptInterface::luaVocationGetManaGainAmount);
 
-	registerMethod("Vocation", "getMaxSoul", LuaScriptInterface::luaVocationGetMaxSoul);
-	registerMethod("Vocation", "getSoulGainTicks", LuaScriptInterface::luaVocationGetSoulGainTicks);
-
 	registerMethod("Vocation", "getAttackSpeed", LuaScriptInterface::luaVocationGetAttackSpeed);
 	registerMethod("Vocation", "getBaseSpeed", LuaScriptInterface::luaVocationGetBaseSpeed);
 
@@ -2733,8 +2725,6 @@ void LuaScriptInterface::registerFunctions()
 	// Moves
 	registerClass("Move", "", LuaScriptInterface::luaMoveCreate);
 	registerMetaMethod("Move", "__eq", LuaScriptInterface::luaUserdataCompare);
-
-	registerMethod("Move", "getSoulCost", LuaScriptInterface::luaMoveGetSoulCost);
 
 	registerMethod("Move", "isPremium", LuaScriptInterface::luaMoveIsPremium);
 	registerMethod("Move", "isLearnable", LuaScriptInterface::luaMoveIsLearnable);
@@ -10482,30 +10472,6 @@ int LuaScriptInterface::luaVocationGetManaGainAmount(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetMaxSoul(lua_State* L)
-{
-	// vocation:getMaxSoul()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getSoulMax());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetSoulGainTicks(lua_State* L)
-{
-	// vocation:getSoulGainTicks()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getSoulGainTicks());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaVocationGetAttackSpeed(lua_State* L)
 {
 	// vocation:getAttackSpeed()
@@ -12809,17 +12775,6 @@ int LuaScriptInterface::luaMoveCreate(lua_State* L)
 
 	if (move) {
 		pushInstantMove(L, *move);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaMoveGetSoulCost(lua_State* L)
-{
-	// move:getSoulCost()
-	if (InstantMove* move = getUserdata<InstantMove>(L, 1)) {
-		lua_pushnumber(L, move->getSoulCost());
 	} else {
 		lua_pushnil(L);
 	}

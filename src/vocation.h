@@ -69,13 +69,6 @@ class Vocation
 			return gainHealthAmount;
 		}
 
-		uint8_t getSoulMax() const {
-			return soulMax;
-		}
-		uint16_t getSoulGainTicks() const {
-			return gainSoulTicks;
-		}
-
 		uint32_t getAttackSpeed() const {
 			return attackSpeed;
 		}
@@ -115,10 +108,7 @@ class Vocation
 		uint32_t attackSpeed = 1500;
 		uint32_t baseSpeed = 220;
 		uint16_t id;
-
-		uint16_t gainSoulTicks = 120;
-
-		uint8_t soulMax = 100;
+		
 		uint8_t clientId = 0;
 
 		static uint32_t skillBase[SKILL_LAST + 1];

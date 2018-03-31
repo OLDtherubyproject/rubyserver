@@ -198,10 +198,6 @@ function Player:onTradeAccept(target, item, targetItem)
 	return true
 end
 
-local soulCondition = Condition(CONDITION_SOUL, CONDITIONID_DEFAULT)
-soulCondition:setTicks(4 * 60 * 1000)
-soulCondition:setParameter(CONDITION_PARAM_SOULGAIN, 1)
-
 local function useStamina(player)
 	local staminaMinutes = player:getStamina()
 	if staminaMinutes == 0 then
@@ -232,13 +228,6 @@ end
 function Player:onGainExperience(source, exp, rawExp)
 	if not source or source:isPlayer() then
 		return exp
-	end
-
-	-- Soul regeneration
-	local vocation = self:getVocation()
-	if self:getSoul() < vocation:getMaxSoul() and exp >= self:getLevel() then
-		soulCondition:setParameter(CONDITION_PARAM_SOULTICKS, vocation:getSoulGainTicks() * 1000)
-		self:addCondition(soulCondition)
 	end
 
 	-- Apply experience stage multiplier

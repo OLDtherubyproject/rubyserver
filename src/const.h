@@ -610,7 +610,6 @@ enum PlayerFlags : uint64_t {
 	PlayerFlag_IgnoredByPokemons = 1 << 8,
 	PlayerFlag_NotGainInFight = 1 << 9,
 	PlayerFlag_HasInfiniteMana = 1 << 10,
-	PlayerFlag_HasInfiniteSoul = 1 << 11,
 	PlayerFlag_HasNoExhaustion = 1 << 12,
 	PlayerFlag_CannotUseMoves = 1 << 13,
 	PlayerFlag_CannotPickupItem = 1 << 14,

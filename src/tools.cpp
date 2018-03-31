@@ -1153,9 +1153,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_NOTENOUGHMANA:
 			return "You do not have enough mana.";
 
-		case RETURNVALUE_NOTENOUGHSOUL:
-			return "You do not have enough soul.";
-
 		case RETURNVALUE_YOUAREEXHAUSTED:
 			return "You are exhausted.";
 

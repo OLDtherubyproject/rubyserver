@@ -130,12 +130,9 @@ class Move : public BaseMove
 		}
 
 		void postCastMove(Player* player, bool finishedCast = true, bool payCost = true) const;
-		static void postCastMove(Player* player, uint32_t manaCost, uint32_t soulCost);
+		static void postCastMove(Player* player, uint32_t manaCost);
 
 		uint32_t getManaCost(const Player* player) const;
-		uint32_t getSoulCost() const {
-			return soul;
-		}
 		uint32_t getLevel() const {
 			return level;
 		}
@@ -188,7 +185,6 @@ class Move : public BaseMove
 
 		uint32_t mana = 0;
 		uint32_t manaPercent = 0;
-		uint32_t soul = 0;
 
 		bool needWeapon = false;
 		bool blockingSolid = false;

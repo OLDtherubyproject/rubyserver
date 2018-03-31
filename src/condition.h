@@ -48,8 +48,6 @@ enum ConditionAttr_t {
 	CONDITIONATTR_LIGHTLEVEL,
 	CONDITIONATTR_LIGHTTICKS,
 	CONDITIONATTR_LIGHTINTERVAL,
-	CONDITIONATTR_SOULTICKS,
-	CONDITIONATTR_SOULGAIN,
 	CONDITIONATTR_SKILLS,
 	CONDITIONATTR_STATS,
 	CONDITIONATTR_OUTFIT,
@@ -208,31 +206,6 @@ class ConditionRegeneration final : public ConditionGeneric
 		uint32_t manaTicks = 1000;
 		uint32_t healthGain = 0;
 		uint32_t manaGain = 0;
-};
-
-class ConditionSoul final : public ConditionGeneric
-{
-	public:
-		ConditionSoul(ConditionId_t id, ConditionType_t type, int32_t ticks, bool buff = false, uint32_t subId = 0) :
-			ConditionGeneric(id, type, ticks, buff, subId) {}
-
-		void addCondition(Creature* creature, const Condition* condition) override;
-		bool executeCondition(Creature* creature, int32_t interval) override;
-
-		bool setParam(ConditionParam_t param, int32_t value) override;
-
-		ConditionSoul* clone() const override {
-			return new ConditionSoul(*this);
-		}
-
-		//serialization
-		void serialize(PropWriteStream& propWriteStream) override;
-		bool unserializeProp(ConditionAttr_t attr, PropStream& propStream) override;
-
-	private:
-		uint32_t internalSoulTicks = 0;
-		uint32_t soulTicks = 0;
-		uint32_t soulGain = 0;
 };
 
 class ConditionInvisible final : public ConditionGeneric

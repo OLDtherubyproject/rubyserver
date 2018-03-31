@@ -99,14 +99,6 @@ bool Vocations::loadFromXml()
 			voc.baseSpeed = pugi::cast<uint32_t>(attr.value());
 		}
 
-		if ((attr = vocationNode.attribute("soulmax"))) {
-			voc.soulMax = pugi::cast<uint16_t>(attr.value());
-		}
-
-		if ((attr = vocationNode.attribute("gainsoulticks"))) {
-			voc.gainSoulTicks = pugi::cast<uint16_t>(attr.value());
-		}
-
 		if ((attr = vocationNode.attribute("fromvoc"))) {
 			voc.fromVocation = pugi::cast<uint32_t>(attr.value());
 		}

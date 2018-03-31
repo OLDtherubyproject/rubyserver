@@ -573,7 +573,7 @@ class Player final : public Creature, public Cylinder
 
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) override;
 		void changePokemonHealth(int32_t manaChange);
-		void changePokemonCapacity(int32_t soulChange);
+		void changePokemonCapacity(int32_t pkCapacityChange);
 
 		bool isPzLocked() const {
 			return pzLocked;

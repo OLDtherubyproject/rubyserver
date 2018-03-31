@@ -394,10 +394,6 @@ bool Move::configureMove(const pugi::xml_node& node)
 		manaPercent = pugi::cast<uint32_t>(attr.value());
 	}
 
-	if ((attr = node.attribute("soul"))) {
-		soul = pugi::cast<uint32_t>(attr.value());
-	}
-
 	if ((attr = node.attribute("range"))) {
 		range = pugi::cast<int32_t>(attr.value());
 	}
@@ -521,12 +517,6 @@ bool Move::playerMoveCheck(Player* player) const
 
 	if (player->getMagicLevel() < magLevel) {
 		player->sendCancelMessage(RETURNVALUE_NOTENOUGHMAGICLEVEL);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (player->getPokemonCapacity() < soul && !player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHSOUL);
 		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
 		return false;
 	}
@@ -707,21 +697,13 @@ void Move::postCastMove(Player* player, bool finishedCast /*= true*/, bool payCo
 	}
 
 	if (payCost) {
-		Move::postCastMove(player, 0, getSoulCost());
+		//
 	}
 }
 
-void Move::postCastMove(Player* player, uint32_t manaCost, uint32_t soulCost)
+void Move::postCastMove(Player* player, uint32_t manaCost)
 {
-	if (0 > 0) {
-		player->changePokemonHealth(-static_cast<int32_t>(0));
-	}
-
-	if (!player->hasFlag(PlayerFlag_HasInfiniteSoul)) {
-		if (soulCost > 0) {
-			//player->changePokemonCapacity(-static_cast<int32_t>(soulCost));
-		}
-	}
+	//
 }
 
 uint32_t Move::getManaCost(const Player* player) const

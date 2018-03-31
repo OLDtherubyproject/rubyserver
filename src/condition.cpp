@@ -173,9 +173,6 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 		case CONDITION_REGENERATION:
 			return new ConditionRegeneration(id, type, ticks, buff, subId);
 
-		case CONDITION_SOUL:
-			return new ConditionSoul(id, type, ticks, buff, subId);
-
 		case CONDITION_ATTRIBUTES:
 			return new ConditionAttributes(id, type, ticks, buff, subId);
 
@@ -835,72 +832,6 @@ bool ConditionRegeneration::setParam(ConditionParam_t param, int32_t value)
 
 		case CONDITION_PARAM_MANATICKS:
 			manaTicks = value;
-			return true;
-
-		default:
-			return ret;
-	}
-}
-
-void ConditionSoul::addCondition(Creature*, const Condition* condition)
-{
-	if (updateCondition(condition)) {
-		setTicks(condition->getTicks());
-
-		const ConditionSoul& conditionSoul = static_cast<const ConditionSoul&>(*condition);
-
-		soulTicks = conditionSoul.soulTicks;
-		soulGain = conditionSoul.soulGain;
-	}
-}
-
-bool ConditionSoul::unserializeProp(ConditionAttr_t attr, PropStream& propStream)
-{
-	if (attr == CONDITIONATTR_SOULGAIN) {
-		return propStream.read<uint32_t>(soulGain);
-	} else if (attr == CONDITIONATTR_SOULTICKS) {
-		return propStream.read<uint32_t>(soulTicks);
-	}
-	return Condition::unserializeProp(attr, propStream);
-}
-
-void ConditionSoul::serialize(PropWriteStream& propWriteStream)
-{
-	Condition::serialize(propWriteStream);
-
-	propWriteStream.write<uint8_t>(CONDITIONATTR_SOULGAIN);
-	propWriteStream.write<uint32_t>(soulGain);
-
-	propWriteStream.write<uint8_t>(CONDITIONATTR_SOULTICKS);
-	propWriteStream.write<uint32_t>(soulTicks);
-}
-
-bool ConditionSoul::executeCondition(Creature* creature, int32_t interval)
-{
-	internalSoulTicks += interval;
-
-	if (Player* player = creature->getPlayer()) {
-		if (player->getZone() != ZONE_PROTECTION) {
-			if (internalSoulTicks >= soulTicks) {
-				internalSoulTicks = 0;
-				//player->changePokemonCapacity(soulGain);
-			}
-		}
-	}
-
-	return ConditionGeneric::executeCondition(creature, interval);
-}
-
-bool ConditionSoul::setParam(ConditionParam_t param, int32_t value)
-{
-	bool ret = ConditionGeneric::setParam(param, value);
-	switch (param) {
-		case CONDITION_PARAM_SOULGAIN:
-			soulGain = value;
-			return true;
-
-		case CONDITION_PARAM_SOULTICKS:
-			soulTicks = value;
 			return true;
 
 		default:

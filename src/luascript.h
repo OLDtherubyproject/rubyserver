@@ -1072,9 +1072,6 @@ class LuaScriptInterface
 		static int luaVocationGetManaGainTicks(lua_State* L);
 		static int luaVocationGetManaGainAmount(lua_State* L);
 
-		static int luaVocationGetMaxSoul(lua_State* L);
-		static int luaVocationGetSoulGainTicks(lua_State* L);
-
 		static int luaVocationGetAttackSpeed(lua_State* L);
 		static int luaVocationGetBaseSpeed(lua_State* L);
 
@@ -1289,8 +1286,6 @@ class LuaScriptInterface
 
 		// Moves
 		static int luaMoveCreate(lua_State* L);
-
-		static int luaMoveGetSoulCost(lua_State* L);
 
 		static int luaMoveIsPremium(lua_State* L);
 		static int luaMoveIsLearnable(lua_State* L);
