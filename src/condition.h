@@ -34,8 +34,6 @@ enum ConditionAttr_t {
 	CONDITIONATTR_TICKS,
 	CONDITIONATTR_HEALTHTICKS,
 	CONDITIONATTR_HEALTHGAIN,
-	CONDITIONATTR_MANATICKS,
-	CONDITIONATTR_MANAGAIN,
 	CONDITIONATTR_DELAYED,
 	CONDITIONATTR_OWNER,
 	CONDITIONATTR_INTERVALDATA,
@@ -200,12 +198,9 @@ class ConditionRegeneration final : public ConditionGeneric
 
 	private:
 		uint32_t internalHealthTicks = 0;
-		uint32_t internalManaTicks = 0;
 
 		uint32_t healthTicks = 1000;
-		uint32_t manaTicks = 1000;
 		uint32_t healthGain = 0;
-		uint32_t manaGain = 0;
 };
 
 class ConditionInvisible final : public ConditionGeneric

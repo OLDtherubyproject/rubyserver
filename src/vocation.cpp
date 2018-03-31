@@ -67,28 +67,12 @@ bool Vocations::loadFromXml()
 			voc.gainHP = pugi::cast<uint32_t>(attr.value());
 		}
 
-		if ((attr = vocationNode.attribute("gainmana"))) {
-			voc.gainMana = pugi::cast<uint32_t>(attr.value());
-		}
-
 		if ((attr = vocationNode.attribute("gainhpticks"))) {
 			voc.gainHealthTicks = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("gainhpamount"))) {
 			voc.gainHealthAmount = pugi::cast<uint32_t>(attr.value());
-		}
-
-		if ((attr = vocationNode.attribute("gainmanaticks"))) {
-			voc.gainManaTicks = pugi::cast<uint32_t>(attr.value());
-		}
-
-		if ((attr = vocationNode.attribute("gainmanaamount"))) {
-			voc.gainManaAmount = pugi::cast<uint32_t>(attr.value());
-		}
-
-		if ((attr = vocationNode.attribute("manamultiplier"))) {
-			voc.manaMultiplier = pugi::cast<float>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("attackspeed"))) {
@@ -188,23 +172,4 @@ uint64_t Vocation::getReqSkillTries(uint8_t skill, uint16_t level)
 	uint64_t tries = static_cast<uint64_t>(skillBase[skill] * std::pow(static_cast<double>(skillMultipliers[skill]), level - 11));
 	cacheSkill[skill][level] = tries;
 	return tries;
-}
-
-uint64_t Vocation::getReqMana(uint32_t magLevel)
-{
-	auto it = cacheMana.find(magLevel);
-	if (it != cacheMana.end()) {
-		return it->second;
-	}
-
-	uint64_t reqMana = static_cast<uint64_t>(400 * std::pow<double>(manaMultiplier, static_cast<int32_t>(magLevel) - 1));
-	uint32_t modResult = reqMana % 20;
-	if (modResult < 10) {
-		reqMana -= modResult;
-	} else {
-		reqMana -= modResult + 20;
-	}
-
-	cacheMana[magLevel] = reqMana;
-	return reqMana;
 }

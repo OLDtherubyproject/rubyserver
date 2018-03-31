@@ -646,7 +646,6 @@ CombatTypeNames combatTypeNames = {
 	{COMBAT_FIREDAMAGE, 		"fire"},
 	{COMBAT_UNDEFINEDDAMAGE, 	"undefined"},
 	{COMBAT_LIFEDRAIN, 		"lifedrain"},
-	{COMBAT_MANADRAIN, 		"manadrain"},
 	{COMBAT_HEALING, 		"healing"},
 	{COMBAT_DROWNDAMAGE, 		"drown"},
 	{COMBAT_ICEDAMAGE, 		"ice"},
@@ -796,12 +795,6 @@ std::string getSpecialSkillName(uint8_t skillid)
 		case SPECIALSKILL_HITPOINTSLEECHAMOUNT:
 			return "hitpoints leech amount";
 
-		case SPECIALSKILL_MANAPOINTSLEECHCHANCE:
-			return "manapoints leech chance";
-
-		case SPECIALSKILL_MANAPOINTSLEECHAMOUNT:
-			return "mana points leech amount";
-
 		default:
 			return "unknown";
 	}
@@ -934,18 +927,16 @@ size_t combatTypeToIndex(CombatType_t combatType)
 			return 4;
 		case COMBAT_LIFEDRAIN:
 			return 5;
-		case COMBAT_MANADRAIN:
-			return 6;
 		case COMBAT_HEALING:
-			return 7;
+			return 6;
 		case COMBAT_DROWNDAMAGE:
-			return 8;
+			return 7;
 		case COMBAT_ICEDAMAGE:
-			return 9;
+			return 8;
 		case COMBAT_HOLYDAMAGE:
-			return 10;
+			return 9;
 		case COMBAT_DEATHDAMAGE:
-			return 11;
+			return 10;
 		default:
 			return 0;
 	}
@@ -1149,9 +1140,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_NOTENOUGHMAGICLEVEL:
 			return "You do not have enough magic level.";
-
-		case RETURNVALUE_NOTENOUGHMANA:
-			return "You do not have enough mana.";
 
 		case RETURNVALUE_YOUAREEXHAUSTED:
 			return "You are exhausted.";

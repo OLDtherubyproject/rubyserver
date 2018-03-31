@@ -87,8 +87,6 @@ bool Player::setVocation(uint16_t vocId)
 	if (condition) {
 		condition->setParam(CONDITION_PARAM_HEALTHGAIN, vocation->getHealthGainAmount());
 		condition->setParam(CONDITION_PARAM_HEALTHTICKS, vocation->getHealthGainTicks() * 1000);
-		condition->setParam(CONDITION_PARAM_MANAGAIN, vocation->getManaGainAmount());
-		condition->setParam(CONDITION_PARAM_MANATICKS, vocation->getManaGainTicks() * 1000);
 	}
 	return true;
 }
@@ -505,13 +503,6 @@ void Player::setVarStats(stats_t stat, int32_t modifier)
 			break;
 		}
 
-		case STAT_MAXMANAPOINTS: {
-			if (getPokemonHealth() > getPokemonHealthMax()) {
-				changePokemonHealth(getPokemonHealthMax() - getPokemonHealth());
-			}
-			break;
-		}
-
 		default: {
 			break;
 		}
@@ -522,7 +513,6 @@ int32_t Player::getDefaultStats(stats_t stat) const
 {
 	switch (stat) {
 		case STAT_MAXHITPOINTS: return healthMax;
-		case STAT_MAXMANAPOINTS: return pokemonHealthMax;
 		case STAT_MAGICPOINTS: return getBaseMagicLevel();
 		default: return 0;
 	}
@@ -1499,18 +1489,6 @@ void Player::drainHealth(Creature* attacker, int32_t damage)
 	sendStats();
 }
 
-void Player::drainMana(Creature* attacker, int32_t manaLoss)
-{
-	onAttacked();
-	changePokemonHealth(-manaLoss);
-
-	if (attacker) {
-		addDamagePoints(attacker, manaLoss);
-	}
-
-	sendStats();
-}
-
 void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = false*/)
 {
 	uint64_t currLevelExp = Player::getExpForLevel(level);
@@ -1637,7 +1615,6 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 	while (level > 1 && experience < currLevelExp) {
 		--level;
 		healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-		pokemonHealthMax = std::max<int32_t>(0, pokemonHealthMax - vocation->getManaGain());
 		capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 		currLevelExp = Player::getExpForLevel(level);
 	}
@@ -1842,22 +1819,7 @@ void Player::death(Creature* lastHitCreature)
 			}
 		}
 
-		//Magic level loss
-		uint64_t sumMana = 0;
-
-		//sum up all the mana
-		for (uint32_t i = 1; i <= magLevel; ++i) {
-			sumMana += vocation->getReqMana(i);
-		}
-
 		double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
-
-		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (nextReqMana > vocation->getReqMana(magLevel)) {
-			magLevelPercent = Player::getPercentLevel(0, nextReqMana);
-		} else {
-			magLevelPercent = 0;
-		}
 
 		//Skill loss
 		for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) { //for each skill
@@ -1901,7 +1863,6 @@ void Player::death(Creature* lastHitCreature)
 			while (level > 1 && experience < Player::getExpForLevel(level)) {
 				--level;
 				healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-				pokemonHealthMax = std::max<int32_t>(0, pokemonHealthMax - vocation->getManaGain());
 				capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
 			}
 

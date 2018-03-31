@@ -61,8 +61,6 @@ enum ItemTypes_t {
 struct Abilities {
 	uint32_t healthGain = 0;
 	uint32_t healthTicks = 0;
-	uint32_t manaGain = 0;
-	uint32_t manaTicks = 0;
 
 	uint32_t conditionImmunities = 0;
 	uint32_t conditionSuppressions = 0;
@@ -87,7 +85,6 @@ struct Abilities {
 	uint16_t elementDamage = 0;
 	CombatType_t elementType = COMBAT_NONE;
 
-	bool manaShield = false;
 	bool invisible = false;
 	bool regeneration = false;
 };

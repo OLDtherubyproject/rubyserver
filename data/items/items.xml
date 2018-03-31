@@ -2243,7 +2243,6 @@
 		<attribute key="slotType" value="necklace" />
 		<attribute key="charges" value="200" />
 		<attribute key="showcharges" value="1" />
-		<attribute key="absorbPercentManaDrain" value="20" />
 		<attribute key="showattributes" value="1" />
 	</item>
 	<item id="2173" article="an" name="amulet of loss">
@@ -2431,7 +2430,6 @@
 		<attribute key="transformDeEquipTo" value="2167" />
 		<attribute key="duration" value="30" />
 		<attribute key="showduration" value="1" />
-		<attribute key="manashield" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
 	<item id="2205" article="a" name="life ring (faster regeneration)">
@@ -2442,8 +2440,6 @@
 		<attribute key="duration" value="1200" />
 		<attribute key="healthGain" value="2" />
 		<attribute key="healthTicks" value="6000" />
-		<attribute key="manaGain" value="8" />
-		<attribute key="manaTicks" value="6000" />
 		<attribute key="showduration" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -2537,8 +2533,6 @@
 		<attribute key="duration" value="450" />
 		<attribute key="healthGain" value="6" />
 		<attribute key="healthTicks" value="6000" />
-		<attribute key="manaGain" value="24" />
-		<attribute key="manaTicks" value="6000" />
 		<attribute key="showduration" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -3535,8 +3529,6 @@
 		<attribute key="duration" value="14400" />
 		<attribute key="healthGain" value="1" />
 		<attribute key="healthTicks" value="2000" />
-		<attribute key="manaGain" value="2" />
-		<attribute key="manaTicks" value="1000" />
 		<attribute key="showduration" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
@@ -15029,8 +15021,6 @@
 		<attribute key="decayTo" value="8905" />
 		<attribute key="healthGain" value="1" />
 		<attribute key="healthTicks" value="3000" />
-		<attribute key="manaGain" value="4" />
-		<attribute key="manaTicks" value="3000" />
 	</item>
 	<item id="8910" article="an" name="underworld rod">
 		<attribute key="description" value="No one knows which hell this unholy rod comes from." />
@@ -17869,7 +17859,6 @@
 	<item id="10570" name="witch hat">
 		<attribute key="weight" value="780" />
 		<attribute key="armor" value="3" />
-		<attribute key="absorbPercentManaDrain" value="5" />
 		<attribute key="slotType" value="head" />
 	</item>
 	<item id="10571" article="a" name="war crystal">
@@ -22678,7 +22667,6 @@
 		<attribute key="weight" value="4800" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="portrait" />
-		<attribute key="absorbPercentManaDrain" value="15" />
 		<attribute key="showattributes" value="1" />
 	</item>
 	<item id="15410" article="a" name="depth calcei">

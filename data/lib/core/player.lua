@@ -13,8 +13,6 @@ function Player.feed(self, food)
 		foodCondition:setTicks(food * 1000)
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHGAIN, vocation:getHealthGainAmount())
 		foodCondition:setParameter(CONDITION_PARAM_HEALTHTICKS, vocation:getHealthGainTicks() * 1000)
-		foodCondition:setParameter(CONDITION_PARAM_MANAGAIN, vocation:getManaGainAmount())
-		foodCondition:setParameter(CONDITION_PARAM_MANATICKS, vocation:getManaGainTicks() * 1000)
 
 		self:addCondition(foodCondition)
 	end
@@ -89,14 +87,6 @@ local addSkillTriesFunc = Player.addSkillTries
 function Player.addSkillTries(...)
 	APPLY_SKILL_MULTIPLIER = false
 	local ret = addSkillTriesFunc(...)
-	APPLY_SKILL_MULTIPLIER = true
-	return ret
-end
-
-local addManaSpentFunc = Player.addManaSpent
-function Player.addManaSpent(...)
-	APPLY_SKILL_MULTIPLIER = false
-	local ret = addManaSpentFunc(...)
 	APPLY_SKILL_MULTIPLIER = true
 	return ret
 end

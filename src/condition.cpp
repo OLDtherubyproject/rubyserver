@@ -194,8 +194,8 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 		case CONDITION_CHANNELMUTEDTICKS:
 		case CONDITION_YELLTICKS:
 		case CONDITION_PACIFIED:
-		case CONDITION_MANASHIELD:
 			return new ConditionGeneric(id, type, ticks, buff, subId);
+
 
 		default:
 			return nullptr;
@@ -323,10 +323,6 @@ uint32_t ConditionGeneric::getIcons() const
 	uint32_t icons = Condition::getIcons();
 
 	switch (conditionType) {
-		case CONDITION_MANASHIELD:
-			icons |= ICON_MANASHIELD;
-			break;
-
 		case CONDITION_INFIGHT:
 			icons |= ICON_SWORDS;
 			break;
@@ -421,10 +417,6 @@ void ConditionAttributes::updatePercentStats(Player* player)
 		switch (i) {
 			case STAT_MAXHITPOINTS:
 				stats[i] = static_cast<int32_t>(player->getMaxHealth() * ((statsPercent[i] - 100) / 100.f));
-				break;
-
-			case STAT_MAXMANAPOINTS:
-				stats[i] = static_cast<int32_t>(player->getPokemonHealthMax() * ((statsPercent[i] - 100) / 100.f));
 				break;
 
 			case STAT_MAGICPOINTS:
@@ -627,11 +619,6 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		case CONDITION_PARAM_STAT_MAXMANAPOINTS: {
-			stats[STAT_MAXMANAPOINTS] = value;
-			return true;
-		}
-
 		case CONDITION_PARAM_STAT_MAGICPOINTS: {
 			stats[STAT_MAGICPOINTS] = value;
 			return true;
@@ -639,11 +626,6 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 
 		case CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT: {
 			statsPercent[STAT_MAXHITPOINTS] = std::max<int32_t>(0, value);
-			return true;
-		}
-
-		case CONDITION_PARAM_STAT_MAXMANAPOINTSPERCENT: {
-			statsPercent[STAT_MAXMANAPOINTS] = std::max<int32_t>(0, value);
 			return true;
 		}
 
@@ -677,16 +659,6 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		case CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHCHANCE: {
-			specialSkills[SPECIALSKILL_MANAPOINTSLEECHCHANCE] = value;
-			return true;
-		}
-
-		case CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHAMOUNT: {
-			specialSkills[SPECIALSKILL_MANAPOINTSLEECHAMOUNT] = value;
-			return true;
-		}
-
 		default:
 			return ret;
 	}
@@ -700,10 +672,7 @@ void ConditionRegeneration::addCondition(Creature*, const Condition* condition)
 		const ConditionRegeneration& conditionRegen = static_cast<const ConditionRegeneration&>(*condition);
 
 		healthTicks = conditionRegen.healthTicks;
-		manaTicks = conditionRegen.manaTicks;
-
 		healthGain = conditionRegen.healthGain;
-		manaGain = conditionRegen.manaGain;
 	}
 }
 
@@ -713,10 +682,6 @@ bool ConditionRegeneration::unserializeProp(ConditionAttr_t attr, PropStream& pr
 		return propStream.read<uint32_t>(healthTicks);
 	} else if (attr == CONDITIONATTR_HEALTHGAIN) {
 		return propStream.read<uint32_t>(healthGain);
-	} else if (attr == CONDITIONATTR_MANATICKS) {
-		return propStream.read<uint32_t>(manaTicks);
-	} else if (attr == CONDITIONATTR_MANAGAIN) {
-		return propStream.read<uint32_t>(manaGain);
 	}
 	return Condition::unserializeProp(attr, propStream);
 }
@@ -730,18 +695,11 @@ void ConditionRegeneration::serialize(PropWriteStream& propWriteStream)
 
 	propWriteStream.write<uint8_t>(CONDITIONATTR_HEALTHGAIN);
 	propWriteStream.write<uint32_t>(healthGain);
-
-	propWriteStream.write<uint8_t>(CONDITIONATTR_MANATICKS);
-	propWriteStream.write<uint32_t>(manaTicks);
-
-	propWriteStream.write<uint8_t>(CONDITIONATTR_MANAGAIN);
-	propWriteStream.write<uint32_t>(manaGain);
 }
 
 bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interval)
 {
 	internalHealthTicks += interval;
-	internalManaTicks += interval;
 
 	if (creature->getZone() == ZONE_PROTECTION) {
 		return ConditionGeneric::executeCondition(creature, interval);
@@ -779,37 +737,6 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 		}
 	}
 
-	if (internalManaTicks >= manaTicks) {
-		internalManaTicks = 0;
-
-		if (Player* player = creature->getPlayer()) {
-			int32_t realManaGain = player->getPokemonHealth();
-			player->changePokemonHealth(manaGain);
-			realManaGain = player->getPokemonHealth() - realManaGain;
-
-			if (isBuff && realManaGain > 0) {
-				std::string manaGainString = std::to_string(realManaGain);
-
-				TextMessage message(MESSAGE_HEALED, "You gained " + manaGainString + " mana.");
-				message.position = player->getPosition();
-				message.primary.value = realManaGain;
-				message.primary.color = TEXTCOLOR_MAYABLUE;
-				player->sendTextMessage(message);
-
-				SpectatorHashSet spectators;
-				g_game.map.getSpectators(spectators, player->getPosition(), false, true);
-				spectators.erase(player);
-				if (!spectators.empty()) {
-					message.type = MESSAGE_HEALED_OTHERS;
-					message.text = player->getName() + " gained " + manaGainString + " mana.";
-					for (Creature* spectator : spectators) {
-						spectator->getPlayer()->sendTextMessage(message);
-					}
-				}
-			}
-		}
-	}
-
 	return ConditionGeneric::executeCondition(creature, interval);
 }
 
@@ -824,14 +751,6 @@ bool ConditionRegeneration::setParam(ConditionParam_t param, int32_t value)
 
 		case CONDITION_PARAM_HEALTHTICKS:
 			healthTicks = value;
-			return true;
-
-		case CONDITION_PARAM_MANAGAIN:
-			manaGain = value;
-			return true;
-
-		case CONDITION_PARAM_MANATICKS:
-			manaTicks = value;
 			return true;
 
 		default:

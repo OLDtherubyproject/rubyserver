@@ -426,8 +426,6 @@ bool Pokemons::deserializeMove(const pugi::xml_node& node, moveBlock_t& sb, cons
 			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_DEATHDAMAGE);
 		} else if (tmpName == "lifedrain") {
 			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_LIFEDRAIN);
-		} else if (tmpName == "manadrain") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_MANADRAIN);
 		} else if (tmpName == "healing") {
 			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_HEALING);
 			combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
@@ -984,8 +982,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 					mType->info.conditionImmunities |= CONDITION_CURSED;
 				} else if (tmpStrValue == "lifedrain") {
 					mType->info.damageImmunities |= COMBAT_LIFEDRAIN;
-				} else if (tmpStrValue == "manadrain") {
-					mType->info.damageImmunities |= COMBAT_MANADRAIN;
 				} else if (tmpStrValue == "paralyze") {
 					mType->info.conditionImmunities |= CONDITION_PARALYZE;
 				} else if (tmpStrValue == "outfit") {
@@ -1042,10 +1038,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 			} else if ((attr = immunityNode.attribute("lifedrain"))) {
 				if (attr.as_bool()) {
 					mType->info.damageImmunities |= COMBAT_LIFEDRAIN;
-				}
-			} else if ((attr = immunityNode.attribute("manadrain"))) {
-				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_MANADRAIN;
 				}
 			} else if ((attr = immunityNode.attribute("paralyze"))) {
 				if (attr.as_bool()) {
@@ -1186,8 +1178,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				mType->info.elementMap[COMBAT_DROWNDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("lifedrainPercent"))) {
 				mType->info.elementMap[COMBAT_LIFEDRAIN] = pugi::cast<int32_t>(attr.value());
-			} else if ((attr = elementNode.attribute("manadrainPercent"))) {
-				mType->info.elementMap[COMBAT_MANADRAIN] = pugi::cast<int32_t>(attr.value());
 			} else {
 				std::cout << "[Warning - Pokemons::loadPokemon] Unknown element percent. " << file << std::endl;
 			}

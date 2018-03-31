@@ -130,20 +130,12 @@ class Move : public BaseMove
 		}
 
 		void postCastMove(Player* player, bool finishedCast = true, bool payCost = true) const;
-		static void postCastMove(Player* player, uint32_t manaCost);
 
-		uint32_t getManaCost(const Player* player) const;
 		uint32_t getLevel() const {
 			return level;
 		}
 		uint32_t getMagicLevel() const {
 			return magLevel;
-		}
-		uint32_t getPokemonHealth() const {
-			return mana;
-		}
-		uint32_t getManaPercent() const {
-			return manaPercent;
 		}
 		bool isPremium() const {
 			return premium;
@@ -182,9 +174,6 @@ class Move : public BaseMove
 		bool selfTarget = false;
 
 	private:
-
-		uint32_t mana = 0;
-		uint32_t manaPercent = 0;
 
 		bool needWeapon = false;
 		bool blockingSolid = false;

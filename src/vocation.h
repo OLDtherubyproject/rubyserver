@@ -36,7 +36,6 @@ class Vocation
 			return description;
 		}
 		uint64_t getReqSkillTries(uint8_t skill, uint16_t level);
-		uint64_t getReqMana(uint32_t magLevel);
 
 		uint16_t getId() const {
 			return id;
@@ -49,19 +48,10 @@ class Vocation
 		uint32_t getHPGain() const {
 			return gainHP;
 		}
-		uint32_t getManaGain() const {
-			return gainMana;
-		}
 		uint32_t getCapGain() const {
 			return gainCap;
 		}
 
-		uint32_t getManaGainTicks() const {
-			return gainManaTicks;
-		}
-		uint32_t getManaGainAmount() const {
-			return gainManaAmount;
-		}
 		uint32_t getHealthGainTicks() const {
 			return gainHealthTicks;
 		}
@@ -88,27 +78,22 @@ class Vocation
 	private:
 		friend class Vocations;
 
-		std::map<uint32_t, uint64_t> cacheMana;
 		std::map<uint32_t, uint32_t> cacheSkill[SKILL_LAST + 1];
 
 		std::string name = "none";
 		std::string description;
 
 		float skillMultipliers[SKILL_LAST + 1] = {1.5f, 2.0f, 2.0f, 2.0f, 2.0f, 1.5f, 1.1f};
-		float manaMultiplier = 4.0f;
 
 		uint32_t gainHealthTicks = 6;
 		uint32_t gainHealthAmount = 1;
-		uint32_t gainManaTicks = 6;
-		uint32_t gainManaAmount = 1;
 		uint32_t gainCap = 500;
-		uint32_t gainMana = 5;
 		uint32_t gainHP = 5;
 		uint32_t fromVocation = VOCATION_NONE;
 		uint32_t attackSpeed = 1500;
 		uint32_t baseSpeed = 220;
 		uint16_t id;
-		
+
 		uint8_t clientId = 0;
 
 		static uint32_t skillBase[SKILL_LAST + 1];

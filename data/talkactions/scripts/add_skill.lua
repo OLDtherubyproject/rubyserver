@@ -54,8 +54,6 @@ function onSay(player, words, param)
 	for i = 1, count do
 		if ch == "l" or ch == "e" then
 			target:addExperience(getExpForLevel(target:getLevel() + 1) - target:getExperience(), false)
-		elseif ch == "m" then
-			target:addManaSpent(target:getVocation():getRequiredManaSpent(target:getBaseMagicLevel() + 1) - target:getManaSpent())
 		else
 			local skillId = getSkillId(split[2])
 			target:addSkillTries(skillId, target:getVocation():getRequiredSkillTries(skillId, target:getSkillLevel(skillId) + 1) - target:getSkillTries(skillId))

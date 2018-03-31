@@ -323,9 +323,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 
 	player->magLevel = result->getNumber<uint32_t>("maglevel");
 
-	uint64_t nextManaCount = player->vocation->getReqMana(player->magLevel + 1);
-
-	player->magLevelPercent = Player::getPercentLevel(0, nextManaCount);
+	player->magLevelPercent = 0;
 
 	player->health = result->getNumber<int32_t>("health");
 	player->healthMax = result->getNumber<int32_t>("healthmax");

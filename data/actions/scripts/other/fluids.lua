@@ -44,9 +44,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				player:addCondition(drunk)
 			elseif item.type == 4 then
 				player:addCondition(poison)
-			elseif item.type == 7 then
-				player:addMana(math.random(50, 150))
-				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)
 			elseif item.type == 10 then
 				player:addHealth(60)
 				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)

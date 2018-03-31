@@ -459,9 +459,6 @@ class LuaScriptInterface
 		static int luaDoTargetCombatHealth(lua_State* L);
 
 		//
-		static int luaDoAreaCombatMana(lua_State* L);
-		static int luaDoTargetCombatMana(lua_State* L);
-
 		static int luaDoAreaCombatCondition(lua_State* L);
 		static int luaDoTargetCombatCondition(lua_State* L);
 
@@ -864,7 +861,6 @@ class LuaScriptInterface
 		static int luaPlayerSetPokemonHealthMax(lua_State* L);
 
 		static int luaPlayerGetBaseMaxHealth(lua_State* L);
-		static int luaPlayerGetBaseMaxMana(lua_State* L);
 
 		static int luaPlayerGetSkillLevel(lua_State* L);
 		static int luaPlayerGetEffectiveSkillLevel(lua_State* L);
@@ -1067,10 +1063,6 @@ class LuaScriptInterface
 		static int luaVocationGetHealthGain(lua_State* L);
 		static int luaVocationGetHealthGainTicks(lua_State* L);
 		static int luaVocationGetHealthGainAmount(lua_State* L);
-
-		static int luaVocationGetManaGain(lua_State* L);
-		static int luaVocationGetManaGainTicks(lua_State* L);
-		static int luaVocationGetManaGainAmount(lua_State* L);
 
 		static int luaVocationGetAttackSpeed(lua_State* L);
 		static int luaVocationGetBaseSpeed(lua_State* L);

@@ -457,7 +457,7 @@ class Player final : public Creature, public Cylinder
 			return pokemonHealth;
 		}
 		uint32_t getPokemonHealthMax() const {
-			return std::max<int32_t>(0, pokemonHealthMax + varStats[STAT_MAXMANAPOINTS]);
+			return pokemonHealthMax;
 		}
 
 		Item* getInventoryItem(slots_t slot) const;
@@ -572,7 +572,7 @@ class Player final : public Creature, public Cylinder
 		static bool lastHitIsPlayer(Creature* lastHitCreature);
 
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) override;
-		void changePokemonHealth(int32_t manaChange);
+		void changePokemonHealth(int32_t hpChange);
 		void changePokemonCapacity(int32_t pkCapacityChange);
 
 		bool isPzLocked() const {
@@ -612,7 +612,6 @@ class Player final : public Creature, public Cylinder
 		void getShieldAndWeapon(const Item*& shield, const Item*& weapon) const;
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
-		void drainMana(Creature* attacker, int32_t manaLoss);
 		void addSkillAdvance(skills_t skill, uint64_t count);
 
 		int32_t getArmor() const override;
@@ -1288,7 +1287,7 @@ class Player final : public Creature, public Cylinder
 		uint8_t pokemonCapacity = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
-		uint8_t magLevelPercent = 0;
+		uint8_t magLevelPercent = 50;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;

@@ -216,8 +216,6 @@ function getPlayerAccess(cid)
 	return player:getGroup():getAccess() and 1 or 0
 end
 function getPlayerSkill(cid, skillId) local p = Player(cid) return p and p:getSkillLevel(skillId) or false end
-function getPlayerMana(cid) local p = Player(cid) return p and p:getMana() or false end
-function getPlayerMaxMana(cid) local p = Player(cid) return p and p:getMaxMana() or false end
 function getPlayerLevel(cid) local p = Player(cid) return p and p:getLevel() or false end
 function getPlayerTown(cid) local p = Player(cid) return p and p:getTown():getId() or false end
 function getPlayerVocation(cid) local p = Player(cid) return p and p:getVocation():getId() or false end
@@ -424,9 +422,7 @@ function doPlayerAddExp(cid, exp, useMult, ...)
 	end
 	return player:addExperience(exp, ...)
 end
-function doPlayerAddManaSpent(cid, mana) local p = Player(cid) return p and p:addManaSpent(mana * configManager.getNumber(configKeys.RATE_MAGIC)) or false end
 function doPlayerAddSkillTry(cid, skillid, n) local p = Player(cid) return p and p:addSkillTries(skillid, n * configManager.getNumber(configKeys.RATE_SKILL)) or false end
-function doPlayerAddMana(cid, mana, ...) local p = Player(cid) return p and p:addMana(mana, ...) or false end
 function doPlayerJoinParty(cid, leaderId)
 	local player = Player(cid)
 	if player == nil then

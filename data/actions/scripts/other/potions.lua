@@ -59,10 +59,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			doTargetCombatHealth(0, target, COMBAT_HEALING, potion.health[1], potion.health[2])
 		end
 
-		if potion.mana then
-			doTargetCombatMana(0, target, potion.mana[1], potion.mana[2])
-		end
-
 		if potion.antidote then
 			target:removeCondition(CONDITION_POISON)
 		end

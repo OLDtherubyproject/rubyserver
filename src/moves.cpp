@@ -304,7 +304,6 @@ bool Move::configureMove(const pugi::xml_node& node)
 		"energy",
 		"drown",
 		"lifedrain",
-		"manadrain",
 		"healing",
 		"speed",
 		"outfit",
@@ -384,14 +383,6 @@ bool Move::configureMove(const pugi::xml_node& node)
 
 	if ((attr = node.attribute("magiclevel")) || (attr = node.attribute("maglv"))) {
 		magLevel = pugi::cast<uint32_t>(attr.value());
-	}
-
-	if ((attr = node.attribute("mana"))) {
-		mana = pugi::cast<uint32_t>(attr.value());
-	}
-
-	if ((attr = node.attribute("manapercent"))) {
-		manaPercent = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = node.attribute("range"))) {
@@ -699,26 +690,6 @@ void Move::postCastMove(Player* player, bool finishedCast /*= true*/, bool payCo
 	if (payCost) {
 		//
 	}
-}
-
-void Move::postCastMove(Player* player, uint32_t manaCost)
-{
-	//
-}
-
-uint32_t Move::getManaCost(const Player* player) const
-{
-	if (mana != 0) {
-		return mana;
-	}
-
-	if (manaPercent != 0) {
-		uint32_t maxMana = player->getPokemonHealthMax();
-		uint32_t manaCost = (maxMana * manaPercent) / 100;
-		return manaCost;
-	}
-
-	return 0;
 }
 
 std::string InstantMove::getScriptEventName() const

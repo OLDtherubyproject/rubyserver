@@ -482,8 +482,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.fluidSource = FLUID_LEMONADE;
 			} else if (tmpStrValue == "milk") {
 				it.fluidSource = FLUID_MILK;
-			} else if (tmpStrValue == "mana") {
-				it.fluidSource = FLUID_MANA;
 			} else if (tmpStrValue == "life") {
 				it.fluidSource = FLUID_LIFE;
 			} else if (tmpStrValue == "oil") {
@@ -623,16 +621,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			Abilities& abilities = it.getAbilities();
 			abilities.regeneration = true;
 			abilities.healthTicks = pugi::cast<uint32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "managain") {
-			Abilities& abilities = it.getAbilities();
-			abilities.regeneration = true;
-			abilities.manaGain = pugi::cast<uint32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "manaticks") {
-			Abilities& abilities = it.getAbilities();
-			abilities.regeneration = true;
-			abilities.manaTicks = pugi::cast<uint32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "manashield") {
-			it.getAbilities().manaShield = valueAttribute.as_bool();
 		} else if (tmpStrValue == "skillsword") {
 			it.getAbilities().skills[SKILL_SWORD] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "skillaxe") {
@@ -651,10 +639,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.getAbilities().stats[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "maxhitpointspercent") {
 			it.getAbilities().statsPercent[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "maxmanapoints") {
-			it.getAbilities().stats[STAT_MAXMANAPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "maxmanapointspercent") {
-			it.getAbilities().statsPercent[STAT_MAXMANAPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "magicpoints" || tmpStrValue == "magiclevelpoints") {
 			it.getAbilities().stats[STAT_MAGICPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "magicpointspercent") {
@@ -667,10 +651,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.getAbilities().specialSkills[SPECIALSKILL_HITPOINTSLEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "hitpointsleechamount") {
 			it.getAbilities().specialSkills[SPECIALSKILL_HITPOINTSLEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "manapointsleechchance") {
-			it.getAbilities().specialSkills[SPECIALSKILL_MANAPOINTSLEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "manapointsleechamount") {
-			it.getAbilities().specialSkills[SPECIALSKILL_MANAPOINTSLEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "fieldabsorbpercentenergy") {
 			it.getAbilities().fieldAbsorbPercent[combatTypeToIndex(COMBAT_ENERGYDAMAGE)] += pugi::cast<int16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "fieldabsorbpercentfire") {
@@ -713,8 +693,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.getAbilities().absorbPercent[combatTypeToIndex(COMBAT_DEATHDAMAGE)] += pugi::cast<int16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "absorbpercentlifedrain") {
 			it.getAbilities().absorbPercent[combatTypeToIndex(COMBAT_LIFEDRAIN)] += pugi::cast<int16_t>(valueAttribute.value());
-		} else if (tmpStrValue == "absorbpercentmanadrain") {
-			it.getAbilities().absorbPercent[combatTypeToIndex(COMBAT_MANADRAIN)] += pugi::cast<int16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "absorbpercentdrown") {
 			it.getAbilities().absorbPercent[combatTypeToIndex(COMBAT_DROWNDAMAGE)] += pugi::cast<int16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "absorbpercentphysical") {

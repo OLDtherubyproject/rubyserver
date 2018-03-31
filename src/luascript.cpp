@@ -910,8 +910,6 @@ void LuaScriptInterface::pushInstantMove(lua_State* L, const InstantMove& move)
 	setField(L, "words", move.getWords());
 	setField(L, "level", move.getLevel());
 	setField(L, "mlevel", move.getMagicLevel());
-	setField(L, "mana", move.getPokemonHealth());
-	setField(L, "manapercent", move.getManaPercent());
 
 	setMetatable(L, -1, "Move");
 }
@@ -993,12 +991,6 @@ void LuaScriptInterface::registerFunctions()
 
 	//doTargetCombatHealth(cid, target, type, min, max, effect)
 	lua_register(luaState, "doTargetCombatHealth", LuaScriptInterface::luaDoTargetCombatHealth);
-
-	//doAreaCombatMana(cid, pos, area, min, max, effect)
-	lua_register(luaState, "doAreaCombatMana", LuaScriptInterface::luaDoAreaCombatMana);
-
-	//doTargetCombatMana(cid, target, min, max, effect)
-	lua_register(luaState, "doTargetCombatMana", LuaScriptInterface::luaDoTargetCombatMana);
 
 	//doAreaCombatCondition(cid, pos, area, condition, effect)
 	lua_register(luaState, "doAreaCombatCondition", LuaScriptInterface::luaDoAreaCombatCondition);
@@ -1106,7 +1098,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(COMBAT_FIREDAMAGE)
 	registerEnum(COMBAT_UNDEFINEDDAMAGE)
 	registerEnum(COMBAT_LIFEDRAIN)
-	registerEnum(COMBAT_MANADRAIN)
 	registerEnum(COMBAT_HEALING)
 	registerEnum(COMBAT_DROWNDAMAGE)
 	registerEnum(COMBAT_ICEDAMAGE)
@@ -1134,7 +1125,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_OUTFIT)
 	registerEnum(CONDITION_INVISIBLE)
 	registerEnum(CONDITION_LIGHT)
-	registerEnum(CONDITION_MANASHIELD)
 	registerEnum(CONDITION_INFIGHT)
 	registerEnum(CONDITION_DRUNK)
 	registerEnum(CONDITION_EXHAUST_WEAPON)
@@ -1171,8 +1161,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_TICKS)
 	registerEnum(CONDITION_PARAM_HEALTHGAIN)
 	registerEnum(CONDITION_PARAM_HEALTHTICKS)
-	registerEnum(CONDITION_PARAM_MANAGAIN)
-	registerEnum(CONDITION_PARAM_MANATICKS)
 	registerEnum(CONDITION_PARAM_DELAYED)
 	registerEnum(CONDITION_PARAM_SPEED)
 	registerEnum(CONDITION_PARAM_LIGHT_LEVEL)
@@ -1191,10 +1179,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SKILL_SHIELD)
 	registerEnum(CONDITION_PARAM_SKILL_FISHING)
 	registerEnum(CONDITION_PARAM_STAT_MAXHITPOINTS)
-	registerEnum(CONDITION_PARAM_STAT_MAXMANAPOINTS)
 	registerEnum(CONDITION_PARAM_STAT_MAGICPOINTS)
 	registerEnum(CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT)
-	registerEnum(CONDITION_PARAM_STAT_MAXMANAPOINTSPERCENT)
 	registerEnum(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT)
 	registerEnum(CONDITION_PARAM_PERIODICDAMAGE)
 	registerEnum(CONDITION_PARAM_SKILL_MELEEPERCENT)
@@ -1213,8 +1199,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SPECIALSKILL_CRITICALHITAMOUNT)
 	registerEnum(CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHCHANCE)
 	registerEnum(CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHAMOUNT)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHCHANCE)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHAMOUNT)
 
 	registerEnum(CONST_ME_NONE)
 	registerEnum(CONST_ME_DRAWBLOOD)
@@ -1387,7 +1371,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CREATURE_EVENT_MODALWINDOW)
 	registerEnum(CREATURE_EVENT_TEXTEDIT)
 	registerEnum(CREATURE_EVENT_HEALTHCHANGE)
-	registerEnum(CREATURE_EVENT_MANACHANGE)
 	registerEnum(CREATURE_EVENT_EXTENDED_OPCODE)
 
 	registerEnum(GAME_STATE_STARTUP)
@@ -1515,7 +1498,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_CanSenseInvisibility)
 	registerEnum(PlayerFlag_IgnoredByPokemons)
 	registerEnum(PlayerFlag_NotGainInFight)
-	registerEnum(PlayerFlag_HasInfiniteMana)
+	//registerEnum(PlayerFlag_HasInfiniteMana)
 	registerEnum(PlayerFlag_HasNoExhaustion)
 	registerEnum(PlayerFlag_CannotUseMoves)
 	registerEnum(PlayerFlag_CannotPickupItem)
@@ -1530,7 +1513,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_CanTalkRedChannel)
 	registerEnum(PlayerFlag_TalkOrangeHelpChannel)
 	registerEnum(PlayerFlag_NotGainExperience)
-	registerEnum(PlayerFlag_NotGainMana)
+	//registerEnum(PlayerFlag_NotGainMana)
 	registerEnum(PlayerFlag_NotGainHealth)
 	registerEnum(PlayerFlag_NotGainSkill)
 	registerEnum(PlayerFlag_SetMaxSpeed)
@@ -1793,7 +1776,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_DIRECTPLAYERSHOOT)
 	registerEnum(RETURNVALUE_NOTENOUGHLEVEL)
 	registerEnum(RETURNVALUE_NOTENOUGHMAGICLEVEL)
-	registerEnum(RETURNVALUE_NOTENOUGHMANA)
 	registerEnum(RETURNVALUE_YOUAREEXHAUSTED)
 	registerEnum(RETURNVALUE_PLAYERISNOTREACHABLE)
 	registerEnum(RETURNVALUE_CANONLYUSETHISRUNEONCREATURES)
@@ -2289,7 +2271,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "setPokemonHealthMax", LuaScriptInterface::luaPlayerSetPokemonHealthMax);
 
 	registerMethod("Player", "getBaseMaxHealth", LuaScriptInterface::luaPlayerGetBaseMaxHealth);
-	registerMethod("Player", "getBaseMaxMana", LuaScriptInterface::luaPlayerGetBaseMaxMana);
 
 	registerMethod("Player", "getSkillLevel", LuaScriptInterface::luaPlayerGetSkillLevel);
 	registerMethod("Player", "getEffectiveSkillLevel", LuaScriptInterface::luaPlayerGetEffectiveSkillLevel);
@@ -2496,10 +2477,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Vocation", "getHealthGain", LuaScriptInterface::luaVocationGetHealthGain);
 	registerMethod("Vocation", "getHealthGainTicks", LuaScriptInterface::luaVocationGetHealthGainTicks);
 	registerMethod("Vocation", "getHealthGainAmount", LuaScriptInterface::luaVocationGetHealthGainAmount);
-
-	registerMethod("Vocation", "getManaGain", LuaScriptInterface::luaVocationGetManaGain);
-	registerMethod("Vocation", "getManaGainTicks", LuaScriptInterface::luaVocationGetManaGainTicks);
-	registerMethod("Vocation", "getManaGainAmount", LuaScriptInterface::luaVocationGetManaGainAmount);
 
 	registerMethod("Vocation", "getAttackSpeed", LuaScriptInterface::luaVocationGetAttackSpeed);
 	registerMethod("Vocation", "getBaseSpeed", LuaScriptInterface::luaVocationGetBaseSpeed);
@@ -3115,67 +3092,6 @@ int LuaScriptInterface::luaDoTargetCombatHealth(lua_State* L)
 	damage.primary.value = normal_random(getNumber<int32_t>(L, 4), getNumber<int32_t>(L, 5));
 
 	Combat::doCombatHealth(creature, target, damage, params);
-	pushBoolean(L, true);
-	return 1;
-}
-
-int LuaScriptInterface::luaDoAreaCombatMana(lua_State* L)
-{
-	//doAreaCombatMana(cid, pos, area, min, max, effect[, origin = ORIGIN_MOVE])
-	Creature* creature = getCreature(L, 1);
-	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
-		pushBoolean(L, false);
-		return 1;
-	}
-
-	uint32_t areaId = getNumber<uint32_t>(L, 3);
-	const AreaCombat* area = g_luaEnvironment.getAreaObject(areaId);
-	if (area || areaId == 0) {
-		CombatParams params;
-		params.impactEffect = getNumber<uint8_t>(L, 6);
-
-		CombatDamage damage;
-		damage.origin = getNumber<CombatOrigin>(L, 7, ORIGIN_MOVE);
-		damage.primary.type = COMBAT_MANADRAIN;
-		damage.primary.value = normal_random(getNumber<int32_t>(L, 4), getNumber<int32_t>(L, 5));
-
-		Position pos = getPosition(L, 2);
-		Combat::doCombatMana(creature, pos, area, damage, params);
-		pushBoolean(L, true);
-	} else {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_AREA_NOT_FOUND));
-		pushBoolean(L, false);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaDoTargetCombatMana(lua_State* L)
-{
-	//doTargetCombatMana(cid, target, min, max, effect[, origin = ORIGIN_MOVE)
-	Creature* creature = getCreature(L, 1);
-	if (!creature && (!isNumber(L, 1) || getNumber<uint32_t>(L, 1) != 0)) {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
-		pushBoolean(L, false);
-		return 1;
-	}
-
-	Creature* target = getCreature(L, 2);
-	if (!target) {
-		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
-		pushBoolean(L, false);
-		return 1;
-	}
-
-	CombatParams params;
-	params.impactEffect = getNumber<uint8_t>(L, 5);
-
-	CombatDamage damage;
-	damage.origin = getNumber<CombatOrigin>(L, 6, ORIGIN_MOVE);
-	damage.primary.type = COMBAT_MANADRAIN;
-	damage.primary.value = normal_random(getNumber<int32_t>(L, 3), getNumber<int32_t>(L, 4));
-
-	Combat::doCombatMana(creature, target, damage, params);
 	pushBoolean(L, true);
 	return 1;
 }
@@ -8037,18 +7953,6 @@ int LuaScriptInterface::luaPlayerGetBaseMaxHealth(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetBaseMaxMana(lua_State* L)
-{
-	// player:getBaseMaxMana()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->pokemonHealth);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerGetSkillLevel(lua_State* L)
 {
 	// player:getSkillLevel(skillType)
@@ -10430,42 +10334,6 @@ int LuaScriptInterface::luaVocationGetHealthGainAmount(lua_State* L)
 	Vocation* vocation = getUserdata<Vocation>(L, 1);
 	if (vocation) {
 		lua_pushnumber(L, vocation->getHealthGainAmount());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetManaGain(lua_State* L)
-{
-	// vocation:getManaGain()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getManaGain());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetManaGainTicks(lua_State* L)
-{
-	// vocation:getManaGainTicks()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getManaGainTicks());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetManaGainAmount(lua_State* L)
-{
-	// vocation:getManaGainAmount()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getManaGainAmount());
 	} else {
 		lua_pushnil(L);
 	}
