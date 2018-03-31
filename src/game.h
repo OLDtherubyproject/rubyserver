@@ -483,8 +483,6 @@ class Game
 		uint32_t getMotdNum() const { return motdNum; }
 		void incrementMotdNum() { motdNum++; }
 
-		void sendOfflineTrainingDialog(Player* player);
-
 		const std::unordered_map<uint32_t, Player*>& getPlayers() const { return players; }
 		const std::map<uint32_t, Npc*>& getNpcs() const { return npcs; }
 
@@ -571,8 +569,6 @@ class Game
 		std::map<Item*, uint32_t> tradeItems;
 
 		std::map<uint32_t, BedItem*> bedSleepersMap;
-
-		ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:" };
 
 		static constexpr int32_t LIGHT_LEVEL_DAY = 250;
 		static constexpr int32_t LIGHT_LEVEL_NIGHT = 20;

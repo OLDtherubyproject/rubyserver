@@ -204,7 +204,6 @@
 
 
 	<action itemid="14405" function="market" />
-	<action fromid="18488" toid="18492" script="other/skilltrainer.lua" />
 	<action itemid="3743" script="other/transforms.lua" />
 	<action itemid="4404" script="other/transforms.lua" />
 </actions>
