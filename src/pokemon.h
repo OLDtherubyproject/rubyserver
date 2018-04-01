@@ -194,7 +194,7 @@ class Pokemon final : public Creature
 			this->name = name;
 		}
 		void setMaxHealth(int32_t healthMax) {
-			this->healthMax = health;
+			this->healthMax = healthMax;
 		}
 		void setHealth(int32_t health) {
 			this->health = health;
