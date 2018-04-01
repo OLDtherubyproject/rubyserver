@@ -513,12 +513,10 @@ Player* Game::getPlayerByAccount(uint32_t acc)
 bool Game::internalPlaceCreature(Creature* creature, const Position& pos, bool extendedPos /*=false*/, bool forced /*= false*/)
 {
 	if (creature->getParent() != nullptr) {
-		//std::cout << "xd2" << std::endl;
 		return false;
 	}
 
 	if (!map.placeCreature(pos, creature, extendedPos, forced)) {
-		//std::cout << "xd3" << std::endl;
 		return false;
 	}
 
@@ -531,7 +529,6 @@ bool Game::internalPlaceCreature(Creature* creature, const Position& pos, bool e
 bool Game::placeCreature(Creature* creature, const Position& pos, bool extendedPos /*=false*/, bool forced /*= false*/)
 {
 	if (!internalPlaceCreature(creature, pos, extendedPos, forced)) {
-		std::cout << "xd" << std::endl;
 		return false;
 	}
 
@@ -5840,6 +5837,10 @@ Position Game::getClosestFreeTile(Creature* creature, Position centerPos, bool e
 
 void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item* pokeball)
 {
+	if (!pokeball) {
+		return;
+	}
+
 	if (pokeball->getPokemonId() && (fromCylinder != toCylinder) && !pokeball->isStackable()) {
 		PokemonType* pokemonType = loadPokemonTypeById(pokeball->getPokemonId());
 		const PokeballType* pokeballType = loadPokemonPokeballById(pokeball->getPokemonId());
