@@ -149,7 +149,6 @@ class PokemonType
 		bool canPushItems = false;
 		bool canPushCreatures = false;
 		bool pushable = true;
-		bool isSummonable = false;
 		bool isCatchable = false;
 		bool isIllusionable = false;
 		bool isConvinceable = false;

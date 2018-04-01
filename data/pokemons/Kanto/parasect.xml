@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<flags>
-		<flag summonable="1" />
+		<flag catchable="1" />
 		<flag attackable="1" />
 		<flag hostile="1" />
 		<flag illusionable="1" />

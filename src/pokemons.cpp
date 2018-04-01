@@ -744,9 +744,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		for (auto flagNode : node.children()) {
 			attr = flagNode.first_attribute();
 			const char* attrName = attr.name();
-			if (strcasecmp(attrName, "summonable") == 0) {
-				mType->info.isSummonable = attr.as_bool();
-			} else if (strcasecmp(attrName, "catchable") == 0) {
+			if (strcasecmp(attrName, "catchable") == 0) {
 				mType->info.isCatchable = attr.as_bool();
 			} else if (strcasecmp(attrName, "attackable") == 0) {
 				mType->info.isAttackable = attr.as_bool();
