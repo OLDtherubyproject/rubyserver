@@ -3867,10 +3867,20 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 		pokemon->setMaster(this);
 		pokemon->setDropLoot(false);
 		pokemon->setSkillLoss(false);
-		message = pokemon->getName() + getCallPokemonMessage(CallPokemon(rand() % CALLPOKEMON_MESSAGE_LAST));
 
+		if (!g_game.placeCreature(pokemon, pos)) {
+			message = "You can't use your Pokemon here.";
+			pokemon->getParent()->postRemoveNotification(pokemon, nullptr, 0);
+			pokemon->removeList();
+			pokemon->setRemoved();
+			g_game.ReleaseCreature(pokemon);
+			g_game.removeCreatureCheck(pokemon);
+			g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, message, false);
+			return false;
+		}
+
+		message = pokemon->getName() + getCallPokemonMessage(CallPokemon(rand() % CALLPOKEMON_MESSAGE_LAST));
 		g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, message, false);
-		g_game.placeCreature(pokemon, pos);
 
 		if (!ignoreTransformPokeball){
 			g_game.transformItem(pokeball, pType->info.iconDischarged);

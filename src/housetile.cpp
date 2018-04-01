@@ -81,6 +81,12 @@ ReturnValue HouseTile::queryAdd(int32_t index, const Thing& thing, uint32_t coun
 			if (!house->isInvited(player)) {
 				return RETURNVALUE_PLAYERISNOTINVITED;
 			}
+		}
+		else if (const Pokemon* pokemon = creature->getPokemon()) {
+			if (!pokemon->isSummon() || !pokemon->getMaster()->getPlayer() ||
+			     !house->isInvited(pokemon->getMaster()->getPlayer())) {
+				return RETURNVALUE_NOTPOSSIBLE;
+			}
 		} else {
 			return RETURNVALUE_NOTPOSSIBLE;
 		}

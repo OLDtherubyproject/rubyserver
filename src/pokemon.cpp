@@ -760,6 +760,22 @@ void Pokemon::onThink(uint32_t interval)
 {
 	Creature::onThink(interval);
 
+	if (isSummon() && getMaster()->getPlayer()) {
+		if (getHealth() <= (0.15 * getMaxHealth())) {
+			if (canSendEmot()) {
+				setNextEmot(OTSYS_TIME() + EVENT_SEND_PBEMOT_INTERVAL);
+				g_game.addMagicEffect(getPosition(), 91);
+			}
+		} else {
+			Tile* tile = g_game.map.getTile(getPosition());
+			HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
+			if (houseTile && canSendEmot()) {
+				setNextEmot(OTSYS_TIME() + EVENT_SEND_HOUSEEMOT_INTERVAL);
+				g_game.addMagicEffect(getPosition(), 99);
+			}
+		}
+	}
+
 	if (mType->info.thinkEvent != -1) {
 		// onThink(self, interval)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;

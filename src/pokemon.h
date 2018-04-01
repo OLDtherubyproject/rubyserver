@@ -32,6 +32,9 @@ class PokeballType;
 using CreatureHashSet = std::unordered_set<Creature*>;
 using CreatureList = std::list<Creature*>;
 
+static constexpr int32_t EVENT_SEND_PBEMOT_INTERVAL = 4000;
+static constexpr int32_t EVENT_SEND_HOUSEEMOT_INTERVAL = 10000;
+
 enum TargetSearchType_t {
 	TARGETSEARCH_DEFAULT,
 	TARGETSEARCH_RANDOM,
@@ -288,6 +291,7 @@ class Pokemon final : public Creature
 		PokemonIVs ivs = {};
 
 		int64_t lastMeleeAttack = 0;
+		int64_t nextEmot = 0;
 
 		uint32_t guid = 0;
 		uint32_t price = 0;
@@ -349,6 +353,15 @@ class Pokemon final : public Creature
 		                  bool keepAttack = true, bool keepDistance = true);
 		bool isInSpawnRange(const Position& pos) const;
 		bool canWalkTo(Position pos, Direction direction) const;
+
+		bool canSendEmot() const {
+			return nextEmot < OTSYS_TIME();
+		}
+		void setNextEmot(int64_t time) {
+			if (time > nextEmot) {
+				nextEmot = time;
+			}
+		}
 
 		static bool pushItem(Item* item);
 		static void pushItems(Tile* tile);
