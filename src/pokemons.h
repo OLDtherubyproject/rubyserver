@@ -131,7 +131,8 @@ class PokemonType
 		uint32_t iconCharged = 0;
 		uint32_t iconDischarged = 0;
 		uint32_t portrait = 0;
-
+		uint32_t level = 0;
+		
 		int32_t price = -1;
 		int32_t creatureAppearEvent = -1;
 		int32_t creatureDisappearEvent = -1;

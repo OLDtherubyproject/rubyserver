@@ -3854,6 +3854,11 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 			return false;
 		}
 
+		if (getLevel() < pType->info.level) {
+			sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You need level " + std::to_string(pType->info.level) + " to use this Pokemon.");
+			return false;
+		}
+
 		if (pokemon->getHealth() <= 0) {
 			if (pokeball->getID() != pType->info.iconDischarged) {
 				g_game.transformItem(pokeball, pType->info.iconDischarged);
