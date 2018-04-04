@@ -5543,7 +5543,7 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 	pokemon->healthMax = result->getNumber<int32_t>("hp") * 30;
 	pokemon->health = result->getNumber<int32_t>("hpnow");
 	pokemon->setSkull(static_cast<Skulls_t>(result->getNumber<uint16_t>("gender")));
-	pokemon->setNature(static_cast<Natures_t>(result->getNumber<uint16_t>("gender")));
+	pokemon->setNature(static_cast<Natures_t>(result->getNumber<uint16_t>("nature")));
 	pokemon->setName(result->getString("nickname"));
 	pokemon->ivs.hp = result->getNumber<uint16_t>("hp");
 	pokemon->ivs.attack = result->getNumber<uint16_t>("atk");
