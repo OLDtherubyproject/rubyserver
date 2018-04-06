@@ -61,6 +61,7 @@
 	<pokemon name="Growlithe" file="Kanto/growlithe.xml" />
 	<pokemon name="Arcanine" file="Kanto/arcanine.xml" />
 	<pokemon name="Poliwag" file="Kanto/poliwag.xml" />
+	<pokemon name="Poliwhirl" file="Kanto/poliwhirl.xml" />
 	<pokemon name="Poliwrath" file="Kanto/poliwrath.xml" />
 	<pokemon name="Abra" file="Kanto/abra.xml" />
 	<pokemon name="Kadabra" file="Kanto/kadabra.xml" />
@@ -102,17 +103,19 @@
 	<pokemon name="Voltorb" file="Kanto/voltorb.xml" />
 	<pokemon name="Electrode" file="Kanto/electrode.xml" />
 	<pokemon name="Exeggcute" file="Kanto/exeggcute.xml" />
+	<pokemon name="Exeggutor" file="Kanto/exeggutor.xml" />
 	<pokemon name="Cubone" file="Kanto/cubone.xml" />
 	<pokemon name="Marowak" file="Kanto/marowak.xml" />
-	<pokemon name="Hitmonlee" file="Kanto/hitmonchan.xml" />
-	<pokemon name="Lickiktung" file="Kanto/lickitung.xml" />
+	<pokemon name="Hitmonlee" file="Kanto/hitmonlee.xml" />
+	<pokemon name="Hitmonchan" file="Kanto/hitmonchan.xml" />
+	<pokemon name="Lickitung" file="Kanto/lickitung.xml" />
 	<pokemon name="Koffing" file="Kanto/koffing.xml" />
 	<pokemon name="Weezing" file="Kanto/weezing.xml" />
 	<pokemon name="Rhyhorn" file="Kanto/rhyhorn.xml" />
 	<pokemon name="Rhydon" file="Kanto/rhydon.xml" />
 	<pokemon name="Chansey" file="Kanto/chansey.xml" />
 	<pokemon name="Tangela" file="Kanto/tangela.xml" />
-	<pokemon name="Kengaskhan" file="Kanto/Kengaskhan.xml" />
+	<pokemon name="Kangaskhan" file="Kanto/Kangaskhan.xml" />
 	<pokemon name="Horsea" file="Kanto/horsea.xml" />
 	<pokemon name="Seadra" file="Kanto/seadra.xml" />
 	<pokemon name="Goldeen" file="Kanto/goldeen.xml" />
@@ -125,7 +128,7 @@
 	<pokemon name="Electabuzz" file="Kanto/electabuzz.xml" />
 	<pokemon name="Magmar" file="Kanto/magmar.xml" />
 	<pokemon name="Pinsir" file="Kanto/pinsir.xml" />
-	<pokemon name="Taurus" file="Kanto/taurus.xml" />
+	<pokemon name="Tauros" file="Kanto/tauros.xml" />
 	<pokemon name="Magikarp" file="Kanto/magikarp.xml" />
 	<pokemon name="Gyarados" file="Kanto/gyarados.xml" />
 	<pokemon name="Lapras" file="Kanto/lapras.xml" />
@@ -137,7 +140,8 @@
 	<pokemon name="Porygon" file="Kanto/porygon.xml" />
 	<pokemon name="Omanyte" file="Kanto/omanyte.xml" />
 	<pokemon name="Omastar" file="Kanto/omastar.xml" />
-	<pokemon name="Kabuto" file="Kanto/kabutops.xml" />
+	<pokemon name="Kabuto" file="Kanto/kabuto.xml" />
+	<pokemon name="Kabutops" file="Kanto/kabutops.xml" />
 	<pokemon name="Aerodactyl" file="Kanto/aerodactyl.xml" />
 	<pokemon name="Snorlax" file="Kanto/snorlax.xml" />
 	<pokemon name="Articuno" file="Kanto/articuno.xml" />
