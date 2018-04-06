@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="nidoqueen" at="anytime" stone="8928" />
+	    <evolution to="nidoqueen" at="anytime" stone="8928" />
     </evolutions>	
 	<flags>
 		<flag attackable="1" />

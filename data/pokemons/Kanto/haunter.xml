@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="gengar" at="night" stone="8930" />
+	    <evolution to="gengar" at="night" stone="8930" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />		

@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="kabutops" at="anytime" stone="8927" />
+	    <evolution to="kabutops" at="anytime" stone="8927" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

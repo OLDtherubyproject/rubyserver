@@ -18,7 +18,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="blissey" at="anytime" stone="8922" />
+	    <evolution to="blissey" at="anytime" stone="8922" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

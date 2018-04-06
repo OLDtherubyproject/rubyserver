@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="vileplume" at="anytime" stone="8927" />
-		<evolution to="bellossom" at="day" stone="8924" />
+	    <evolution to="vileplume" at="anytime" stone="8927" />
+        <evolution to="bellossom" at="day" stone="8924" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

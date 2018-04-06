@@ -20,8 +20,8 @@
 	</basestats>
 	<evolutions>
         <evolution to="vaporeon" at="anytime" stone="8929" />
-		<evolution to="jolteon" at="anytime" stone="8923" />
-		<evolution to="flareon" at="anytime" stone="8926" />
+        <evolution to="jolteon" at="anytime" stone="8923" />
+        <evolution to="flareon" at="anytime" stone="8926" />
     </evolutions>	
 	<flags>
 		<flag catchable="1" />

@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="marowak" at="day" stone="8924" />
+	    <evolution to="marowak" at="day" stone="8924" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

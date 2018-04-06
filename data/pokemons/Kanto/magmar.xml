@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="magmortar" at="anytime" stone="8926" />
+	    <evolution to="magmortar" at="anytime" stone="8926" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="dodrio" at="anytime" stone="8932" />
+	    <evolution to="dodrio" at="anytime" stone="8932" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />		
