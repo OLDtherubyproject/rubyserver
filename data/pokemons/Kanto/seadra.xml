@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="kingdra" at="anytime" stone="8929" />
-    </evolutions>
+		<evolution to="kingdra" at="anytime" stone="8929" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
