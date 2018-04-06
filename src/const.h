@@ -195,6 +195,8 @@ enum MagicEffectClasses : uint16_t {
 	CONST_ME_GOBACK_ROCKETBALL = 230,
 	CONST_ME_GOBACK_POLICEBALL = 231,
 	CONST_ME_DITTOTRANSFORM = 297,
+
+	CONST_ME_EVOLUTION = 943,
 };
 
 enum ShootType_t : uint16_t {

@@ -27,6 +27,12 @@
 const uint32_t MAX_LOOTCHANCE = 100000;
 const uint32_t MAX_STATICWALK = 100;
 
+struct EvolutionBlock_t {
+	std::string to;
+	uint8_t at;
+	uint16_t stone;
+};
+
 struct LootBlock {
 	uint16_t id;
 	uint32_t countmax;
@@ -103,6 +109,7 @@ class PokemonType
 		std::vector<moveBlock_t> attackMoves;
 		std::vector<moveBlock_t> defenseMoves;
 		std::vector<summonBlock_t> summons;
+		std::vector<EvolutionBlock_t> evolutions;
 
 		Skulls_t skull = SKULL_ORANGE;
 		Outfit_t outfit = {};
@@ -132,7 +139,7 @@ class PokemonType
 		uint32_t iconDischarged = 0;
 		uint32_t portrait = 0;
 		uint32_t level = 0;
-		
+
 		int32_t price = -1;
 		int32_t creatureAppearEvent = -1;
 		int32_t creatureDisappearEvent = -1;
@@ -147,6 +154,7 @@ class PokemonType
 		int32_t defense = 0;
 		int32_t armor = 0;
 
+		bool canEvolve = false;
 		bool canPushItems = false;
 		bool canPushCreatures = false;
 		bool pushable = true;

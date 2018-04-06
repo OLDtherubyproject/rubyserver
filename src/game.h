@@ -526,6 +526,8 @@ class Game
 		bool isSunset();
 		bool isNight();
 		bool isSunrise();
+		
+		void evolvePokemon(Player* player, Item* item, Creature* creature);
 
 		Groups groups;
 		Map map;

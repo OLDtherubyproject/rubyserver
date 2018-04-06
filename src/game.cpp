@@ -2265,9 +2265,11 @@ void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uin
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	if (!g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
-		g_actions->useItemEx(player, fromPos, creature->getPosition(), creature->getParent()->getThingIndex(creature), item, isHotkey, creature);
+	if (g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+		return;
 	}
+
+	g_actions->useItemEx(player, fromPos, creature->getPosition(), creature->getParent()->getThingIndex(creature), item, isHotkey, creature);
 }
 
 void Game::playerCloseContainer(uint32_t playerId, uint8_t cid)
@@ -5467,7 +5469,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "'" << pbServerID << "', ";
 		query << "'" << pokemon->mType->typeName << "', ";
 		query << "'" << pokemon->isShiny << "', ";
-		query << "'" << pokemon->mType->name << "', ";
+		query << "'" << pokemon->getName() << "', ";
 		query << "'" << pokemon->getSkull() << "', ";
 		query << "'" << pokemon->getNature() << "', ";
 		query << "'" << pokemon->ivs.hp * 30 << "', ";
@@ -5494,7 +5496,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "`pokeball` = '" << pbServerID << "', ";
 		query << "`type` = '" << pokemon->mType->typeName << "', ";
 		query << "`shiny` = '" << pokemon->isShiny << "', ";
-		query << "`nickname` = '" << pokemon->mType->name << "', ";
+		query << "`nickname` = '" << pokemon->getName() << "', ";
 		query << "`gender` = " << pokemon->getSkull() << ", ";
 		query << "`nature` = " << pokemon->getNature() << ", ";
 		query << "`hpnow` = " << pokemon->getHealth() << ", ";
@@ -5901,4 +5903,94 @@ bool Game::isSunrise()
 	}
 
 	return false;
+}
+
+void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
+{
+	if (!player || !item) {
+		return;
+	}
+
+	if (!creature || !creature->getPokemon()) {
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You can only use evolution stone in a Pokemon.");
+		return;
+	}
+
+	Pokemon* pokemon = creature->getPokemon();
+	if (!pokemon->belongsToPlayer(player)) {
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You can only evolve your own Pokemon.");
+		return;
+	}
+
+	if (!pokemon->canEvolve()) {
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, pokemon->getPokemonType()->name + " has no evolution.");
+		return;
+	}
+
+	for (auto const& evolution : pokemon->getEvolutions()) {
+		if (evolution.stone == item->getID()) {
+			PokemonType* pokemonType = g_pokemons.getPokemonType(evolution.to);
+			if (!pokemonType) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, pokemon->getPokemonType()->name + " has a invalid evolution. Please reporter to the game master.");
+				return;
+			}
+
+			if (player->getLevel() < pokemonType->info.level) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You need level " + std::to_string(pokemonType->info.level) + " to evolve your " + pokemon->getPokemonType()->name + " into " + pokemonType->nameDescription + ".");
+				return;
+			}
+
+			if (evolution.at == 1 && (!isNight() && !pokemon->getTile()->hasFlag(TILESTATE_CAVE))) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, pokemon->getPokemonType()->name + " only evolves at night or inside a cave.");
+				return;
+			} else if (evolution.at == 2 && !isDay()) {
+				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, pokemon->getPokemonType()->name + " only evolves during the day.");
+				return;
+			}
+			
+			// pokemon basic data
+			const Position& pos = pokemon->getPosition();
+			uint32_t pokemonId = pokemon->getGUID();
+			Direction dir = pokemon->getDirection();
+			std::string oldName = pokemon->getName();
+
+			internalRemoveItem(item, 1);
+
+			// transform pokemon
+			if (pokemon->getName() == pokemon->getPokemonType()->name) {
+				pokemon->setName(pokemonType->name);
+			}
+
+			pokemon->setPokemonType(pokemonType);
+			savePokemon(pokemon);
+			removeCreature(pokemon);
+
+			Pokemon* newPokemon = loadPokemonById(pokemonId);
+			newPokemon->setMaster(player);
+			newPokemon->setDropLoot(false);
+			newPokemon->setSkillLoss(false);
+			newPokemon->setDirection(dir);
+			placeCreature(newPokemon, pos);
+
+			// transform portrait
+			Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
+			if (portrait) {
+				transformItem(portrait, pokemonType->info.portrait);
+			}
+
+			// transform pokeball
+			Item* pokeball = player->getInventoryItem(CONST_SLOT_POKEBALL);
+			if (pokeball) {
+				transformItem(pokeball, pokemonType->info.iconDischarged);
+				pokeball->setDescription("It contains " + pokemonType->nameDescription + ".");
+				pokeball->setPrice(pokemon->getBasePrice());
+			}
+
+			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Congratulations! " + oldName + " evolved to " + pokemonType->nameDescription + "!");
+			addMagicEffect(newPokemon->getPosition(), CONST_ME_EVOLUTION);
+			return;
+		}
+	}
+
+	player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, capitalizeString(item->getName()) + " seems to have no effect on " + pokemon->getPokemonType()->name + ".");
 }

@@ -1460,6 +1460,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_TYPE_BED)
 	registerEnum(ITEM_TYPE_CORPSE)
 	registerEnum(ITEM_TYPE_KEY)
+	registerEnum(ITEM_TYPE_EVOLUTION_STONE)
 
 	registerEnum(ITEM_BAG)
 	registerEnum(ITEM_GOLD_COIN)
@@ -9837,16 +9838,17 @@ int LuaScriptInterface::luaPokemonSearchTarget(lua_State* L)
 int LuaScriptInterface::luaPokemonCastMove(lua_State* L)
 {
 	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
-	Player* player = pokemon->getMaster()->getPlayer();
-
-	if (!player) {
-		reportErrorFunc("castMove can only be used with a Pokémon that belongs to a player.");
+	
+	if (!pokemon) {
+		reportErrorFunc("Pokémon not found.");
 		lua_pushboolean(L, 0);
 		return 1;
 	}
+	
+	Player* player = pokemon->getMaster()->getPlayer();
 
-	if (!pokemon) {
-		reportErrorFunc("Pokémon not found.");
+	if (!pokemon->isSummon() || !pokemon->getMaster()->getPlayer()) {
+		reportErrorFunc("castMove can only be used with a Pokémon that belongs to a player.");
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -9880,7 +9882,7 @@ int LuaScriptInterface::luaPokemonCastMove(lua_State* L)
 	}
 
 	move->castMove(pokemon, target);
-	//lua_pushboolean(L, 1);
+	lua_pushboolean(L, 1);
 	return 1;
 }
 

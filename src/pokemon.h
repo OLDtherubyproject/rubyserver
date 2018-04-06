@@ -135,6 +135,9 @@ class Pokemon final : public Creature
 			return mType->info.secondType;
 		}
 
+		bool canEvolve() const {
+			return mType->info.canEvolve;
+		}
 		bool canPushItems() const {
 			return mType->info.canPushItems;
 		}
@@ -184,6 +187,9 @@ class Pokemon final : public Creature
 		uint16_t getSpDef() const {
 			return ivs.special_defense;
 		}
+		std::vector<EvolutionBlock_t> getEvolutions() const {
+			return mType->info.evolutions;
+		}
 		void setSpawn(Spawn* spawn) {
 			this->spawn = spawn;
 		}
@@ -207,6 +213,9 @@ class Pokemon final : public Creature
 		}
 		void setPokeballType(const PokeballType* pokeballType) {
 			this->pokeballType = pokeballType;
+		}
+		void setPokemonType(PokemonType* pokemonType) {
+			this->mType = pokemonType;
 		}
 		bool canWalkOnFieldType(CombatType_t combatType) const;
 
@@ -266,13 +275,27 @@ class Pokemon final : public Creature
 		PokemonType* getPokemonType() const {
 			return mType;
 		}
-
+		
 		bool teleportToPlayer();
+
+		bool belongsToPlayer() const {
+			return isSummon() && getMaster()->getPlayer();
+		}
+		bool belongsToPlayer(Player* player) const {
+			return belongsToPlayer() && (getMaster()->getPlayer() == player);
+		}
 
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
 		                     bool checkDefense = false, bool checkArmor = false, bool field = false) override;
 
 		static uint32_t pokemonAutoID;
+
+		void setGUID(uint32_t guid) {
+			this->guid = guid;
+		}
+		uint32_t getGUID() const {
+			return guid;
+		}
 
 	private:
 		CreatureHashSet friendList;
@@ -294,7 +317,6 @@ class Pokemon final : public Creature
 		int64_t nextEmot = 0;
 
 		uint32_t guid = 0;
-		uint32_t price = 0;
 		uint32_t attackTicks = 0;
 		uint32_t targetTicks = 0;
 		uint32_t targetChangeTicks = 0;
@@ -304,6 +326,7 @@ class Pokemon final : public Creature
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
 		int32_t stepDuration = 0;
+		int32_t price = -1;
 
 		Position masterPos;
 
@@ -387,12 +410,6 @@ class Pokemon final : public Creature
 		}
 		uint32_t getConditionImmunities() const override {
 			return mType->info.conditionImmunities;
-		}
-		void setGUID(uint32_t guid) {
-			this->guid = guid;
-		}
-		uint32_t getGUID() const {
-			return guid;
 		}
 		void getPathSearchParams(const Creature* creature, FindPathParams& fpp) const override;
 		bool useCacheMap() const override {

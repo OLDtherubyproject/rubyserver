@@ -55,6 +55,7 @@ enum ItemTypes_t {
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
 	ITEM_TYPE_CORPSE,
+	ITEM_TYPE_EVOLUTION_STONE,
 	ITEM_TYPE_LAST
 };
 
@@ -148,6 +149,9 @@ class ItemType
 		}
 		bool isCorpse() const {
 			return (type == ITEM_TYPE_CORPSE);
+		}
+		bool isEvolutionStone() const {
+			return (type == ITEM_TYPE_EVOLUTION_STONE);
 		}
 		bool hasSubType() const {
 			return (isFluidContainer() || isSplash() || stackable || charges != 0);

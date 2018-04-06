@@ -366,6 +366,11 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	player->stopWalk();
 
+	if (item->isEvolutionStone()) {
+		g_game.evolvePokemon(player, item, creature);
+		return true;
+	}
+
 	// action usage
 	Action* action = getAction(item);
 	if (!action) {

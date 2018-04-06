@@ -1288,6 +1288,22 @@ const char* getCallbackPokemonMessage(CallbackPokemon value)
 	}
 }
 
+std::string capitalizeString(std::string str)
+{
+	str[0] = toupper(str[0]);
+	std::transform(str.begin()+1, str.end(),str.begin(),str.begin()+1, 
+	[](const char& a, const char& b) -> char
+	{
+		if(b==' ' || b=='\t')
+		{
+			return toupper(a);
+		}
+		return a;
+	});
+
+	return str;
+}
+
 int64_t OTSYS_TIME()
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();

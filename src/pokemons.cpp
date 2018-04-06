@@ -1119,6 +1119,45 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("evolutions"))) {
+		pugi::xml_node auxNode;
+
+		for (auto evolutionNode : node.children()) {
+			EvolutionBlock_t evolutionBlock;
+
+			if ((attr = evolutionNode.attribute("to"))) {
+				evolutionBlock.to = pugi::cast<std::string>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Evolution to is missing. " << file << std::endl;
+			}
+
+			if ((attr = evolutionNode.attribute("at"))) {
+				std::string at = pugi::cast<std::string>(attr.value());
+
+				if (at == "day") {
+					evolutionBlock.at = 2;
+				} else if (at == "night") {
+					evolutionBlock.at = 1;
+				} else if (at == "anytime") {
+					evolutionBlock.at = 0;
+				} else {
+					std::cout << "[Warning - Pokemons::loadPokemon] Unknown evolution at value. " << file << std::endl;
+				}
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Evolution at is missing. " << file << std::endl;
+			}
+			
+			if ((attr = evolutionNode.attribute("stone"))) {
+				evolutionBlock.stone = pugi::cast<uint16_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Evolution stone is missing. " << file << std::endl;
+			}
+
+			mType->info.canEvolve = true;
+			mType->info.evolutions.emplace_back(std::move(evolutionBlock));
+		}
+	}
+
 	if ((node = pokemonNode.child("voices"))) {
 		if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
 			mType->info.yellSpeedTicks = pugi::cast<uint32_t>(attr.value());
@@ -1245,6 +1284,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 	mType->info.defenseMoves.shrink_to_fit();
 	mType->info.voiceVector.shrink_to_fit();
 	mType->info.scripts.shrink_to_fit();
+	mType->info.evolutions.shrink_to_fit();
 	return mType;
 }
 
