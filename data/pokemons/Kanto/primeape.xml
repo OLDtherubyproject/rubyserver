@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Primeape" nameDescription="a primeape" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Primeape" nameDescription="a Primeape" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="57" corpse="2862" />
 	<type first="fighting" />

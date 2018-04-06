@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Porygon" nameDescription="a porygon" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Porygon" nameDescription="a Porygon" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="137" corpse="2985" />
 	<type first="normal" />
@@ -17,7 +17,10 @@
 		<specialAttack value="65" />
 		<specialDefense value="65" />
 		<speed value="45" />
-	</basestats>
+	</basestats>	
+	<evolutions>
+        <evolution to="porygon2" at="anytime" stone="8929" />
+    </evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

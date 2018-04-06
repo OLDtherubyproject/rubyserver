@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Weedle" nameDescription="a weedle" blood="green" experience="23" speed="150" catchRate="1">
+<pokemon name="Weedle" nameDescription="a Weedle" blood="green" experience="23" speed="150" catchRate="1">
 	<health now="80" max="80" />
 	<look type="13" corpse="2821" />
 	<type first="bug" second="poison" />
@@ -18,6 +18,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="kakuna" at="anytime" stone="8927" />
+    </evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

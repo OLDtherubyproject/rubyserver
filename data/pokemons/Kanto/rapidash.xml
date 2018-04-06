@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Rapidash" nameDescription="a rapidash" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Rapidash" nameDescription="a Rapidash" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="78" corpse="6049" />
 	<type first="fire" />

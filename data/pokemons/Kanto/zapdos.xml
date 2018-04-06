@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Zapdos" nameDescription="a zapdos" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Zapdos" nameDescription="a Zapdos" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="145" corpse="2964" />
 	<type first="electric" second="flying" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Seaking" nameDescription="a seaking" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Seaking" nameDescription="a Seaking" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="119" corpse="2937" />
 	<type first="water" />

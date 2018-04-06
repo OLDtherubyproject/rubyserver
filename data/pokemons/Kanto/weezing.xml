@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Weezing" nameDescription="a weezing" blood="purple" experience="23" speed="150" catchRate="50">
+<pokemon name="Weezing" nameDescription="a Weezing" blood="purple" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="110" corpse="2928" />
 	<type first="poison" />
