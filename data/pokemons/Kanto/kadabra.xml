@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="alakazam" at="anytime" stone="8932" />
-    </evolutions>
+		<evolution to="alakazam" at="anytime" stone="8932" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
