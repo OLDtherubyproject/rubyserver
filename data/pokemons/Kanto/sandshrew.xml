@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="sandslash" at="anytime" stone="8925" />
-    </evolutions>
+		<evolution to="sandslash" at="anytime" stone="8925" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
