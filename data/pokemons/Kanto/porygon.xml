@@ -17,9 +17,9 @@
 		<specialAttack value="65" />
 		<specialDefense value="65" />
 		<speed value="45" />
-	</basestats>	
-	<evolutions>
-        <evolution to="porygon2" at="anytime" stone="8929" />
+	</basestats>
+    <evolutions>
+	    <evolution to="porygon2" at="anytime" stone="8929" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>	
 	<evolutions>
-        <evolution to="pidgeot" at="day" stone="8924" />
+	    <evolution to="pidgeot" at="day" stone="8924" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

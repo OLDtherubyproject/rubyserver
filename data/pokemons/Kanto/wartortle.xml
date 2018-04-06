@@ -19,7 +19,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="blastoise" at="anytime" stone="8929" />
+	    <evolution to="blastoise" at="anytime" stone="8929" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />

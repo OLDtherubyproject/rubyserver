@@ -15,7 +15,7 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-        <evolution to="electrode" at="anytime" stone="8923" />
+	    <evolution to="electrode" at="anytime" stone="8923" />
     </evolutions>
 	<flags>
 		<flag catchable="1" />
