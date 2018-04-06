@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="nidoking" at="anytime" stone="8928" />
-    </evolutions>
+		<evolution to="nidoking" at="anytime" stone="8928" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
