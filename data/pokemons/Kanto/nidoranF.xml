@@ -18,8 +18,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="nidorina" at="anytime" stone="8928" />
-    </evolutions>
+		<evolution to="nidorina" at="anytime" stone="8928" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
