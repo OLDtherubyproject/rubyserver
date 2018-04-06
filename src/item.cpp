@@ -1069,12 +1069,20 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 	if (lookDistance <= 1) {
 		if (item) {
+			// weight
 			const uint32_t weight = item->getWeight();
 			if (weight != 0 && it.pickupable) {
 				s << '\n' << getWeightDescription(it, weight, item->getItemCount());
 			}
+
+			// price
+			const int32_t price = item->getPrice();
+			if (price >= 0 && it.pickupable) {
+				s << ' ' << getPriceDescription(it, price);
+			}
 		} else if (it.weight != 0 && it.pickupable) {
 			s << '\n' << getWeightDescription(it, it.weight);
+			s << ' ' << getPriceDescription(it, it.price);
 		}
 	}
 
@@ -1097,16 +1105,6 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		if (text && !text->empty()) {
 			s << '\n' << *text;
 		}
-	}
-
-	// Item Price
-	if (item) {
-		const int32_t price = item->getPrice();
-		if (price >= 0 && it.pickupable) {
-			s << ' ' << getPriceDescription(it, price, item->getItemCount());
-		}
-	} else if (it.price >= 0 && it.pickupable){
-		s << ' ' << getPriceDescription(it, it.price);
 	}
 
 	return s.str();
@@ -1209,33 +1207,35 @@ static std::string dbl2str(double d)
     return s;
 }
 
-std::string Item::getPriceDescription(const ItemType& it, int32_t price, uint32_t count /*= 1*/)
+std::string Item::getPriceDescription(const ItemType& it, int32_t price)
 {
+	if (!it.showPrice) {
+		return std::string();
+	}
+
 	std::ostringstream ss;
 	ss << "Price: ";
 
-	if (price == 0) {
+	if (price < 0) {
 		ss << "Unsellable";
 	} else {
-		double finalPrice = price / 100.0;
-		ss << "$";
-		ss << dbl2str(finalPrice);
+		std::string priceString = dbl2str(price / 100.0);
+		ss << "$" << priceString;
 	}
 
-	ss << ".";
 	return ss.str();
 }
 
 std::string Item::getPriceDescription(int32_t price) const
 {
 	const ItemType& it = Item::items[id];
-	return getPriceDescription(it, price, getItemCount());
+	return getPriceDescription(it, price);
 }
 
 std::string Item::getPriceDescription() const
 {
 	int32_t price = getPrice();
-	if (price < 0) {
+	if (price == -1) {
 		return std::string();
 	}
 	return getPriceDescription(price);
