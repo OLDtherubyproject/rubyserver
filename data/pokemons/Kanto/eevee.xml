@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Eevee" nameDescription="a eevee" blood="green" experience="23" speed="150" catchRate="0">
+<pokemon name="Eevee" nameDescription="a Eevee" blood="green" experience="23" speed="150" catchRate="0">
 	<health now="80" max="80" />
 	<look type="133" corpse="2951" />
 	<type first="normal" />
@@ -18,6 +18,11 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="vaporeon" at="anytime" stone="8929" />
+		<evolution to="jolteon" at="anytime" stone="8923" />
+		<evolution to="flareon" at="anytime" stone="8926" />
+    </evolutions>	
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Geodude" nameDescription="a geodude" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Geodude" nameDescription="a Geodude" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="74" corpse="2889" />
 	<type first="rock" second="ground" />
@@ -18,6 +18,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="graveler" at="anytime" stone="8927" />
+    </evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

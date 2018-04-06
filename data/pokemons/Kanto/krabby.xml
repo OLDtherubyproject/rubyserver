@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Krabby" nameDescription="a krabby" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Krabby" nameDescription="a Krabby" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="98" corpse="2915" />
 	<type first="water" />
@@ -18,6 +18,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="kingler" at="anytime" stone="8929" />
+    </evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

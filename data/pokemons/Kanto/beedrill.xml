@@ -1,5 +1,5 @@
 <flag catchable="1" /><?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Beedrill" nameDescription="a beedrill" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Beedrill" nameDescription="a Beedrill" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="15" corpse="2823" />
 	<type first="bug" second="poison" />

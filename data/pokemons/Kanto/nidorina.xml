@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Nidorina" nameDescription="a nidorina" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Nidorina" nameDescription="a Nidorina" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="30" corpse="2839" />
 	<type first="poison" />
@@ -18,6 +18,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="nidoqueen" at="anytime" stone="8928" />
+    </evolutions>	
 	<flags>
 		<flag attackable="1" />
 		<flag hostile="1" />

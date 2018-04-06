@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Nidoking" nameDescription="a nidoking" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Nidoking" nameDescription="a Nidoking" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="34" corpse="2843" />
 	<type first="poison" second="ground" />

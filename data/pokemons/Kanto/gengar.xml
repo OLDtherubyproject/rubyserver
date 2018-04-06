@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Gengar" nameDescription="a gengar" blood="green" experience="23" speed="150" catchRate="100">
+<pokemon name="Gengar" nameDescription="a Gengar" blood="green" experience="23" speed="150" catchRate="100">
 	<health now="80" max="80" />
 	<look type="94" corpse="2911" />
 	<type first="ghost" second="poison" />

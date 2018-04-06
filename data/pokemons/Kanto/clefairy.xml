@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Clefairy" nameDescription="a clefairy" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Clefairy" nameDescription="a Clefairy" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="35" corpse="2844" />
 	<type first="fairy" />
@@ -18,6 +18,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="clefable" at="night" stone="8928" />
+    </evolutions>
 	<flags>
 		<flag attackable="1" />
 		<flag hostile="1" />

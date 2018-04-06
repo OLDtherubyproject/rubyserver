@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dugtrio" nameDescription="a dugtrio" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Dugtrio" nameDescription="a Dugtrio" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="51" corpse="12661" />
 	<type first="ground" />

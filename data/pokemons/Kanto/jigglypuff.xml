@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Jigglypuff" nameDescription="a jigglypuff" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon name="Jigglypuff" nameDescription="a Jigglypuff" blood="green" experience="23" speed="150" catchRate="50">
 	<health now="80" max="80" />
 	<look type="39" corpse="2848" />
 	<type first="normal" second="fairy" />
@@ -17,6 +17,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+        <evolution to="wigglytuff" at="anytime" stone="8928" />
+    </evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
