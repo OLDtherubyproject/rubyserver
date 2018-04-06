@@ -19,8 +19,8 @@
 		<speed value="45" />
 	</basestats>
 	<evolutions>
-	    <evolution to="charmeleon" at="anytime" stone="8926" />
-    </evolutions>
+		<evolution to="charmeleon" at="anytime" stone="8926" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />
