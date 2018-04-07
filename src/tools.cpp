@@ -1171,9 +1171,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUCANONLYUSEITONCREATURES:
 			return "You can only use it on creatures.";
 
-		case RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS:
-			return "Turn secure mode off if you really want to attack unmarked players.";
-
 		case RETURNVALUE_YOUNEEDPREMIUMACCOUNT:
 			return "You need a premium account.";
 

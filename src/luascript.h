@@ -973,7 +973,6 @@ class LuaScriptInterface
 		static int luaPlayerCanCast(lua_State* L);
 
 		static int luaPlayerHasChaseMode(lua_State* L);
-		static int luaPlayerHasSecureMode(lua_State* L);
 		static int luaPlayerGetFightMode(lua_State* L);
 
 		// Pokemon

@@ -1787,7 +1787,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE)
 	registerEnum(RETURNVALUE_YOUCANONLYUSEITONCREATURES)
 	registerEnum(RETURNVALUE_CREATUREISNOTREACHABLE)
-	registerEnum(RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS)
 	registerEnum(RETURNVALUE_YOUNEEDPREMIUMACCOUNT)
 	registerEnum(RETURNVALUE_YOUNEEDTOLEARNTHISMOVE)
 	registerEnum(RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE)
@@ -2384,7 +2383,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "canCast", LuaScriptInterface::luaPlayerCanCast);
 
 	registerMethod("Player", "hasChaseMode", LuaScriptInterface::luaPlayerHasChaseMode);
-	registerMethod("Player", "hasSecureMode", LuaScriptInterface::luaPlayerHasSecureMode);
 	registerMethod("Player", "getFightMode", LuaScriptInterface::luaPlayerGetFightMode);
 
 	// Pokemon
@@ -9460,18 +9458,6 @@ int LuaScriptInterface::luaPlayerHasChaseMode(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		pushBoolean(L, player->chaseMode);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerHasSecureMode(lua_State* L)
-{
-	// player:hasSecureMode()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		pushBoolean(L, player->secureMode);
 	} else {
 		lua_pushnil(L);
 	}

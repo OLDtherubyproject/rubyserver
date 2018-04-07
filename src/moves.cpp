@@ -650,15 +650,6 @@ bool Move::playerRuneMoveCheck(Player* player, const Position& toPos)
 		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
 		return false;
 	}
-
-	if (aggressive && needTarget && topVisibleCreature && player->hasSecureMode()) {
-		const Player* targetPlayer = topVisibleCreature->getPlayer();
-		if (targetPlayer && targetPlayer != player && player->getSkullClient(targetPlayer) == SKULL_NONE && !Combat::isInPvpZone(player, targetPlayer)) {
-			player->sendCancelMessage(RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS);
-			g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-			return false;
-		}
-	}
 	return true;
 }
 

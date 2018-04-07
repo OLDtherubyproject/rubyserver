@@ -201,10 +201,6 @@ ReturnValue Combat::canTargetCreature(Player* attacker, Creature* target)
 		if (isProtected(attacker, target->getPlayer())) {
 			return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
 		}
-
-		if (attacker->hasSecureMode() && !Combat::isInPvpZone(attacker, target) && attacker->getSkullClient(target->getPlayer()) == SKULL_NONE) {
-			return RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS;
-		}
 	}
 
 	return Combat::canDoCombat(attacker, target);
@@ -260,7 +256,7 @@ bool Combat::isProtected(const Player* attacker, const Player* target)
 		return true;
 	}
 
-	if (attacker->getVocationId() == VOCATION_NONE || target->getVocationId() == VOCATION_NONE) {
+	if (target->getHisPokemon()) {
 		return true;
 	}
 

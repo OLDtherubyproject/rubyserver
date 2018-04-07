@@ -257,10 +257,6 @@ class Player final : public Creature, public Cylinder
 			return client->getVersion();
 		}
 
-		bool hasSecureMode() const {
-			return secureMode;
-		}
-
 		void setParty(Party* party) {
 			this->party = party;
 		}
@@ -558,9 +554,6 @@ class Player final : public Creature, public Cylinder
 		void setChaseMode(bool mode);
 		void setFightMode(fightMode_t mode) {
 			fightMode = mode;
-		}
-		void setSecureMode(bool mode) {
-			secureMode = mode;
 		}
 
 		//combat functions
@@ -1297,7 +1290,6 @@ class Player final : public Creature, public Cylinder
 		AccountType_t accountType = ACCOUNT_TYPE_NORMAL;
 
 		bool chaseMode = false;
-		bool secureMode = false;
 		bool inMarket = false;
 		bool wasMounted = false;
 		bool ghostMode = false;
