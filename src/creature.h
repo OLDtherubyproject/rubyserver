@@ -460,6 +460,10 @@ class Creature : virtual public Thing
 
 		bool needTeleportToPlayer = false;
 
+		void clearConditions() {
+			conditions.clear();
+		}
+
 	protected:
 		virtual bool useCacheMap() const {
 			return false;

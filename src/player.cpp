@@ -1557,6 +1557,14 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 			party->updateSharedExperience();
 		}
 
+		if (Pokemon* pokemon = getHisPokemon()) {
+			pokemon->setMasterLevel(getLevel());
+			setPokemonHealthMax(pokemon->getMaxHealth());
+			setPokemonHealth(pokemon->getMaxHealth());
+			pokemon->changeHealth(pokemon->getMaxHealth());
+			sendStats();
+		}
+
 		g_creatureEvents->playerAdvance(this, SKILL_LEVEL, prevLevel, level);
 
 		std::ostringstream ss;
@@ -1630,6 +1638,14 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 
 		if (party) {
 			party->updateSharedExperience();
+		}
+
+		if (Pokemon* pokemon = getHisPokemon()) {
+			pokemon->setMasterLevel(getLevel());
+			setPokemonHealthMax(pokemon->getMaxHealth());
+			setPokemonHealth(pokemon->getMaxHealth());
+			pokemon->changeHealth(pokemon->getMaxHealth());
+			sendStats();
 		}
 
 		std::ostringstream ss;
@@ -3847,7 +3863,7 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 		
 		pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
 	} else {
-		pokemon = g_game.loadPokemonById(pokeball->getPokemonId());
+		pokemon = g_game.loadPokemonById(pokeball->getPokemonId(), this);
 
 		if (!pokemon) {
 			sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon not found! Please contact an administrator.");

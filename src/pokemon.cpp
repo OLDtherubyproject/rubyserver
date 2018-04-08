@@ -32,39 +32,40 @@ int32_t Pokemon::despawnRadius;
 
 uint32_t Pokemon::pokemonAutoID = 0x40000000;
 
-Pokemon* Pokemon::createPokemon(const std::string& name)
+Pokemon* Pokemon::createPokemon(const std::string& name, bool spawn /* = true */)
 {
 	PokemonType* mType = g_pokemons.getPokemonType(name);
 	if (!mType) {
 		return nullptr;
 	}
-	return new Pokemon(mType);
+	return new Pokemon(mType, spawn);
 }
 
-Pokemon::Pokemon(PokemonType* mType) :
+Pokemon::Pokemon(PokemonType* mType, bool spawn /* = true */) :
 	Creature(),
 	strDescription(mType->nameDescription),
 	mType(mType)
 {
-	isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
-	isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
-	defaultOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
-	currentOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
-	skull = mType->info.skull;
-	health = mType->info.health;
-	healthMax = mType->info.healthMax;
-	baseSpeed = mType->info.baseSpeed;
-	internalLight = mType->info.light;
-	hiddenHealth = mType->info.hiddenHealth;
-	name = mType->name;
-	ivs.hp = uniform_random(1, 31);
-	ivs.attack = uniform_random(1, 31);
-	ivs.defense = uniform_random(1, 31);
-	ivs.speed = uniform_random(1, 31);
-	ivs.special_attack = uniform_random(1, 31);
-	ivs.special_defense = uniform_random(1, 31);
+	if (spawn) {
+		isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
+		isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
+		defaultOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
+		currentOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
+		skull = mType->info.skull;
+		baseSpeed = mType->info.baseSpeed;
+		internalLight = mType->info.light;
+		hiddenHealth = mType->info.hiddenHealth;
+		name = mType->name;
+		ivs.hp = uniform_random(1, 31);
+		ivs.attack = uniform_random(1, 31);
+		ivs.defense = uniform_random(1, 31);
+		ivs.speed = uniform_random(1, 31);
+		ivs.special_attack = uniform_random(1, 31);
+		ivs.special_defense = uniform_random(1, 31);
+		health = getMaxHealth();
 
-	randomGender();
+		randomGender();
+	}
 
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
@@ -621,11 +622,23 @@ BlockType_t Pokemon::blockHit(Creature* attacker, CombatType_t combatType, int32
 	return blockType;
 }
 
+int32_t Pokemon::getMaxHealth() const
+{
+	int32_t level = getMasterLevel();
+	int32_t base = mType->info.baseStats.hp;
+	int32_t iv = ivs.hp;
+	int32_t ev = evs.hp;
+	int32_t hp = ((((2 * base) + level + (ev / 4)) * iv ) / 100 ) + 10;
+
+	return std::max<int32_t>(1, hp * 10);
+}
 
 bool Pokemon::isTarget(const Creature* creature) const
 {
 	if (creature->isRemoved() || !creature->isAttackable() ||
-	        creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature)) {
+	        creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature) ||
+			(creature->getPokemon() && creature->getPokemon()->belongsToPlayer() 
+			&& creature->getMaster()->getZone() == ZONE_PROTECTION)) {
 		return false;
 	}
 
@@ -948,6 +961,15 @@ void Pokemon::onThinkTarget(uint32_t interval)
 			if (Player* player = attackedCreature->getPlayer()) {
 				if (player->getHisPokemon()) {
 					selectTarget(player->getHisPokemon());
+				}
+			} else if (Pokemon* pokemon = attackedCreature->getPokemon()) {
+				if (pokemon->belongsToPlayer() && pokemon->getMaster()->getZone() == ZONE_PROTECTION) {
+					removeTarget(attackedCreature);
+					setAttackedCreature(nullptr);
+					setFollowCreature(nullptr);
+					if (targetList.empty()) {
+						updateIdleStatus();
+					}
 				}
 			}
 		}

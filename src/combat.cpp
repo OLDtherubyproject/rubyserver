@@ -327,6 +327,10 @@ ReturnValue Combat::canDoCombat(Creature* attacker, Creature* target)
 		} else if (attacker->getPokemon()) {
 			const Creature* targetMaster = target->getMaster();
 
+			if (targetMaster && targetMaster->getZone() == ZONE_PROTECTION) {
+				return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
+			}
+
 			if (!targetMaster || !targetMaster->getPlayer()) {
 				const Creature* attackerMaster = attacker->getMaster();
 

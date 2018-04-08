@@ -494,7 +494,7 @@ class Game
 		void addPokemon(Pokemon* pokemon);
 		void removePokemon(Pokemon* pokemon);
 		uint32_t savePokemon(Pokemon* pokemon);
-		Pokemon* loadPokemonById(uint32_t id);
+		Pokemon* loadPokemonById(uint32_t id, Player* player = nullptr);
 		PokemonType* loadPokemonTypeById(uint32_t id);
 		PokeballType* loadPokemonPokeballById(uint32_t id);
 

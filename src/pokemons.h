@@ -118,6 +118,7 @@ class PokemonType
 		BloodType_t blood = BLOOD_RED;
 		PokemonType_t firstType = TYPE_NONE;
 		PokemonType_t secondType = TYPE_NONE;
+		PokemonBaseStats_t baseStats = {};
 
 		LightInfo light = {};
 		float dittoChance = 0;
@@ -148,8 +149,6 @@ class PokemonType
 		int32_t thinkEvent = -1;
 		int32_t targetDistance = 1;
 		int32_t runAwayHealth = 0;
-		int32_t health = 100;
-		int32_t healthMax = 100;
 		int32_t changeTargetChance =0;
 		int32_t defense = 0;
 		int32_t armor = 0;

@@ -520,7 +520,7 @@ struct Shiny_t {
 	uint16_t iconDischarged = 0;
 };
 
-struct PokemonBaseStats {
+struct PokemonBaseStats_t {
 	uint8_t hp = 0;
 	uint8_t attack = 0;
 	uint8_t defense = 0;
@@ -543,12 +543,12 @@ struct PokemonIVs {
 };
 
 struct PokemonEVs {
-	uint8_t hp = 0;
-	uint8_t attack = 0;
-	uint8_t defense = 0;
-	uint8_t special_attack = 0;
-	uint8_t special_defense = 0;
-	uint8_t speed = 0;
+	uint16_t hp = 0;
+	uint16_t attack = 0;
+	uint16_t defense = 0;
+	uint16_t special_attack = 0;
+	uint16_t special_defense = 0;
+	uint16_t speed = 0;
 };
 
 struct LightInfo {

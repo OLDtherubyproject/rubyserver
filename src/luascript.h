@@ -807,6 +807,7 @@ class LuaScriptInterface
 		static int luaCreatureAddCondition(lua_State* L);
 		static int luaCreatureRemoveCondition(lua_State* L);
 		static int luaCreatureHasCondition(lua_State* L);
+		static int luaCreatureClearConditions(lua_State* L);
 
 		static int luaCreatureRemove(lua_State* L);
 		static int luaCreatureTeleportTo(lua_State* L);
@@ -1212,8 +1213,6 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetName(lua_State* L);
 		static int luaPokemonTypeGetNameDescription(lua_State* L);
 
-		static int luaPokemonTypeGetHealth(lua_State* L);
-		static int luaPokemonTypeGetMaxHealth(lua_State* L);
 		static int luaPokemonTypeGetRunHealth(lua_State* L);
 		static int luaPokemonTypeGetExperience(lua_State* L);
 

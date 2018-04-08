@@ -2217,6 +2217,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Creature", "addCondition", LuaScriptInterface::luaCreatureAddCondition);
 	registerMethod("Creature", "removeCondition", LuaScriptInterface::luaCreatureRemoveCondition);
 	registerMethod("Creature", "hasCondition", LuaScriptInterface::luaCreatureHasCondition);
+	registerMethod("Creature", "clearConditions", LuaScriptInterface::luaCreatureClearConditions);
 
 	registerMethod("Creature", "remove", LuaScriptInterface::luaCreatureRemove);
 	registerMethod("Creature", "teleportTo", LuaScriptInterface::luaCreatureTeleportTo);
@@ -2634,8 +2635,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokemonType", "getName", LuaScriptInterface::luaPokemonTypeGetName);
 	registerMethod("PokemonType", "getNameDescription", LuaScriptInterface::luaPokemonTypeGetNameDescription);
 
-	registerMethod("PokemonType", "getHealth", LuaScriptInterface::luaPokemonTypeGetHealth);
-	registerMethod("PokemonType", "getMaxHealth", LuaScriptInterface::luaPokemonTypeGetMaxHealth);
 	registerMethod("PokemonType", "getRunHealth", LuaScriptInterface::luaPokemonTypeGetRunHealth);
 	registerMethod("PokemonType", "getExperience", LuaScriptInterface::luaPokemonTypeGetExperience);
 
@@ -7327,6 +7326,20 @@ int LuaScriptInterface::luaCreatureHasCondition(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaCreatureClearConditions(lua_State* L)
+{
+	// creature:clearConditions()
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (!creature) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	creature->clearConditions();
+	pushBoolean(L, true);
+	return 1;
+}
+
 int LuaScriptInterface::luaCreatureIsImmune(lua_State* L)
 {
 	// creature:isImmune(condition or conditionType)
@@ -11913,30 +11926,6 @@ int LuaScriptInterface::luaPokemonTypeGetNameDescription(lua_State* L)
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
 		pushString(L, pokemonType->nameDescription);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokemonTypeGetHealth(lua_State* L)
-{
-	// pokemonType:getHealth()
-	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
-	if (pokemonType) {
-		lua_pushnumber(L, pokemonType->info.health);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPokemonTypeGetMaxHealth(lua_State* L)
-{
-	// pokemonType:getMaxHealth()
-	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
-	if (pokemonType) {
-		lua_pushnumber(L, pokemonType->info.healthMax);
 	} else {
 		lua_pushnil(L);
 	}

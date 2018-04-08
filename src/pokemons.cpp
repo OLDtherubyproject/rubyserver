@@ -716,20 +716,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 	}
 
 	pugi::xml_node node;
-	if ((node = pokemonNode.child("health"))) {
-		if ((attr = node.attribute("now"))) {
-			mType->info.health = pugi::cast<int32_t>(attr.value());
-		} else {
-			std::cout << "[Error - Pokemons::loadPokemon] Missing health now. " << file << std::endl;
-		}
-
-		if ((attr = node.attribute("max"))) {
-			mType->info.healthMax = pugi::cast<int32_t>(attr.value());
-		} else {
-			std::cout << "[Error - Pokemons::loadPokemon] Missing health max. " << file << std::endl;
-		}
-	}
-
 	if ((node = pokemonNode.child("type"))) {
 		if ((attr = node.attribute("first"))) {
 			mType->info.firstType = getPokemonElementType(asLowerCaseString(attr.as_string()));
@@ -742,6 +728,69 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	} else {
 		std::cout << "[Error - Pokemons::loadPokemon] Missing type(s). " << file << std::endl;
+	}
+
+	if ((node = pokemonNode.child("basestats"))) {
+		pugi::xml_node auxNode;
+		if ((auxNode = node.child("hp"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.hp = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing hp value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing hp basestats. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("attack"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.attack = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing attack value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing attack basestats. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("defense"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.defense = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing defense value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing defense basestats. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("specialAttack"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.special_attack = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing specialAttack value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing specialAttack basestats. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("specialDefense"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.special_defense = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing specialDefense value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing specialDefense basestats. " << file << std::endl;
+		}
+
+		if ((auxNode = node.child("speed"))) {
+			if ((attr = auxNode.attribute("value"))) {
+				mType->info.baseStats.speed = pugi::cast<uint32_t>(attr.value());
+			} else {
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing speed value basestats. " << file << std::endl;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing speed basestats. " << file << std::endl;
+		}
 	}
 
 	if ((node = pokemonNode.child("flags"))) {

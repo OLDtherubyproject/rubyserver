@@ -317,7 +317,7 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 			return 0;
 		}
 
-		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId());
+		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId(), player);
 		if (!pokemon) {
 			return 0;
 		}

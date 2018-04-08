@@ -3914,7 +3914,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			TextMessage message;
 			message.position = targetPos;
 			message.primary.value = realHealthChange;
-			message.primary.color = TEXTCOLOR_PASTELRED;
+			message.primary.color = TEXTCOLOR_SKYBLUE;
 
 			SpectatorHashSet spectators;
 			map.getSpectators(spectators, targetPos, false, true);
@@ -5271,6 +5271,8 @@ void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corp
 
 	pokemon->setIsShiny(corpse->getPokemonIsShiny());
 	pokemon->setPokeballType(pokeballType);
+	pokemon->setMasterLevel(player->getLevel());
+	pokemon->setHealth(pokemon->getMaxHealth());
 
 	uint32_t pokemonID = savePokemon(pokemon);
 
@@ -5471,7 +5473,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "'" << pokemon->getName() << "', ";
 		query << "'" << pokemon->getSkull() << "', ";
 		query << "'" << pokemon->getNature() << "', ";
-		query << "'" << pokemon->ivs.hp * 30 << "', ";
+		query << "'" << pokemon->getMaxHealth() << "', ";
 		query << "'" << pokemon->ivs.hp << "', ";
 		query << "'" << pokemon->ivs.attack << "', ";
 		query << "'" << pokemon->ivs.defense << "', ";
@@ -5516,7 +5518,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	}
 }
 
-Pokemon* Game::loadPokemonById(uint32_t id)
+Pokemon* Game::loadPokemonById(uint32_t id, Player* player /* = nullptr */)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
@@ -5527,7 +5529,7 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 		return nullptr;
 	}
 
-	Pokemon* pokemon = Pokemon::createPokemon(result->getString("type"));
+	Pokemon* pokemon = Pokemon::createPokemon(result->getString("type"), false);
 
 	if (!pokemon) {
 		return nullptr;
@@ -5541,8 +5543,6 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 	// load general attributes
 	pokemon->setGUID(id);
 	pokemon->pokeballType = pokeballType;
-	pokemon->healthMax = result->getNumber<int32_t>("hp") * 30;
-	pokemon->health = result->getNumber<int32_t>("hpnow");
 	pokemon->setSkull(static_cast<Skulls_t>(result->getNumber<uint16_t>("gender")));
 	pokemon->setNature(static_cast<Natures_t>(result->getNumber<uint16_t>("nature")));
 	pokemon->setName(result->getString("nickname"));
@@ -5553,6 +5553,10 @@ Pokemon* Game::loadPokemonById(uint32_t id)
 	pokemon->ivs.special_attack = result->getNumber<uint16_t>("spatk");
 	pokemon->ivs.special_defense = result->getNumber<uint16_t>("spdef");
 	pokemon->isShiny = result->getNumber<uint16_t>("shiny");
+	pokemon->setMasterLevel((player) ? player->getLevel() : 1);
+
+	//load hp
+	pokemon->setHealth(result->getNumber<int32_t>("hpnow"));
 
 	if (pokemon->isShiny && (pokemon->mType->info.shiny.outfit.lookType)) {
 		pokemon->setCurrentOutfit(pokemon->mType->info.shiny.outfit);
@@ -5964,7 +5968,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 			savePokemon(pokemon);
 			removeCreature(pokemon);
 
-			Pokemon* newPokemon = loadPokemonById(pokemonId);
+			Pokemon* newPokemon = loadPokemonById(pokemonId, player);
 			newPokemon->setMaster(player);
 			newPokemon->setDropLoot(false);
 			newPokemon->setSkillLoss(false);

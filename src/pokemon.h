@@ -45,11 +45,11 @@ enum TargetSearchType_t {
 class Pokemon final : public Creature
 {
 	public:
-		static Pokemon* createPokemon(const std::string& name);
+		static Pokemon* createPokemon(const std::string& name, bool spawn = true);
 		static int32_t despawnRange;
 		static int32_t despawnRadius;
 
-		explicit Pokemon(PokemonType* mType);
+		explicit Pokemon(PokemonType* mType, bool spawn = true);
 		~Pokemon();
 
 		// non-copyable
@@ -166,9 +166,6 @@ class Pokemon final : public Creature
 		Natures_t getNature() const {
 			return nature;
 		}
-		uint16_t getHPNow() const {
-			return ivs.hp * 30;
-		}
 		uint16_t getHP() const {
 			return ivs.hp;
 		}
@@ -203,7 +200,7 @@ class Pokemon final : public Creature
 			this->healthMax = healthMax;
 		}
 		void setHealth(int32_t health) {
-			this->health = health;
+			this->health = std::min<int32_t>(health, getMaxHealth());
 		}
 		void setPrice(uint32_t price) {
 			this->price = price;
@@ -297,6 +294,15 @@ class Pokemon final : public Creature
 			return guid;
 		}
 
+		int32_t getMaxHealth() const override;
+
+		int32_t getMasterLevel() const {
+			return masterLevel;
+		}
+		void setMasterLevel(int32_t masterLevel) {
+			this->masterLevel = masterLevel;
+		}
+
 	private:
 		CreatureHashSet friendList;
 		CreatureList targetList;
@@ -327,6 +333,7 @@ class Pokemon final : public Creature
 		int32_t targetChangeCooldown = 0;
 		int32_t stepDuration = 0;
 		int32_t price = -1;
+		int32_t masterLevel = 1;
 
 		Position masterPos;
 

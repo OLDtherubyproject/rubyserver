@@ -14829,41 +14829,20 @@
 		<attribute key="armor" value="0" />
 		<attribute key="slotType" value="body" />
 	</item>
-	<item id="8877" article="a" name="lavos armor">
-		<attribute key="weight" value="8500" />
-		<attribute key="armor" value="13" />
-		<attribute key="absorbPercentFire" value="3" />
-		<attribute key="absorbPercentIce" value="-3" />
-		<attribute key="slotType" value="body" />
+	<item id="8877" article="a" name="potion">
+		<attribute key="description" value="It restores the HP of one Pokemon by just 200 points." />
 	</item>
-	<item id="8878" article="a" name="crystalline armor">
-		<attribute key="weight" value="8450" />
-		<attribute key="armor" value="13" />
-		<attribute key="absorbPercentIce" value="3" />
-		<attribute key="absorbPercentEnergy" value="-3" />
-		<attribute key="slotType" value="body" />
+	<item id="8878" article="a" name="super potion">
+		<attribute key="description" value="It restores the HP of one Pokemon by just 500 points." />
 	</item>
-	<item id="8879" article="a" name="voltage armor">
-		<attribute key="weight" value="8450" />
-		<attribute key="armor" value="13" />
-		<attribute key="absorbPercentEnergy" value="3" />
-		<attribute key="absorbPercentEarth" value="-3" />
-		<attribute key="slotType" value="body" />
+	<item id="8879" article="a" name="hyper potion">
+		<attribute key="description" value="It restores the HP of one Pokemon by just 2000 points." />
 	</item>
-	<item id="8880" article="a" name="swamplair armor">
-		<attribute key="weight" value="8450" />
-		<attribute key="armor" value="13" />
-		<attribute key="absorbPercentEarth" value="3" />
-		<attribute key="absorbPercentFire" value="-3" />
-		<attribute key="slotType" value="body" />
+	<item id="8880" article="a" name="max potion">
+		<attribute key="description" value="It completely restores the HP of a single Pokemon." />
 	</item>
-	<item id="8881" article="a" name="fireborn giant armor">
-		<attribute key="weight" value="12000" />
-		<attribute key="armor" value="15" />
-		<attribute key="skillSword" value="2" />
-		<attribute key="absorbPercentFire" value="5" />
-		<attribute key="absorbPercentIce" value="-5" />
-		<attribute key="slotType" value="body" />
+	<item id="8881" article="a" name="full restore">
+		<attribute key="description" value="It completely restores the HP and heals any status problems of a single Pokemon." />
 	</item>
 	<item id="8882" article="an" name="earthborn titan armor">
 		<attribute key="weight" value="12000" />
