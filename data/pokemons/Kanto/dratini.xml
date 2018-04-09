@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dratini" nameDescription="a dratini" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Dratini" nameDescription="a Dratini" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="147" corpse="2966" />
 	<type first="dragon" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3971" />
 	<icon charged="26436" discharged="26775" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "41" />
+		<attack value="64" />
+		<defense value="45" />
+		<specialAttack value="50" />
+		<specialDefense value="50" />
+		<speed value="50" />
 	</basestats>
+	<evolutions>
+		<evolution to="dragonair" at="anytime" stone="8926" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

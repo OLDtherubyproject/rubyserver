@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Jynx" nameDescription="a jynx" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Jynx" nameDescription="a Jynx" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="124" corpse="2943" />
 	<type first="ice" second="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2490" />
 	<icon charged="26419" discharged="26638" />
 	<genders>
-        <gender name="female" percentage="100" />
-    </genders>
+		<gender name="female" percentage="100" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "65" />
+		<attack value="50" />
+		<defense value="35" />
+		<specialAttack value="115" />
+		<specialDefense value="95" />
+		<speed value="95" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

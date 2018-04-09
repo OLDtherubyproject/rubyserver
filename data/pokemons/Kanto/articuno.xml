@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Articuno" nameDescription="an articuno" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Articuno" nameDescription="an Articuno" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="144" corpse="2963" />
 	<type first="ice" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3968" />
 	<icon charged="26396" discharged="26615" />
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "90" />
+		<attack value="85" />
+		<defense value="100" />
+		<specialAttack value="95" />
+		<specialDefense value="125" />
+		<speed value="85" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

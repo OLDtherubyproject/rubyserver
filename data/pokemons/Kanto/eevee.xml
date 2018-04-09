@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Eevee" nameDescription="a eevee" blood="green" experience="23" speed="150" catchRate="0">
-	<health now="80" max="80" />
+<pokemon name="Eevee" nameDescription="an Eevee" blood="green" experience="23" speed="150" catchRate="0">
 	<look type="133" corpse="2951" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2499" />
-	 <icon charged="26506" discharged="26726" />
+	<icon charged="26506" discharged="26726" />
 	<genders>
-        <gender name="male" percentage="87.5" />
-        <gender name="female" percentage="12.5" />
-    </genders>
+		<gender name="male" percentage="87.5" />
+		<gender name="female" percentage="12.5" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
+		<hp value= "55" />
+		<attack value="55" />
+		<defense value="50" />
+		<specialAttack value="45" />
 		<specialDefense value="65" />
-		<speed value="45" />
+		<speed value="55" />
 	</basestats>
+	<evolutions>
+		<evolution to="vaporeon" at="anytime" stone="8929" />
+		<evolution to="jolteon" at="anytime" stone="8923" />
+		<evolution to="flareon" at="anytime" stone="8926" />
+	</evolutions>	
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

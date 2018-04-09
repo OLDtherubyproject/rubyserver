@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dugtrio" nameDescription="a dugtrio" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Dugtrio" nameDescription="a Dugtrio" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="51" corpse="12661" />
 	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "35" />
+		<attack value="80" />
+		<defense value="50" />
+		<specialAttack value="50" />
+		<specialDefense value="70" />
+		<speed value="120" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

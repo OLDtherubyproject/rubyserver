@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dodrio" nameDescription="a dodrio" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Dodrio" nameDescription="a Dodrio" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="85" corpse="2902" />
 	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2439" />
-	 <icon charged="26508" discharged="26728" />
+	<icon charged="26508" discharged="26728" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "60" />
+		<attack value="110" />
+		<defense value="70" />
+		<specialAttack value="60" />
+		<specialDefense value="60" />
+		<speed value="100" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

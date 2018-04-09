@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Machamp" nameDescription="a machamp" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Machamp" nameDescription="a Machamp" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="68" corpse="6049" />
 	<type first="fighting" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="25" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "90" />
+		<attack value="130" />
+		<defense value="80" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="85" />
+		<speed value="55" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

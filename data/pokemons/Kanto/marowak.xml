@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Marowak" nameDescription="a marowak" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Marowak" nameDescription="a Marowak" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="105" corpse="2923" />
 	<type first="ground" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2471" />
 	<icon charged="26585" discharged="26806" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
+		<hp value= "60" />
+		<attack value="80" />
+		<defense value="110" />
+		<specialAttack value="50" />
+		<specialDefense value="80" />
 		<speed value="45" />
 	</basestats>
 	<flags>

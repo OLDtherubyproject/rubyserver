@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Golbat" nameDescription="a golbat" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Golbat" nameDescription="a Golbat" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="42" corpse="2852" />
 	<type first="poison" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2417" />
 	<icon charged="26397" discharged="26616" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "75" />
+		<attack value="80" />
+		<defense value="70" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="75" />
+		<speed value="90" />
 	</basestats>
+	<evolutions>
+		<evolution to="crobat" at="night" stone="8930" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

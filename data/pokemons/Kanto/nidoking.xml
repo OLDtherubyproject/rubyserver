@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Nidoking" nameDescription="a nidoking" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Nidoking" nameDescription="a Nidoking" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="34" corpse="2843" />
 	<type first="poison" second="ground" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "81" />
+		<attack value="92" />
+		<defense value="77" />
+		<specialAttack value="85" />
+		<specialDefense value="75" />
+		<speed value="85" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

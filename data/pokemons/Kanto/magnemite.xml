@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Magnemite" nameDescription="a magnemite" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Magnemite" nameDescription="a Magnemite" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="81" corpse="2898" />
 	<type first="electric" second="steel" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2453" />
-	    <icon charged="26438" discharged="26657" />
+	<icon charged="26438" discharged="26657" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
+		<hp value= "25" />
+		<attack value="35" />
+		<defense value="70" />
+		<specialAttack value="95" />
+		<specialDefense value="55" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+		<evolution to="magneton" at="anytime" stone="8923" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

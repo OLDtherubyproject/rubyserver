@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Bulbasaur" nameDescription="a bulbasaur" blood="green" experience="23" speed="150" catchRate="100">
-	<health now="80" max="80" />
+<pokemon name="Bulbasaur" nameDescription="a Bulbasaur" blood="green" experience="23" speed="150" catchRate="100">
 	<look type="1" corpse="2806" />
 	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
@@ -18,6 +17,9 @@
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>
+	<evolutions>
+		<evolution to="ivysaur" at="day" stone="8924" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

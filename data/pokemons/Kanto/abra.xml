@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Abra" nameDescription="a abra" blood="green" experience="23" speed="150" catchRate="50" price="500000">
-	<health now="80" max="80" />
+<pokemon name="Abra" nameDescription="an Abra" blood="green" experience="23" speed="150" catchRate="50" price="500000">
 	<look type="63" corpse="2871" />
 	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="25" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
-	</basestats>		
+		<hp value= "25" />
+		<attack value="20" />
+		<defense value="15" />
+		<specialAttack value="105" />
+		<specialDefense value="55" />
+		<speed value="90" />
+	</basestats>
+	<evolutions>
+		<evolution to="kadabra" at="day" stone="8932" />
+	</evolutions>	
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

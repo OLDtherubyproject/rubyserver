@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Muk" nameDescription="a muk" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Muk" nameDescription="a Muk" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="89" corpse="2906" />
 	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "105" />
+		<attack value="105" />
+		<defense value="75" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="100" />
+		<speed value="50" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

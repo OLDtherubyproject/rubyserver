@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Electabuzz" nameDescription="a electabuzz" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Electabuzz" nameDescription="an Electabuzz" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="125" corpse="6049" />
 	<type first="electric" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2491" />
 	<icon charged="26429" discharged="26648" />
 	<genders>
-        <gender name="male" percentage="75" />
-        <gender name="female" percentage="25" />
-    </genders>
+		<gender name="male" percentage="75" />
+		<gender name="female" percentage="25" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "65" />
+		<attack value="83" />
+		<defense value="57" />
+		<specialAttack value="95" />
+		<specialDefense value="85" />
+		<speed value="105" />
 	</basestats>
+	<evolutions>
+		<evolution to="electivire" at="anytime" stone="8923" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

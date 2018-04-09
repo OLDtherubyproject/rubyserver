@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Arbok" nameDescription="an arbok" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Arbok" nameDescription="an Arbok" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="24" corpse="2971" />
 	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "60" />
+		<attack value="85" />
+		<defense value="69" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="79" />
+		<speed value="80" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

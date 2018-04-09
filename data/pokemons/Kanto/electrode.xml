@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Electrode" nameDescription="a electrode" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Electrode" nameDescription="an Electrode" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="101" corpse="2919" />
 	<type first="electric" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2467" />
 	<icon charged="26510" discharged="26730" />
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "60" />
+		<attack value="50" />
+		<defense value="70" />
+		<specialAttack value="80" />
+		<specialDefense value="80" />
+		<speed value="140" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

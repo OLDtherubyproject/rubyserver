@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Butterfree" nameDescription="a butterfree" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Butterfree" nameDescription="a Butterfree" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="12" corpse="2820" />
 	<type first="bug" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2387" />
 	<icon charged="26485" discharged="26695" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />		
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />		
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "60" />
+		<attack value="45" />
+		<defense value="50" />
+		<specialAttack value="80" />
+		<specialDefense value="80" />
+		<speed value="70" />
 	</basestats>
 	<flags>
 		<flag attackable="1" />

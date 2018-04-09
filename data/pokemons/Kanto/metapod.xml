@@ -1,6 +1,5 @@
 <flag catchable="1" /><?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Metapod" nameDescription="a metapod" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Metapod" nameDescription="a Metapod" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="11" corpse="2819" />
 	<type first="bug" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "50" />
+		<attack value="20" />
+		<defense value="55" />
+		<specialAttack value="25" />
+		<specialDefense value="25" />
+		<speed value="30" />
 	</basestats>
+	<evolutions>
+		<evolution to="butterfree" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

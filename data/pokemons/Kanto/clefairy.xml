@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Clefairy" nameDescription="a clefairy" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Clefairy" nameDescription="a Clefairy" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="35" corpse="2844" />
 	<type first="fairy" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="75" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
+		<hp value= "70" />
+		<attack value="45" />
+		<defense value="48" />
+		<specialAttack value="60" />
 		<specialDefense value="65" />
-		<speed value="45" />
+		<speed value="35" />
 	</basestats>
+	<evolutions>
+		<evolution to="clefable" at="night" stone="8928" />
+	</evolutions>
 	<flags>
 		<flag attackable="1" />
 		<flag hostile="1" />

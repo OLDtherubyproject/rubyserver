@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Graveler" nameDescription="a geodude" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Graveler" nameDescription="a Graveler" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="75" corpse="6049" />
 	<type first="rock" second="ground" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "55" />
+		<attack value="95" />
+		<defense value="115" />
+		<specialAttack value="45" />
+		<specialDefense value="45" />
+		<speed value="35" />
 	</basestats>
+	<evolutions>
+		<evolution to="golem" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Mr. Mime" nameDescription="a mr. mime" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Mr. Mime" nameDescription="a Mr. mime" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="122" corpse="6049" />
 	<type first="psychic" second="fairy" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2488" />
 	<icon charged="26435" discharged="26654" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "40" />
+		<attack value="45" />
+		<defense value="65" />
+		<specialAttack value="100" />
+		<specialDefense value="120" />
+		<speed value="90" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		
