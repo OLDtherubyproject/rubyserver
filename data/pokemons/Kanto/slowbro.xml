@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Slowbro" nameDescription="a slowbro" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Slowbro" nameDescription="a Slowbro" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="80" corpse="2897" />
 	<type first="water" second="psychic" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "95" />
+		<attack value="75" />
+		<defense value="110" />
+		<specialAttack value="100" />
+		<specialDefense value="80" />
+		<speed value="30" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

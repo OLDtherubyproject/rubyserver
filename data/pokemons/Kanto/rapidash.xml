@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Rapidash" nameDescription="a rapidash" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Rapidash" nameDescription="a Rapidash" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="78" corpse="6049" />
 	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
@@ -11,12 +10,12 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "65" />
+		<attack value="100" />
+		<defense value="70" />
+		<specialAttack value="80" />
+		<specialDefense value="80" />
+		<speed value="105" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

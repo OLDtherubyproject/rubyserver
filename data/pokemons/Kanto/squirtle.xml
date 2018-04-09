@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Squirtle" nameDescription="a squirtle" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Squirtle" nameDescription="a Squirtle" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<look type="7" corpse="2814" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2382" />
-	    <icon charged="26441" discharged="26660" />
+	<icon charged="26441" discharged="26660" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "44" />
+		<attack value="48" />
+		<defense value="65" />
+		<specialAttack value="50" />
+		<specialDefense value="64" />
+		<speed value="43" />
 	</basestats>
+	<evolutions>
+		<evolution to="wartotle" at="anytime" stone="8929" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Lapras" nameDescription="a lapras" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Lapras" nameDescription="a Lapras" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="131" corpse="2950" />
 	<type first="water" second="ice" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2497" />
 	<icon charged="26488" discharged="26708" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "130" />
+		<attack value="85" />
+		<defense value="80" />
+		<specialAttack value="85" />
+		<specialDefense value="95" />
+		<speed value="60" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

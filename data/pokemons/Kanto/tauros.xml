@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Tauros" nameDescription="a tauros" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Tauros" nameDescription="a Tauros" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="128" corpse="2947" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2494" />
 	<icon charged="26479" discharged="26699" />
 	<genders>
-        <gender name="male" percentage="100" />
-    </genders>
+		<gender name="male" percentage="100" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "75" />
+		<attack value="100" />
+		<defense value="95" />
+		<specialAttack value="40" />
+		<specialDefense value="70" />
+		<speed value="110" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

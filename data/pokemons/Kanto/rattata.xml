@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Rattata" nameDescription="a rattata" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Rattata" nameDescription="a Rattata" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="19" corpse="2827" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2394" />	
 	<icon charged="26547" discharged="26639" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "30" />
+		<attack value="56" />
+		<defense value="35" />
+		<specialAttack value="25" />
+		<specialDefense value="35" />
+		<speed value="72" />
 	</basestats>
+	<evolutions>
+		<evolution to="raticate" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Seaking" nameDescription="a seaking" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Seaking" nameDescription="a Seaking" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="119" corpse="2937" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2485" />
 	<icon charged="26561" discharged="26782" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "80" />
+		<attack value="92" />
+		<defense value="65" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="80" />
+		<speed value="68" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

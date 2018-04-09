@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Rhyhorn" nameDescription="a rhyhorn" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Rhyhorn" nameDescription="a Rhyhorn" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="111" corpse="2929" />
 	<type first="ground" second="rock" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2477" />
 	<icon charged="26517" discharged="26737" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "80" />
+		<attack value="85" />
+		<defense value="95" />
+		<specialAttack value="30" />
+		<specialDefense value="30" />
+		<speed value="25" />
 	</basestats>
+	<evolutions>
+		<evolution to="rhydon" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

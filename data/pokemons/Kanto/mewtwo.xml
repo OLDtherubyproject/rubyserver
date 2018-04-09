@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Mewtwo" nameDescription="a mewtwo" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Mewtwo" nameDescription="a Mewtwo" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="150" corpse="2969" />
 	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2510" />
 	<icon charged="26416" discharged="26635" />
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "106" />
+		<attack value="110" />
+		<defense value="90" />
+		<specialAttack value="154" />
+		<specialDefense value="90" />
+		<speed value="130" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

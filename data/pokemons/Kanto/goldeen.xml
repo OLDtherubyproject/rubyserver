@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Goldeen" nameDescription="a goldeen" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Goldeen" nameDescription="a Goldeen" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="118" corpse="2936" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2484" />
 	<icon charged="26552" discharged="26773" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
 		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<attack value="67" />
+		<defense value="60" />
+		<specialAttack value="35" />
+		<specialDefense value="50" />
+		<speed value="63" />
 	</basestats>
+	<evolutions>
+		<evolution to="seaking" at="anytime" stone="8929" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

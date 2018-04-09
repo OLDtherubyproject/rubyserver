@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Clefable" nameDescription="a clefable" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Clefable" nameDescription="a Clefable" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="36" corpse="2845" />
 	<type first="fairy" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2411" />
-	    <icon charged="26442" discharged="26661" />
+	<icon charged="26442" discharged="26661" />
 	<genders>
 		<gender name="male" percentage="25" />
 		<gender name="female" percentage="75" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "95" />
+		<attack value="70" />
+		<defense value="73" />
+		<specialAttack value="85" />
+		<specialDefense value="90" />
+		<speed value="60" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

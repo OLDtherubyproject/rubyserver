@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Hitmonchan" nameDescription="a hitmonchan" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Hitmonchan" nameDescription="a Hitmonchan" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="107" corpse="2925" />
 	<type first="fighting" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2473" />
 	<icon charged="26385" discharged="26604" />
 	<genders>
-        <gender name="male" percentage="100" />
-    </genders>
+		<gender name="male" percentage="100" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "50" />
+		<attack value="105" />
+		<defense value="79" />
+		<specialAttack value="35" />
+		<specialDefense value="110" />
+		<speed value="76" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

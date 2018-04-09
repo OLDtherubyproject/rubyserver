@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Rhydon" nameDescription="a rhydon" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Rhydon" nameDescription="a Rhydon" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="112" corpse="2997" />
 	<type first="ground" second="rock" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2478" />
 	<icon charged="26525" discharged="26746" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "105" />
+		<attack value="130" />
+		<defense value="120" />
+		<specialAttack value="45" />
+		<specialDefense value="45" />
+		<speed value="40" />
 	</basestats>
+	<evolutions>
+		<evolution to="rhyperior" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

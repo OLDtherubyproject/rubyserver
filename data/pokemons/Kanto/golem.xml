@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Golem" nameDescription="a golem" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Golem" nameDescription="a Golem" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="76" corpse="2892" />
 	<type first="rock" second="ground" />
 	<targetchange interval="4000" chance="0" />
@@ -11,10 +10,10 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
+		<hp value= "80" />
+		<attack value="110" />
+		<defense value="130" />
+		<specialAttack value="55" />
 		<specialDefense value="65" />
 		<speed value="45" />
 	</basestats>

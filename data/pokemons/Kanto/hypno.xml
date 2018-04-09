@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Hypno" nameDescription="a hypno" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Hypno" nameDescription="a Hypno" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="97" corpse="2914" />
 	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2463" />
-		<icon charged="26531" discharged="26752" />
+	<icon charged="26531" discharged="26752" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "85" />
+		<attack value="73" />
+		<defense value="70" />
+		<specialAttack value="73" />
+		<specialDefense value="115" />
+		<speed value="67" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />		

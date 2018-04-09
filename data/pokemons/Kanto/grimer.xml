@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Grimer" nameDescription="a grimer" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Grimer" nameDescription="a Grimer" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="88" corpse="2905" />
 	<type first="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3966" />
-	    <icon charged="26439" discharged="26658" />
+	<icon charged="26439" discharged="26658" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "80" />
+		<attack value="80" />
+		<defense value="50" />
+		<specialAttack value="40" />
+		<specialDefense value="50" />
+		<speed value="25" />
 	</basestats>
+	<evolutions>
+		<evolution to="muk" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />

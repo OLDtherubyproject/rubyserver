@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Bellsprout" nameDescription="a bellsprout" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Bellsprout" nameDescription="a Bellsprout" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="69" corpse="2847" />
 	<type first="grass" second="poison" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "50" />
+		<attack value="75" />
+		<defense value="35" />
+		<specialAttack value="70" />
+		<specialDefense value="30" />
+		<speed value="40" />
 	</basestats>
+	<evolutions>
+		<evolution to="weepinbell" at="day" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

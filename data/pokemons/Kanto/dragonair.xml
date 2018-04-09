@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dragonair" nameDescription="a dragonair" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Dragonair" nameDescription="a Dragonair" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="148" corpse="2967" />
 	<type first="dragon" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3972" />
 	<icon charged="26445" discharged="26664" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "61" />
+		<attack value="84" />
+		<defense value="65" />
+		<specialAttack value="70" />
+		<specialDefense value="70" />
+		<speed value="70" />
 	</basestats>
+	<evolutions>
+		<evolution to="dragonite" at="anytime" stone="8926" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />
