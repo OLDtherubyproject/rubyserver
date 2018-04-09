@@ -86,10 +86,10 @@ bool Creature::canSeeCreature(const Creature* creature) const
 	return true;
 }
 
-void Creature::setSkull(Skulls_t newSkull)
+void Creature::setGender(Genders_t newGender)
 {
-	skull = newSkull;
-	g_game.updateCreatureSkull(this);
+	gender = newGender;
+	g_game.updateCreatureGender(this);
 }
 
 int64_t Creature::getTimeSinceLastMove() const

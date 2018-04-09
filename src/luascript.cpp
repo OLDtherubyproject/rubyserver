@@ -1568,13 +1568,10 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKILL_MAGLEVEL)
 	registerEnum(SKILL_LEVEL)
 
-	registerEnum(SKULL_NONE)
-	registerEnum(SKULL_YELLOW)
-	registerEnum(SKULL_GREEN)
-	registerEnum(SKULL_WHITE)
-	registerEnum(SKULL_RED)
-	registerEnum(SKULL_BLACK)
-	registerEnum(SKULL_ORANGE)
+	registerEnum(GENDER_NONE)
+	registerEnum(GENDER_UNDEFINED)
+	registerEnum(GENDER_MALE)
+	registerEnum(GENDER_FEMALE)
 
 	registerEnum(NATURE_HARDY)
 	registerEnum(NATURE_LONELY)
@@ -1904,7 +1901,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::DEATH_LOSE_PERCENT)
 	registerEnumIn("configKeys", ConfigManager::STATUSQUERY_TIMEOUT)
 	registerEnumIn("configKeys", ConfigManager::FRAG_TIME)
-	registerEnumIn("configKeys", ConfigManager::WHITE_SKULL_TIME)
 	registerEnumIn("configKeys", ConfigManager::GAME_PORT)
 	registerEnumIn("configKeys", ConfigManager::LOGIN_PORT)
 	registerEnumIn("configKeys", ConfigManager::STATUS_PORT)
@@ -2207,8 +2203,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Creature", "setMaxHealth", LuaScriptInterface::luaCreatureSetMaxHealth);
 	registerMethod("Creature", "setHiddenHealth", LuaScriptInterface::luaCreatureSetHiddenHealth);
 
-	registerMethod("Creature", "getSkull", LuaScriptInterface::luaCreatureGetSkull);
-	registerMethod("Creature", "setSkull", LuaScriptInterface::luaCreatureSetSkull);
+	registerMethod("Creature", "getGender", LuaScriptInterface::luaCreatureGetGender);
+	registerMethod("Creature", "setGender", LuaScriptInterface::luaCreatureSetGender);
 
 	registerMethod("Creature", "getOutfit", LuaScriptInterface::luaCreatureGetOutfit);
 	registerMethod("Creature", "setOutfit", LuaScriptInterface::luaCreatureSetOutfit);
@@ -2257,8 +2253,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getDepotChest", LuaScriptInterface::luaPlayerGetDepotChest);
 	registerMethod("Player", "getInbox", LuaScriptInterface::luaPlayerGetInbox);
 
-	registerMethod("Player", "getSkullTime", LuaScriptInterface::luaPlayerGetSkullTime);
-	registerMethod("Player", "setSkullTime", LuaScriptInterface::luaPlayerSetSkullTime);
 	registerMethod("Player", "getDeathPenalty", LuaScriptInterface::luaPlayerGetDeathPenalty);
 
 	registerMethod("Player", "getExperience", LuaScriptInterface::luaPlayerGetExperience);
@@ -7200,24 +7194,24 @@ int LuaScriptInterface::luaCreatureSetHiddenHealth(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaCreatureGetSkull(lua_State* L)
+int LuaScriptInterface::luaCreatureGetGender(lua_State* L)
 {
-	// creature:getSkull()
+	// creature:getGender()
 	Creature* creature = getUserdata<Creature>(L, 1);
 	if (creature) {
-		lua_pushnumber(L, creature->getSkull());
+		lua_pushnumber(L, creature->getGender());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaCreatureSetSkull(lua_State* L)
+int LuaScriptInterface::luaCreatureSetGender(lua_State* L)
 {
-	// creature:setSkull(skull)
+	// creature:setGender(gender)
 	Creature* creature = getUserdata<Creature>(L, 1);
 	if (creature) {
-		creature->setSkull(getNumber<Skulls_t>(L, 2));
+		creature->setGender(getNumber<Genders_t>(L, 2));
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -7795,31 +7789,6 @@ int LuaScriptInterface::luaPlayerGetInbox(lua_State* L)
 		setItemMetatable(L, -1, inbox);
 	} else {
 		pushBoolean(L, false);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetSkullTime(lua_State* L)
-{
-	// player:getSkullTime()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getSkullTicks());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerSetSkullTime(lua_State* L)
-{
-	// player:setSkullTime(skullTime)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->setSkullTicks(getNumber<int64_t>(L, 2));
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
 	}
 	return 1;
 }
@@ -9527,7 +9496,7 @@ int LuaScriptInterface::luaPokemonIsMale(lua_State* L)
 	// pokemon:isMale()
 	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
 	if (pokemon) {
-		pushBoolean(L, pokemon->getSkull() == SKULL_GREEN);
+		pushBoolean(L, pokemon->getGender() == GENDER_MALE);
 	} else {
 		lua_pushnil(L);
 	}
@@ -9539,7 +9508,7 @@ int LuaScriptInterface::luaPokemonIsFemale(lua_State* L)
 	// pokemon:isFemale()
 	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
 	if (pokemon) {
-		pushBoolean(L, pokemon->getSkull() == SKULL_RED);
+		pushBoolean(L, pokemon->getGender() == GENDER_FEMALE);
 	} else {
 		lua_pushnil(L);
 	}
@@ -9551,7 +9520,7 @@ int LuaScriptInterface::luaPokemonIsUndefined(lua_State* L)
 	// pokemon:isUndefined()
 	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
 	if (pokemon) {
-		pushBoolean(L, pokemon->getSkull() == SKULL_ORANGE);
+		pushBoolean(L, pokemon->getGender() == GENDER_UNDEFINED);
 	} else {
 		lua_pushnil(L);
 	}
@@ -9588,7 +9557,7 @@ int LuaScriptInterface::luaPokemonTypeGetGenders(lua_State* L)
 	// pokemonType:getGenders()
 	PokemonType* pokemonType = getUserdata<PokemonType>(L, 1);
 	if (pokemonType) {
-		pushGenders(L, pokemonType->info.gender);
+		pushGenders(L, pokemonType->info.genders);
 	} else {
 		lua_pushnil(L);
 	}
@@ -12370,7 +12339,7 @@ int32_t LuaScriptInterface::luaPartyCreate(lua_State* L)
 	if (!party) {
 		party = new Party(player);
 		g_game.updatePlayerShield(player);
-		player->sendCreatureSkull(player);
+		player->sendCreatureGender(player);
 		pushUserdata<Party>(L, party);
 		setMetatable(L, -1, "Party");
 	} else {

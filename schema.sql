@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS `players` (
   `lastlogin` bigint(20) unsigned NOT NULL DEFAULT '0',
   `lastip` int(10) unsigned NOT NULL DEFAULT '0',
   `save` tinyint(1) NOT NULL DEFAULT '1',
-  `skull` tinyint(1) NOT NULL DEFAULT '0',
-  `skulltime` int(11) NOT NULL DEFAULT '0',
   `lastlogout` bigint(20) unsigned NOT NULL DEFAULT '0',
   `blessings` tinyint(2) NOT NULL DEFAULT '0',
   `onlinetime` int(11) NOT NULL DEFAULT '0',

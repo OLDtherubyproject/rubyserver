@@ -637,22 +637,19 @@ class Player final : public Creature, public Cylinder
 
 		LightInfo getCreatureLight() const override;
 
-		Skulls_t getSkull() const override;
-		Skulls_t getSkullClient(const Creature* creature) const override;
-		int64_t getSkullTicks() const { return skullTicks; }
-		void setSkullTicks(int64_t ticks) { skullTicks = ticks; }
+		Genders_t getGender() const override;
+		Genders_t getGenderClient(const Creature* creature) const override;
 
 		bool hasAttacked(const Player* attacked) const;
 		void addAttacked(const Player* attacked);
 		void removeAttacked(const Player* attacked);
 		void clearAttacked();
 		void addUnjustifiedDead(const Player* attacked);
-		void sendCreatureSkull(const Creature* creature) const {
+		void sendCreatureGender(const Creature* creature) const {
 			if (client) {
-				client->sendCreatureSkull(creature);
+				client->sendCreatureGender(creature);
 			}
 		}
-		void checkSkullTicks(int32_t ticks);
 
 		bool canWear(uint32_t lookType, uint8_t addons) const;
 		void addOutfit(uint16_t lookType, uint8_t addons);
@@ -1219,7 +1216,6 @@ class Player final : public Creature, public Cylinder
 		uint64_t bankBalance = 0;
 		uint64_t lastQuestlogUpdate = 0;
 		int64_t lastFailedFollow = 0;
-		int64_t skullTicks = 0;
 		int64_t lastWalkthroughAttempt = 0;
 		int64_t lastToggleMount = 0;
 		int64_t lastPing;

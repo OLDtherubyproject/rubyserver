@@ -503,7 +503,7 @@ using ShootTypeNames = std::unordered_map<std::string, ShootType_t>;
 using CombatTypeNames = std::unordered_map<CombatType_t, std::string, std::hash<int32_t>>;
 using AmmoTypeNames = std::unordered_map<std::string, Ammo_t>;
 using WeaponActionNames = std::unordered_map<std::string, WeaponAction_t>;
-using SkullNames = std::unordered_map<std::string, Skulls_t>;
+using GenderNames = std::unordered_map<std::string, Genders_t>;
 using PokemonTypeNames = std::unordered_map<std::string, PokemonType_t>;
 
 MagicEffectNames magicEffectNames = {
@@ -685,14 +685,11 @@ WeaponActionNames weaponActionNames = {
 	{"removecount",		WEAPONACTION_REMOVECOUNT},
 };
 
-SkullNames skullNames = {
-	{"none",	SKULL_NONE},
-	{"yellow",	SKULL_YELLOW},
-	{"green",	SKULL_GREEN},
-	{"white",	SKULL_WHITE},
-	{"red",		SKULL_RED},
-	{"black",	SKULL_BLACK},
-	{"orange",	SKULL_ORANGE},
+GenderNames genderNames = {
+	{"none",		GENDER_NONE},
+	{"male",		GENDER_MALE},
+	{"female",		GENDER_FEMALE},
+	{"undefined",	GENDER_UNDEFINED},
 };
 
 PokemonTypeNames pokemonTypes = {
@@ -762,13 +759,13 @@ WeaponAction_t getWeaponAction(const std::string& strValue)
 	return WEAPONACTION_NONE;
 }
 
-Skulls_t getSkullType(const std::string& strValue)
+Genders_t getGenderType(const std::string& strValue)
 {
-	auto skullType = skullNames.find(strValue);
-	if (skullType != skullNames.end()) {
-		return skullType->second;
+	auto genderType = genderNames.find(strValue);
+	if (genderType != genderNames.end()) {
+		return genderType->second;
 	}
-	return SKULL_NONE;
+	return GENDER_NONE;
 }
 
 PokemonType_t getPokemonElementType(const std::string& strValue)

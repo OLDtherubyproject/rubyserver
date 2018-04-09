@@ -51,7 +51,7 @@ Pokemon::Pokemon(PokemonType* mType, bool spawn /* = true */) :
 		isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
 		defaultOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
 		currentOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
-		skull = mType->info.skull;
+		gender = mType->info.gender;
 		baseSpeed = mType->info.baseSpeed;
 		internalLight = mType->info.light;
 		hiddenHealth = mType->info.hiddenHealth;
@@ -1940,7 +1940,7 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 				}
 			}
 		}
-		corpse->setCorpseGender(getSkull());
+		corpse->setCorpseGender(getGender());
 		corpse->setCorpseType(mType->typeName);
 		corpse->setPokemonIsShiny(isShiny);
 	}

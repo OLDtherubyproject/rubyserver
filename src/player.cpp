@@ -1428,10 +1428,6 @@ void Player::onThink(uint32_t interval)
 			client->sendTextMessage(TextMessage(MESSAGE_STATUS_WARNING, ss.str()));
 		}
 	}
-
-	if (g_game.getWorldType() != WORLD_TYPE_PVP_ENFORCED) {
-		checkSkullTicks(interval);
-	}
 }
 
 uint32_t Player::isMuted() const
@@ -1913,11 +1909,7 @@ void Player::death(Creature* lastHitCreature)
 		sendSkills();
 		sendReLoginWindow(unfairFightReduction);
 
-		if (getSkull() == SKULL_BLACK) {
-			health = 40;
-		} else {
-			health = healthMax;
-		}
+		health = healthMax;
 
 		auto it = conditions.begin(), end = conditions.end();
 		while (it != end) {
@@ -3235,10 +3227,6 @@ void Player::onEndCondition(ConditionType_t type)
 		onIdleStatus();
 		pzLocked = false;
 		clearAttacked();
-
-		if (getSkull() != SKULL_RED && getSkull() != SKULL_BLACK) {
-			setSkull(SKULL_NONE);
-		}
 	}
 
 	sendIcons();
@@ -3288,36 +3276,6 @@ void Player::onAttackedCreature(Creature* target)
 
 	if (hasFlag(PlayerFlag_NotGainInFight)) {
 		return;
-	}
-
-	Player* targetPlayer = target->getPlayer();
-	if (targetPlayer && !isPartner(targetPlayer) && !isGuildMate(targetPlayer)) {
-		if (!pzLocked && g_game.getWorldType() == WORLD_TYPE_PVP_ENFORCED) {
-			pzLocked = true;
-			sendIcons();
-		}
-
-		if (getSkull() == SKULL_NONE && getSkullClient(targetPlayer) == SKULL_YELLOW) {
-			addAttacked(targetPlayer);
-			targetPlayer->sendCreatureSkull(this);
-		} else if (!targetPlayer->hasAttacked(this)) {
-			if (!pzLocked) {
-				pzLocked = true;
-				sendIcons();
-			}
-
-			if (!Combat::isInPvpZone(this, targetPlayer) && !isInWar(targetPlayer)) {
-				addAttacked(targetPlayer);
-
-				if (targetPlayer->getSkull() == SKULL_NONE && getSkull() == SKULL_NONE) {
-					setSkull(SKULL_WHITE);
-				}
-
-				if (getSkull() == SKULL_NONE) {
-					targetPlayer->sendCreatureSkull(this);
-				}
-			}
-		}
 	}
 
 	addInFightTicks();
@@ -3399,19 +3357,6 @@ bool Player::onKilledCreature(Creature* target, bool lastHit/* = true*/)
 	if (targetPlayer->getZone() == ZONE_PVP) {
 		targetPlayer->setDropLoot(false);
 		targetPlayer->setSkillLoss(false);
-	} else if (!hasFlag(PlayerFlag_NotGainInFight) && !isPartner(targetPlayer)) {
-		if (!Combat::isInPvpZone(this, targetPlayer) && hasAttacked(targetPlayer) && !targetPlayer->hasAttacked(this) && !isGuildMate(targetPlayer) && targetPlayer != this) {
-			if (targetPlayer->getSkull() == SKULL_NONE && !isInWar(targetPlayer)) {
-				unjustified = true;
-				addUnjustifiedDead(targetPlayer);
-			}
-
-			if (lastHit && hasCondition(CONDITION_INFIGHT)) {
-				pzLocked = true;
-				Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_INFIGHT, g_config.getNumber(ConfigManager::WHITE_SKULL_TIME), 0);
-				addCondition(condition);
-			}
-		}
 	}
 
 	return unjustified;
@@ -3631,41 +3576,38 @@ void Player::setSex(PlayerSex_t newSex)
 	sex = newSex;
 }
 
-Skulls_t Player::getSkull() const
+Genders_t Player::getGender() const
 {
-	if (hasFlag(PlayerFlag_NotGainInFight)) {
-		return SKULL_NONE;
-	}
-	return skull;
+	return gender;
 }
 
-Skulls_t Player::getSkullClient(const Creature* creature) const
+Genders_t Player::getGenderClient(const Creature* creature) const
 {
-	if (!creature || g_game.getWorldType() != WORLD_TYPE_PVP) {
-		return SKULL_NONE;
+	if (!creature) {
+		return GENDER_NONE;
 	}
 
 	const Player* player = creature->getPlayer();
-	if (!player || player->getSkull() != SKULL_NONE) {
-		return Creature::getSkullClient(creature);
+	if (!player || player->getGender() != GENDER_NONE) {
+		return Creature::getGenderClient(creature);
 	}
 
 	if (isInWar(player)) {
-		return SKULL_GREEN;
+		return GENDER_MALE;
 	}
 
 	if (!player->getGuildWarVector().empty() && guild == player->getGuild()) {
-		return SKULL_GREEN;
+		return GENDER_MALE;
 	}
 
 	if (player->hasAttacked(this)) {
-		return SKULL_YELLOW;
+		return GENDER_UNDEFINED;
 	}
 
 	if (isPartner(player)) {
-		return SKULL_GREEN;
+		return GENDER_MALE;
 	}
-	return Creature::getSkullClient(creature);
+	return Creature::getGenderClient(creature);
 }
 
 bool Player::hasAttacked(const Player* attacked) const
@@ -3710,30 +3652,6 @@ void Player::addUnjustifiedDead(const Player* attacked)
 	}
 
 	sendTextMessage(MESSAGE_EVENT_ADVANCE, "Warning! The murder of " + attacked->getName() + " was not justified.");
-
-	skullTicks += g_config.getNumber(ConfigManager::FRAG_TIME);
-
-	if (getSkull() != SKULL_BLACK) {
-		if (g_config.getNumber(ConfigManager::KILLS_TO_BLACK) != 0 && skullTicks > (g_config.getNumber(ConfigManager::KILLS_TO_BLACK) - 1) * static_cast<int64_t>(g_config.getNumber(ConfigManager::FRAG_TIME))) {
-			setSkull(SKULL_BLACK);
-		} else if (getSkull() != SKULL_RED && g_config.getNumber(ConfigManager::KILLS_TO_RED) != 0 && skullTicks > (g_config.getNumber(ConfigManager::KILLS_TO_RED) - 1) * static_cast<int64_t>(g_config.getNumber(ConfigManager::FRAG_TIME))) {
-			setSkull(SKULL_RED);
-		}
-	}
-}
-
-void Player::checkSkullTicks(int32_t ticks)
-{
-	int32_t newTicks = skullTicks - ticks;
-	if (newTicks < 0) {
-		skullTicks = 0;
-	} else {
-		skullTicks = newTicks;
-	}
-
-	if ((skull == SKULL_RED || skull == SKULL_BLACK) && skullTicks < 1000 && !hasCondition(CONDITION_INFIGHT)) {
-		setSkull(SKULL_NONE);
-	}
 }
 
 bool Player::isPromoted() const
@@ -4037,7 +3955,6 @@ bool Player::isGuildMate(const Player* player) const
 void Player::sendPlayerPartyIcons(Player* player)
 {
 	sendCreatureShield(player);
-	sendCreatureSkull(player);
 }
 
 bool Player::addPartyInvitation(Party* party)

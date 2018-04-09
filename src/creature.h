@@ -152,13 +152,13 @@ class Creature : virtual public Thing
 		virtual BloodType_t getBlood() const {
 			return BLOOD_NONE;
 		}
-		virtual Skulls_t getSkull() const {
-			return skull;
+		virtual Genders_t getGender() const {
+			return gender;
 		}
-		virtual Skulls_t getSkullClient(const Creature* creature) const {
-			return creature->getSkull();
+		virtual Genders_t getGenderClient(const Creature* creature) const {
+			return creature->getGender();
 		}
-		void setSkull(Skulls_t newSkull);
+		void setGender(Genders_t newGender);
 		Direction getDirection() const {
 			return direction;
 		}
@@ -517,7 +517,7 @@ class Creature : virtual public Thing
 		LightInfo internalLight;
 
 		Direction direction = DIRECTION_SOUTH;
-		Skulls_t skull = SKULL_NONE;
+		Genders_t gender = GENDER_NONE;
 
 		bool localMapCache[mapWalkHeight][mapWalkWidth] = {{ false }};
 		bool isInternalRemoved = false;

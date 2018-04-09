@@ -691,8 +691,8 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		mType->info.level = pugi::cast<int32_t>(attr.value());
 	}
 
-	if ((attr = pokemonNode.attribute("skull"))) {
-		mType->info.skull = getSkullType(asLowerCaseString(attr.as_string()));
+	if ((attr = pokemonNode.attribute("gender"))) {
+		mType->info.gender = getGenderType(asLowerCaseString(attr.as_string()));
 	}
 
 	if ((attr = pokemonNode.attribute("script"))) {
@@ -907,7 +907,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 					if ((attr = genderNode.attribute("percentage"))) {
 						float percentage = pugi::cast<float>(attr.value());;
 						sum += percentage;
-						mType->info.gender.male = percentage;
+						mType->info.genders.male = percentage;
 					} else {
 						std::cout << "[Warning - Pokemons::loadPokemon] Gender percentage is missing in: " << attr.value() << ". " << file << std::endl;	
 					}
@@ -915,7 +915,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 					if ((attr = genderNode.attribute("percentage"))) {
 						float percentage = pugi::cast<float>(attr.value());;
 						sum += percentage;
-						mType->info.gender.female = percentage;
+						mType->info.genders.female = percentage;
 					} else {
 						std::cout << "[Warning - Pokemons::loadPokemon] Gender percentage is missing in: " << attr.value() << ". " << file << std::endl;
 					}

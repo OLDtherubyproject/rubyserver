@@ -3884,9 +3884,6 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		Player* targetPlayer = target->getPlayer();
-		if (attackerPlayer && targetPlayer && attackerPlayer->getSkull() == SKULL_BLACK && attackerPlayer->getSkullClient(targetPlayer) == SKULL_NONE) {
-			return false;
-		}
 
 		if (damage.origin != ORIGIN_NONE) {
 			const auto& events = target->getCreatureEvents(CREATURE_EVENT_HEALTHCHANGE);
@@ -3975,9 +3972,6 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		Player* targetPlayer = target->getPlayer();
-		if (attackerPlayer && targetPlayer && attackerPlayer->getSkull() == SKULL_BLACK && attackerPlayer->getSkullClient(targetPlayer) == SKULL_NONE) {
-			return false;
-		}
 
 		damage.primary.value = std::abs(damage.primary.value);
 		damage.secondary.value = std::abs(damage.secondary.value);
@@ -4379,16 +4373,12 @@ void Game::updateCreatureWalkthrough(const Creature* creature)
 	}
 }
 
-void Game::updateCreatureSkull(const Creature* creature)
+void Game::updateCreatureGender(const Creature* creature)
 {
-	if (getWorldType() != WORLD_TYPE_PVP) {
-		return;
-	}
-
 	SpectatorHashSet spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
-		spectator->getPlayer()->sendCreatureSkull(creature);
+		spectator->getPlayer()->sendCreatureGender(creature);
 	}
 }
 
@@ -5471,7 +5461,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "'" << pokemon->mType->typeName << "', ";
 		query << "'" << pokemon->isShiny << "', ";
 		query << "'" << pokemon->getName() << "', ";
-		query << "'" << pokemon->getSkull() << "', ";
+		query << "'" << pokemon->getGender() << "', ";
 		query << "'" << pokemon->getNature() << "', ";
 		query << "'" << pokemon->getMaxHealth() << "', ";
 		query << "'" << pokemon->ivs.hp << "', ";
@@ -5498,7 +5488,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "`type` = '" << pokemon->mType->typeName << "', ";
 		query << "`shiny` = '" << pokemon->isShiny << "', ";
 		query << "`nickname` = '" << pokemon->getName() << "', ";
-		query << "`gender` = " << pokemon->getSkull() << ", ";
+		query << "`gender` = " << pokemon->getGender() << ", ";
 		query << "`nature` = " << pokemon->getNature() << ", ";
 		query << "`hpnow` = " << pokemon->getHealth() << ", ";
 		query << "`hp` = " << pokemon->ivs.hp << ", ";
@@ -5543,7 +5533,7 @@ Pokemon* Game::loadPokemonById(uint32_t id, Player* player /* = nullptr */)
 	// load general attributes
 	pokemon->setGUID(id);
 	pokemon->pokeballType = pokeballType;
-	pokemon->setSkull(static_cast<Skulls_t>(result->getNumber<uint16_t>("gender")));
+	pokemon->setGender(static_cast<Genders_t>(result->getNumber<uint16_t>("gender")));
 	pokemon->setNature(static_cast<Natures_t>(result->getNumber<uint16_t>("nature")));
 	pokemon->setName(result->getString("nickname"));
 	pokemon->ivs.hp = result->getNumber<uint16_t>("hp");

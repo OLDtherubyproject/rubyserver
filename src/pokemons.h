@@ -111,9 +111,9 @@ class PokemonType
 		std::vector<summonBlock_t> summons;
 		std::vector<EvolutionBlock_t> evolutions;
 
-		Skulls_t skull = SKULL_ORANGE;
+		Genders_t gender = GENDER_UNDEFINED;
 		Outfit_t outfit = {};
-		Gender_t gender = {};
+		Gender_t genders = {};
 		Shiny_t shiny = {};
 		BloodType_t blood = BLOOD_RED;
 		PokemonType_t firstType = TYPE_NONE;

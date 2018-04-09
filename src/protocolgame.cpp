@@ -1234,12 +1234,8 @@ void ProtocolGame::sendCreatureShield(const Creature* creature)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendCreatureSkull(const Creature* creature)
+void ProtocolGame::sendCreatureGender(const Creature* creature)
 {
-	if (g_game.getWorldType() != WORLD_TYPE_PVP) {
-		return;
-	}
-
 	if (!canSee(creature)) {
 		return;
 	}
@@ -1247,7 +1243,7 @@ void ProtocolGame::sendCreatureSkull(const Creature* creature)
 	NetworkMessage msg;
 	msg.addByte(0x90);
 	msg.add<uint32_t>(creature->getID());
-	msg.addByte(player->getSkullClient(creature));
+	msg.addByte(player->getGenderClient(creature));
 	writeToOutputBuffer(msg);
 }
 
@@ -2827,7 +2823,7 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 
 	msg.add<uint16_t>(creature->getStepSpeed() / 2);
 
-	msg.addByte(player->getSkullClient(creature));
+	msg.addByte(player->getGenderClient(creature));
 	msg.addByte(player->getPartyShield(otherPlayer));
 
 	if (!known) {

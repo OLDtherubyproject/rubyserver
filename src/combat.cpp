@@ -260,10 +260,6 @@ bool Combat::isProtected(const Player* attacker, const Player* target)
 		return true;
 	}
 
-	if (attacker->getSkull() == SKULL_BLACK && attacker->getSkullClient(target) == SKULL_NONE) {
-		return true;
-	}
-
 	return false;
 }
 
@@ -475,14 +471,6 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 	CombatDamage damage = *data;
 	if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
 		return;
-	}
-
-	if ((damage.primary.value < 0 || damage.secondary.value < 0) && caster) {
-		Player* targetPlayer = target->getPlayer();
-		if (targetPlayer && caster->getPlayer() && targetPlayer->getSkull() != SKULL_BLACK) {
-			damage.primary.value /= 2;
-			damage.secondary.value /= 2;
-		}
 	}
 
 	if (g_game.combatChangeHealth(caster, target, damage)) {

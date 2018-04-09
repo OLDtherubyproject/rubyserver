@@ -474,7 +474,7 @@ bool Move::playerMoveCheck(Player* player) const
 		return false;
 	}
 
-	if (aggressive && (range < 1 || (range > 0 && !player->getAttackedCreature())) && player->getSkull() == SKULL_BLACK) {
+	if (aggressive && (range < 1 || (range > 0 && !player->getAttackedCreature()))) {
 		player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
 		return false;
 	}

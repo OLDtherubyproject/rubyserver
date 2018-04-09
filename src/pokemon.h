@@ -103,11 +103,11 @@ class Pokemon final : public Creature
 				return;
 			}
 
-			if (mType->info.gender.male > 0 || mType->info.gender.female > 0) {
-				if (boolean_random(mType->info.gender.male / 100) == 1) {
-					setSkull(SKULL_GREEN); // Male
+			if (mType->info.genders.male > 0 || mType->info.genders.female > 0) {
+				if (boolean_random(mType->info.genders.male / 100) == 1) {
+					setGender(GENDER_MALE);
 				} else{
-					setSkull(SKULL_RED); // Female
+					setGender(GENDER_FEMALE);
 				}
 			}
 		}

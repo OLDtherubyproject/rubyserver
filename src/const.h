@@ -478,14 +478,11 @@ enum WieldInfo_t {
 	WIELDINFO_PREMIUM = 1 << 3,
 };
 
-enum Skulls_t : uint8_t {
-	SKULL_NONE = 0,
-	SKULL_YELLOW = 1,
-	SKULL_GREEN = 2,
-	SKULL_WHITE = 3,
-	SKULL_RED = 4,
-	SKULL_BLACK = 5,
-	SKULL_ORANGE = 6,
+enum Genders_t : uint8_t {
+	GENDER_NONE = 0,
+	GENDER_UNDEFINED = 1,
+	GENDER_MALE = 2,
+	GENDER_FEMALE = 3,
 };
 
 enum Natures_t : uint8_t {
