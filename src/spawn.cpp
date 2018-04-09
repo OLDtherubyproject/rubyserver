@@ -69,7 +69,7 @@ bool Spawns::loadFromXml(const std::string& filename)
 		Spawn& spawn = spawnList.front();
 
 		for (auto childNode : spawnNode.children()) {
-			if (strcasecmp(childNode.name(), "monster") == 0) {
+			if (strcasecmp(childNode.name(), "pokemon") == 0) {
 				pugi::xml_attribute nameAttribute = childNode.attribute("name");
 				if (!nameAttribute) {
 					continue;
