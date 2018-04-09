@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Zapdos" nameDescription="a zapdos" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Zapdos" nameDescription="a Zapdos" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="145" corpse="2964" />
 	<type first="electric" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3969" />
 	<icon charged="26406" discharged="26625" />
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "90" />
+		<attack value="90" />
+		<defense value="85" />
+		<specialAttack value="125" />
+		<specialDefense value="90" />
+		<speed value="100" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

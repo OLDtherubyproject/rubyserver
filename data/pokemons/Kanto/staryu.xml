@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Staryu" nameDescription="a staryu" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Staryu" nameDescription="a Staryu" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="120" corpse="2938" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />
@@ -9,15 +8,18 @@
 	<genders>
 		<gender name="male" percentage="87.5" />
 		<gender name="female" percentage="12.5" />
-    </genders>
+	</genders>
 		<basestats>
-	<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "30" />
+		<attack value="45" />
+		<defense value="55" />
+		<specialAttack value="70" />
+		<specialDefense value="55" />
+		<speed value="85" />
 	</basestats>
+	<evolutions>
+		<evolution to="starmie" at="anytime" stone="8929" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

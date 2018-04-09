@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Psyduck" nameDescription="a psyduck" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Psyduck" nameDescription="a Psyduck" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="54" corpse="2859" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />
@@ -11,13 +10,16 @@
 		<gender name="female" percentage="50" />
 	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "50" />
+		<attack value="52" />
+		<defense value="48" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="50" />
+		<speed value="55" />
 	</basestats>
+	<evolutions>
+		<evolution to="golduck" at="anytime" stone="8929" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

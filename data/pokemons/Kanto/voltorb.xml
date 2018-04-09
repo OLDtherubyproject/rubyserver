@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Voltorb" nameDescription="a voltorb" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Voltorb" nameDescription="a Voltorb" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="100" corpse="2917" />
 	<type first="electric" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2466" />
 	<icon charged="26501" discharged="26721" />
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "40" />
+		<attack value="30" />
+		<defense value="50" />
+		<specialAttack value="55" />
+		<specialDefense value="55" />
+		<speed value="100" />
 	</basestats>
+	<evolutions>
+		<evolution to="electrode" at="anytime" stone="8923" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

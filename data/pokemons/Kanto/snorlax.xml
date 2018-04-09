@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Snorlax" nameDescription="a snorlax" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Snorlax" nameDescription="a Snorlax" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="143" corpse="2961" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="3967" />
 	<icon charged="26595" discharged="26816" />
 	<genders>
-        <gender name="male" percentage="87.5" />
-        <gender name="female" percentage="12.5" />
-    </genders>
+		<gender name="male" percentage="87.5" />
+		<gender name="female" percentage="12.5" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
+		<hp value= "160" />
+		<attack value="110" />
+		<defense value="65" />
 		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<specialDefense value="110" />
+		<speed value="30" />
 	</basestats>
 	<flags>
 		<flag catchable="1" />

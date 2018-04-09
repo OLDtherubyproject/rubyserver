@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Vulpix" nameDescription="a vulpix" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Vulpix" nameDescription="a Vulpix" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="37" corpse="2846" />
 	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2412" />
 	<icon charged="26481" discharged="26701" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />		
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />		
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
+		<hp value= "38" />
+		<attack value="41" />
+		<defense value="40" />
+		<specialAttack value="50" />
 		<specialDefense value="65" />
-		<speed value="45" />
+		<speed value="65" />
 	</basestats>
+	<evolutions>
+		<evolution to="ninetales" at="anytime" stone="8926" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

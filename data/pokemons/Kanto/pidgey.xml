@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Pidgey" nameDescription="a pidgey" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Pidgey" nameDescription="a Pidgey" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="16" corpse="2824" />
 	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2391" />	
 	<icon charged="26520" discharged="26750" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "40" />
+		<attack value="45" />
+		<defense value="40" />
+		<specialAttack value="35" />
+		<specialDefense value="35" />
+		<speed value="56" />
 	</basestats>
+	<evolutions>
+		<evolution to="pidgeotto" at="day" stone="8924" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />
 		<flag attackable="1" />

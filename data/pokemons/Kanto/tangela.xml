@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Tangela" nameDescription="a tangela" blood="green" experience="23" speed="150" catchRate="50">
-	<health now="80" max="80" />
+<pokemon name="Tangela" nameDescription="a Tangela" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="114" corpse="2931" />
 	<type first="grass" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2480" />
 	<icon charged="26415" discharged="26634" />
 	<genders>
-        <gender name="male" percentage="50" />
-        <gender name="female" percentage="50" />
-    </genders>
+		<gender name="male" percentage="50" />
+		<gender name="female" percentage="50" />
+	</genders>
 	<basestats>
-		<hp value= "45" />
-		<attack value="49" />
-		<defense value="49" />
-		<specialAttack value="65" />
-		<specialDefense value="65" />
-		<speed value="45" />
+		<hp value= "65" />
+		<attack value="55" />
+		<defense value="115" />
+		<specialAttack value="100" />
+		<specialDefense value="40" />
+		<speed value="60" />
 	</basestats>
+	<evolutions>
+		<evolution to="tangrowth" at="anytime" stone="8927" />
+	</evolutions>
 	<flags>
 		<flag catchable="1" />		
 		<flag attackable="1" />
