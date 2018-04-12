@@ -92,7 +92,7 @@ class PokeballType : public Event
 		}
 
 		uint16_t getDischargedID() const {
-			return charged;
+			return discharged;
 		}
 
 		MagicEffectClasses getGobackEffect() const {
