@@ -972,6 +972,26 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((node = pokemonNode.child("spawn"))) {
+		if ((attr = node.attribute("at"))) {
+			std::string at = pugi::cast<std::string>(attr.value());
+
+			if (at == "anytime") {
+				mType->info.spawnAt = 0;
+			}
+
+			if (at == "night") {
+				mType->info.spawnAt = 1;
+			}
+
+			if (at == "day") {
+				mType->info.spawnAt = 2;
+			}
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Missing spawn at. " << file << std::endl;
+		}
+	}
+
 	if ((node = pokemonNode.child("attacks"))) {
 		for (auto attackNode : node.children()) {
 			moveBlock_t sb;

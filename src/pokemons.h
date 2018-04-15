@@ -124,6 +124,7 @@ class PokemonType
 		float dittoChance = 0;
 		double catchRate = 0;
 
+		uint16_t spawnAt = 0;
 		uint16_t lookcorpse = 0;
 
 		uint64_t experience = 0;

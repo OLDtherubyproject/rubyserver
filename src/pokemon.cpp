@@ -773,22 +773,6 @@ void Pokemon::onThink(uint32_t interval)
 {
 	Creature::onThink(interval);
 
-	if (isSummon() && getMaster()->getPlayer()) {
-		if (getHealth() <= (0.15 * getMaxHealth())) {
-			if (canSendEmot()) {
-				setNextEmot(OTSYS_TIME() + EVENT_SEND_PBEMOT_INTERVAL);
-				g_game.addMagicEffect(getPosition(), 91);
-			}
-		} else {
-			Tile* tile = g_game.map.getTile(getPosition());
-			HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
-			if (houseTile && canSendEmot()) {
-				setNextEmot(OTSYS_TIME() + EVENT_SEND_HOUSEEMOT_INTERVAL);
-				g_game.addMagicEffect(getPosition(), 99);
-			}
-		}
-	}
-
 	if (mType->info.thinkEvent != -1) {
 		// onThink(self, interval)
 		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
@@ -826,6 +810,22 @@ void Pokemon::onThink(uint32_t interval)
 				if(needTeleportToPlayer && teleportToPlayer())
 					needTeleportToPlayer = false;
 
+				if (belongsToPlayer()) {
+					if (getHealth() <= (0.15 * getMaxHealth())) {
+						if (canSendEmot()) {
+							setNextEmot(OTSYS_TIME() + EVENT_SEND_PBEMOT_INTERVAL);
+							g_game.addMagicEffect(getPosition(), 91);
+						}
+					} else {
+						Tile* tile = g_game.map.getTile(getPosition());
+						HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
+						if (houseTile && canSendEmot()) {
+							setNextEmot(OTSYS_TIME() + EVENT_SEND_HOUSEEMOT_INTERVAL);
+							g_game.addMagicEffect(getPosition(), 99);
+						}
+					}
+				}
+
 				if (!attackedCreature) {
 					if (getMaster() && getMaster()->getAttackedCreature()) {
 						//This happens if the pokemon is summoned during combat
@@ -840,12 +840,18 @@ void Pokemon::onThink(uint32_t interval)
 					//This happens just after a master orders an attack, so lets follow it aswell.
 					setFollowCreature(attackedCreature);
 				}
-			} else if (!targetList.empty()) {
-				if (!followCreature || !hasFollowPath) {
-					searchTarget();
-				} else if (isFleeing()) {
-					if (attackedCreature && !canUseAttack(getPosition(), attackedCreature)) {
-						searchTarget(TARGETSEARCH_ATTACKRANGE);
+			} else {
+				if (checkSpawn()) {
+					return;
+				}
+
+				if (!targetList.empty()) {
+					if (!followCreature || !hasFollowPath) {
+						searchTarget();
+					} else if (isFleeing()) {
+						if (attackedCreature && !canUseAttack(getPosition(), attackedCreature)) {
+							searchTarget(TARGETSEARCH_ATTACKRANGE);
+						}
 					}
 				}
 			}
@@ -2117,4 +2123,24 @@ void Pokemon::getPathSearchParams(const Creature* creature, FindPathParams& fpp)
 	} else {
 		fpp.fullPathSearch = !canUseAttack(getPosition(), creature);
 	}
+}
+
+bool Pokemon::checkSpawn()
+{
+	if (!belongsToPlayer() && getPokemonType()->info.spawnAt != 0) {
+		if (getPokemonType()->info.spawnAt == 1 && !getTile()->hasFlag(TILESTATE_CAVE)) {
+			if (!g_game.isNight() && !g_game.isSunset()) {
+				g_game.addMagicEffect(getPosition(), 3);
+				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, getName() + " ran away...", false);
+				g_game.removeCreature(this, true);
+				return true;
+			}
+		} else if (getPokemonType()->info.spawnAt == 2 && !g_game.isDay() && !g_game.isSunrise()) {
+			g_game.addMagicEffect(getPosition(), 3);
+			g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, getName() + " ran away...", false);
+			g_game.removeCreature(this, true);
+			return true;
+		}
+	}
+	return false;
 }

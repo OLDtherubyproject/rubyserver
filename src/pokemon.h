@@ -419,6 +419,7 @@ class Pokemon final : public Creature
 			return mType->info.conditionImmunities;
 		}
 		void getPathSearchParams(const Creature* creature, FindPathParams& fpp) const override;
+		bool checkSpawn();
 		bool useCacheMap() const override {
 			return !randomStepping;
 		}

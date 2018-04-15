@@ -199,6 +199,22 @@ bool Spawn::isInSpawnZone(const Position& pos)
 bool Spawn::spawnPokemon(uint32_t spawnId, PokemonType* mType, const Position& pos, Direction dir, bool startup /*= false*/)
 {
 	std::unique_ptr<Pokemon> pokemon_ptr(new Pokemon(mType));
+	
+	Tile* tile = g_game.map.getTile(pos);
+	if (!tile) {
+		return false;
+	}
+
+	if (mType->info.spawnAt != 0) {
+		if (mType->info.spawnAt == 1 && !tile->hasFlag(TILESTATE_CAVE)) {
+			if (!g_game.isNight() && !g_game.isSunset()) {
+				return false;
+			}
+		} else if (mType->info.spawnAt == 2 && !g_game.isDay() && !g_game.isSunrise()) {
+			return false;
+		}
+	}
+
 	if (startup) {
 		//No need to send out events to the surrounding since there is no one out there to listen!
 		if (!g_game.internalPlaceCreature(pokemon_ptr.get(), pos, true)) {
