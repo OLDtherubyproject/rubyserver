@@ -71,7 +71,7 @@ Game::~Game()
 void Game::start(ServiceManager* manager)
 {
 	serviceManager = manager;
-
+	
 	g_scheduler.addEvent(createSchedulerTask(0, std::bind(&Game::checkLight, this)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_CREATURE_THINK_INTERVAL, std::bind(&Game::checkCreatures, this, 0)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_DECAYINTERVAL, std::bind(&Game::checkDecay, this)));
@@ -5862,40 +5862,24 @@ void Game::transformPokeball(Cylinder* fromCylinder, Cylinder* toCylinder, Item*
 
 bool Game::isDay()
 {
-	if (lightState == LIGHT_STATE_DAY) {
-		return true;
-	}
-
-	return false;
+	return lightState == LIGHT_STATE_DAY;
 }
 
 bool Game::isSunset()
 {
-	if (lightState == LIGHT_STATE_SUNSET) {
-		return true;
-	}
-
-	return false;
+	return lightState == LIGHT_STATE_SUNSET;
 }
 
 
 bool Game::isNight()
 {
-	if (lightState == LIGHT_STATE_NIGHT) {
-		return true;
-	}
-
-	return false;
+	return lightState == LIGHT_STATE_NIGHT;
 }
 
 
 bool Game::isSunrise()
 {
-	if (lightState == LIGHT_STATE_SUNRISE) {
-		return true;
-	}
-
-	return false;
+	return lightState == LIGHT_STATE_SUNRISE;
 }
 
 void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
