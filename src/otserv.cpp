@@ -240,6 +240,21 @@ void mainLoader(int, char*[], ServiceManager* services)
 	}
 	std::cout << asUpperCaseString(worldType) << std::endl;
 
+	std::cout << ">> Setting world time... ";
+	g_game.checkLight();
+
+	if (g_game.isDay()) {
+		std::cout << "DAY" << std::endl;
+	} else if (g_game.isSunset()) {
+		std::cout << "SUNSET" << std::endl;
+	} else if (g_game.isNight()) {
+		std::cout << "NIGHT" << std::endl;
+	} else if (g_game.isSunrise()) {
+		std::cout << "SUNRISE" << std::endl;
+	} else {
+		std::cout << "UNKNOWN" << std::endl;
+	}
+
 	std::cout << ">> Loading map" << std::endl;
 	if (!g_game.loadMainMap(g_config.getString(ConfigManager::MAP_NAME))) {
 		startupErrorMessage("Failed to load map");
