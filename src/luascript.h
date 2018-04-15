@@ -560,6 +560,9 @@ class LuaScriptInterface
 		static int luaGameIsNight(lua_State* L);
 		static int luaGameIsSunrise(lua_State* L);
 
+		static int luaGameLoadPokemonById(lua_State* L);
+		static int luaGameSavePokemon(lua_State* L);
+
 		// Variant
 		static int luaVariantCreate(lua_State* L);
 
@@ -1011,6 +1014,8 @@ class LuaScriptInterface
 		
 		static int luaPokemonCastMove(lua_State* L);
 
+		static int luaPokemonGetPokemonType(lua_State* L);
+
 		// Npc
 		static int luaNpcCreate(lua_State* L);
 
@@ -1246,6 +1251,9 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetYellSpeedTicks(lua_State* L);
 		static int luaPokemonTypeGetChangeTargetChance(lua_State* L);
 		static int luaPokemonTypeGetChangeTargetSpeed(lua_State* L);
+
+		static int luaPokemonTypeGetChargedIcon(lua_State* L);
+		static int luaPokemonTypeGetDischargedIcon(lua_State* L);
 
 		// Party
 		static int luaPartyCreate(lua_State* L);
