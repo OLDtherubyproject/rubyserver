@@ -71,7 +71,7 @@ Game::~Game()
 void Game::start(ServiceManager* manager)
 {
 	serviceManager = manager;
-	
+
 	g_scheduler.addEvent(createSchedulerTask(0, std::bind(&Game::checkLight, this)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_CREATURE_THINK_INTERVAL, std::bind(&Game::checkCreatures, this, 0)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_DECAYINTERVAL, std::bind(&Game::checkDecay, this)));
@@ -5211,8 +5211,9 @@ void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballTyp
 	MagicEffectClasses pokemonEmot = CONST_ME_EMOT_THREE_POINTS;
 	std::ostringstream message;
 	message << "Sorry, your pokeball broke.";
+	rate = (pokemonType->info.catchRate * rate) * g_config.getNumber(ConfigManager::RATE_CATCH);
 
-	if (boolean_random((pokemonType->info.catchRate * rate) / 100) == 1) {
+	if (uniform_random(1, 100) <= rate || rate > 100) {
 		tryEffect = pokeballType->getCatchSuccessEffect();
 		pokemonEmot = CONST_ME_EMOT_EXCLAMATION;
 		Pokemon* pokemon = Pokemon::createPokemon(pokemonType->typeName);
