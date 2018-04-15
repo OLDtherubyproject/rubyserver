@@ -5917,10 +5917,10 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 				return;
 			}
 
-			if (evolution.at == 1 && (!isNight() && !pokemon->getTile()->hasFlag(TILESTATE_CAVE))) {
+			if (evolution.at == 1 && ((!isNight() && !isSunset()) && !pokemon->getTile()->hasFlag(TILESTATE_CAVE))) {
 				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, pokemon->getPokemonType()->name + " only evolves at night or inside a cave.");
 				return;
-			} else if (evolution.at == 2 && !isDay()) {
+			} else if (evolution.at == 2 && (!isDay() && !isSunrise())) {
 				player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, pokemon->getPokemonType()->name + " only evolves during the day.");
 				return;
 			}
@@ -5939,6 +5939,8 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 			}
 
 			pokemon->setPokemonType(pokemonType);
+			pokemon->setHealth(pokemon->getMaxHealth());
+			pokemon->clearConditions();
 			savePokemon(pokemon);
 			removeCreature(pokemon);
 
@@ -5952,7 +5954,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 			// transform portrait
 			Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 			if (portrait) {
-				transformItem(portrait, pokemonType->info.portrait);
+				//transformItem(portrait, pokemonType->info.portrait);
 			}
 
 			// transform pokeball
@@ -5964,6 +5966,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 			}
 
 			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Congratulations! " + oldName + " evolved to " + pokemonType->nameDescription + "!");
+			//player->sendStats();
 			addMagicEffect(newPokemon->getPosition(), CONST_ME_EVOLUTION);
 			return;
 		}
