@@ -5940,7 +5940,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 
 			pokemon->setPokemonType(pokemonType);
 			pokemon->setHealth(pokemon->getMaxHealth());
-			pokemon->clearConditions();
+			pokemon->cleanConditions();
 			savePokemon(pokemon);
 			removeCreature(pokemon);
 

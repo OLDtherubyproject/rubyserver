@@ -460,7 +460,7 @@ class Creature : virtual public Thing
 
 		bool needTeleportToPlayer = false;
 
-		void clearConditions() {
+		void cleanConditions() {
 			conditions.clear();
 		}
 
