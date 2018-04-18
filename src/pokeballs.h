@@ -41,6 +41,7 @@ class Pokeballs final : public BaseEvents
 
 		PokeballType* getPokeballTypeByItemID(const uint16_t id) const;
 		PokeballType* getPokeballTypeByServerID(const uint16_t id) const;
+		PokeballType* getPokeballTypeByName(const std::string name) const;
 
 		bool usePokeball(Player* player, Item* pokeball, const Position& fromPos, const Position& toPos, bool isHotkey) const;
 	private:

@@ -72,6 +72,17 @@ PokeballType* Pokeballs::getPokeballTypeByServerID(const uint16_t id) const
 	return it->second;
 }
 
+PokeballType* Pokeballs::getPokeballTypeByName(const std::string name) const
+{
+	for (std::map<uint32_t, PokeballType*>::const_iterator it = pokeballs.begin(); it != pokeballs.end(); ++it) {
+		if (it->second->getName() == name) {
+			return it->second;
+		}
+	}
+
+	return nullptr;
+}
+
 bool Pokeballs::usePokeball(Player* player, Item* pokeball, const Position& fromPos, const Position& toPos, bool isHotkey) const
 {
 	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::POKEBALLS_DELAY_INTERVAL));
