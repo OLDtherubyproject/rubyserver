@@ -50,8 +50,8 @@ timeBetweenGoback = 500
 
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
-mapName = "forgotten"
-mapAuthor = "Komic"
+mapName = "ruby"
+mapAuthor = "Tataboy67"
 
 -- Market
 marketOfferDuration = 30 * 24 * 60 * 60
