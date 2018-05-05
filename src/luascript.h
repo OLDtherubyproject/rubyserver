@@ -899,6 +899,7 @@ class LuaScriptInterface
 
 		static int luaPlayerGetPokemonCapacity(lua_State* L);
 		static int luaPlayerAddPokemonCapacity(lua_State* L);
+		static int luaPlayerAddPokemon(lua_State* L);
 
 		static int luaPlayerGetBankBalance(lua_State* L);
 		static int luaPlayerSetBankBalance(lua_State* L);

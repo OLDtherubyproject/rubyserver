@@ -2307,6 +2307,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "getPokemonCapacity", LuaScriptInterface::luaPlayerGetPokemonCapacity);
 	registerMethod("Player", "addPokemonCapacity", LuaScriptInterface::luaPlayerAddPokemonCapacity);
+	registerMethod("Player", "addPokemon", LuaScriptInterface::luaPlayerAddPokemon);
 
 	registerMethod("Player", "getBankBalance", LuaScriptInterface::luaPlayerGetBankBalance);
 	registerMethod("Player", "setBankBalance", LuaScriptInterface::luaPlayerSetBankBalance);
@@ -8383,6 +8384,132 @@ int LuaScriptInterface::luaPlayerAddPokemonCapacity(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPlayerAddPokemon(lua_State* L)
+{
+	// player:addPokemon(name, pokeballType, gender[, isShiny[, nature[, health[, attack[, defense[, speed[, special_attack[, special_defense]]]]]]]])
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	Pokemon* pokemon = Pokemon::createPokemon(getString(L, 2));
+	if (!pokemon) {
+		reportErrorFunc("Pokemon not found.");
+		lua_pushnil(L);
+		return 1;
+	}
+
+	PokeballType* pokeballType;
+	if (isNumber(L, 3)) {
+		pokeballType = g_pokeballs->getPokeballTypeByItemID(getNumber<uint16_t>(L, 3));
+	} else if (isString(L, 3)) {
+		pokeballType = g_pokeballs->getPokeballTypeByName(getString(L, 3));
+	} else {
+		pokeballType = nullptr;
+	}
+
+	if (!pokeballType) {
+		reportErrorFunc("Pokeball not found.");
+		lua_pushnil(L);
+		return 1;
+	}
+
+	Genders_t gender = static_cast<Genders_t>(getNumber<uint8_t>(L, 4));
+	pokemon->setPokeballType(pokeballType);
+
+	pokemon->setMasterLevel(player->getLevel());
+	pokemon->setHealth(pokemon->getMaxHealth());
+	pokemon->setGender(gender);
+
+	bool isShiny = false;
+	Natures_t nature = pokemon->getNature();
+	uint16_t health = pokemon->getHP();
+	uint16_t attack = pokemon->getAtk();
+	uint16_t defense = pokemon->getDef();
+	uint16_t speed = pokemon->getSpeed();
+	uint16_t special_attack = pokemon->getSpAtk();
+	uint16_t special_defense = pokemon->getSpDef();
+
+	int parameters = lua_gettop(L);
+
+	if (parameters >= 5) {
+		isShiny = getBoolean(L, 5);
+	}
+	if (parameters >= 6) {
+		nature = static_cast<Natures_t>(getNumber<uint8_t>(L, 6));
+	}
+	if (parameters >= 7) {
+		health = getNumber<uint16_t>(L, 7);
+		if (health < 1 || health > 31)
+			health = pokemon->getHP();
+	}
+	if (parameters >= 8) {
+		attack = getNumber<uint16_t>(L, 8);
+		if (attack < 1 || attack > 31)
+			attack = pokemon->getAtk();
+	}
+	if (parameters >= 9) {
+		defense = getNumber<uint16_t>(L, 9);
+		if (defense < 1 || defense > 31)
+			defense = pokemon->getDef();
+	}
+	if (parameters >= 10) {
+		speed = getNumber<uint16_t>(L, 10);
+		if (speed < 1 || speed > 31)
+			speed = pokemon->getSpeed();
+	}
+	if (parameters >= 11) {
+		special_attack = getNumber<uint16_t>(L, 11);
+		if (special_attack < 1 || special_attack > 31)
+			special_attack = pokemon->getSpAtk();
+	}
+	if (parameters >= 12) {
+		special_defense = getNumber<uint16_t>(L, 12);
+		if (special_defense < 1 || special_defense > 31)
+			special_defense = pokemon->getSpDef();
+	}
+
+	pokemon->setNature(nature);
+	pokemon->setIsShiny(isShiny);
+	pokemon->ivs.hp = health;
+	pokemon->ivs.attack = attack;
+	pokemon->ivs.defense = defense;
+	pokemon->ivs.speed = speed;
+	pokemon->ivs.special_attack = special_attack;
+	pokemon->ivs.special_defense = special_defense;
+
+	uint32_t pokemonID = g_game.savePokemon(pokemon);
+
+	if (!pokemonID) {
+		return 0;
+	}
+
+	Item* pokeball = Item::CreateItem(pokemon->mType->info.iconCharged, 1);
+	std::ostringstream s;
+
+	pokeball->setPokemonId(pokemonID);
+	pokeball->setName(pokeballType->getName());
+	pokeball->setDescription("It contains " + pokemon->getNameDescription() + ".");
+	pokeball->setPrice(pokemon->getPrice());
+
+	if (player->getPokemonCapacity() >= 6) {
+		s << "You already hold six pokemon, your new pokemon will be teleported to the Pokemon Center!";
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, s.str());
+		g_game.internalAddItem(player->getInbox(), pokeball, INDEX_WHEREEVER, FLAG_NOLIMIT);
+	} else {
+		g_game.internalAddItem(player, pokeball, INDEX_WHEREEVER, 0);
+	}
+
+	pokemon->removeList();
+	pokemon->setRemoved();
+	g_game.ReleaseCreature(pokemon);
+	g_game.removeCreatureCheck(pokemon);
+
+	pushBoolean(L, true);
+	return 1;
+}
+
 int LuaScriptInterface::luaPlayerGetBankBalance(lua_State* L)
 {
 	// player:getBankBalance()
@@ -12696,6 +12823,8 @@ int LuaScriptInterface::luaPokeballTypeCreate(lua_State* L)
 	const PokeballType* pokeballType;
 	if (isNumber(L, 2)) {
 		pokeballType = g_pokeballs->getPokeballTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else if (isString(L, 2)) {
+		pokeballType = g_pokeballs->getPokeballTypeByName(getString(L, 2));
 	} else {
 		pokeballType = nullptr;
 	}
