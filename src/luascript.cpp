@@ -12696,6 +12696,8 @@ int LuaScriptInterface::luaPokeballTypeCreate(lua_State* L)
 	const PokeballType* pokeballType;
 	if (isNumber(L, 2)) {
 		pokeballType = g_pokeballs->getPokeballTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else if (isString(L, 2)) {
+		pokeballType = g_pokeballs->getPokeballTypeByName(getString(L, 2));
 	} else {
 		pokeballType = nullptr;
 	}
