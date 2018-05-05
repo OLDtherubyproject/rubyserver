@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>	
+	<!-- Quest -->
+	<action actionid="3000" script="quests/pokemon_quest_exemple_advanced.lua" />
+	<action actionid="3001" script="quests/pokemon_quest_exemple_simple.lua" />
+
 	<!-- Tools -->
 	<action itemid="2420" script="tools/machete.lua" />
 	<action itemid="2550" script="tools/scythe.lua" />
