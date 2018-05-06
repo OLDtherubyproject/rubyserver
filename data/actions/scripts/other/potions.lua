@@ -20,21 +20,22 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if player:getExhaustion(exhaustion) > 0 then
 		player:sendCancelMessage("You have to wait ".. player:getExhaustion(exhaustion) .." seconds to use this potion.")
 		return true
-    end
+	end
 	
-	local potion = potions[item:getId()]
-	if potion and not (target:getHealth() == target:getMaxHealth())then
-		target:addHealth(potion)
+	if target:getHealth() == target:getMaxHealth() and item:getId() ~= 8881 then
+		player:sendCancelMessage("This pokemon does not need any potion.")
+		return true
+	end
+	
+	if potions[item:getId()] then
+		target:addHealth(potions[item:getId()])
 		target:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 		player:setExhaustion(exhaustion, seconds)
 		item:remove(1)
 		return true
-	else
-		player:sendCancelMessage("This Pokemon does not need any potion.")
-		return true
 	end
-
-	if item:getId() == 8880 then
+	
+	if item:getId() == 8880 then -- Max Health Potion
 		target:addHealth(target:getMaxHealth())
 		target:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 		player:setExhaustion(exhaustion, seconds)
@@ -42,7 +43,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 	
-	if item:getId() == 8881 then
+	if item:getId() == 8881 then -- Full Restore Potion
+		target:addHealth(target:getMaxHealth())
 		target:cleanConditions();
 		target:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 		player:setExhaustion(exhaustion, seconds)
