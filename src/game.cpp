@@ -1757,26 +1757,24 @@ Item* searchForItem(Container* container, uint16_t itemId)
 slots_t getSlotType(const ItemType& it)
 {
 	slots_t slot = CONST_SLOT_RIGHT;
-	if (it.weaponType != WeaponType_t::WEAPON_SHIELD) {
-		int32_t slotPosition = it.slotPosition;
+	int32_t slotPosition = it.slotPosition;
 
-		if (slotPosition & SLOTP_HEAD) {
-			slot = CONST_SLOT_HEAD;
-		} else if (slotPosition & SLOTP_NECKLACE) {
-			slot = CONST_SLOT_NECKLACE;
-		} else if (slotPosition & SLOTP_ARMOR) {
-			slot = CONST_SLOT_ARMOR;
-		} else if (slotPosition & SLOTP_PORTRAIT) {
-			slot = CONST_SLOT_PORTRAIT;
-		} else if (slotPosition & SLOTP_POKEBALL) {
-			slot = CONST_SLOT_POKEBALL ;
-		} else if (slotPosition & SLOTP_RING) {
-			slot = CONST_SLOT_RING;
-		} else if (slotPosition & SLOTP_SUPPORT) {
-			slot = CONST_SLOT_SUPPORT;
-		} else if (slotPosition & SLOTP_TWO_HAND || slotPosition & SLOTP_LEFT) {
-			slot = CONST_SLOT_LEFT;
-		}
+	if (slotPosition & SLOTP_HEAD) {
+		slot = CONST_SLOT_HEAD;
+	} else if (slotPosition & SLOTP_NECKLACE) {
+		slot = CONST_SLOT_NECKLACE;
+	} else if (slotPosition & SLOTP_ARMOR) {
+		slot = CONST_SLOT_ARMOR;
+	} else if (slotPosition & SLOTP_PORTRAIT) {
+		slot = CONST_SLOT_PORTRAIT;
+	} else if (slotPosition & SLOTP_POKEBALL) {
+		slot = CONST_SLOT_POKEBALL ;
+	} else if (slotPosition & SLOTP_RING) {
+		slot = CONST_SLOT_RING;
+	} else if (slotPosition & SLOTP_SUPPORT) {
+		slot = CONST_SLOT_SUPPORT;
+	} else if (slotPosition & SLOTP_TWO_HAND || slotPosition & SLOTP_LEFT) {
+		slot = CONST_SLOT_LEFT;
 	}
 
 	return slot;
@@ -3710,9 +3708,9 @@ void Game::changeLight(const Creature* creature)
 	}
 }
 
-bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* target, bool checkDefense, bool checkArmor, bool field)
+bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* target, bool field)
 {
-	if (damage.primary.type == COMBAT_NONE && damage.secondary.type == COMBAT_NONE) {
+	if (damage.type == COMBAT_NONE) {
 		return true;
 	}
 
@@ -3720,67 +3718,20 @@ bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* ta
 		return true;
 	}
 
-	if (damage.primary.value > 0) {
+	if (damage.value > 0) {
 		return false;
 	}
 
-	static const auto sendBlockEffect = [this](BlockType_t blockType, CombatType_t combatType, const Position& targetPos) {
-		if (blockType == BLOCK_DEFENSE) {
-			addMagicEffect(targetPos, CONST_ME_POFF);
-		} else if (blockType == BLOCK_ARMOR) {
-			addMagicEffect(targetPos, CONST_ME_BLOCKHIT);
-		} else if (blockType == BLOCK_IMMUNITY) {
-			uint8_t hitEffect = 0;
-			switch (combatType) {
-				case COMBAT_UNDEFINEDDAMAGE: {
-					return;
-				}
-				case COMBAT_ENERGYDAMAGE:
-				case COMBAT_FIREDAMAGE:
-				case COMBAT_PHYSICALDAMAGE:
-				case COMBAT_ICEDAMAGE:
-				case COMBAT_DEATHDAMAGE: {
-					hitEffect = CONST_ME_BLOCKHIT;
-					break;
-				}
-				case COMBAT_EARTHDAMAGE: {
-					hitEffect = CONST_ME_GREEN_RINGS;
-					break;
-				}
-				case COMBAT_HOLYDAMAGE: {
-					hitEffect = CONST_ME_HOLYDAMAGE;
-					break;
-				}
-				default: {
-					hitEffect = CONST_ME_POFF;
-					break;
-				}
-			}
-			addMagicEffect(targetPos, hitEffect);
-		}
-	};
-
-	BlockType_t primaryBlockType, secondaryBlockType;
-	if (damage.primary.type != COMBAT_NONE) {
-		damage.primary.value = -damage.primary.value;
-		primaryBlockType = target->blockHit(attacker, damage.primary.type, damage.primary.value, checkDefense, checkArmor, field);
-
-		damage.primary.value = -damage.primary.value;
-		sendBlockEffect(primaryBlockType, damage.primary.type, target->getPosition());
+	BlockType_t blockType;
+	if (damage.type != COMBAT_NONE) {
+		damage.value = -damage.value;
+		blockType = target->blockHit(attacker, damage.type, damage.value, field);
+		damage.value = -damage.value;
 	} else {
-		primaryBlockType = BLOCK_NONE;
+		blockType = BLOCK_NONE;
 	}
 
-	if (damage.secondary.type != COMBAT_NONE) {
-		damage.secondary.value = -damage.secondary.value;
-		secondaryBlockType = target->blockHit(attacker, damage.secondary.type, damage.secondary.value, false, false, field);
-
-		damage.secondary.value = -damage.secondary.value;
-		sendBlockEffect(secondaryBlockType, damage.secondary.type, target->getPosition());
-	} else {
-		secondaryBlockType = BLOCK_NONE;
-	}
-	return (primaryBlockType != BLOCK_NONE) && (secondaryBlockType != BLOCK_NONE);
+	return (blockType != BLOCK_NONE);
 }
 
 void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColor_t& color, uint8_t& effect)
@@ -3806,7 +3757,7 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					break;
 				case BLOOD_PURPLE:
 					color = TEXTCOLOR_ELECTRICPURPLE;
-					effect = CONST_ME_ENERGYHIT;
+					effect = CONST_ME_DRAWBLOOD;
 					break;
 				default:
 					color = TEXTCOLOR_NONE;
@@ -3817,48 +3768,120 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 			break;
 		}
 
-		case COMBAT_ENERGYDAMAGE: {
-			color = TEXTCOLOR_ELECTRICPURPLE;
-			effect = CONST_ME_ENERGYHIT;
+		case COMBAT_NORMALDAMAGE: {
+			color = TEXTCOLOR_DARKGREEN;
+			effect = CONST_ME_NONE;
 			break;
 		}
 
-		case COMBAT_EARTHDAMAGE: {
-			color = TEXTCOLOR_LIGHTGREEN;
-			effect = CONST_ME_GREEN_RINGS;
+		case COMBAT_ELECTRICDAMAGE: {
+			color = TEXTCOLOR_YELLOW;
+			effect = CONST_ME_NONE;
 			break;
 		}
 
-		case COMBAT_DROWNDAMAGE: {
-			color = TEXTCOLOR_LIGHTBLUE;
-			effect = CONST_ME_LOSEENERGY;
+		case COMBAT_GRASSDAMAGE: {
+			color = TEXTCOLOR_GREEN;
+			effect = CONST_ME_NONE;
 			break;
 		}
+
+		case COMBAT_WATERDAMAGE: {
+			color = TEXTCOLOR_BLUE;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
 		case COMBAT_FIREDAMAGE: {
 			color = TEXTCOLOR_ORANGE;
-			effect = CONST_ME_HITBYFIRE;
+			effect = CONST_ME_NONE;
 			break;
 		}
+
 		case COMBAT_ICEDAMAGE: {
 			color = TEXTCOLOR_SKYBLUE;
-			effect = CONST_ME_ICEATTACK;
+			effect = CONST_ME_NONE;
 			break;
 		}
-		case COMBAT_HOLYDAMAGE: {
-			color = TEXTCOLOR_YELLOW;
-			effect = CONST_ME_HOLYDAMAGE;
+
+		case COMBAT_BUGDAMAGE: {
+			color = TEXTCOLOR_POOLGREEN;
+			effect = CONST_ME_NONE;
 			break;
 		}
-		case COMBAT_DEATHDAMAGE: {
-			color = TEXTCOLOR_DARKRED;
-			effect = CONST_ME_SMALLCLOUDS;
+
+		case COMBAT_POISONDAMAGE: {
+			color = TEXTCOLOR_DARKPURPLE;
+			effect = CONST_ME_NONE;
 			break;
 		}
+
+		case COMBAT_DARKDAMAGE: {
+			color = TEXTCOLOR_QUINCY;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
 		case COMBAT_LIFEDRAIN: {
 			color = TEXTCOLOR_RED;
-			effect = CONST_ME_MAGIC_RED;
+			effect = CONST_ME_NONE;
 			break;
 		}
+
+		case COMBAT_FAIRYDAMAGE: {
+			color = TEXTCOLOR_PINK;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_GHOSTDAMAGE: {
+			color = TEXTCOLOR_BUTTERFLYBUSH;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_FIGHTINGDAMAGE: {
+			color = TEXTCOLOR_DARKRED;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_GROUNDDAMAGE: {
+			color = TEXTCOLOR_LIGHTYELLOW;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_FLYINGDAMAGE: {
+			color = TEXTCOLOR_LIGHTPINK;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_PSYCHICDAMAGE: {
+			color = TEXTCOLOR_BRINKPINK;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_ROCKDAMAGE: {
+			color = TEXTCOLOR_BRASS;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_DRAGONDAMAGE: {
+			color = TEXTCOLOR_BLUEVIOLET;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
+		case COMBAT_STEELDAMAGE: {
+			color = TEXTCOLOR_LAVENDERGREY;
+			effect = CONST_ME_NONE;
+			break;
+		}
+
 		default: {
 			color = TEXTCOLOR_NONE;
 			effect = CONST_ME_NONE;
@@ -3870,19 +3893,19 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage& damage)
 {
 	const Position& targetPos = target->getPosition();
-	if (damage.primary.value > 0) {
+	if (damage.value > 0) {
 		if (target->getHealth() <= 0) {
 			return false;
 		}
 
-		Player* attackerPlayer;
+		Pokemon* attackerPokemon;
 		if (attacker) {
-			attackerPlayer = attacker->getPlayer();
+			attackerPokemon = attacker->getPokemon();
 		} else {
-			attackerPlayer = nullptr;
+			attackerPokemon = nullptr;
 		}
 
-		Player* targetPlayer = target->getPlayer();
+		Pokemon* targetPokemon = target->getPokemon();
 
 		if (damage.origin != ORIGIN_NONE) {
 			const auto& events = target->getCreatureEvents(CREATURE_EVENT_HEALTHCHANGE);
@@ -3896,7 +3919,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		int32_t realHealthChange = target->getHealth();
-		target->gainHealth(attacker, damage.primary.value);
+		target->gainHealth(attacker, damage.value);
 		realHealthChange = target->getHealth() - realHealthChange;
 
 		if (realHealthChange > 0 && !target->isInGhostMode()) {
@@ -3916,19 +3939,19 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			map.getSpectators(spectators, targetPos, false, true);
 			for (Creature* spectator : spectators) {
 				Player* tmpPlayer = spectator->getPlayer();
-				if (tmpPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
+				if (attackerPokemon && attackerPokemon->belongsToPlayer() && tmpPlayer == attackerPokemon->getMaster()->getPlayer() && attackerPokemon && attackerPokemon != targetPokemon) {
 					ss.str({});
-					ss << "You heal " << target->getNameDescription() << " for " << damageString;
+					ss << "Your pokemon heal " << target->getNameDescription() << " for " << damageString;
 					message.type = MESSAGE_HEALED;
 					message.text = ss.str();
-				} else if (tmpPlayer == targetPlayer) {
+				} else if (targetPokemon->belongsToPlayer() && tmpPlayer == targetPokemon->getMaster()->getPlayer()) {
 					ss.str({});
 					if (!attacker) {
-						ss << "You were healed";
-					} else if (targetPlayer == attackerPlayer) {
-						ss << "You healed yourself";
+						ss << "Your pokemon were healed";
+					} else if (targetPokemon == attackerPokemon) {
+						ss << "Your pokemon healed yourself";
 					} else {
-						ss << "You were healed by " << attacker->getNameDescription();
+						ss << "Your pokemon were healed by " << attacker->getNameDescription();
 					}
 					ss << " for " << damageString;
 					message.type = MESSAGE_HEALED;
@@ -3941,7 +3964,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						} else {
 							ss << ucfirst(attacker->getNameDescription()) << " healed ";
 							if (attacker == target) {
-								ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "herself" : "himself") : "itself");
+								ss << "itself";
 							} else {
 								ss << target->getNameDescription();
 							}
@@ -3963,28 +3986,28 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			return true;
 		}
 
-		Player* attackerPlayer;
+		Pokemon* attackerPokemon;
 		if (attacker) {
-			attackerPlayer = attacker->getPlayer();
+			attackerPokemon = attacker->getPokemon();
 		} else {
-			attackerPlayer = nullptr;
+			attackerPokemon = nullptr;
 		}
 
-		Player* targetPlayer = target->getPlayer();
+		Pokemon* targetPokemon = target->getPokemon();
 
-		damage.primary.value = std::abs(damage.primary.value);
-		damage.secondary.value = std::abs(damage.secondary.value);
+		damage.value = std::abs(damage.value);
 
-		int32_t healthChange = damage.primary.value + damage.secondary.value;
+		int32_t healthChange = damage.value;
 		if (healthChange == 0) {
 			return true;
 		}
 
-		if (attackerPlayer) {
+        /* soon for helds
+		if (attackerPokemon) {
 			uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHCHANCE);
 			if (chance != 0 && uniform_random(1, 100) <= chance) {
 				CombatDamage lifeLeech;
-				lifeLeech.primary.value = std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT) / 100.));
+				lifeLeech.value = std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT) / 100.));
 				g_game.combatChangeHealth(nullptr, attackerPlayer, lifeLeech);
 			}
 
@@ -3993,14 +4016,14 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 				healthChange += std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT) / 100.));
 				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 			}
-		}
+		}*/
 
 		TextMessage message;
 		message.position = targetPos;
 
 		SpectatorHashSet spectators;
 
-		int32_t realDamage = damage.primary.value + damage.secondary.value;
+		int32_t realDamage = damage.value;
 		if (realDamage == 0) {
 			return true;
 		}
@@ -4017,14 +4040,11 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		int32_t targetHealth = target->getHealth();
-		if (damage.primary.value >= targetHealth) {
-			damage.primary.value = targetHealth;
-			damage.secondary.value = 0;
-		} else if (damage.secondary.value) {
-			damage.secondary.value = std::min<int32_t>(damage.secondary.value, targetHealth - damage.primary.value);
+		if (damage.value >= targetHealth) {
+			damage.value = targetHealth;
 		}
 
-		realDamage = damage.primary.value + damage.secondary.value;
+		realDamage = damage.value;
 		if (realDamage == 0) {
 			return true;
 		}
@@ -4033,25 +4053,17 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			map.getSpectators(spectators, targetPos, true, true);
 		}
 
-		message.primary.value = damage.primary.value;
-		message.secondary.value = damage.secondary.value;
+		message.primary.value = damage.value;
 
 		uint8_t hitEffect;
 		if (message.primary.value) {
-			combatGetTypeInfo(damage.primary.type, target, message.primary.color, hitEffect);
+			combatGetTypeInfo(damage.type, target, message.primary.color, hitEffect);
 			if (hitEffect != CONST_ME_NONE) {
 				addMagicEffect(spectators, targetPos, hitEffect);
 			}
 		}
 
-		if (message.secondary.value) {
-			combatGetTypeInfo(damage.secondary.type, target, message.secondary.color, hitEffect);
-			if (hitEffect != CONST_ME_NONE) {
-				addMagicEffect(spectators, targetPos, hitEffect);
-			}
-		}
-
-		if (message.primary.color != TEXTCOLOR_NONE || message.secondary.color != TEXTCOLOR_NONE) {
+		if (message.primary.color != TEXTCOLOR_NONE) {
 			std::stringstream ss;
 
 			ss << realDamage << (realDamage != 1 ? " hitpoints" : " hitpoint");
@@ -4065,20 +4077,31 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					continue;
 				}
 
-				if (tmpPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
+				if (attackerPokemon && attackerPokemon->belongsToPlayer() && tmpPlayer == attackerPokemon->getMaster()->getPlayer() && targetPokemon != attackerPokemon) {
 					ss.str({});
-					ss << ucfirst(target->getNameDescription()) << " loses " << damageString << " due to your attack.";
+					if (targetPokemon->belongsToPlayer()) {
+						ss << targetPokemon->getMaster()->getName() << "'s " << targetPokemon->getName() << " ";
+					} else {
+						ss << targetPokemon->getNameDescription() << " ";
+					}
+					ss << " loses " << damageString << " due to your pokemon attack.";
 					message.type = MESSAGE_DAMAGE_DEALT;
 					message.text = ss.str();
-				} else if (tmpPlayer == targetPlayer) {
+				} else if (targetPokemon && targetPokemon->belongsToPlayer() && tmpPlayer == targetPokemon->getMaster()->getPlayer()) {
 					ss.str({});
-					ss << "You lose " << damageString;
+					ss << "Your pokemon lose " << damageString;
 					if (!attacker) {
 						ss << '.';
-					} else if (targetPlayer == attackerPlayer) {
-						ss << " due to your own attack.";
+					} else if (targetPokemon == attackerPokemon) {
+						ss << " due to its own attack.";
 					} else {
-						ss << " due to an attack by " << attacker->getNameDescription() << '.';
+						ss << " due to an attack by ";
+						if (attackerPokemon->belongsToPlayer()) {
+							ss << attacker->getMaster()->getName() << "'s " << attacker->getName();
+						} else {
+							ss << attacker->getNameDescription();
+						}
+						ss << ".";
 					}
 					message.type = MESSAGE_DAMAGE_RECEIVED;
 					message.text = ss.str();
@@ -4091,11 +4114,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						if (attacker) {
 							ss << " due to ";
 							if (attacker == target) {
-								if (targetPlayer) {
-									ss << (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "her own attack" : "his own attack");
-								} else {
-									ss << "its own attack";
-								}
+								ss << "its own attack";
 							} else {
 								ss << "an attack by " << attacker->getNameDescription();
 							}
@@ -4155,6 +4174,22 @@ void Game::addMagicEffect(const SpectatorHashSet& spectators, const Position& po
 			tmpPlayer->sendMagicEffect(pos, effect);
 		}
 	}
+}
+
+void Game::addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text)
+{
+	SpectatorHashSet spectators;
+	map.getSpectators(spectators, pos, true, true);
+   	addAnimatedText(spectators, pos, textColor, text);
+}
+ 
+void Game::addAnimatedText(const SpectatorHashSet& spectators, const Position& pos, uint8_t textColor, const std::string& text)
+{
+   for (Creature* spectator : spectators) {
+     if (Player* tmpPlayer = spectator->getPlayer()) {
+       tmpPlayer->sendAnimatedText(pos, textColor, text);
+     }
+   }
 }
 
 void Game::addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect)
@@ -5261,7 +5296,7 @@ void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corp
 
 	pokemon->setIsShiny(corpse->getPokemonIsShiny());
 	pokemon->setPokeballType(pokeballType);
-	pokemon->setMasterLevel(player->getLevel());
+	pokemon->setLevel(player->getLevel());
 	pokemon->setHealth(pokemon->getMaxHealth());
 
 	uint32_t pokemonID = savePokemon(pokemon);
@@ -5444,6 +5479,24 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	size_t conditionsSize;
 	const char* conditions = propWriteStream.getStream(conditionsSize);
 
+	
+	//serialize moves
+	propWriteStream.clear();
+	for (const auto& moveType : pokemon->getMoves()) {
+		Move* move = g_moves->getMove(moveType.first);
+
+		if (!move) {
+			continue;
+		}
+
+		if (move->isPersistent()) {
+			move->serialize(propWriteStream);
+		}
+	}
+
+	size_t movesSize;
+	const char* moves = propWriteStream.getStream(movesSize);
+
 	// create
 	std::ostringstream query;
 	query << "SELECT `type` FROM `pokemon` WHERE `id` = " << pokemon->getGUID();
@@ -5456,7 +5509,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	}
 
 	if (!result) {
-		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`) VALUES ");		
+		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`) VALUES ");		
 		query << "'" << pbServerID << "', ";
 		query << "'" << pokemon->mType->typeName << "', ";
 		query << "'" << pokemon->isShiny << "', ";
@@ -5470,7 +5523,8 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "'" << pokemon->ivs.speed << "', ";
 		query << "'" << pokemon->ivs.special_attack << "', ";
 		query << "'" << pokemon->ivs.special_defense << "', ";
-		query << db.escapeBlob(conditions, conditionsSize);
+		query << db.escapeBlob(conditions, conditionsSize) << ", ";
+		query << db.escapeBlob(moves, movesSize);
 
 		if (!pokemonQuery.addRow(query)) {
 			return 0;
@@ -5497,7 +5551,8 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "`speed` = " << pokemon->ivs.speed << ", ";
 		query << "`spatk` = " << pokemon->ivs.special_attack << ", ";
 		query << "`spdef` = " << pokemon->ivs.special_defense << ", ";
-		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize);
+		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize) << ", ";
+		query << "`moves` = " << db.escapeBlob(moves, movesSize);
 		query << " WHERE `id` = " << pokemon->getGUID();
 
 		if (db.executeQuery(query.str())) {
@@ -5508,11 +5563,47 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	}
 }
 
-Pokemon* Game::loadPokemonById(uint32_t id, Player* player /* = nullptr */)
+Pokemon* Game::preloadPokemon(uint32_t id, Player* player /* = nullptr */)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions` FROM `pokemon` WHERE `id` = " << id;
+	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `hpnow`, `hp` FROM `pokemon` WHERE `id` = " << id;
+	DBResult_ptr result = db.storeQuery(query.str());
+
+	if (!result) {
+		return nullptr;
+	}
+
+	Pokemon* pokemon = Pokemon::createPokemon(result->getString("type"), false);
+
+	if (!pokemon) {
+		return nullptr;
+	}
+
+	const PokeballType* pokeballType = g_pokeballs->getPokeballTypeByServerID(result->getNumber<uint16_t>("pokeball"));
+	if (!pokeballType) {
+		return nullptr;
+	}
+
+	// load general attributes
+	pokemon->setGUID(id);
+	pokemon->pokeballType = pokeballType;
+	pokemon->setName(result->getString("nickname"));
+	pokemon->ivs.hp = result->getNumber<uint16_t>("hp");
+	pokemon->isShiny = result->getNumber<uint16_t>("shiny");
+	pokemon->setLevel((player) ? player->getLevel() : 1);
+
+	//load hp
+	pokemon->setHealth(result->getNumber<int32_t>("hpnow"));
+
+	return pokemon;
+}
+
+Pokemon* Game::loadPokemon(uint32_t id, Player* player /* = nullptr */)
+{
+	Database& db = Database::getInstance();
+	std::ostringstream query;
+	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves` FROM `pokemon` WHERE `id` = " << id;
 	DBResult_ptr result = db.storeQuery(query.str());
 
 	if (!result) {
@@ -5543,7 +5634,7 @@ Pokemon* Game::loadPokemonById(uint32_t id, Player* player /* = nullptr */)
 	pokemon->ivs.special_attack = result->getNumber<uint16_t>("spatk");
 	pokemon->ivs.special_defense = result->getNumber<uint16_t>("spdef");
 	pokemon->isShiny = result->getNumber<uint16_t>("shiny");
-	pokemon->setMasterLevel((player) ? player->getLevel() : 1);
+	pokemon->setLevel((player) ? player->getLevel() : 1);
 
 	//load hp
 	pokemon->setHealth(result->getNumber<int32_t>("hpnow"));
@@ -5559,17 +5650,33 @@ Pokemon* Game::loadPokemonById(uint32_t id, Player* player /* = nullptr */)
 	// load conditions
 	unsigned long conditionsSize;
 	const char* conditions = result->getStream("conditions", conditionsSize);
-	PropStream propStream;
-	propStream.init(conditions, conditionsSize);
+	PropStream conditionPropStream;
+	conditionPropStream.init(conditions, conditionsSize);
 
-	Condition* condition = Condition::createCondition(propStream);
+	Condition* condition = Condition::createCondition(conditionPropStream);
 	while (condition) {
-		if (condition->unserialize(propStream)) {
+		if (condition->unserialize(conditionPropStream)) {
 			pokemon->storedConditionList.push_front(condition);
 		} else {
 			delete condition;
 		}
-		condition = Condition::createCondition(propStream);
+		condition = Condition::createCondition(conditionPropStream);
+	}
+
+	// load moves
+	unsigned long movesSize;
+	const char* moves = result->getStream("moves", movesSize);
+	PropStream movePropStream;
+	movePropStream.init(moves, movesSize);
+
+	while (true) {
+		uint16_t moveId;
+
+		if (!movePropStream.read<uint16_t>(moveId)) {
+			break;
+		}
+
+		pokemon->addMove(std::pair<uint16_t, uint16_t>(moveId, 100));
 	}
 
 	return pokemon;
@@ -5944,7 +6051,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 			savePokemon(pokemon);
 			removeCreature(pokemon);
 
-			Pokemon* newPokemon = loadPokemonById(pokemonId, player);
+			Pokemon* newPokemon = loadPokemon(pokemonId, player);
 			newPokemon->setMaster(player);
 			newPokemon->setDropLoot(false);
 			newPokemon->setSkillLoss(false);

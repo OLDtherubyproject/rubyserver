@@ -109,7 +109,7 @@ enum AttrTypes_t {
 	ATTR_CORPSETYPE = 37,
 	ATTR_POKEMONID = 38,
 	ATTR_POKEMONTYPE = 39,
-	ATTR_POKEMONISSHINY = 40,
+	ATTR_POKEMONISSHINY = 40
 };
 
 enum Attr_ReadValue {
@@ -938,12 +938,6 @@ class Item : virtual public Thing
 		// Returns the player that is holding this item in his inventory
 		Player* getHoldingPlayer() const;
 
-		WeaponType_t getWeaponType() const {
-			return items[id].weaponType;
-		}
-		Ammo_t getAmmoType() const {
-			return items[id].ammoType;
-		}
 		uint8_t getShootRange() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_SHOOTRANGE)) {
 				return getIntAttr(ITEM_ATTRIBUTE_SHOOTRANGE);

@@ -48,7 +48,7 @@ class Combat;
 class Condition;
 class Npc;
 class Pokemon;
-class InstantMove;
+class Move;
 
 enum {
 	EVENT_ID_LOADING = 1,
@@ -373,7 +373,7 @@ class LuaScriptInterface
 		// Push
 		static void pushBoolean(lua_State* L, bool value);
 		static void pushCombatDamage(lua_State* L, const CombatDamage& damage);
-		static void pushInstantMove(lua_State* L, const InstantMove& move);
+		static void pushMove(lua_State* L, const Move& move);
 		static void pushPosition(lua_State* L, const Position& position, int32_t stackpos = 0);
 		static void pushOutfit(lua_State* L, const Outfit_t& outfit);
 		static void pushGenders(lua_State* L, const Gender_t& genders);
@@ -550,6 +550,7 @@ class LuaScriptInterface
 		static int luaGameCreateTile(lua_State* L);
 
 		static int luaGameStartRaid(lua_State* L);
+		static int luaGameSendAnimatedText(lua_State* L);
 
 		static int luaGameGetClientVersion(lua_State* L);
 
@@ -560,7 +561,7 @@ class LuaScriptInterface
 		static int luaGameIsNight(lua_State* L);
 		static int luaGameIsSunrise(lua_State* L);
 
-		static int luaGameLoadPokemonById(lua_State* L);
+		static int luaGameLoadPokemon(lua_State* L);
 		static int luaGameSavePokemon(lua_State* L);
 
 		// Variant
@@ -800,6 +801,8 @@ class LuaScriptInterface
 		static int luaCreatureSetMaxHealth(lua_State* L);
 		static int luaCreatureSetHiddenHealth(lua_State* L);
 
+		static int luaCreatureKill(lua_State* L);
+
 		static int luaCreatureGetGender(lua_State* L);
 		static int luaCreatureSetGender(lua_State* L);
 
@@ -946,11 +949,6 @@ class LuaScriptInterface
 		static int luaPlayerAddBlessing(lua_State* L);
 		static int luaPlayerRemoveBlessing(lua_State* L);
 
-		static int luaPlayerCanLearnMove(lua_State* L);
-		static int luaPlayerLearnMove(lua_State* L);
-		static int luaPlayerForgetMove(lua_State* L);
-		static int luaPlayerHasLearnedMove(lua_State* L);
-
 		static int luaPlayerSendTutorial(lua_State* L);
 		static int luaPlayerAddMapMark(lua_State* L);
 
@@ -971,9 +969,6 @@ class LuaScriptInterface
 		static int luaPlayerGetContainerById(lua_State* L);
 		static int luaPlayerGetContainerIndex(lua_State* L);
 
-		static int luaPlayerGetInstantMoves(lua_State* L);
-		static int luaPlayerCanCast(lua_State* L);
-
 		static int luaPlayerHasChaseMode(lua_State* L);
 		static int luaPlayerGetFightMode(lua_State* L);
 
@@ -988,6 +983,10 @@ class LuaScriptInterface
 
 		static int luaPokemonGetType(lua_State* L);
 		static int luaPokemonGetNature(lua_State* L);
+		static int luaPokemonGetAttack(lua_State* L);
+		static int luaPokemonGetSpecialAttack(lua_State* L);
+		static int luaPokemonGetDefense(lua_State* L);
+		static int luaPokemonGetSpecialDefense(lua_State* L);
 
 		static int luaPokemonGetSpawnPosition(lua_State* L);
 		static int luaPokemonIsInSpawnRange(lua_State* L);
@@ -1015,6 +1014,12 @@ class LuaScriptInterface
 		static int luaPokemonCastMove(lua_State* L);
 
 		static int luaPokemonGetPokemonType(lua_State* L);
+
+		static int luaPokemonAddMove(lua_State* L);
+		static int luaPokemonGetMove(lua_State* L);
+
+		static int luaPokemonGetLevel(lua_State* L);
+		static int luaPokemonSetLevel(lua_State* L);
 
 		// Npc
 		static int luaNpcCreate(lua_State* L);
@@ -1148,7 +1153,6 @@ class LuaScriptInterface
 		static int luaItemTypeGetDefense(lua_State* L);
 		static int luaItemTypeGetExtraDefense(lua_State* L);
 		static int luaItemTypeGetArmor(lua_State* L);
-		static int luaItemTypeGetWeaponType(lua_State* L);
 
 		static int luaItemTypeGetElementType(lua_State* L);
 		static int luaItemTypeGetElementDamage(lua_State* L);
@@ -1158,7 +1162,6 @@ class LuaScriptInterface
 		static int luaItemTypeGetDestroyId(lua_State* L);
 		static int luaItemTypeGetDecayId(lua_State* L);
 		static int luaItemTypeGetRequiredLevel(lua_State* L);
-		static int luaItemTypeGetAmmoType(lua_State* L);
 		static int luaItemTypeGetCorpseType(lua_State* L);
 
 		static int luaItemTypeHasSubType(lua_State* L);
@@ -1225,7 +1228,7 @@ class LuaScriptInterface
 		static int luaPokemonTypeGetCombatImmunities(lua_State* L);
 		static int luaPokemonTypeGetConditionImmunities(lua_State* L);
 
-		static int luaPokemonTypeGetAttackList(lua_State* L);
+		//static int luaPokemonTypeGetAttackList(lua_State* L);
 		static int luaPokemonTypeGetDefenseList(lua_State* L);
 		static int luaPokemonTypeGetElementList(lua_State* L);
 
@@ -1235,9 +1238,7 @@ class LuaScriptInterface
 
 		static int luaPokemonTypeGetSummonList(lua_State* L);
 		static int luaPokemonTypeGetMaxSummons(lua_State* L);
-
-		static int luaPokemonTypeGetArmor(lua_State* L);
-		static int luaPokemonTypeGetDefense(lua_State* L);
+		
 		static int luaPokemonTypeGetOutfit(lua_State* L);
 		static int luaPokemonTypeGetBlood(lua_State* L);
 		static int luaPokemonTypeGetCorpseId(lua_State* L);
@@ -1283,7 +1284,8 @@ class LuaScriptInterface
 		static int luaMoveCreate(lua_State* L);
 
 		static int luaMoveIsPremium(lua_State* L);
-		static int luaMoveIsLearnable(lua_State* L);
+		static int luaMoveGetId(lua_State* L);
+		static int luaMoveGetName(lua_State* L);
 
 		// PokeballType
 		static int luaPokeballTypeCreate(lua_State* L);
@@ -1353,7 +1355,6 @@ class LuaEnvironment : public LuaScriptInterface
 		uint32_t lastAreaId = 0;
 
 		friend class LuaScriptInterface;
-		friend class CombatMove;
 };
 
 #endif

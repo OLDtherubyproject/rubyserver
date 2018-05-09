@@ -34,33 +34,16 @@ CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 {
 	CombatDamage damage;
 	damage.origin = params.origin;
-	damage.primary.type = params.combatType;
-	if (formulaType == COMBAT_FORMULA_DAMAGE) {
-		damage.primary.value = normal_random(
-			static_cast<int32_t>(mina),
-			static_cast<int32_t>(maxa)
-		);
-	} else if (creature) {
-		int32_t min, max;
-		if (creature->getCombatValues(min, max)) {
-			damage.primary.value = normal_random(min, max);
-		} else if (Player* player = creature->getPlayer()) {
+	damage.type = params.combatType;
+
+	if (creature) {
+		if (Pokemon* pokemon = creature->getPokemon()) {
 			if (params.valueCallback) {
-				params.valueCallback->getMinMaxValues(player, damage, params.useCharges);
-			} else if (formulaType == COMBAT_FORMULA_LEVELMAGIC) {
-				int32_t levelFormula = player->getLevel() * 2 + player->getMagicLevel() * 3;
-				damage.primary.value = normal_random(
-					static_cast<int32_t>(levelFormula * mina + minb),
-					static_cast<int32_t>(levelFormula * maxa + maxb)
-				);
-			} else if (formulaType == COMBAT_FORMULA_SKILL) {
-				damage.primary.value = normal_random(
-					static_cast<int32_t>(minb),
-					static_cast<int32_t>(maxb)
-				);
+				params.valueCallback->getDamageValue(pokemon, damage);
 			}
 		}
 	}
+
 	return damage;
 }
 
@@ -89,25 +72,25 @@ CombatType_t Combat::ConditionToDamageType(ConditionType_t type)
 			return COMBAT_FIREDAMAGE;
 
 		case CONDITION_ENERGY:
-			return COMBAT_ENERGYDAMAGE;
+			return COMBAT_ELECTRICDAMAGE;
 
 		case CONDITION_BLEEDING:
 			return COMBAT_PHYSICALDAMAGE;
 
 		case CONDITION_DROWN:
-			return COMBAT_DROWNDAMAGE;
+			return COMBAT_WATERDAMAGE;
 
 		case CONDITION_POISON:
-			return COMBAT_EARTHDAMAGE;
+			return COMBAT_GRASSDAMAGE;
 
 		case CONDITION_FREEZING:
 			return COMBAT_ICEDAMAGE;
 
 		case CONDITION_DAZZLED:
-			return COMBAT_HOLYDAMAGE;
+			return COMBAT_BUGDAMAGE;
 
 		case CONDITION_CURSED:
-			return COMBAT_DEATHDAMAGE;
+			return COMBAT_DARKDAMAGE;
 
 		default:
 			break;
@@ -122,22 +105,22 @@ ConditionType_t Combat::DamageToConditionType(CombatType_t type)
 		case COMBAT_FIREDAMAGE:
 			return CONDITION_FIRE;
 
-		case COMBAT_ENERGYDAMAGE:
+		case COMBAT_ELECTRICDAMAGE:
 			return CONDITION_ENERGY;
 
-		case COMBAT_DROWNDAMAGE:
+		case COMBAT_WATERDAMAGE:
 			return CONDITION_DROWN;
 
-		case COMBAT_EARTHDAMAGE:
+		case COMBAT_GRASSDAMAGE:
 			return CONDITION_POISON;
 
 		case COMBAT_ICEDAMAGE:
 			return CONDITION_FREEZING;
 
-		case COMBAT_HOLYDAMAGE:
+		case COMBAT_BUGDAMAGE:
 			return CONDITION_DAZZLED;
 
-		case COMBAT_DEATHDAMAGE:
+		case COMBAT_DARKDAMAGE:
 			return CONDITION_CURSED;
 
 		case COMBAT_PHYSICALDAMAGE:
@@ -373,22 +356,12 @@ bool Combat::setParam(CombatParam_t param, uint32_t value)
 		}
 
 		case COMBAT_PARAM_EFFECT: {
-			params.impactEffect = static_cast<uint8_t>(value);
+			params.impactEffect = static_cast<uint16_t>(value);
 			return true;
 		}
 
 		case COMBAT_PARAM_DISTANCEEFFECT: {
 			params.distanceEffect = static_cast<uint16_t>(value);
-			return true;
-		}
-
-		case COMBAT_PARAM_BLOCKARMOR: {
-			params.blockedByArmor = (value != 0);
-			return true;
-		}
-
-		case COMBAT_PARAM_BLOCKSHIELD: {
-			params.blockedByShield = (value != 0);
 			return true;
 		}
 
@@ -411,11 +384,6 @@ bool Combat::setParam(CombatParam_t param, uint32_t value)
 			params.dispelType = static_cast<ConditionType_t>(value);
 			return true;
 		}
-
-		case COMBAT_PARAM_USECHARGES: {
-			params.useCharges = (value != 0);
-			return true;
-		}
 	}
 	return false;
 }
@@ -423,13 +391,23 @@ bool Combat::setParam(CombatParam_t param, uint32_t value)
 bool Combat::setCallback(CallBackParam_t key)
 {
 	switch (key) {
-		case CALLBACK_PARAM_LEVELMAGICVALUE: {
-			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_LEVELMAGIC));
+		case CALLBACK_PARAM_LEVELATTACKVALUE: {
+			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_LEVELATTACK));
 			return true;
 		}
 
-		case CALLBACK_PARAM_SKILLVALUE: {
-			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_SKILL));
+		case CALLBACK_PARAM_LEVELSPECIALATTACKVALUE: {
+			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_LEVELSPECIALATTACK));
+			return true;
+		}
+
+		case CALLBACK_PARAM_LEVELDEFENSEVALUE: {
+			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_LEVELDEFENSE));
+			return true;
+		}
+
+		case CALLBACK_PARAM_LEVELSPECIALDEFENSEVALUE: {
+			params.valueCallback.reset(new ValueCallback(COMBAT_FORMULA_LEVELSPECIALDEFENSE));
 			return true;
 		}
 
@@ -449,8 +427,10 @@ bool Combat::setCallback(CallBackParam_t key)
 CallBack* Combat::getCallback(CallBackParam_t key)
 {
 	switch (key) {
-		case CALLBACK_PARAM_LEVELMAGICVALUE:
-		case CALLBACK_PARAM_SKILLVALUE: {
+		case CALLBACK_PARAM_LEVELATTACKVALUE:
+		case CALLBACK_PARAM_LEVELSPECIALATTACKVALUE:
+		case CALLBACK_PARAM_LEVELDEFENSEVALUE: 
+		case CALLBACK_PARAM_LEVELSPECIALDEFENSEVALUE: {
 			return params.valueCallback.get();
 		}
 
@@ -469,7 +449,26 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 {
 	assert(data);
 	CombatDamage damage = *data;
-	if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
+	float modifier = 1.0f;
+
+	if (Pokemon* pokemon = caster->getPokemon()) {
+		if (damage.type == pokemonTypeToCombatType(pokemon->getFirstType()) ||
+			damage.type == pokemonTypeToCombatType(pokemon->getSecondType())) {
+			modifier = 1.5f;
+		}
+	}
+
+	modifier *= (uniform_random(85, 100) / 100.0);
+
+	if (damage.stat == STAT_ATTACK) {
+		damage.value = (((damage.value * (caster->getAttack() / target->getDefense())) / 50.0f) + 2.0f) * modifier;
+	} else if (damage.stat == STAT_SPECIALATTACK) {
+		damage.value = (((damage.value * (caster->getSpecialAttack() / target->getSpecialDefense())) / 50.0f) + 2.0f) * modifier;
+	} else {
+		damage.value = ((damage.value / 50.0f) + 2.0f) * modifier;
+	}
+
+	if (g_game.combatBlockHit(damage, caster, target, params.itemId != 0)) {
 		return;
 	}
 
@@ -481,7 +480,7 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 
 void Combat::CombatConditionFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data)
 {
-	if (params.origin == ORIGIN_MELEE && data && data->primary.value == 0 && data->secondary.value == 0) {
+	if (data && data->value == 0) {
 		return;
 	}
 
@@ -494,6 +493,8 @@ void Combat::CombatConditionFunc(Creature* caster, Creature* target, const Comba
 
 			//TODO: infight condition until all aggressive conditions has ended
 			target->addCombatCondition(conditionCopy);
+		} else {
+			g_game.addAnimatedText(target->getPosition(), 215, "IMMUNE");
 		}
 	}
 }
@@ -600,32 +601,6 @@ void Combat::postCombatEffects(Creature* caster, const Position& pos, const Comb
 
 void Combat::addDistanceEffect(Creature* caster, const Position& fromPos, const Position& toPos, uint16_t effect)
 {
-	if (effect == CONST_ANI_WEAPONTYPE) {
-		if (!caster) {
-			return;
-		}
-
-		Player* player = caster->getPlayer();
-		if (!player) {
-			return;
-		}
-
-		switch (player->getWeaponType()) {
-			case WEAPON_AXE:
-				effect = CONST_ANI_WHIRLWINDAXE;
-				break;
-			case WEAPON_SWORD:
-				effect = CONST_ANI_WHIRLWINDSWORD;
-				break;
-			case WEAPON_CLUB:
-				effect = CONST_ANI_WHIRLWINDCLUB;
-				break;
-			default:
-				effect = CONST_ANI_NONE;
-				break;
-		}
-	}
-
 	if (effect != CONST_ANI_NONE) {
 		g_game.addDistanceEffect(fromPos, toPos, effect);
 	}
@@ -808,11 +783,9 @@ void Combat::doCombatDefault(Creature* caster, Creature* target, const CombatPar
 			params.targetCallback->onTargetCombat(caster, target);
 		}
 
-		/*
 		if (params.impactEffect != CONST_ME_NONE) {
 			g_game.addMagicEffect(target->getPosition(), params.impactEffect);
 		}
-		*/
 
 		if (caster && params.distanceEffect != CONST_ANI_NONE) {
 			addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
@@ -822,11 +795,11 @@ void Combat::doCombatDefault(Creature* caster, Creature* target, const CombatPar
 
 //**********************************************************//
 
-void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const
+void ValueCallback::getDamageValue(Pokemon* pokemon, CombatDamage& damage) const
 {
-	//onGetPlayerMinMaxValues(...)
+	//onGetPokemonMinMaxValues(...)
 	if (!scriptInterface->reserveScriptEnv()) {
-		std::cout << "[Error - ValueCallback::getMinMaxValues] Call stack overflow" << std::endl;
+		std::cout << "[Error - ValueCallback::getDamageValue] Call stack overflow" << std::endl;
 		return;
 	}
 
@@ -840,48 +813,59 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool u
 
 	scriptInterface->pushFunction(scriptId);
 
-	LuaScriptInterface::pushUserdata<Player>(L, player);
-	LuaScriptInterface::setMetatable(L, -1, "Player");
+	LuaScriptInterface::pushUserdata<Pokemon>(L, pokemon);
+	LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 	int parameters = 1;
 	switch (type) {
-		case COMBAT_FORMULA_LEVELMAGIC: {
-			//onGetPlayerMinMaxValues(player, level, maglevel)
-			lua_pushnumber(L, player->getLevel());
-			lua_pushnumber(L, player->getMagicLevel());
-			parameters += 2;
+		case COMBAT_FORMULA_LEVELATTACK: {
+			//onGetPokemonDamageValue(pokemon, level)
+			lua_pushnumber(L, pokemon->getLevel());
+
+			parameters += 1;
+			damage.stat = STAT_ATTACK;
 			break;
 		}
+		case COMBAT_FORMULA_LEVELSPECIALATTACK: {
+			//onGetPokemonDamageValue(pokemon, level)
+			lua_pushnumber(L, pokemon->getLevel());
 
-		case COMBAT_FORMULA_SKILL: {
-			//onGetPlayerMinMaxValues(player, attackSkill, attackValue, attackFactor)
-			Item* tool = player->getWeapon();
+			parameters += 1;
+			damage.stat = STAT_SPECIALATTACK;
+			break;
+		}
+		case COMBAT_FORMULA_LEVELDEFENSE: {
+			//onGetPokemonDamageValue(pokemon, level, def)
+			lua_pushnumber(L, pokemon->getLevel());
+			lua_pushnumber(L, pokemon->getDefense());
 
-			int32_t attackValue = 7;
+			parameters += 2;
+			damage.stat = STAT_DEFENSE;
+			break;
+		}
+		case COMBAT_FORMULA_LEVELSPECIALDEFENSE: {
+			//onGetPokemonDamageValue(pokemon, level, spdef)
+			lua_pushnumber(L, pokemon->getLevel());
+			lua_pushnumber(L, pokemon->getSpecialDefense());
 
-			lua_pushnumber(L, player->getWeaponSkill(tool));
-			lua_pushnumber(L, attackValue);
-			lua_pushnumber(L, player->getAttackFactor());
-			parameters += 3;
+			parameters += 2;
+			damage.stat = STAT_SPECIALDEFENSE;
 			break;
 		}
 
 		default: {
-			std::cout << "ValueCallback::getMinMaxValues - unknown callback type" << std::endl;
+			std::cout << "ValueCallback::getDamageValue - unknown callback type" << std::endl;
 			scriptInterface->resetScriptEnv();
 			return;
 		}
 	}
 
 	int size0 = lua_gettop(L);
-	if (lua_pcall(L, parameters, 2, 0) != 0) {
+	if (lua_pcall(L, parameters, 1, 0) != 0) {
 		LuaScriptInterface::reportError(nullptr, LuaScriptInterface::popString(L));
 	} else {
-		damage.primary.value = normal_random(
-			LuaScriptInterface::getNumber<int32_t>(L, -2),
-			LuaScriptInterface::getNumber<int32_t>(L, -1)
-		);
-		lua_pop(L, 2);
+		damage.value = LuaScriptInterface::getNumber<int32_t>(L, -1);
+		lua_pop(L, 1);
 	}
 
 	if ((lua_gettop(L) + parameters + 1) != size0) {

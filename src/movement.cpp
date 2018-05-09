@@ -69,6 +69,11 @@ std::string MoveEvents::getScriptBaseName() const
 	return "movements";
 }
 
+std::string MoveEvents::getScriptPrefixName() const
+{
+	return "";
+}
+
 Event_ptr MoveEvents::getEvent(const std::string& nodeName)
 {
 	if (strcasecmp(nodeName.c_str(), "movevent") != 0) {
@@ -317,7 +322,7 @@ uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, boo
 			return 0;
 		}
 
-		Pokemon* pokemon = g_game.loadPokemonById(item->getPokemonId(), player);
+		Pokemon* pokemon = g_game.preloadPokemon(item->getPokemonId(), player);
 		if (!pokemon) {
 			return 0;
 		}
@@ -475,8 +480,6 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 				slot = SLOTP_POKEBALL;
 			} else if (tmpStr == "ring") {
 				slot = SLOTP_RING;
-			} else if (tmpStr == "ammo") {
-				slot = SLOTP_SUPPORT;
 			} else {
 				std::cout << "[Warning - MoveEvent::configureMoveEvent] Unknown slot type: " << slotAttribute.as_string() << std::endl;
 			}
@@ -589,7 +592,7 @@ uint32_t EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slo
 		return 1;
 	}
 
-	if (!player->hasFlag(PlayerFlag_IgnoreWeaponCheck) && moveEvent->getWieldInfo() != 0) {
+	if (moveEvent->getWieldInfo() != 0) {
 		if (player->getLevel() < moveEvent->getReqLevel() || player->getMagicLevel() < moveEvent->getReqMagLv()) {
 			return 0;
 		}

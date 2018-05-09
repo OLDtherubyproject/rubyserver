@@ -37,7 +37,7 @@ class ValueCallback final : public CallBack
 {
 	public:
 		explicit ValueCallback(formulaType_t type): type(type) {}
-		void getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const;
+		void getDamageValue(Pokemon* pokemon, CombatDamage& damage) const;
 
 	private:
 		formulaType_t type;
@@ -68,14 +68,11 @@ struct CombatParams {
 	CombatType_t combatType = COMBAT_NONE;
 	CombatOrigin origin = ORIGIN_MOVE;
 
-	uint8_t impactEffect = CONST_ME_NONE;
+	uint16_t impactEffect = CONST_ME_NONE;
 	uint16_t distanceEffect = CONST_ANI_NONE;
 
-	bool blockedByArmor = false;
-	bool blockedByShield = false;
 	bool targetCasterOrTopMost = false;
 	bool aggressive = true;
-	bool useCharges = false;
 };
 
 using CombatFunction = std::function<void(Creature*, Creature*, const CombatParams&, CombatDamage*)>;

@@ -62,33 +62,7 @@ struct summonBlock_t {
 	bool force = false;
 };
 
-class BaseMove;
-struct moveBlock_t {
-	constexpr moveBlock_t() = default;
-	~moveBlock_t();
-	moveBlock_t(const moveBlock_t& other) = delete;
-	moveBlock_t& operator=(const moveBlock_t& other) = delete;
-	moveBlock_t(moveBlock_t&& other) :
-		move(other.move),
-		chance(other.chance),
-		speed(other.speed),
-		range(other.range),
-		minCombatValue(other.minCombatValue),
-		maxCombatValue(other.maxCombatValue),
-		combatMove(other.combatMove),
-		isMelee(other.isMelee) {
-		other.move = nullptr;
-	}
 
-	BaseMove* move = nullptr;
-	uint32_t chance = 100;
-	uint32_t speed = 2000;
-	uint32_t range = 0;
-	int32_t minCombatValue = 0;
-	int32_t maxCombatValue = 0;
-	bool combatMove = false;
-	bool isMelee = false;
-};
 
 struct voiceBlock_t {
 	std::string text;
@@ -101,13 +75,12 @@ class PokemonType
 		LuaScriptInterface* scriptInterface;
 
 		std::map<CombatType_t, int32_t> elementMap;
+		std::map<uint32_t, std::pair<uint16_t, uint16_t>> moves;
 
 		std::vector<voiceBlock_t> voiceVector;
 
 		std::vector<LootBlock> lootItems;
 		std::vector<std::string> scripts;
-		std::vector<moveBlock_t> attackMoves;
-		std::vector<moveBlock_t> defenseMoves;
 		std::vector<summonBlock_t> summons;
 		std::vector<EvolutionBlock_t> evolutions;
 
@@ -136,7 +109,8 @@ class PokemonType
 		uint32_t changeTargetSpeed = 0;
 		uint32_t conditionImmunities = 0;
 		uint32_t damageImmunities = 0;
-		uint32_t baseSpeed = 200;
+		uint32_t damageSuperEffective = 0;
+		uint32_t damageNotVeryEffective = 0;
 		uint32_t iconCharged = 0;
 		uint32_t iconDischarged = 0;
 		uint32_t portrait = 0;
@@ -151,8 +125,6 @@ class PokemonType
 		int32_t targetDistance = 1;
 		int32_t runAwayHealth = 0;
 		int32_t changeTargetChance =0;
-		int32_t defense = 0;
-		int32_t armor = 0;
 
 		bool canEvolve = false;
 		bool canPushItems = false;
@@ -209,7 +181,6 @@ class Pokemons
 	private:
 		ConditionDamage* getDamageCondition(ConditionType_t conditionType,
 		                                    int32_t maxDamage, int32_t minDamage, int32_t startDamage, uint32_t tickInterval);
-		bool deserializeMove(const pugi::xml_node& node, moveBlock_t& sb, const std::string& description = "");
 
 		PokemonType* loadPokemon(const std::string& file, const std::string& pokemonName, bool reloading = false);
 

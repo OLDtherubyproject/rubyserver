@@ -165,6 +165,7 @@ class ProtocolGame final : public Protocol
 		void parseCloseChannel(NetworkMessage& msg);
 
 		//Send functions
+		void sendAnimatedText(const Position& pos, uint8_t color, std::string text);
 		void sendChannelMessage(const std::string& author, const std::string& text, SpeakClasses type, uint16_t channel);
 		void sendChannelEvent(uint16_t channelId, const std::string& playerName, ChannelEvent_t channelEvent);
 		void sendClosePrivate(uint16_t channelId);
@@ -241,7 +242,7 @@ class ProtocolGame final : public Protocol
 		void sendCreatureSquare(const Creature* creature, SquareColor_t color);
 
 		void sendMoveCooldown(uint8_t moveId, uint32_t time);
-		void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time);
+		//void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time);
 
 		//tiles
 		void sendMapDescription(const Position& pos);
@@ -285,6 +286,7 @@ class ProtocolGame final : public Protocol
 
 		void AddCreature(NetworkMessage& msg, const Creature* creature, bool known, uint32_t remove);
 		void AddPlayerStats(NetworkMessage& msg);
+		void AddAnimatedText(NetworkMessage& msg, const Position& pos, uint8_t color, const std::string& text);
 		void AddOutfit(NetworkMessage& msg, const Outfit_t& outfit);
 		void AddPlayerSkills(NetworkMessage& msg);
 		void AddWorldLight(NetworkMessage& msg, LightInfo lightInfo);

@@ -35,13 +35,6 @@ extern Moves* g_moves;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 
-moveBlock_t::~moveBlock_t()
-{
-	if (combatMove) {
-		delete move;
-	}
-}
-
 uint32_t Pokemons::getLootRandom()
 {
 	return uniform_random(0, MAX_LOOTCHANCE) / g_config.getNumber(ConfigManager::RATE_LOOT);
@@ -210,405 +203,6 @@ ConditionDamage* Pokemons::getDamageCondition(ConditionType_t conditionType,
 	return condition;
 }
 
-bool Pokemons::deserializeMove(const pugi::xml_node& node, moveBlock_t& sb, const std::string& description)
-{
-	std::string name;
-	std::string scriptName;
-	bool isScripted;
-
-	pugi::xml_attribute attr;
-	if ((attr = node.attribute("script"))) {
-		scriptName = attr.as_string();
-		isScripted = true;
-	} else if ((attr = node.attribute("name"))) {
-		name = attr.as_string();
-		isScripted = false;
-	} else {
-		return false;
-	}
-
-	if ((attr = node.attribute("speed")) || (attr = node.attribute("interval"))) {
-		sb.speed = std::max<int32_t>(1, pugi::cast<int32_t>(attr.value()));
-	}
-
-	if ((attr = node.attribute("chance"))) {
-		uint32_t chance = pugi::cast<uint32_t>(attr.value());
-		if (chance > 100) {
-			chance = 100;
-		}
-		sb.chance = chance;
-	}
-
-	if ((attr = node.attribute("range"))) {
-		uint32_t range = pugi::cast<uint32_t>(attr.value());
-		if (range > (Map::maxViewportX * 2)) {
-			range = Map::maxViewportX * 2;
-		}
-		sb.range = range;
-	}
-
-	if ((attr = node.attribute("min"))) {
-		sb.minCombatValue = pugi::cast<int32_t>(attr.value());
-	}
-
-	if ((attr = node.attribute("max"))) {
-		sb.maxCombatValue = pugi::cast<int32_t>(attr.value());
-
-		//normalize values
-		if (std::abs(sb.minCombatValue) > std::abs(sb.maxCombatValue)) {
-			int32_t value = sb.maxCombatValue;
-			sb.maxCombatValue = sb.minCombatValue;
-			sb.minCombatValue = value;
-		}
-	}
-
-	if (auto move = g_moves->getMoveByName(name)) {
-		sb.move = move;
-		return true;
-	}
-
-	CombatMove* combatMove = nullptr;
-	bool needTarget = false;
-	bool needDirection = false;
-
-	if (isScripted) {
-		if ((attr = node.attribute("direction"))) {
-			needDirection = attr.as_bool();
-		}
-
-		if ((attr = node.attribute("target"))) {
-			needTarget = attr.as_bool();
-		}
-
-		std::unique_ptr<CombatMove> combatMovePtr(new CombatMove(nullptr, needTarget, needDirection));
-		if (!combatMovePtr->loadScript("data/" + g_moves->getScriptBaseName() + "/scripts/" + scriptName)) {
-			return false;
-		}
-
-		if (!combatMovePtr->loadScriptCombat()) {
-			return false;
-		}
-
-		combatMove = combatMovePtr.release();
-		combatMove->getCombat()->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
-	} else {
-		Combat* combat = new Combat;
-		if ((attr = node.attribute("length"))) {
-			int32_t length = pugi::cast<int32_t>(attr.value());
-			if (length > 0) {
-				int32_t spread = 3;
-
-				//need direction move
-				if ((attr = node.attribute("spread"))) {
-					spread = std::max<int32_t>(0, pugi::cast<int32_t>(attr.value()));
-				}
-
-				AreaCombat* area = new AreaCombat();
-				area->setupArea(length, spread);
-				combat->setArea(area);
-
-				needDirection = true;
-			}
-		}
-
-		if ((attr = node.attribute("radius"))) {
-			int32_t radius = pugi::cast<int32_t>(attr.value());
-
-			//target move
-			if ((attr = node.attribute("target"))) {
-				needTarget = attr.as_bool();
-			}
-
-			AreaCombat* area = new AreaCombat();
-			area->setupArea(radius);
-			combat->setArea(area);
-		}
-
-		std::string tmpName = asLowerCaseString(name);
-
-		if (tmpName == "melee") {
-			sb.isMelee = true;
-
-			pugi::xml_attribute attackAttribute, skillAttribute;
-			if ((attackAttribute = node.attribute("attack")) && (skillAttribute = node.attribute("skill"))) {
-				sb.minCombatValue = 0;
-				sb.maxCombatValue = 0;
-			}
-
-			ConditionType_t conditionType = CONDITION_NONE;
-			int32_t minDamage = 0;
-			int32_t maxDamage = 0;
-			uint32_t tickInterval = 2000;
-
-			if ((attr = node.attribute("fire"))) {
-				conditionType = CONDITION_FIRE;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 9000;
-			} else if ((attr = node.attribute("poison"))) {
-				conditionType = CONDITION_POISON;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 4000;
-			} else if ((attr = node.attribute("energy"))) {
-				conditionType = CONDITION_ENERGY;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 10000;
-			} else if ((attr = node.attribute("drown"))) {
-				conditionType = CONDITION_DROWN;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 5000;
-			} else if ((attr = node.attribute("freeze"))) {
-				conditionType = CONDITION_FREEZING;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 8000;
-			} else if ((attr = node.attribute("dazzle"))) {
-				conditionType = CONDITION_DAZZLED;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 10000;
-			} else if ((attr = node.attribute("curse"))) {
-				conditionType = CONDITION_CURSED;
-
-				minDamage = pugi::cast<int32_t>(attr.value());
-				maxDamage = minDamage;
-				tickInterval = 4000;
-			} else if ((attr = node.attribute("bleed")) || (attr = node.attribute("physical"))) {
-				conditionType = CONDITION_BLEEDING;
-				tickInterval = 4000;
-			}
-
-			if ((attr = node.attribute("tick"))) {
-				int32_t value = pugi::cast<int32_t>(attr.value());
-				if (value > 0) {
-					tickInterval = value;
-				}
-			}
-
-			if (conditionType != CONDITION_NONE) {
-				Condition* condition = getDamageCondition(conditionType, maxDamage, minDamage, 0, tickInterval);
-				combat->addCondition(condition);
-			}
-
-			sb.range = 1;
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE);
-			combat->setParam(COMBAT_PARAM_BLOCKARMOR, 1);
-			combat->setParam(COMBAT_PARAM_BLOCKSHIELD, 1);
-			combat->setOrigin(ORIGIN_MELEE);
-		} else if (tmpName == "physical") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE);
-			combat->setParam(COMBAT_PARAM_BLOCKARMOR, 1);
-			combat->setOrigin(ORIGIN_RANGED);
-		} else if (tmpName == "bleed") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE);
-		} else if (tmpName == "poison" || tmpName == "earth") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_EARTHDAMAGE);
-		} else if (tmpName == "fire") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_FIREDAMAGE);
-		} else if (tmpName == "energy") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE);
-		} else if (tmpName == "drown") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_DROWNDAMAGE);
-		} else if (tmpName == "ice") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE);
-		} else if (tmpName == "holy") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_HOLYDAMAGE);
-		} else if (tmpName == "death") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_DEATHDAMAGE);
-		} else if (tmpName == "lifedrain") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_LIFEDRAIN);
-		} else if (tmpName == "healing") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_HEALING);
-			combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-		} else if (tmpName == "speed") {
-			int32_t speedChange = 0;
-			int32_t duration = 10000;
-
-			if ((attr = node.attribute("duration"))) {
-				duration = pugi::cast<int32_t>(attr.value());
-			}
-
-			if ((attr = node.attribute("speedchange"))) {
-				speedChange = pugi::cast<int32_t>(attr.value());
-				if (speedChange < -1000) {
-					//cant be slower than 100%
-					speedChange = -1000;
-				}
-			}
-
-			ConditionType_t conditionType;
-			if (speedChange > 0) {
-				conditionType = CONDITION_HASTE;
-				combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			} else {
-				conditionType = CONDITION_PARALYZE;
-			}
-
-			ConditionSpeed* condition = static_cast<ConditionSpeed*>(Condition::createCondition(CONDITIONID_COMBAT, conditionType, duration, 0));
-			condition->setFormulaVars(speedChange / 1000.0, 0, speedChange / 1000.0, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "outfit") {
-			int32_t duration = 10000;
-
-			if ((attr = node.attribute("duration"))) {
-				duration = pugi::cast<int32_t>(attr.value());
-			}
-
-			if ((attr = node.attribute("pokemon"))) {
-				PokemonType* mType = g_pokemons.getPokemonType(attr.as_string());
-				if (mType) {
-					ConditionOutfit* condition = static_cast<ConditionOutfit*>(Condition::createCondition(CONDITIONID_COMBAT, CONDITION_OUTFIT, duration, 0));
-					condition->setOutfit(mType->info.outfit);
-					combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-					combat->addCondition(condition);
-				}
-			} else if ((attr = node.attribute("item"))) {
-				Outfit_t outfit;
-				outfit.lookTypeEx = pugi::cast<uint16_t>(attr.value());
-
-				ConditionOutfit* condition = static_cast<ConditionOutfit*>(Condition::createCondition(CONDITIONID_COMBAT, CONDITION_OUTFIT, duration, 0));
-				condition->setOutfit(outfit);
-				combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-				combat->addCondition(condition);
-			}
-		} else if (tmpName == "invisible") {
-			int32_t duration = 10000;
-
-			if ((attr = node.attribute("duration"))) {
-				duration = pugi::cast<int32_t>(attr.value());
-			}
-
-			Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_INVISIBLE, duration, 0);
-			combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "drunk") {
-			int32_t duration = 10000;
-
-			if ((attr = node.attribute("duration"))) {
-				duration = pugi::cast<int32_t>(attr.value());
-			}
-
-			Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_DRUNK, duration, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "firefield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_FIREFIELD_PVP_FULL);
-		} else if (tmpName == "poisonfield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_POISONFIELD_PVP);
-		} else if (tmpName == "energyfield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_ENERGYFIELD_PVP);
-		} else if (tmpName == "firecondition" || tmpName == "energycondition" ||
-		           tmpName == "earthcondition" || tmpName == "poisoncondition" ||
-		           tmpName == "icecondition" || tmpName == "freezecondition" ||
-		           tmpName == "deathcondition" || tmpName == "cursecondition" ||
-		           tmpName == "holycondition" || tmpName == "dazzlecondition" ||
-		           tmpName == "drowncondition" || tmpName == "bleedcondition" ||
-		           tmpName == "physicalcondition") {
-			ConditionType_t conditionType = CONDITION_NONE;
-			uint32_t tickInterval = 2000;
-
-			if (tmpName == "firecondition") {
-				conditionType = CONDITION_FIRE;
-				tickInterval = 10000;
-			} else if (tmpName == "poisoncondition" || tmpName == "earthcondition") {
-				conditionType = CONDITION_POISON;
-				tickInterval = 4000;
-			} else if (tmpName == "energycondition") {
-				conditionType = CONDITION_ENERGY;
-				tickInterval = 10000;
-			} else if (tmpName == "drowncondition") {
-				conditionType = CONDITION_DROWN;
-				tickInterval = 5000;
-			} else if (tmpName == "freezecondition" || tmpName == "icecondition") {
-				conditionType = CONDITION_FREEZING;
-				tickInterval = 10000;
-			} else if (tmpName == "cursecondition" || tmpName == "deathcondition") {
-				conditionType = CONDITION_CURSED;
-				tickInterval = 4000;
-			} else if (tmpName == "dazzlecondition" || tmpName == "holycondition") {
-				conditionType = CONDITION_DAZZLED;
-				tickInterval = 10000;
-			} else if (tmpName == "physicalcondition" || tmpName == "bleedcondition") {
-				conditionType = CONDITION_BLEEDING;
-				tickInterval = 4000;
-			}
-
-			if ((attr = node.attribute("tick"))) {
-				int32_t value = pugi::cast<int32_t>(attr.value());
-				if (value > 0) {
-					tickInterval = value;
-				}
-			}
-
-			int32_t minDamage = std::abs(sb.minCombatValue);
-			int32_t maxDamage = std::abs(sb.maxCombatValue);
-			int32_t startDamage = 0;
-
-			if ((attr = node.attribute("start"))) {
-				int32_t value = std::abs(pugi::cast<int32_t>(attr.value()));
-				if (value <= minDamage) {
-					startDamage = value;
-				}
-			}
-
-			Condition* condition = getDamageCondition(conditionType, maxDamage, minDamage, startDamage, tickInterval);
-			combat->addCondition(condition);
-		} else if (tmpName == "strength") {
-			//
-		} else if (tmpName == "effect") {
-			//
-		} else {
-			std::cout << "[Error - Pokemons::deserializeMove] - " << description << " - Unknown move name: " << name << std::endl;
-			delete combat;
-			return false;
-		}
-
-		combat->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
-		combatMove = new CombatMove(combat, needTarget, needDirection);
-
-		for (auto attributeNode : node.children()) {
-			if ((attr = attributeNode.attribute("key"))) {
-				const char* value = attr.value();
-				if (strcasecmp(value, "shooteffect") == 0) {
-					if ((attr = attributeNode.attribute("value"))) {
-						ShootType_t shoot = getShootType(asLowerCaseString(attr.as_string()));
-						if (shoot != CONST_ANI_NONE) {
-							combat->setParam(COMBAT_PARAM_DISTANCEEFFECT, shoot);
-						} else {
-							std::cout << "[Warning - Pokemons::deserializeMove] " << description << " - Unknown shootEffect: " << attr.as_string() << std::endl;
-						}
-					}
-				} else if (strcasecmp(value, "areaeffect") == 0) {
-					if ((attr = attributeNode.attribute("value"))) {
-						MagicEffectClasses effect = getMagicEffect(asLowerCaseString(attr.as_string()));
-						if (effect != CONST_ME_NONE) {
-							combat->setParam(COMBAT_PARAM_EFFECT, effect);
-						} else {
-							std::cout << "[Warning - Pokemons::deserializeMove] " << description << " - Unknown areaEffect: " << attr.as_string() << std::endl;
-						}
-					}
-				} else {
-					std::cout << "[Warning - Pokemons::deserializeMoves] Effect type \"" << attr.as_string() << "\" does not exist." << std::endl;
-				}
-			}
-		}
-	}
-
-	sb.move = combatMove;
-	if (combatMove) {
-		sb.combatMove = true;
-	}
-	return true;
-}
-
 PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& pokemonName, bool reloading /*= false*/)
 {
 	PokemonType* mType = nullptr;
@@ -673,10 +267,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 
 	if ((attr = pokemonNode.attribute("experience"))) {
 		mType->info.experience = pugi::cast<uint64_t>(attr.value());
-	}
-
-	if ((attr = pokemonNode.attribute("speed"))) {
-		mType->info.baseSpeed = pugi::cast<int32_t>(attr.value());
 	}
 
 	if ((attr = pokemonNode.attribute("catchRate"))) {
@@ -992,36 +582,201 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
-	if ((node = pokemonNode.child("attacks"))) {
-		for (auto attackNode : node.children()) {
-			moveBlock_t sb;
-			if (deserializeMove(attackNode, sb, pokemonName)) {
-				mType->info.attackMoves.emplace_back(std::move(sb));
-			} else {
-				std::cout << "[Warning - Pokemons::loadPokemon] Cant load move. " << file << std::endl;
+	if ((node = pokemonNode.child("moves"))) {
+		for (auto moveNode : node.children()) {
+			Move* move;
+			uint16_t chanceToLearn = 100;
+			uint16_t chanceToCast = 100;
+
+			if ((attr = moveNode.attribute("name"))) {
+				move = g_moves->getMoveByName(attr.as_string());
+
+				if (!move) {
+					std::cout << "[Warning - Pokemons::loadPokemon] Move " << attr.as_string() << " not found at. " << file << std::endl;
+					continue;
+				}
+			} else{
+				std::cout << "[Warning - Pokemons::loadPokemon] Missing move name at. " << file << std::endl;
+				continue;
 			}
+
+			if ((attr = moveNode.attribute("chanceToLearn"))) {
+				chanceToLearn = pugi::cast<uint16_t>(attr.value());
+			}
+
+			if ((attr = moveNode.attribute("chanceToCast"))) {
+				chanceToCast = pugi::cast<uint16_t>(attr.value());
+			}
+
+			mType->info.moves[move->getId()] = std::make_pair(chanceToLearn, chanceToCast);
 		}
 	}
 
-	if ((node = pokemonNode.child("defenses"))) {
-		if ((attr = node.attribute("defense"))) {
-			mType->info.defense = pugi::cast<int32_t>(attr.value());
-		}
-
-		if ((attr = node.attribute("armor"))) {
-			mType->info.armor = pugi::cast<int32_t>(attr.value());
-		}
-
-		for (auto defenseNode : node.children()) {
-			moveBlock_t sb;
-			if (deserializeMove(defenseNode, sb, pokemonName)) {
-				mType->info.defenseMoves.emplace_back(std::move(sb));
-			} else {
-				std::cout << "[Warning - Pokemons::loadPokemon] Cant load move. " << file << std::endl;
-			}
-		}
+	// default immunities
+	if (mType->info.firstType == TYPE_NORMAL || mType->info.secondType == TYPE_NORMAL) {
+		mType->info.damageImmunities |= COMBAT_GHOSTDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIGHTINGDAMAGE;
 	}
+	if (mType->info.firstType == TYPE_GHOST || mType->info.secondType == TYPE_GHOST) {
+		mType->info.damageImmunities |= COMBAT_NORMALDAMAGE;
+		mType->info.damageImmunities |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GHOSTDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_DARKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_GROUND || mType->info.secondType == TYPE_GROUND) {
+		mType->info.damageImmunities |= COMBAT_ELECTRICDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ROCKDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_DARK || mType->info.secondType == TYPE_DARK) {
+		mType->info.damageImmunities |= COMBAT_PSYCHICDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FAIRYDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GHOSTDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_DARKDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_STEEL || mType->info.secondType == TYPE_STEEL) {
+		mType->info.damageImmunities |= COMBAT_POISONDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_NORMALDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FLYINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_PSYCHICDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_DRAGONDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FAIRYDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_FAIRY || mType->info.secondType == TYPE_FAIRY) {
+		mType->info.damageImmunities |= COMBAT_DRAGONDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_DARKDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_FLYING || mType->info.secondType == TYPE_FLYING) {
+		mType->info.damageImmunities |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ELECTRICDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_GRASS || mType->info.secondType == TYPE_GRASS) {
+		mType->info.conditionImmunities |= CONDITION_SLEEP;
+		mType->info.damageSuperEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FLYINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ELECTRICDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GROUNDDAMAGE;
 
+	}
+	if (mType->info.firstType == TYPE_POISON || mType->info.secondType == TYPE_POISON) {
+		mType->info.conditionImmunities |= CONDITION_POISON;
+		mType->info.damageSuperEffective |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_PSYCHICDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FAIRYDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_ELECTRIC || mType->info.secondType == TYPE_ELECTRIC) {
+		mType->info.conditionImmunities |= CONDITION_PARALYZE;
+		mType->info.damageSuperEffective |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ELECTRICDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FLYINGDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_ICE || mType->info.secondType == TYPE_ICE) {
+		mType->info.conditionImmunities |= CONDITION_FREEZING;
+		mType->info.damageSuperEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ICEDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_WATER || mType->info.secondType == TYPE_WATER) {
+		mType->info.conditionImmunities |= CONDITION_DROWN;
+		mType->info.damageSuperEffective |= COMBAT_ELECTRICDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ICEDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_FIGHTING || mType->info.secondType == TYPE_FIGHTING) {
+		mType->info.damageSuperEffective |= COMBAT_FLYINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_PSYCHICDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FAIRYDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_DARKDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_PSYCHIC || mType->info.secondType == TYPE_PSYCHIC) {
+		mType->info.damageSuperEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GHOSTDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_DARKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_PSYCHICDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_BUG || mType->info.secondType == TYPE_BUG) {
+		mType->info.damageSuperEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FLYINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GROUNDDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_ROCK || mType->info.secondType == TYPE_ROCK) {
+		mType->info.damageSuperEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FIGHTINGDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_NORMALDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_POISONDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FLYINGDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_DRAGON || mType->info.secondType == TYPE_DRAGON) {
+		mType->info.damageSuperEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_DRAGONDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_FAIRYDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ELECTRICDAMAGE;
+	}
+	if (mType->info.firstType == TYPE_FIRE || mType->info.secondType == TYPE_FIRE) {
+		mType->info.damageSuperEffective |= COMBAT_WATERDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_GROUNDDAMAGE;
+		mType->info.damageSuperEffective |= COMBAT_ROCKDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FIREDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_GRASSDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_ICEDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_BUGDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_STEELDAMAGE;
+		mType->info.damageNotVeryEffective |= COMBAT_FAIRYDAMAGE;
+	}
+	
+	// custom immunities
 	if ((node = pokemonNode.child("immunities"))) {
 		for (auto immunityNode : node.children()) {
 			if ((attr = immunityNode.attribute("name"))) {
@@ -1029,28 +784,26 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				if (tmpStrValue == "physical") {
 					mType->info.damageImmunities |= COMBAT_PHYSICALDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_BLEEDING;
-				} else if (tmpStrValue == "energy") {
-					mType->info.damageImmunities |= COMBAT_ENERGYDAMAGE;
-					mType->info.conditionImmunities |= CONDITION_ENERGY;
+				} else if (tmpStrValue == "electric") {
+					mType->info.damageImmunities |= COMBAT_ELECTRICDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_PARALYZE;
 				} else if (tmpStrValue == "fire") {
 					mType->info.damageImmunities |= COMBAT_FIREDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_FIRE;
-				} else if (tmpStrValue == "poison" ||
-							tmpStrValue == "earth") {
-					mType->info.damageImmunities |= COMBAT_EARTHDAMAGE;
-					mType->info.conditionImmunities |= CONDITION_POISON;
-				} else if (tmpStrValue == "drown") {
-					mType->info.damageImmunities |= COMBAT_DROWNDAMAGE;
+				} else if (tmpStrValue == "grass") {
+					mType->info.damageImmunities |= COMBAT_GRASSDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_SLEEP;
+				} else if (tmpStrValue == "water") {
+					mType->info.damageImmunities |= COMBAT_WATERDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_DROWN;
 				} else if (tmpStrValue == "ice") {
 					mType->info.damageImmunities |= COMBAT_ICEDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_FREEZING;
-				} else if (tmpStrValue == "holy") {
-					mType->info.damageImmunities |= COMBAT_HOLYDAMAGE;
-					mType->info.conditionImmunities |= CONDITION_DAZZLED;
-				} else if (tmpStrValue == "death") {
-					mType->info.damageImmunities |= COMBAT_DEATHDAMAGE;
-					mType->info.conditionImmunities |= CONDITION_CURSED;
+				} else if (tmpStrValue == "bug") {
+					mType->info.damageImmunities |= COMBAT_BUGDAMAGE;
+				} else if (tmpStrValue == "posion") {
+					mType->info.damageImmunities |= COMBAT_POISONDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_POISON;
 				} else if (tmpStrValue == "lifedrain") {
 					mType->info.damageImmunities |= COMBAT_LIFEDRAIN;
 				} else if (tmpStrValue == "paralyze") {
@@ -1058,7 +811,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				} else if (tmpStrValue == "outfit") {
 					mType->info.conditionImmunities |= CONDITION_OUTFIT;
 				} else if (tmpStrValue == "drunk") {
-					mType->info.conditionImmunities |= CONDITION_DRUNK;
+					mType->info.conditionImmunities |= CONDITION_CONFUSION;
 				} else if (tmpStrValue == "invisible" || tmpStrValue == "invisibility") {
 					mType->info.conditionImmunities |= CONDITION_INVISIBLE;
 				} else if (tmpStrValue == "bleed") {
@@ -1073,7 +826,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				}
 			} else if ((attr = immunityNode.attribute("energy"))) {
 				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_ENERGYDAMAGE;
+					mType->info.damageImmunities |= COMBAT_ELECTRICDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_ENERGY;
 				}
 			} else if ((attr = immunityNode.attribute("fire"))) {
@@ -1083,12 +836,12 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				}
 			} else if ((attr = immunityNode.attribute("poison")) || (attr = immunityNode.attribute("earth"))) {
 				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_EARTHDAMAGE;
+					mType->info.damageImmunities |= COMBAT_GRASSDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_POISON;
 				}
 			} else if ((attr = immunityNode.attribute("drown"))) {
 				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_DROWNDAMAGE;
+					mType->info.damageImmunities |= COMBAT_WATERDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_DROWN;
 				}
 			} else if ((attr = immunityNode.attribute("ice"))) {
@@ -1098,12 +851,12 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				}
 			} else if ((attr = immunityNode.attribute("holy"))) {
 				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_HOLYDAMAGE;
+					mType->info.damageImmunities |= COMBAT_BUGDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_DAZZLED;
 				}
 			} else if ((attr = immunityNode.attribute("death"))) {
 				if (attr.as_bool()) {
-					mType->info.damageImmunities |= COMBAT_DEATHDAMAGE;
+					mType->info.damageImmunities |= COMBAT_DARKDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_CURSED;
 				}
 			} else if ((attr = immunityNode.attribute("lifedrain"))) {
@@ -1124,7 +877,7 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				}
 			} else if ((attr = immunityNode.attribute("drunk"))) {
 				if (attr.as_bool()) {
-					mType->info.conditionImmunities |= CONDITION_DRUNK;
+					mType->info.conditionImmunities |= CONDITION_CONFUSION;
 				}
 			} else if ((attr = immunityNode.attribute("invisible")) || (attr = immunityNode.attribute("invisibility"))) {
 				if (attr.as_bool()) {
@@ -1275,17 +1028,17 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 			} else if ((attr = elementNode.attribute("icePercent"))) {
 				mType->info.elementMap[COMBAT_ICEDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("poisonPercent")) || (attr = elementNode.attribute("earthPercent"))) {
-				mType->info.elementMap[COMBAT_EARTHDAMAGE] = pugi::cast<int32_t>(attr.value());
+				mType->info.elementMap[COMBAT_GRASSDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("firePercent"))) {
 				mType->info.elementMap[COMBAT_FIREDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("energyPercent"))) {
-				mType->info.elementMap[COMBAT_ENERGYDAMAGE] = pugi::cast<int32_t>(attr.value());
+				mType->info.elementMap[COMBAT_ELECTRICDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("holyPercent"))) {
-				mType->info.elementMap[COMBAT_HOLYDAMAGE] = pugi::cast<int32_t>(attr.value());
+				mType->info.elementMap[COMBAT_BUGDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("deathPercent"))) {
-				mType->info.elementMap[COMBAT_DEATHDAMAGE] = pugi::cast<int32_t>(attr.value());
+				mType->info.elementMap[COMBAT_DARKDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("drownPercent"))) {
-				mType->info.elementMap[COMBAT_DROWNDAMAGE] = pugi::cast<int32_t>(attr.value());
+				mType->info.elementMap[COMBAT_WATERDAMAGE] = pugi::cast<int32_t>(attr.value());
 			} else if ((attr = elementNode.attribute("lifedrainPercent"))) {
 				mType->info.elementMap[COMBAT_LIFEDRAIN] = pugi::cast<int32_t>(attr.value());
 			} else {
@@ -1349,8 +1102,6 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 
 	mType->info.summons.shrink_to_fit();
 	mType->info.lootItems.shrink_to_fit();
-	mType->info.attackMoves.shrink_to_fit();
-	mType->info.defenseMoves.shrink_to_fit();
 	mType->info.voiceVector.shrink_to_fit();
 	mType->info.scripts.shrink_to_fit();
 	mType->info.evolutions.shrink_to_fit();

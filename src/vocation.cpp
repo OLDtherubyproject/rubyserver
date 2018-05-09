@@ -115,11 +115,6 @@ bool Vocations::loadFromXml()
 				if (defenseAttribute) {
 					voc.defenseMultiplier = pugi::cast<float>(defenseAttribute.value());
 				}
-
-				pugi::xml_attribute armorAttribute = childNode.attribute("armor");
-				if (armorAttribute) {
-					voc.armorMultiplier = pugi::cast<float>(armorAttribute.value());
-				}
 			}
 		}
 	}

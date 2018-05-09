@@ -96,6 +96,10 @@ class Condition
 			return ticks;
 		}
 		void setTicks(int32_t newTicks);
+		CombatType_t getCombatType() const {
+			return combatType;
+		}
+		void setCombatType(CombatType_t newCombatType);
 
 		static Condition* createCondition(ConditionId_t id, ConditionType_t type, int32_t ticks, int32_t param = 0, bool buff = false, uint32_t subId = 0);
 		static Condition* createCondition(PropStream& propStream);
@@ -116,6 +120,7 @@ class Condition
 		uint32_t subId;
 		int32_t ticks;
 		ConditionType_t conditionType;
+		CombatType_t combatType = COMBAT_NONE;
 		bool isBuff;
 
 	private:

@@ -1,4 +1,4 @@
-local drunk = Condition(CONDITION_DRUNK)
+local drunk = Condition(CONDITION_CONFUSION)
 drunk:setParameter(CONDITION_PARAM_TICKS, 60000)
 
 local poison = Condition(CONDITION_POISON)

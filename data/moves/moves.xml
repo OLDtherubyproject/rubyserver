@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <moves>
-	<!-- House Moves -->
-	<instant name="House Door List" words="aleta grav" casterTargetOrDirection="1" aggressive="0" script="house/edit_door_list.lua" />
-	<instant name="House Guest List" words="aleta sio" aggressive="0" script="house/edit_guest_list.lua" />
-	<instant name="House Kick" words="alana sio" aggressive="0" playernameparam="1" params="1" script="house/kick.lua" />
-	<instant name="House Subowner List" words="aleta som" aggressive="0" script="house/edit_subowner_list.lua" />
+	<!-- House Moves (will be removed soon) -->
+	<move name="House Door List" moveid="996" words="aleta grav" casterTargetOrDirection="1" aggressive="0" script="house/edit_door_list.lua" />
+	<move name="House Guest List" moveid="997" words="aleta sio" aggressive="0" script="house/edit_guest_list.lua" />
+	<move name="House Kick" moveid="998" words="alana sio" aggressive="0" playernameparam="1" params="1" script="house/kick.lua" />
+	<move name="House Subowner List" moveid="999" words="aleta som" aggressive="0" script="house/edit_subowner_list.lua" />
 
 	<!-- Grass Moves -->
-	<instant name="Absorb" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Grass/absorb.lua" />
+	<move name="Vine Whip" moveid="1" accuracy="100" cooldown="10000" category="physical" type="grass" aggressive="1" blockwalls="1" direction="1" needtarget="0" script="vine whip.lua" />
+	<move name="Spore" moveid="2" accuracy="100" cooldown="10000" ignoreSleep="1" range="1" category="status" type="grass" aggressive="1" blockwalls="1" direction="0" needtarget="0" script="spore.lua" />
 
 	<!-- Bug Moves -->
-	<instant name="Heal Order" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Bug/heal order.lua" />
+	<move name="Heal Order" moveid="3" type="bug" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="heal order.lua" />
 
 	<!-- Dark Moves -->
-	<instant name="Assurance" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Dark/assurance.lua" />
+	<move name="Assurance" moveid="4" type="dark" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="assurance.lua" />
 
 	<!-- Dragon Moves -->
-	<instant name="Dual Chop" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Dragon/dual chop.lua" />
+	<move name="Dual Chop" moveid="5" type="dragon" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="dual chop.lua" />
 
 	<!-- Electric Moves -->
-	<instant name="Electro Ball" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Electric/electro ball.lua" />
+	<move name="Electro Ball" moveid="6" type="electric" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="electro ball.lua" />
 
 	<!-- Fairy Moves -->
-	<instant name="Fairy Wind" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fairy/fairy wind.lua" />
+	<move name="Fairy Wind" moveid="7" type="fairy" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="fairy wind.lua" />
 
 	<!-- Fighting Moves -->
-	<instant name="Focus Punch" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fighting/focus punch.lua" />
+	<move name="Focus Punch" moveid="8" type="fighting" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="focus punch.lua" />
 
 	<!-- Fire Moves -->
-	<instant name="Blast Burn" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Fire/blast burn.lua" />
+	<move name="Blast Burn" moveid="9" type="fire" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="blast burn.lua" />
 
 	<!-- Flying Moves -->
-	<instant name="Aeroblast" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Flying/aeroblast.lua" />
+	<move name="Aeroblast" moveid="10" cooldown="5000" type="flying" moveid="9" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="aeroblast.lua" />
 
 	<!-- Ghost Moves -->
-	<instant name="Astonish" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ghost/astonish.lua" />
+	<move name="Astonish" moveid="11" type="ghost" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="astonish.lua" />
 
 	<!-- Ground Moves -->
-	<instant name="Bone Club" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ground/bone club.lua" />
+	<move name="Bone Club" moveid="12" type="ground" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="bone club.lua" />
 
 	<!-- Ice Moves -->
-	<instant name="Aurora Beam" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Ice/aurora beam.lua" />
+	<move name="Aurora Beam" moveid="13" type="ice" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="aurora beam.lua" />
 
 	<!-- Normal Moves -->
-	<instant name="Assist" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Normal/assist.lua" />
-
+	<move name="Self-Destruct" moveid="14" accuracy="100" cooldown="0" range="1" category="status" type="normal" aggressive="1" blockwalls="1" direction="0" needtarget="0" script="self-destruct.lua" />
+	
 	<!-- Poison Moves -->
-	<instant name="Acid" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Poison/acid.lua" />
+	<move name="Acid" moveid="15" type="poison" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="acid.lua" />
 
 	<!-- Psychic Moves -->
-	<instant name="Barrier" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Psychic/barrier.lua" />
+	<move name="Confusion" moveid="16" accuracy="100" cooldown="5000" range="1" category="status" type="psychic" aggressive="1" blockwalls="1" direction="0" needtarget="0" script="confusion.lua" />
 
 	<!-- Rock Moves -->
-	<instant name="Ancient Power" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Rock/ancient power.lua" />
+	<move name="Ancient Power" moveid="17" type="rock" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="ancient power.lua" />
 
 	<!-- Steel Moves -->
-	<instant name="Iron Tail" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Steel/iron tail.lua" />
+	<move name="Iron Tail" moveid="18" type="steel" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="iron tail.lua" />
 
 	<!-- Water Moves -->
-	<instant name="Aqua Tail" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="Water/aqua tail.lua" />
+	<move name="Aqua Tail" moveid="19" type="water" aggressive="1" blockwalls="1" needtarget="1" needlearn="1" script="aqua tail.lua" />
 </moves>

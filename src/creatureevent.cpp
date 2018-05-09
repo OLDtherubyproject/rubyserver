@@ -51,6 +51,11 @@ std::string CreatureEvents::getScriptBaseName() const
 	return "creaturescripts";
 }
 
+std::string CreatureEvents::getScriptPrefixName() const
+{
+	return "";
+}
+
 Event_ptr CreatureEvents::getEvent(const std::string& nodeName)
 {
 	if (strcasecmp(nodeName.c_str(), "event") != 0) {
@@ -496,18 +501,15 @@ void CreatureEvent::executeHealthChange(Creature* creature, Creature* attacker, 
 
 	LuaScriptInterface::pushCombatDamage(L, damage);
 
-	if (scriptInterface->protectedCall(L, 7, 4) != 0) {
+	if (scriptInterface->protectedCall(L, 7, 2) != 0) {
 		LuaScriptInterface::reportError(nullptr, LuaScriptInterface::popString(L));
 	} else {
-		damage.primary.value = std::abs(LuaScriptInterface::getNumber<int32_t>(L, -4));
-		damage.primary.type = LuaScriptInterface::getNumber<CombatType_t>(L, -3);
-		damage.secondary.value = std::abs(LuaScriptInterface::getNumber<int32_t>(L, -2));
-		damage.secondary.type = LuaScriptInterface::getNumber<CombatType_t>(L, -1);
+		damage.value = std::abs(LuaScriptInterface::getNumber<int32_t>(L, -2));
+		damage.type = LuaScriptInterface::getNumber<CombatType_t>(L, -1);
 
-		lua_pop(L, 4);
-		if (damage.primary.type != COMBAT_HEALING) {
-			damage.primary.value = -damage.primary.value;
-			damage.secondary.value = -damage.secondary.value;
+		lua_pop(L, 2);
+		if (damage.type != COMBAT_HEALING) {
+			damage.value = -damage.value;
 		}
 	}
 

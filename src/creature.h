@@ -199,8 +199,8 @@ class Creature : virtual public Thing
 		virtual int32_t getStepSpeed() const {
 			return getSpeed();
 		}
-		int32_t getSpeed() const {
-			return baseSpeed + varSpeed;
+		virtual int32_t getSpeed() const {
+			return getBaseSpeed() + varSpeed;
 		}
 		void setSpeed(int32_t varSpeedDelta) {
 			int32_t oldSpeed = getSpeed();
@@ -217,7 +217,7 @@ class Creature : virtual public Thing
 		void setBaseSpeed(uint32_t newBaseSpeed) {
 			baseSpeed = newBaseSpeed;
 		}
-		uint32_t getBaseSpeed() const {
+		virtual uint32_t getBaseSpeed() const {
 			return baseSpeed;
 		}
 
@@ -269,7 +269,7 @@ class Creature : virtual public Thing
 		}
 		virtual bool setAttackedCreature(Creature* creature);
 		virtual BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-		                             bool checkDefense = false, bool checkArmor = false, bool field = false);
+		                             bool field = false);
 
 		bool setMaster(Creature* newMaster);
 
@@ -291,11 +291,17 @@ class Creature : virtual public Thing
 			return summons;
 		}
 
-		virtual int32_t getArmor() const {
-			return 0;
+		virtual float getDefense() const {
+			return 1.0f;
 		}
-		virtual int32_t getDefense() const {
-			return 0;
+		virtual float getSpecialDefense() const {
+			return 1.0f;
+		}
+		virtual float getAttack() const {
+			return 1.0f;
+		}
+		virtual float getSpecialAttack() const {
+			return 1.0f;
 		}
 		virtual float getAttackFactor() const {
 			return 1.0f;
@@ -360,8 +366,6 @@ class Creature : virtual public Thing
 		virtual void onTargetCreatureGainHealth(Creature*, int32_t) {}
 		virtual bool onKilledCreature(Creature* target, bool lastHit = true);
 		virtual void onGainExperience(uint64_t gainExp, Creature* target);
-		virtual void onAttackedCreatureBlockHit(BlockType_t) {}
-		virtual void onBlockHit() {}
 		virtual void onChangeZone(ZoneType_t zone);
 		virtual void onAttackedCreatureChangeZone(ZoneType_t zone);
 		virtual void onIdleStatus();
@@ -460,9 +464,7 @@ class Creature : virtual public Thing
 
 		bool needTeleportToPlayer = false;
 
-		void cleanConditions() {
-			conditions.clear();
-		}
+		void cleanConditions();
 
 	protected:
 		virtual bool useCacheMap() const {

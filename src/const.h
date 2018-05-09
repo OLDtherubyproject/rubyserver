@@ -256,8 +256,7 @@ enum ShootType_t : uint16_t {
 	CONST_ANI_GLOOTHSPEAR = 53,
 	CONST_ANI_SIMPLEARROW = 54,
 
-	// for internal use, don't send to client
-	CONST_ANI_WEAPONTYPE = 0xFFFE, // 65534
+	// limit 65534
 };
 
 enum SpeakClasses : uint8_t {
@@ -409,17 +408,30 @@ enum SquareColor_t : uint8_t {
 enum TextColor_t : uint8_t {
 	TEXTCOLOR_BLUE = 5,
 	TEXTCOLOR_LIGHTGREEN = 30,
+	TEXTCOLOR_GREEN = 30,
 	TEXTCOLOR_LIGHTBLUE = 35,
+	TEXTCOLOR_DARKPURPLE = 74,
+	TEXTCOLOR_BLUEVIOLET = 77,
+	TEXTCOLOR_DARKGREEN = 85,
+	TEXTCOLOR_LAVENDERGREY = 86,
 	TEXTCOLOR_MAYABLUE = 95,
+	TEXTCOLOR_POOLGREEN = 102,
 	TEXTCOLOR_DARKRED = 108,
+	TEXTCOLOR_BUTTERFLYBUSH = 112,
+	TEXTCOLOR_QUINCY = 121,
+	TEXTCOLOR_BRASS = 127,
 	TEXTCOLOR_LIGHTGREY = 129,
 	TEXTCOLOR_SKYBLUE = 143,
+	TEXTCOLOR_BRINKPINK = 146,
 	TEXTCOLOR_PURPLE = 154,
 	TEXTCOLOR_ELECTRICPURPLE = 155,
+	TEXTCOLOR_LIGHTPINK = 161,
 	TEXTCOLOR_RED = 180,
 	TEXTCOLOR_PASTELRED = 194,
+	TEXTCOLOR_PINK = 197,
 	TEXTCOLOR_ORANGE = 198,
 	TEXTCOLOR_YELLOW = 210,
+	TEXTCOLOR_LIGHTYELLOW = 212,
 	TEXTCOLOR_WHITE_EXP = 215,
 	TEXTCOLOR_NONE = 255,
 };
@@ -428,7 +440,7 @@ enum Icons_t {
 	ICON_POISON = 1 << 0,
 	ICON_BURN = 1 << 1,
 	ICON_ENERGY =  1 << 2,
-	ICON_DRUNK = 1 << 3,
+	ICON_CONFUSION = 1 << 3,
 	ICON_PARALYZE = 1 << 5,
 	ICON_HASTE = 1 << 6,
 	ICON_SWORDS = 1 << 7,
@@ -440,35 +452,6 @@ enum Icons_t {
 	ICON_REDSWORDS = 1 << 13,
 	ICON_PIGEON = 1 << 14,
 	ICON_BLEEDING = 1 << 15,
-};
-
-enum WeaponType_t : uint8_t {
-	WEAPON_NONE,
-	WEAPON_SWORD,
-	WEAPON_CLUB,
-	WEAPON_AXE,
-	WEAPON_SHIELD,
-	WEAPON_DISTANCE,
-	WEAPON_WAND,
-	WEAPON_AMMO,
-};
-
-enum Ammo_t : uint8_t {
-	AMMO_NONE,
-	AMMO_BOLT,
-	AMMO_ARROW,
-	AMMO_SPEAR,
-	AMMO_THROWINGSTAR,
-	AMMO_THROWINGKNIFE,
-	AMMO_STONE,
-	AMMO_SNOWBALL,
-};
-
-enum WeaponAction_t : uint8_t {
-	WEAPONACTION_NONE,
-	WEAPONACTION_REMOVECOUNT,
-	WEAPONACTION_REMOVECHARGE,
-	WEAPONACTION_MOVE,
 };
 
 enum WieldInfo_t {
@@ -628,7 +611,6 @@ enum PlayerFlags : uint64_t {
 	PlayerFlag_CanTalkRedChannelAnonymous = static_cast<uint64_t>(1) << 32,
 	PlayerFlag_IgnoreProtectionZone = static_cast<uint64_t>(1) << 33,
 	PlayerFlag_IgnoreMoveCheck = static_cast<uint64_t>(1) << 34,
-	PlayerFlag_IgnoreWeaponCheck = static_cast<uint64_t>(1) << 35,
 	PlayerFlag_CannotBeMuted = static_cast<uint64_t>(1) << 36,
 	PlayerFlag_IsAlwaysPremium = static_cast<uint64_t>(1) << 37,
 };

@@ -70,6 +70,11 @@ std::string Actions::getScriptBaseName() const
 	return "actions";
 }
 
+std::string Actions::getScriptPrefixName() const
+{
+	return "";
+}
+
 Event_ptr Actions::getEvent(const std::string& nodeName)
 {
 	if (strcasecmp(nodeName.c_str(), "action") != 0) {

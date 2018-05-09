@@ -225,13 +225,18 @@ void Creature::onWalk()
 
 void Creature::onWalk(Direction& dir)
 {
-	if (hasCondition(CONDITION_DRUNK)) {
+	if (hasCondition(CONDITION_CONFUSION)) {
 		uint32_t r = uniform_random(0, 20);
-		if (r <= DIRECTION_DIAGONAL_MASK) {
-			if (r < DIRECTION_DIAGONAL_MASK) {
-				dir = static_cast<Direction>(r);
+		if (r < DIRECTION_DIAGONAL_MASK) {
+			dir = static_cast<Direction>(r);
+			g_game.addMagicEffect(getPosition(), 948);
+
+			if (uniform_random(1, 100) <= 10) {
+				CombatDamage damage;
+				damage.value = -(getHealth() * 0.1);
+				damage.type = COMBAT_PHYSICALDAMAGE;
+				g_game.combatChangeHealth(this, this, damage);
 			}
-			g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, "Hicks!", false);
 		}
 	}
 }
@@ -774,53 +779,17 @@ void Creature::drainHealth(Creature* attacker, int32_t damage)
 }
 
 BlockType_t Creature::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-                               bool checkDefense /* = false */, bool checkArmor /* = false */, bool /* field  = false */)
+                                bool /* field  = false */)
 {
 	BlockType_t blockType = BLOCK_NONE;
 
 	if (isImmune(combatType)) {
 		damage = 0;
 		blockType = BLOCK_IMMUNITY;
-	} else if (checkDefense || checkArmor) {
-		bool hasDefense = false;
-
-		if (blockCount > 0) {
-			--blockCount;
-			hasDefense = true;
-		}
-
-		if (checkDefense && hasDefense && canUseDefense) {
-			int32_t defense = getDefense();
-			damage -= uniform_random(defense / 2, defense);
-			if (damage <= 0) {
-				damage = 0;
-				blockType = BLOCK_DEFENSE;
-				checkArmor = false;
-			}
-		}
-
-		if (checkArmor) {
-			int32_t armor = getArmor();
-			if (armor > 3) {
-				damage -= uniform_random(armor / 2, armor - (armor % 2 + 1));
-			} else if (armor > 0) {
-				--damage;
-			}
-
-			if (damage <= 0) {
-				damage = 0;
-				blockType = BLOCK_ARMOR;
-			}
-		}
-
-		if (hasDefense && blockType != BLOCK_NONE) {
-			onBlockHit();
-		}
 	}
 
 	if (attacker) {
 		attacker->onAttackedCreature(this);
-		attacker->onAttackedCreatureBlockHit(blockType);
 	}
 
 	onAttacked();
@@ -1014,22 +983,22 @@ void Creature::onTickCondition(ConditionType_t type, bool& bRemove)
 			bRemove = (field->getCombatType() != COMBAT_FIREDAMAGE);
 			break;
 		case CONDITION_ENERGY:
-			bRemove = (field->getCombatType() != COMBAT_ENERGYDAMAGE);
+			bRemove = (field->getCombatType() != COMBAT_ELECTRICDAMAGE);
 			break;
 		case CONDITION_POISON:
-			bRemove = (field->getCombatType() != COMBAT_EARTHDAMAGE);
+			bRemove = (field->getCombatType() != COMBAT_GRASSDAMAGE);
 			break;
 		case CONDITION_FREEZING:
 			bRemove = (field->getCombatType() != COMBAT_ICEDAMAGE);
 			break;
 		case CONDITION_DAZZLED:
-			bRemove = (field->getCombatType() != COMBAT_HOLYDAMAGE);
+			bRemove = (field->getCombatType() != COMBAT_BUGDAMAGE);
 			break;
 		case CONDITION_CURSED:
-			bRemove = (field->getCombatType() != COMBAT_DEATHDAMAGE);
+			bRemove = (field->getCombatType() != COMBAT_DARKDAMAGE);
 			break;
 		case CONDITION_DROWN:
-			bRemove = (field->getCombatType() != COMBAT_DROWNDAMAGE);
+			bRemove = (field->getCombatType() != COMBAT_WATERDAMAGE);
 			break;
 		case CONDITION_BLEEDING:
 			bRemove = (field->getCombatType() != COMBAT_PHYSICALDAMAGE);
@@ -1142,6 +1111,30 @@ bool Creature::addCombatCondition(Condition* condition)
 
 	onAddCombatCondition(type);
 	return true;
+}
+
+void Creature::cleanConditions()
+{
+	auto it = conditions.begin(), end = conditions.end();
+	while (it != end) {
+		Condition* condition = *it;
+		ConditionType_t type = condition->getType();
+
+		if (type == CONDITION_PARALYZE || type == CONDITION_SLEEP) {
+			int64_t walkDelay = getWalkDelay();
+			if (walkDelay > 0) {
+				g_scheduler.addEvent(createSchedulerTask(walkDelay, std::bind(&Game::forceRemoveCondition, &g_game, getID(), type)));
+				return;
+			}
+		}
+
+		it = conditions.erase(it);
+
+		condition->endCondition(this);
+		delete condition;
+
+		onEndCondition(type);
+	}
 }
 
 void Creature::removeCondition(ConditionType_t type, bool force/* = false*/)

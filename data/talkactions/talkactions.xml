@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talkactions>
+	<!-- pokemon commands -->
+	<talkaction words="m1" script="pokemon/m1.lua" />
+	<talkaction words="m2" script="pokemon/m2.lua" />
+	<talkaction words="m3" script="pokemon/m3.lua" />
+	<talkaction words="m4" script="pokemon/m4.lua" />
+	<talkaction words="m5" script="pokemon/m5.lua" />
+	<talkaction words="m6" script="pokemon/m6.lua" />
+	<talkaction words="m7" script="pokemon/m7.lua" />
+	<talkaction words="m8" script="pokemon/m8.lua" />
+	<talkaction words="m9" script="pokemon/m9.lua" />
+	<talkaction words="m10" script="pokemon/m10.lua" />
+	<talkaction words="m11" script="pokemon/m11.lua" />
+	<talkaction words="m12" script="pokemon/m12.lua" />
 	<!-- commands -->
 	<talkaction words="/ban" separator=" " script="ban.lua" />
 	<talkaction words="/ipban" separator=" " script="ipban.lua" />

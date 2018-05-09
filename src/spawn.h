@@ -39,7 +39,7 @@ struct spawnBlock_t {
 class Spawn
 {
 	public:
-		Spawn(Position pos, int32_t radius) : centerPos(std::move(pos)), radius(radius) {}
+		Spawn(Position pos, int32_t radius, int32_t minlevel, int32_t maxlevel) : centerPos(std::move(pos)), radius(radius), minlevel(minlevel), maxlevel(maxlevel) {}
 		~Spawn();
 
 		// non-copyable
@@ -71,6 +71,8 @@ class Spawn
 
 		Position centerPos;
 		int32_t radius;
+		int32_t minlevel;
+		int32_t maxlevel;
 
 		uint32_t interval = 60000;
 		uint32_t checkSpawnEvent = 0;

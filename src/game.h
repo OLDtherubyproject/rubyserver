@@ -451,7 +451,7 @@ class Game
 		void checkCreatures(size_t index);
 		void checkLight();
 
-		bool combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* target, bool checkDefense, bool checkArmor, bool field);
+		bool combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* target, bool field);
 
 		void combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColor_t& color, uint8_t& effect);
 
@@ -462,6 +462,8 @@ class Game
 		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
 		void addMagicEffect(const Position& pos, uint16_t effect);
 		static void addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
+		void addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text);
+		static void addAnimatedText(const SpectatorHashSet& list, const Position& pos, uint8_t textColor, const std::string& text);
 		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect);
 		static void addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t effect);
 
@@ -494,7 +496,8 @@ class Game
 		void addPokemon(Pokemon* pokemon);
 		void removePokemon(Pokemon* pokemon);
 		uint32_t savePokemon(Pokemon* pokemon);
-		Pokemon* loadPokemonById(uint32_t id, Player* player = nullptr);
+		Pokemon* preloadPokemon(uint32_t id, Player* player = nullptr);
+		Pokemon* loadPokemon(uint32_t id, Player* player = nullptr);
 		PokemonType* loadPokemonTypeById(uint32_t id);
 		PokeballType* loadPokemonPokeballById(uint32_t id);
 

@@ -52,6 +52,11 @@ std::string TalkActions::getScriptBaseName() const
 	return "talkactions";
 }
 
+std::string TalkActions::getScriptPrefixName() const
+{
+	return "";
+}
+
 Event_ptr TalkActions::getEvent(const std::string& nodeName)
 {
 	if (strcasecmp(nodeName.c_str(), "talkaction") != 0) {

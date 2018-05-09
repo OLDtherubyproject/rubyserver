@@ -203,166 +203,14 @@ void Player::removeConditionSuppressions(uint32_t conditions)
 	conditionSuppressions &= ~conditions;
 }
 
-Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
+float Player::getDefense() const
 {
-	Item* item = inventory[slot];
-	if (!item) {
-		return nullptr;
-	}
-
-	WeaponType_t weaponType = item->getWeaponType();
-	if (weaponType == WEAPON_NONE || weaponType == WEAPON_SHIELD || weaponType == WEAPON_AMMO) {
-		return nullptr;
-	}
-
-	if (!ignoreAmmo && weaponType == WEAPON_DISTANCE) {
-		const ItemType& it = Item::items[item->getID()];
-		if (it.ammoType != AMMO_NONE) {
-			Item* ammoItem = inventory[CONST_SLOT_SUPPORT];
-			if (!ammoItem || ammoItem->getAmmoType() != it.ammoType) {
-				return nullptr;
-			}
-			item = ammoItem;
-		}
-	}
-	return item;
+	return 1.0f;
 }
 
-Item* Player::getWeapon(bool ignoreAmmo/* = false*/) const
+float Player::getSpecialDefense() const
 {
-	Item* item = getWeapon(CONST_SLOT_LEFT, ignoreAmmo);
-	if (item) {
-		return item;
-	}
-
-	item = getWeapon(CONST_SLOT_RIGHT, ignoreAmmo);
-	if (item) {
-		return item;
-	}
-	return nullptr;
-}
-
-WeaponType_t Player::getWeaponType() const
-{
-	Item* item = getWeapon();
-	if (!item) {
-		return WEAPON_NONE;
-	}
-	return item->getWeaponType();
-}
-
-int32_t Player::getWeaponSkill(const Item* item) const
-{
-	if (!item) {
-		return getSkillLevel(SKILL_FIST);
-	}
-
-	int32_t attackSkill;
-
-	WeaponType_t weaponType = item->getWeaponType();
-	switch (weaponType) {
-		case WEAPON_SWORD: {
-			attackSkill = getSkillLevel(SKILL_SWORD);
-			break;
-		}
-
-		case WEAPON_CLUB: {
-			attackSkill = getSkillLevel(SKILL_CLUB);
-			break;
-		}
-
-		case WEAPON_AXE: {
-			attackSkill = getSkillLevel(SKILL_AXE);
-			break;
-		}
-
-		case WEAPON_DISTANCE: {
-			attackSkill = getSkillLevel(SKILL_DISTANCE);
-			break;
-		}
-
-		default: {
-			attackSkill = 0;
-			break;
-		}
-	}
-	return attackSkill;
-}
-
-int32_t Player::getArmor() const
-{
-	int32_t armor = 0;
-
-	static const slots_t armorSlots[] = {CONST_SLOT_HEAD, CONST_SLOT_NECKLACE, CONST_SLOT_ARMOR, CONST_SLOT_PORTRAIT, CONST_SLOT_POKEBALL, CONST_SLOT_RING};
-	for (slots_t slot : armorSlots) {
-		Item* inventoryItem = inventory[slot];
-		if (inventoryItem) {
-			armor += inventoryItem->getArmor();
-		}
-	}
-	return static_cast<int32_t>(armor * vocation->armorMultiplier);
-}
-
-void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
-{
-	shield = nullptr;
-	weapon = nullptr;
-
-	for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
-		Item* item = inventory[slot];
-		if (!item) {
-			continue;
-		}
-
-		switch (item->getWeaponType()) {
-			case WEAPON_NONE:
-				break;
-
-			case WEAPON_SHIELD: {
-				if (!shield || 0 > 0) {
-					shield = item;
-				}
-				break;
-			}
-
-			default: { // weapons that are not shields
-				weapon = item;
-				break;
-			}
-		}
-	}
-}
-
-int32_t Player::getDefense() const
-{
-	int32_t defenseSkill = getSkillLevel(SKILL_FIST);
-	int32_t defenseValue = 7;
-	const Item* weapon;
-	const Item* shield;
-	getShieldAndWeapon(shield, weapon);
-
-	if (weapon) {
-		defenseValue = 0 + weapon->getExtraDefense();
-		defenseSkill = getWeaponSkill(weapon);
-	}
-
-	if (shield) {
-		defenseValue = weapon != nullptr ? 0 + weapon->getExtraDefense() : 0;
-		defenseSkill = getSkillLevel(SKILL_SHIELD);
-	}
-
-	if (defenseSkill == 0) {
-		switch (fightMode) {
-			case FIGHTMODE_ATTACK:
-			case FIGHTMODE_BALANCED:
-				return 1;
-
-			case FIGHTMODE_DEFENSE:
-				return 2;
-		}
-	}
-
-	return (defenseSkill / 4. + 2.23) * defenseValue * 0.15 * getDefenseFactor() * vocation->defenseMultiplier;
+	return 1.0f;
 }
 
 float Player::getAttackFactor() const
@@ -1400,6 +1248,11 @@ uint32_t Player::getNextActionTime() const
 	return std::max<int64_t>(SCHEDULER_MINTICKS, nextAction - OTSYS_TIME());
 }
 
+uint32_t Player::getNextCastMoveTime() const
+{
+	return std::max<int64_t>(SCHEDULER_MINTICKS, nextMove - OTSYS_TIME());
+}
+
 uint32_t Player::getNextGobackTime() const
 {
 	return std::max<int64_t>(SCHEDULER_MINTICKS, nextGoback - OTSYS_TIME());
@@ -1554,7 +1407,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		}
 
 		if (Pokemon* pokemon = getHisPokemon()) {
-			pokemon->setMasterLevel(getLevel());
+			pokemon->setLevel(getLevel());
 			setPokemonHealthMax(pokemon->getMaxHealth());
 			setPokemonHealth(pokemon->getMaxHealth());
 			pokemon->changeHealth(pokemon->getMaxHealth());
@@ -1637,7 +1490,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 		}
 
 		if (Pokemon* pokemon = getHisPokemon()) {
-			pokemon->setMasterLevel(getLevel());
+			pokemon->setLevel(getLevel());
 			setPokemonHealthMax(pokemon->getMaxHealth());
 			setPokemonHealth(pokemon->getMaxHealth());
 			pokemon->changeHealth(pokemon->getMaxHealth());
@@ -1671,66 +1524,10 @@ uint8_t Player::getPercentLevel(uint64_t count, uint64_t nextLevelCount)
 	return result;
 }
 
-void Player::onBlockHit()
-{
-	if (shieldBlockCount > 0) {
-		--shieldBlockCount;
-
-		if (hasShield()) {
-			addSkillAdvance(SKILL_SHIELD, 1);
-		}
-	}
-}
-
-void Player::onAttackedCreatureBlockHit(BlockType_t blockType)
-{
-	lastAttackBlockType = blockType;
-
-	switch (blockType) {
-		case BLOCK_NONE: {
-			addAttackSkillPoint = true;
-			bloodHitCount = 30;
-			shieldBlockCount = 30;
-			break;
-		}
-
-		case BLOCK_DEFENSE:
-		case BLOCK_ARMOR: {
-			//need to draw blood every 30 hits
-			if (bloodHitCount > 0) {
-				addAttackSkillPoint = true;
-				--bloodHitCount;
-			} else {
-				addAttackSkillPoint = false;
-			}
-			break;
-		}
-
-		default: {
-			addAttackSkillPoint = false;
-			break;
-		}
-	}
-}
-
-bool Player::hasShield() const
-{
-	Item* item = inventory[CONST_SLOT_LEFT];
-	if (item && item->getWeaponType() == WEAPON_SHIELD) {
-		return true;
-	}
-
-	item = inventory[CONST_SLOT_RIGHT];
-	if (item && item->getWeaponType() == WEAPON_SHIELD) {
-		return true;
-	}
-	return false;
-}
-
 BlockType_t Player::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-                             bool checkDefense /* = false*/, bool checkArmor /* = false*/, bool field /* = false*/)
+                             bool field /* = false*/)
 {
-	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, checkDefense, checkArmor, field);
+	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, field);
 
 	if (attacker) {
 		sendCreatureSquare(attacker, SQ_COLOR_BLACK);
@@ -1740,58 +1537,11 @@ BlockType_t Player::blockHit(Creature* attacker, CombatType_t combatType, int32_
 		return blockType;
 	}
 
-	if (damage <= 0) {
+	if (getHisPokemon() && attacker->getAttackedCreature() != this) {
 		damage = 0;
-		return BLOCK_ARMOR;
+		return BLOCK_IMMUNITY;
 	}
 
-	for (int32_t slot = CONST_SLOT_FIRST; slot <= CONST_SLOT_LAST; ++slot) {
-		if (!isItemAbilityEnabled(static_cast<slots_t>(slot))) {
-			continue;
-		}
-
-		Item* item = inventory[slot];
-		if (!item) {
-			continue;
-		}
-
-		const ItemType& it = Item::items[item->getID()];
-		if (!it.abilities) {
-			if (damage <= 0) {
-				damage = 0;
-				return BLOCK_ARMOR;
-			}
-
-			continue;
-		}
-
-		const int16_t& absorbPercent = it.abilities->absorbPercent[combatTypeToIndex(combatType)];
-		if (absorbPercent != 0) {
-			damage -= std::round(damage * (absorbPercent / 100.));
-
-			uint16_t charges = item->getCharges();
-			if (charges != 0) {
-				g_game.transformItem(item, item->getID(), charges - 1);
-			}
-		}
-
-		if (field) {
-			const int16_t& fieldAbsorbPercent = it.abilities->fieldAbsorbPercent[combatTypeToIndex(combatType)];
-			if (fieldAbsorbPercent != 0) {
-				damage -= std::round(damage * (fieldAbsorbPercent / 100.));
-
-				uint16_t charges = item->getCharges();
-				if (charges != 0) {
-					g_game.transformItem(item, item->getID(), charges - 1);
-				}
-			}
-		}
-	}
-
-	if (damage <= 0) {
-		damage = 0;
-		blockType = BLOCK_ARMOR;
-	}
 	return blockType;
 }
 
@@ -2211,88 +1961,14 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 
 		case CONST_SLOT_RIGHT: {
 			if (slotPosition & SLOTP_RIGHT) {
-				if (!g_config.getBoolean(ConfigManager::CLASSIC_EQUIPMENT_SLOTS)) {
-					if (item->getWeaponType() != WEAPON_SHIELD) {
-						ret = RETURNVALUE_CANNOTBEDRESSED;
-					} else {
-						const Item* leftItem = inventory[CONST_SLOT_LEFT];
-						if (leftItem) {
-							if ((leftItem->getSlotPosition() | slotPosition) & SLOTP_TWO_HAND) {
-								ret = RETURNVALUE_BOTHHANDSNEEDTOBEFREE;
-							} else {
-								ret = RETURNVALUE_NOERROR;
-							}
-						} else {
-							ret = RETURNVALUE_NOERROR;
-						}
-					}
-				} else if (slotPosition & SLOTP_TWO_HAND) {
-					if (inventory[CONST_SLOT_LEFT] && inventory[CONST_SLOT_LEFT] != item) {
-						ret = RETURNVALUE_BOTHHANDSNEEDTOBEFREE;
-					} else {
-						ret = RETURNVALUE_NOERROR;
-					}
-				} else if (inventory[CONST_SLOT_LEFT]) {
-					const Item* leftItem = inventory[CONST_SLOT_LEFT];
-					WeaponType_t type = item->getWeaponType(), leftType = leftItem->getWeaponType();
-
-					if (leftItem->getSlotPosition() & SLOTP_TWO_HAND) {
-						ret = RETURNVALUE_DROPTWOHANDEDITEM;
-					} else if (item == leftItem && count == item->getItemCount()) {
-						ret = RETURNVALUE_NOERROR;
-					} else if (leftType == WEAPON_SHIELD && type == WEAPON_SHIELD) {
-						ret = RETURNVALUE_CANONLYUSEONESHIELD;
-					} else if (leftType == WEAPON_NONE || type == WEAPON_NONE ||
-					           leftType == WEAPON_SHIELD || leftType == WEAPON_AMMO
-					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
-						ret = RETURNVALUE_NOERROR;
-					} else {
-						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
-					}
-				} else {
-					ret = RETURNVALUE_NOERROR;
-				}
+				ret = RETURNVALUE_NOERROR;
 			}
 			break;
 		}
 
 		case CONST_SLOT_LEFT: {
 			if (slotPosition & SLOTP_LEFT) {
-				if (!g_config.getBoolean(ConfigManager::CLASSIC_EQUIPMENT_SLOTS)) {
-					WeaponType_t type = item->getWeaponType();
-					if (type == WEAPON_NONE || type == WEAPON_SHIELD) {
-						ret = RETURNVALUE_CANNOTBEDRESSED;
-					} else if (inventory[CONST_SLOT_RIGHT] && (slotPosition & SLOTP_TWO_HAND)) {
-						ret = RETURNVALUE_BOTHHANDSNEEDTOBEFREE;
-					} else {
-						ret = RETURNVALUE_NOERROR;
-					}
-				} else if (slotPosition & SLOTP_TWO_HAND) {
-					if (inventory[CONST_SLOT_RIGHT] && inventory[CONST_SLOT_RIGHT] != item) {
-						ret = RETURNVALUE_BOTHHANDSNEEDTOBEFREE;
-					} else {
-						ret = RETURNVALUE_NOERROR;
-					}
-				} else if (inventory[CONST_SLOT_RIGHT]) {
-					const Item* rightItem = inventory[CONST_SLOT_RIGHT];
-					WeaponType_t type = item->getWeaponType(), rightType = rightItem->getWeaponType();
-
-					if (rightItem->getSlotPosition() & SLOTP_TWO_HAND) {
-						ret = RETURNVALUE_DROPTWOHANDEDITEM;
-					} else if (item == rightItem && count == item->getItemCount()) {
-						ret = RETURNVALUE_NOERROR;
-					} else if (rightType == WEAPON_SHIELD && type == WEAPON_SHIELD) {
-						ret = RETURNVALUE_CANONLYUSEONESHIELD;
-					} else if (rightType == WEAPON_NONE || type == WEAPON_NONE ||
-					           rightType == WEAPON_SHIELD || rightType == WEAPON_AMMO
-					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
-						ret = RETURNVALUE_NOERROR;
-					} else {
-						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
-					}
-				} else {
-					ret = RETURNVALUE_NOERROR;
-				}
+				ret = RETURNVALUE_NOERROR;
 			}
 			break;
 		}
@@ -3194,7 +2870,7 @@ void Player::onAddCombatCondition(ConditionType_t type)
 			sendTextMessage(MESSAGE_STATUS_DEFAULT, "You are paralyzed.");
 			break;
 
-		case CONDITION_DRUNK:
+		case CONDITION_CONFUSION:
 			sendTextMessage(MESSAGE_STATUS_DEFAULT, "You are drunk.");
 			break;
 
@@ -3696,7 +3372,7 @@ void Player::learnInstantMove(const std::string& moveName)
 	}
 }
 
-void Player::forgetInstantMove(const std::string& moveName)
+void Player::forgetMove(const std::string& moveName)
 {
 	learnedInstantMoveList.remove(moveName);
 }
@@ -3781,7 +3457,7 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 		
 		pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
 	} else {
-		pokemon = g_game.loadPokemonById(pokeball->getPokemonId(), this);
+		pokemon = g_game.loadPokemon(pokeball->getPokemonId(), this);
 
 		if (!pokemon) {
 			sendTextMessage(MESSAGE_STATUS_CONSOLE_RED, "Pokemon not found! Please contact an administrator.");

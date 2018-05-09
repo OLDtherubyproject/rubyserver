@@ -304,10 +304,8 @@ bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Ma
 				case OTBM_ATTR_ITEM: {
 					Item* item = Item::CreateItem(propStream);
 					if (!item) {
-						std::ostringstream ss;
-						ss << "[x:" << x << ", y:" << y << ", z:" << z << "] Failed to create item.";
-						setLastErrorString(ss.str());
-						return false;
+						std::cout << "[Warning - IOMap::loadMap] [x: " << x << ", y: " << y << ", z: " << z << "] Failed to create item." << std::endl;
+						continue;
 					}
 
 					if (isHouseTile && item->isMoveable()) {
@@ -359,10 +357,8 @@ bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Ma
 
 			Item* item = Item::CreateItem(stream);
 			if (!item) {
-				std::ostringstream ss;
-				ss << "[x:" << x << ", y:" << y << ", z:" << z << "] Failed to create item.";
-				setLastErrorString(ss.str());
-				return false;
+				std::cout << "[Warning - IOMap::loadMap] [x: " << x << ", y: " << y << ", z: " << z << "] Failed to create item." << std::endl;
+				continue;
 			}
 
 			if (!item->unserializeItemNode(loader, itemNode, stream)) {

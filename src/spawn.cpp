@@ -65,7 +65,26 @@ bool Spawns::loadFromXml(const std::string& filename)
 			radius = -1;
 		}
 
-		spawnList.emplace_front(centerPos, radius);
+		int32_t tempMinLevel;
+		pugi::xml_attribute minLevelAttribute = spawnNode.attribute("minlevel");
+		if (minLevelAttribute) {
+			tempMinLevel = pugi::cast<int32_t>(minLevelAttribute.value());
+		} else {
+			tempMinLevel = 1;
+		}
+
+		int32_t tempMaxLevel;
+		pugi::xml_attribute maxLevelAttribute = spawnNode.attribute("maxlevel");
+		if (maxLevelAttribute) {
+			tempMaxLevel = pugi::cast<int32_t>(maxLevelAttribute.value());
+		} else {
+			tempMaxLevel = 1;
+		}
+
+		int32_t minlevel = std::min(tempMinLevel, tempMaxLevel);
+		int32_t maxlevel = std::max(tempMinLevel, tempMaxLevel);
+
+		spawnList.emplace_front(centerPos, radius, minlevel, maxlevel);
 		Spawn& spawn = spawnList.front();
 
 		for (auto childNode : spawnNode.children()) {
@@ -198,7 +217,9 @@ bool Spawn::isInSpawnZone(const Position& pos)
 
 bool Spawn::spawnPokemon(uint32_t spawnId, PokemonType* mType, const Position& pos, Direction dir, bool startup /*= false*/)
 {
-	std::unique_ptr<Pokemon> pokemon_ptr(new Pokemon(mType));
+	int32_t level = uniform_random(minlevel, maxlevel);
+
+	std::unique_ptr<Pokemon> pokemon_ptr(new Pokemon(mType, level, true));
 	
 	Tile* tile = g_game.map.getTile(pos);
 	if (!tile) {

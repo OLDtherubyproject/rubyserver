@@ -1900,7 +1900,7 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 
 	msg.addString(it.vocationString);
 
-	msg.addString(it.runeMoveName);
+	msg.addString(""); // runeMove legacy REMOVE IT
 
 	if (it.abilities) {
 		std::ostringstream ss;
@@ -1949,7 +1949,8 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 		msg.add<uint16_t>(0x00);
 	}
 
-	std::string weaponName = getWeaponName(it.weaponType);
+	//deprecated
+	std::string weaponName = "";
 
 	if (it.slotPosition & SLOTP_TWO_HAND) {
 		if (!weaponName.empty()) {
@@ -1960,6 +1961,7 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 	}
 
 	msg.addString(weaponName);
+	//deprecated
 
 	if (it.weight != 0) {
 		std::ostringstream ss;
@@ -2249,6 +2251,17 @@ void ProtocolGame::sendMagicEffect(const Position& pos, uint16_t type)
 	msg.addPosition(pos);
 	msg.add<uint16_t>(type);
 	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendAnimatedText(const Position& pos, uint8_t color, std::string text)
+{
+   if (!canSee(pos)) {
+     return;
+   }
+ 
+   NetworkMessage msg;
+   AddAnimatedText(msg, pos, color, text);
+   writeToOutputBuffer(msg);
 }
 
 void ProtocolGame::sendCreatureHealth(const Creature* creature)
@@ -2747,6 +2760,7 @@ void ProtocolGame::sendMoveCooldown(uint8_t moveId, uint32_t time)
 	writeToOutputBuffer(msg);
 }
 
+/* Spell group cooldown system legacy
 void ProtocolGame::sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time)
 {
 	NetworkMessage msg;
@@ -2755,6 +2769,7 @@ void ProtocolGame::sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time)
 	msg.add<uint32_t>(time);
 	writeToOutputBuffer(msg);
 }
+*/
 
 void ProtocolGame::sendModalWindow(const ModalWindow& modalWindow)
 {
@@ -2896,6 +2911,14 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 
 	msg.add<uint16_t>(0); // xp boost time (seconds)
 	msg.addByte(0); // enables exp boost in the store
+}
+
+void ProtocolGame::AddAnimatedText(NetworkMessage& msg, const Position& pos, uint8_t color, const std::string& text)
+{
+   msg.addByte(0x84);
+   msg.addPosition(pos);
+   msg.add<uint8_t>(color);
+   msg.addString(text);
 }
 
 void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)

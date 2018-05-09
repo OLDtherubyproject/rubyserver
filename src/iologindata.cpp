@@ -416,14 +416,6 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 		}
 	}
 
-	query.str(std::string());
-	query << "SELECT `player_id`, `name` FROM `player_moves` WHERE `player_id` = " << player->getGUID();
-	if ((result = db.storeQuery(query.str()))) {
-		do {
-			player->learnedInstantMoveList.emplace_front(result->getString("name"));
-		} while (result->next());
-	}
-
 	//load inventory items
 	ItemMap itemMap;
 
@@ -710,18 +702,6 @@ bool IOLoginData::savePlayer(Player* player)
 	}
 
 	query.str(std::string());
-
-	DBInsert movesQuery("INSERT INTO `player_moves` (`player_id`, `name` ) VALUES ");
-	for (const std::string& moveName : player->learnedInstantMoveList) {
-		query << player->getGUID() << ',' << db.escapeString(moveName);
-		if (!movesQuery.addRow(query)) {
-			return false;
-		}
-	}
-
-	if (!movesQuery.execute()) {
-		return false;
-	}
 
 	//item saving
 	query << "DELETE FROM `player_items` WHERE `player_id` = " << player->getGUID();

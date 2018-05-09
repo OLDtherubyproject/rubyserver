@@ -46,8 +46,7 @@ Moves::~Moves()
 
 void Moves::clear()
 {
-	runes.clear();
-	instants.clear();
+	moves.clear();
 
 	scriptInterface.reInitState();
 }
@@ -62,33 +61,24 @@ std::string Moves::getScriptBaseName() const
 	return "moves";
 }
 
+std::string Moves::getScriptPrefixName() const
+{
+	return "type";
+}
+
 Event_ptr Moves::getEvent(const std::string& nodeName)
 {
-	if (strcasecmp(nodeName.c_str(), "rune") == 0) {
-		return Event_ptr(new RuneMove(&scriptInterface));
-	} else if (strcasecmp(nodeName.c_str(), "instant") == 0) {
-		return Event_ptr(new InstantMove(&scriptInterface));
-	}
-	return nullptr;
+	return Event_ptr(new Move(&scriptInterface));
 }
 
 bool Moves::registerEvent(Event_ptr event, const pugi::xml_node&)
 {
-	InstantMove* instant = dynamic_cast<InstantMove*>(event.get());
-	if (instant) {
-		std::string instantName = instant->getName();
-		auto result = instants.emplace(instantName, std::move(*instant));
+	Move* move = dynamic_cast<Move*>(event.get());
+	if (move) {
+		std::string moveName = move->getName();
+		auto result = moves.emplace(moveName, std::move(*move));
 		if (!result.second) {
-			std::cout << "[Warning - Moves::registerEvent] Duplicate registered instant move with name: " << instantName << std::endl;
-		}
-		return result.second;
-	}
-
-	RuneMove* rune = dynamic_cast<RuneMove*>(event.get());
-	if (rune) {
-		auto result = runes.emplace(rune->getRuneItemId(), std::move(*rune));
-		if (!result.second) {
-			std::cout << "[Warning - Moves::registerEvent] Duplicate registered rune with id: " << rune->getRuneItemId() << std::endl;
+			std::cout << "[Warning - Moves::registerEvent] Duplicate registered move with name: " << moveName << std::endl;
 		}
 		return result.second;
 	}
@@ -96,81 +86,19 @@ bool Moves::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return false;
 }
 
-Move* Moves::getMoveByName(const std::string& name)
+Move* Moves::getMove(uint32_t moveId)
 {
-	Move* move = getRuneMoveByName(name);
-	if (!move) {
-		move = getInstantMoveByName(name);
-	}
-	return move;
-}
-
-RuneMove* Moves::getRuneMove(uint32_t id)
-{
-	auto it = runes.find(id);
-	if (it == runes.end()) {
-		return nullptr;
-	}
-	return &it->second;
-}
-
-RuneMove* Moves::getRuneMoveByName(const std::string& name)
-{
-	for (auto& it : runes) {
-		if (strcasecmp(it.second.getName().c_str(), name.c_str()) == 0) {
+	for (auto& it : moves) {
+		if (it.second.getId() == moveId) {
 			return &it.second;
 		}
 	}
 	return nullptr;
 }
 
-InstantMove* Moves::getInstantMove(const std::string& words)
+Move* Moves::getMoveByName(const std::string& name)
 {
-	InstantMove* result = nullptr;
-
-	for (auto& it : instants) {
-		const std::string& instantMoveWords = it.second.getWords();
-		size_t moveLen = instantMoveWords.length();
-		if (strncasecmp(instantMoveWords.c_str(), words.c_str(), moveLen) == 0) {
-			if (!result || moveLen > result->getWords().length()) {
-				result = &it.second;
-				if (words.length() == moveLen) {
-					break;
-				}
-			}
-		}
-	}
-
-	if (result) {
-		const std::string& resultWords = result->getWords();
-		if (words.length() > resultWords.length()) {
-			if (!result->getHasParam()) {
-				return nullptr;
-			}
-
-			size_t moveLen = resultWords.length();
-			size_t paramLen = words.length() - moveLen;
-			if (paramLen < 2 || words[moveLen] != ' ') {
-				return nullptr;
-			}
-		}
-		return result;
-	}
-	return nullptr;
-}
-
-InstantMove* Moves::getInstantMoveById(uint32_t moveId)
-{
-	auto it = std::next(instants.begin(), std::min<uint32_t>(moveId, instants.size()));
-	if (it != instants.end()) {
-		return &it->second;
-	}
-	return nullptr;
-}
-
-InstantMove* Moves::getInstantMoveByName(const std::string& name)
-{
-	for (auto& it : instants) {
+	for (auto& it : moves) {
 		if (strcasecmp(it.second.getName().c_str(), name.c_str()) == 0) {
 			return &it.second;
 		}
@@ -183,109 +111,6 @@ Position Moves::getCasterPosition(Creature* creature, Direction dir)
 	return getNextPosition(dir, creature->getPosition());
 }
 
-CombatMove::CombatMove(Combat* combat, bool needTarget, bool needDirection) :
-	Event(&g_moves->getScriptInterface()),
-	combat(combat),
-	needDirection(needDirection),
-	needTarget(needTarget)
-{}
-
-CombatMove::~CombatMove()
-{
-	if (!scripted) {
-		delete combat;
-	}
-}
-
-bool CombatMove::loadScriptCombat()
-{
-	combat = g_luaEnvironment.getCombatObject(g_luaEnvironment.lastCombatId);
-	return combat != nullptr;
-}
-
-bool CombatMove::castMove(Creature* creature)
-{
-	if (scripted) {
-		LuaVariant var;
-		var.type = VARIANT_POSITION;
-
-		if (needDirection) {
-			var.pos = Moves::getCasterPosition(creature, creature->getDirection());
-		} else {
-			var.pos = creature->getPosition();
-		}
-
-		return executeCastMove(creature, var);
-	}
-
-	Position pos;
-	if (needDirection) {
-		pos = Moves::getCasterPosition(creature, creature->getDirection());
-	} else {
-		pos = creature->getPosition();
-	}
-
-	combat->doCombat(creature, pos);
-	return true;
-}
-
-bool CombatMove::castMove(Creature* creature, Creature* target)
-{
-	if (scripted) {
-		LuaVariant var;
-
-		if (combat->hasArea()) {
-			var.type = VARIANT_POSITION;
-
-			if (needTarget) {
-				var.pos = target->getPosition();
-			} else if (needDirection) {
-				var.pos = Moves::getCasterPosition(creature, creature->getDirection());
-			} else {
-				var.pos = creature->getPosition();
-			}
-		} else {
-			var.type = VARIANT_NUMBER;
-			var.number = target->getID();
-		}
-		return executeCastMove(creature, var);
-	}
-
-	if (combat->hasArea()) {
-		if (needTarget) {
-			combat->doCombat(creature, target->getPosition());
-		} else {
-			return castMove(creature);
-		}
-	} else {
-		combat->doCombat(creature, target);
-	}
-	return true;
-}
-
-bool CombatMove::executeCastMove(Creature* creature, const LuaVariant& var)
-{
-	//onCastMove(creature, var)
-	if (!scriptInterface->reserveScriptEnv()) {
-		std::cout << "[Error - CombatMove::executeCastMove] Call stack overflow" << std::endl;
-		return false;
-	}
-
-	ScriptEnvironment* env = scriptInterface->getScriptEnv();
-	env->setScriptId(scriptId, scriptInterface);
-
-	lua_State* L = scriptInterface->getLuaState();
-
-	scriptInterface->pushFunction(scriptId);
-
-	LuaScriptInterface::pushUserdata<Creature>(L, creature);
-	LuaScriptInterface::setCreatureMetatable(L, -1, creature);
-
-	LuaScriptInterface::pushVariant(L, var);
-
-	return scriptInterface->callFunction(2);
-}
-
 bool Move::configureMove(const pugi::xml_node& node)
 {
 	pugi::xml_attribute nameAttribute = node.attribute("name");
@@ -296,93 +121,72 @@ bool Move::configureMove(const pugi::xml_node& node)
 
 	name = nameAttribute.as_string();
 
-	static const char* reservedList[] = {
-		"melee",
-		"physical",
-		"poison",
-		"fire",
-		"energy",
-		"drown",
-		"lifedrain",
-		"healing",
-		"speed",
-		"outfit",
-		"invisible",
-		"drunk",
-		"firefield",
-		"poisonfield",
-		"energyfield",
-		"firecondition",
-		"poisoncondition",
-		"energycondition",
-		"drowncondition",
-		"freezecondition",
-		"cursecondition",
-		"dazzlecondition"
-	};
-
-	//static size_t size = sizeof(reservedList) / sizeof(const char*);
-	//for (size_t i = 0; i < size; ++i) {
-	for (const char* reserved : reservedList) {
-		if (strcasecmp(reserved, name.c_str()) == 0) {
-			std::cout << "[Error - Move::configureMove] Move is using a reserved name: " << reserved << std::endl;
-			return false;
-		}
-	}
-
 	pugi::xml_attribute attr;
 	if ((attr = node.attribute("moveid"))) {
-		moveId = pugi::cast<uint16_t>(attr.value());
+		moveId = pugi::cast<uint32_t>(attr.value());
+	} else {
+		std::cout << "[Error - Move::configureMove] Move without id" << std::endl;
+		return false;
 	}
-
-	if ((attr = node.attribute("group"))) {
+	
+	if ((attr = node.attribute("category"))) {
 		std::string tmpStr = asLowerCaseString(attr.as_string());
-		if (tmpStr == "none" || tmpStr == "0") {
-			group = MOVEGROUP_NONE;
-		} else if (tmpStr == "attack" || tmpStr == "1") {
-			group = MOVEGROUP_ATTACK;
-		} else if (tmpStr == "healing" || tmpStr == "2") {
-			group = MOVEGROUP_HEALING;
-		} else if (tmpStr == "support" || tmpStr == "3") {
-			group = MOVEGROUP_SUPPORT;
-		} else if (tmpStr == "special" || tmpStr == "4") {
-			group = MOVEGROUP_SPECIAL;
+		if (tmpStr == "physical" || tmpStr == "0") {
+			category = MOVECATEGORY_PHYSICAL;
+		} else if (tmpStr == "special" || tmpStr == "1") {
+			category = MOVECATEGORY_SPECIAL;
+		} else if (tmpStr == "status" || tmpStr == "2") {
+			category = MOVECATEGORY_STATUS;
 		} else {
-			std::cout << "[Warning - Move::configureMove] Unknown group: " << attr.as_string() << std::endl;
+			std::cout << "[Warning - Move::configureMove] Unknown category: " << attr.as_string() << std::endl;
 		}
 	}
 
-	if ((attr = node.attribute("groupcooldown"))) {
-		groupCooldown = pugi::cast<uint32_t>(attr.value());
-	}
-
-	if ((attr = node.attribute("secondarygroup"))) {
+	if ((attr = node.attribute("type"))) {
 		std::string tmpStr = asLowerCaseString(attr.as_string());
-		if (tmpStr == "none" || tmpStr == "0") {
-			secondaryGroup = MOVEGROUP_NONE;
-		} else if (tmpStr == "attack" || tmpStr == "1") {
-			secondaryGroup = MOVEGROUP_ATTACK;
-		} else if (tmpStr == "healing" || tmpStr == "2") {
-			secondaryGroup = MOVEGROUP_HEALING;
-		} else if (tmpStr == "support" || tmpStr == "3") {
-			secondaryGroup = MOVEGROUP_SUPPORT;
-		} else if (tmpStr == "special" || tmpStr == "4") {
-			secondaryGroup = MOVEGROUP_SPECIAL;
+		if (tmpStr == "normal" || tmpStr == "0") {
+			type = MOVETYPE_NORMAL;
+		} else if (tmpStr == "fighting" || tmpStr == "1") {
+			type = MOVETYPE_FIGHTING;
+		} else if (tmpStr == "flying" || tmpStr == "2") {
+			type = MOVETYPE_FLYING;
+		} else if (tmpStr == "poison" || tmpStr == "3") {
+			type = MOVETYPE_POISON;
+		} else if (tmpStr == "ground" || tmpStr == "4") {
+			type = MOVETYPE_GROUND;
+		} else if (tmpStr == "rock" || tmpStr == "5") {
+			type = MOVETYPE_ROCK;
+		} else if (tmpStr == "bug" || tmpStr == "6") {
+			type = MOVETYPE_BUG;
+		} else if (tmpStr == "ghost" || tmpStr == "7") {
+			type = MOVETYPE_GHOST;
+		} else if (tmpStr == "steel" || tmpStr == "8") {
+			type = MOVETYPE_STEEL;
+		} else if (tmpStr == "fire" || tmpStr == "9") {
+			type = MOVETYPE_FIRE;
+		} else if (tmpStr == "water" || tmpStr == "10") {
+			type = MOVETYPE_WATER;
+		} else if (tmpStr == "grass" || tmpStr == "11") {
+			type = MOVETYPE_GRASS;
+		} else if (tmpStr == "electric" || tmpStr == "12") {
+			type = MOVETYPE_ELECTRIC;
+		} else if (tmpStr == "psychic" || tmpStr == "13") {
+			type = MOVETYPE_PSYCHIC;
+		} else if (tmpStr == "ice" || tmpStr == "14") {
+			type = MOVETYPE_ICE;
+		} else if (tmpStr == "dragon" || tmpStr == "15") {
+			type = MOVETYPE_DRAGON;
+		} else if (tmpStr == "dark" || tmpStr == "16") {
+			type = MOVETYPE_DARK;
+		} else if (tmpStr == "fairy" || tmpStr == "17") {
+			type = MOVETYPE_FAIRY;
 		} else {
-			std::cout << "[Warning - Move::configureMove] Unknown secondarygroup: " << attr.as_string() << std::endl;
+			std::cout << "[Warning - Move::configureMove] Unknown category: " << attr.as_string() << std::endl;
 		}
-	}
-
-	if ((attr = node.attribute("secondarygroupcooldown"))) {
-		secondaryGroupCooldown = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = node.attribute("level")) || (attr = node.attribute("lvl"))) {
 		level = pugi::cast<uint32_t>(attr.value());
-	}
-
-	if ((attr = node.attribute("magiclevel")) || (attr = node.attribute("maglv"))) {
-		magLevel = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = node.attribute("range"))) {
@@ -391,6 +195,14 @@ bool Move::configureMove(const pugi::xml_node& node)
 
 	if ((attr = node.attribute("cooldown")) || (attr = node.attribute("exhaustion"))) {
 		cooldown = pugi::cast<uint32_t>(attr.value());
+	}
+
+	if ((attr = node.attribute("ignoreSleep"))) {
+		ignoreSleep = attr.as_bool();
+	}
+
+	if ((attr = node.attribute("accuracy"))) {
+		accuracy = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = node.attribute("premium")) || (attr = node.attribute("prem"))) {
@@ -405,16 +217,8 @@ bool Move::configureMove(const pugi::xml_node& node)
 		needTarget = attr.as_bool();
 	}
 
-	if ((attr = node.attribute("needweapon"))) {
-		needWeapon = attr.as_bool();
-	}
-
 	if ((attr = node.attribute("selftarget"))) {
 		selfTarget = attr.as_bool();
-	}
-
-	if ((attr = node.attribute("needlearn"))) {
-		learnable = attr.as_bool();
 	}
 
 	if ((attr = node.attribute("blocking"))) {
@@ -439,256 +243,15 @@ bool Move::configureMove(const pugi::xml_node& node)
 	if ((attr = node.attribute("aggressive"))) {
 		aggressive = booleanString(attr.as_string());
 	}
-
-	if (group == MOVEGROUP_NONE) {
-		group = (aggressive ? MOVEGROUP_ATTACK : MOVEGROUP_HEALING);
-	}
-
-	for (auto vocationNode : node.children()) {
-		if (!(attr = vocationNode.attribute("name"))) {
-			continue;
-		}
-
-		int32_t vocationId = g_vocations.getVocationId(attr.as_string());
-		if (vocationId != -1) {
-			attr = vocationNode.attribute("showInDescription");
-			vocMoveMap[vocationId] = !attr || attr.as_bool();
-		} else {
-			std::cout << "[Warning - Move::configureMove] Wrong vocation name: " << attr.as_string() << std::endl;
-		}
-	}
 	return true;
 }
 
-bool Move::playerMoveCheck(Player* player) const
-{
-	if (player->hasFlag(PlayerFlag_CannotUseMoves)) {
-		return false;
-	}
-
-	if (player->hasFlag(PlayerFlag_IgnoreMoveCheck)) {
-		return true;
-	}
-
-	if (!enabled) {
-		return false;
-	}
-
-	if (aggressive && (range < 1 || (range > 0 && !player->getAttackedCreature()))) {
-		player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
-		return false;
-	}
-
-	if (aggressive && player->hasCondition(CONDITION_PACIFIED)) {
-		player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-  if (aggressive && !player->hasFlag(PlayerFlag_IgnoreProtectionZone) && player->getZone() == ZONE_PROTECTION) {
-		player->sendCancelMessage(RETURNVALUE_ACTIONNOTPERMITTEDINPROTECTIONZONE);
-		return false;
-	}
-
-	if (player->hasCondition(CONDITION_MOVEGROUPCOOLDOWN, group) || player->hasCondition(CONDITION_MOVECOOLDOWN, moveId) || (secondaryGroup != MOVEGROUP_NONE && player->hasCondition(CONDITION_MOVEGROUPCOOLDOWN, secondaryGroup))) {
-		player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
-
-		if (isInstant()) {
-			g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		}
-
-		return false;
-	}
-
-	if (player->getLevel() < level) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHLEVEL);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (player->getMagicLevel() < magLevel) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHMAGICLEVEL);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (isInstant() && isLearnable()) {
-		if (!player->hasLearnedInstantMove(getName())) {
-			player->sendCancelMessage(RETURNVALUE_YOUNEEDTOLEARNTHISMOVE);
-			g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-			return false;
-		}
-	} else if (!vocMoveMap.empty() && vocMoveMap.find(player->getVocationId()) == vocMoveMap.end()) {
-		player->sendCancelMessage(RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (needWeapon) {
-		switch (player->getWeaponType()) {
-			case WEAPON_SWORD:
-			case WEAPON_CLUB:
-			case WEAPON_AXE:
-				break;
-
-			default: {
-				player->sendCancelMessage(RETURNVALUE_YOUNEEDAWEAPONTOUSETHISMOVE);
-				g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-				return false;
-			}
-		}
-	}
-
-	if (isPremium() && !player->isPremium()) {
-		player->sendCancelMessage(RETURNVALUE_YOUNEEDPREMIUMACCOUNT);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	return true;
-}
-
-bool Move::playerInstantMoveCheck(Player* player, const Position& toPos)
-{
-	if (toPos.x == 0xFFFF) {
-		return true;
-	}
-
-	const Position& playerPos = player->getPosition();
-	if (playerPos.z > toPos.z) {
-		player->sendCancelMessage(RETURNVALUE_FIRSTGOUPSTAIRS);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	} else if (playerPos.z < toPos.z) {
-		player->sendCancelMessage(RETURNVALUE_FIRSTGODOWNSTAIRS);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	Tile* tile = g_game.map.getTile(toPos);
-	if (!tile) {
-		tile = new StaticTile(toPos.x, toPos.y, toPos.z);
-		g_game.map.setTile(toPos, tile);
-	}
-
-	ReturnValue ret = Combat::canDoCombat(player, tile, aggressive);
-	if (ret != RETURNVALUE_NOERROR) {
-		player->sendCancelMessage(ret);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (blockingCreature && tile->getBottomVisibleCreature(player) != nullptr) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHROOM);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (blockingSolid && tile->hasFlag(TILESTATE_BLOCKSOLID)) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHROOM);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	return true;
-}
-
-bool Move::playerRuneMoveCheck(Player* player, const Position& toPos)
-{
-	if (!playerMoveCheck(player)) {
-		return false;
-	}
-
-	if (toPos.x == 0xFFFF) {
-		return true;
-	}
-
-	const Position& playerPos = player->getPosition();
-	if (playerPos.z > toPos.z) {
-		player->sendCancelMessage(RETURNVALUE_FIRSTGOUPSTAIRS);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	} else if (playerPos.z < toPos.z) {
-		player->sendCancelMessage(RETURNVALUE_FIRSTGODOWNSTAIRS);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	Tile* tile = g_game.map.getTile(toPos);
-	if (!tile) {
-		player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (range != -1 && !g_game.canThrowObjectTo(playerPos, toPos, true, range, range)) {
-		player->sendCancelMessage(RETURNVALUE_DESTINATIONOUTOFREACH);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	ReturnValue ret = Combat::canDoCombat(player, tile, aggressive);
-	if (ret != RETURNVALUE_NOERROR) {
-		player->sendCancelMessage(ret);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	const Creature* topVisibleCreature = tile->getBottomVisibleCreature(player);
-	if (blockingCreature && topVisibleCreature) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHROOM);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	} else if (blockingSolid && tile->hasFlag(TILESTATE_BLOCKSOLID)) {
-		player->sendCancelMessage(RETURNVALUE_NOTENOUGHROOM);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-
-	if (needTarget && !topVisibleCreature) {
-		player->sendCancelMessage(RETURNVALUE_CANONLYUSETHISRUNEONCREATURES);
-		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-		return false;
-	}
-	return true;
-}
-
-void Move::postCastMove(Player* player, bool finishedCast /*= true*/, bool payCost /*= true*/) const
-{
-	if (finishedCast) {
-		if (!player->hasFlag(PlayerFlag_HasNoExhaustion)) {
-			if (cooldown > 0) {
-				Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVECOOLDOWN, cooldown, 0, false, moveId);
-				player->addCondition(condition);
-			}
-
-			if (groupCooldown > 0) {
-				Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, groupCooldown, 0, false, group);
-				player->addCondition(condition);
-			}
-
-			if (secondaryGroupCooldown > 0) {
-				Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, secondaryGroupCooldown, 0, false, secondaryGroup);
-				player->addCondition(condition);
-			}
-		}
-
-		if (aggressive) {
-			player->addInFightTicks();
-		}
-	}
-
-	if (payCost) {
-		//
-	}
-}
-
-std::string InstantMove::getScriptEventName() const
+std::string Move::getScriptEventName() const
 {
 	return "onCastMove";
 }
 
-bool InstantMove::configureEvent(const pugi::xml_node& node)
+bool Move::configureEvent(const pugi::xml_node& node)
 {
 	if (!Move::configureMove(node)) {
 		return false;
@@ -715,145 +278,7 @@ bool InstantMove::configureEvent(const pugi::xml_node& node)
 	return true;
 }
 
-bool InstantMove::playerCastInstant(Player* player, std::string& param)
-{
-	if (!playerMoveCheck(player)) {
-		return false;
-	}
-
-	LuaVariant var;
-
-	if (selfTarget) {
-		var.type = VARIANT_NUMBER;
-		var.number = player->getID();
-	} else if (needTarget || casterTargetOrDirection) {
-		Creature* target = nullptr;
-		bool useDirection = false;
-
-		if (hasParam) {
-			Player* playerTarget = nullptr;
-			ReturnValue ret = g_game.getPlayerByNameWildcard(param, playerTarget);
-
-			if (playerTarget && playerTarget->isAccessPlayer() && !player->isAccessPlayer()) {
-				playerTarget = nullptr;
-			}
-
-			target = playerTarget;
-			if (!target || target->getHealth() <= 0) {
-				if (!casterTargetOrDirection) {
-					if (cooldown > 0) {
-						Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVECOOLDOWN, cooldown, 0, false, moveId);
-						player->addCondition(condition);
-					}
-
-					if (groupCooldown > 0) {
-						Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, groupCooldown, 0, false, group);
-						player->addCondition(condition);
-					}
-
-					if (secondaryGroupCooldown > 0) {
-						Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, secondaryGroupCooldown, 0, false, secondaryGroup);
-						player->addCondition(condition);
-					}
-
-					player->sendCancelMessage(ret);
-					g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-					return false;
-				}
-
-				useDirection = true;
-			}
-
-			if (playerTarget) {
-				param = playerTarget->getName();
-			}
-		} else {
-			target = player->getAttackedCreature();
-			if (!target || target->getHealth() <= 0) {
-				if (!casterTargetOrDirection) {
-					player->sendCancelMessage(RETURNVALUE_YOUCANONLYUSEITONCREATURES);
-					g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-					return false;
-				}
-
-				useDirection = true;
-			}
-		}
-
-		if (!useDirection) {
-			if (!canThrowMove(player, target)) {
-				player->sendCancelMessage(RETURNVALUE_CREATUREISNOTREACHABLE);
-				g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-				return false;
-			}
-
-			var.type = VARIANT_NUMBER;
-			var.number = target->getID();
-		} else {
-			var.type = VARIANT_POSITION;
-			var.pos = Moves::getCasterPosition(player, player->getDirection());
-
-			if (!playerInstantMoveCheck(player, var.pos)) {
-				return false;
-			}
-		}
-	} else if (hasParam) {
-		var.type = VARIANT_STRING;
-
-		if (getHasPlayerNameParam()) {
-			Player* playerTarget = nullptr;
-			ReturnValue ret = g_game.getPlayerByNameWildcard(param, playerTarget);
-
-			if (ret != RETURNVALUE_NOERROR) {
-				if (cooldown > 0) {
-					Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVECOOLDOWN, cooldown, 0, false, moveId);
-					player->addCondition(condition);
-				}
-
-				if (groupCooldown > 0) {
-					Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, groupCooldown, 0, false, group);
-					player->addCondition(condition);
-				}
-
-				if (secondaryGroupCooldown > 0) {
-					Condition* condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_MOVEGROUPCOOLDOWN, secondaryGroupCooldown, 0, false, secondaryGroup);
-					player->addCondition(condition);
-				}
-
-				player->sendCancelMessage(ret);
-				g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
-				return false;
-			}
-
-			if (playerTarget && (!playerTarget->isAccessPlayer() || player->isAccessPlayer())) {
-				param = playerTarget->getName();
-			}
-		}
-
-		var.text = param;
-	} else {
-		var.type = VARIANT_POSITION;
-
-		if (needDirection) {
-			var.pos = Moves::getCasterPosition(player, player->getDirection());
-		} else {
-			var.pos = player->getPosition();
-		}
-
-		if (!playerInstantMoveCheck(player, var.pos)) {
-			return false;
-		}
-	}
-
-	bool result = internalCastMove(player, var);
-	if (result) {
-		postCastMove(player);
-	}
-
-	return result;
-}
-
-bool InstantMove::canThrowMove(const Creature* creature, const Creature* target) const
+bool Move::canThrowMove(const Creature* creature, const Creature* target) const
 {
 	const Position& fromPos = creature->getPosition();
 	const Position& toPos = target->getPosition();
@@ -865,8 +290,145 @@ bool InstantMove::canThrowMove(const Creature* creature, const Creature* target)
 	return true;
 }
 
-bool InstantMove::castMove(Creature* creature)
+PokemonType_t Moves::MoveTypeToPokemonType(MoveType_t type)
 {
+	switch (type) {
+		case MOVETYPE_NORMAL:
+			return TYPE_NORMAL;
+
+		case MOVETYPE_FIGHTING:
+			return TYPE_FIGHTING;
+
+		case MOVETYPE_FLYING:
+			return TYPE_FLYING;
+
+		case MOVETYPE_POISON:
+			return TYPE_POISON;
+
+		case MOVETYPE_GROUND:
+			return TYPE_GROUND;
+
+		case MOVETYPE_ROCK:
+			return TYPE_ROCK;
+
+		case MOVETYPE_BUG:
+			return TYPE_BUG;
+
+		case MOVETYPE_GHOST:
+			return TYPE_GHOST;
+
+		case MOVETYPE_STEEL:
+			return TYPE_STEEL;
+
+		case MOVETYPE_FIRE:
+			return TYPE_FIRE;
+
+		case MOVETYPE_WATER:
+			return TYPE_WATER;
+
+		case MOVETYPE_GRASS:
+			return TYPE_GRASS;
+
+		case MOVETYPE_ELECTRIC:
+			return TYPE_ELECTRIC;
+
+		case MOVETYPE_PSYCHIC:
+			return TYPE_PSYCHIC;
+
+		case MOVETYPE_ICE:
+			return TYPE_ICE;
+
+		case MOVETYPE_DRAGON:
+			return TYPE_DRAGON;
+
+		case MOVETYPE_DARK:
+			return TYPE_DARK;
+
+		case MOVETYPE_FAIRY:
+			return TYPE_FAIRY;
+			
+		default:
+			break;
+	}
+
+	return TYPE_NONE;
+}
+
+MoveType_t Moves::PokemonTypeToMoveType(PokemonType_t type)
+{
+	switch (type) {
+		case TYPE_NORMAL:
+			return MOVETYPE_NORMAL;
+
+		case TYPE_FIGHTING:
+			return MOVETYPE_FIGHTING;
+
+		case TYPE_FLYING:
+			return MOVETYPE_FLYING;
+
+		case TYPE_POISON:
+			return MOVETYPE_POISON;
+
+		case TYPE_GROUND:
+			return MOVETYPE_GROUND;
+
+		case TYPE_ROCK:
+			return MOVETYPE_ROCK;
+
+		case TYPE_BUG:
+			return MOVETYPE_BUG;
+
+		case TYPE_GHOST:
+			return MOVETYPE_GHOST;
+
+		case TYPE_STEEL:
+			return MOVETYPE_STEEL;
+
+		case TYPE_FIRE:
+			return MOVETYPE_FIRE;
+
+		case TYPE_WATER:
+			return MOVETYPE_WATER;
+
+		case TYPE_GRASS:
+			return MOVETYPE_GRASS;
+
+		case TYPE_ELECTRIC:
+			return MOVETYPE_ELECTRIC;
+
+		case TYPE_PSYCHIC:
+			return MOVETYPE_PSYCHIC;
+
+		case TYPE_ICE:
+			return MOVETYPE_ICE;
+
+		case TYPE_DRAGON:
+			return MOVETYPE_DRAGON;
+
+		case TYPE_DARK:
+			return MOVETYPE_DARK;
+
+		case TYPE_FAIRY:
+			return MOVETYPE_FAIRY;
+			
+		default:
+			break;
+	}
+
+	return MOVETYPE_NONE;
+}
+
+void Move::serialize(PropWriteStream& propWriteStream)
+{
+	propWriteStream.write<uint16_t>(getId());
+}
+
+bool Move::castMove(Creature* creature)
+{
+	if (normal_random(1, 100) > getAccuracy()) {
+		return false;
+	}
+
 	LuaVariant var;
 
 	if (casterTargetOrDirection) {
@@ -893,8 +455,12 @@ bool InstantMove::castMove(Creature* creature)
 	return internalCastMove(creature, var);
 }
 
-bool InstantMove::castMove(Creature* creature, Creature* target)
+bool Move::castMove(Creature* creature, Creature* target)
 {
+	if (normal_random(1, 100) > getAccuracy()) {
+		return false;
+	}
+
 	if (needTarget) {
 		LuaVariant var;
 		var.type = VARIANT_NUMBER;
@@ -905,16 +471,16 @@ bool InstantMove::castMove(Creature* creature, Creature* target)
 	}
 }
 
-bool InstantMove::internalCastMove(Creature* creature, const LuaVariant& var)
+bool Move::internalCastMove(Creature* creature, const LuaVariant& var)
 {
 	return executeCastMove(creature, var);
 }
 
-bool InstantMove::executeCastMove(Creature* creature, const LuaVariant& var)
+bool Move::executeCastMove(Creature* creature, const LuaVariant& var)
 {
-	//onCastMove(creature, var)
+	//onCastMove(Creature, var)
 	if (!scriptInterface->reserveScriptEnv()) {
-		std::cout << "[Error - InstantMove::executeCastMove] Call stack overflow" << std::endl;
+		std::cout << "[Error - Move::executeCastMove] Call stack overflow" << std::endl;
 		return false;
 	}
 
@@ -933,183 +499,19 @@ bool InstantMove::executeCastMove(Creature* creature, const LuaVariant& var)
 	return scriptInterface->callFunction(2);
 }
 
-bool InstantMove::canCast(const Player* player) const
+bool Move::canCast(const Player* player) const
 {
 	if (player->hasFlag(PlayerFlag_CannotUseMoves)) {
 		return false;
 	}
 
-	if (player->hasFlag(PlayerFlag_IgnoreMoveCheck)) {
-		return true;
-	}
-
-	if (isLearnable()) {
-		if (player->hasLearnedInstantMove(getName())) {
-			return true;
-		}
-	} else {
-		if (vocMoveMap.empty() || vocMoveMap.find(player->getVocationId()) != vocMoveMap.end()) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-std::string RuneMove::getScriptEventName() const
-{
-	return "onCastMove";
-}
-
-bool RuneMove::configureEvent(const pugi::xml_node& node)
-{
-	if (!Move::configureMove(node)) {
+	if (getLevel() > player->getLevel()) {
 		return false;
 	}
 
-	if (!Action::configureEvent(node)) {
+	if (!player->canCastMove()) {
 		return false;
-	}
-
-	pugi::xml_attribute attr;
-	if (!(attr = node.attribute("id"))) {
-		std::cout << "[Error - RuneMove::configureMove] Rune move without id." << std::endl;
-		return false;
-	}
-	runeId = pugi::cast<uint16_t>(attr.value());
-
-	uint32_t charges;
-	if ((attr = node.attribute("charges"))) {
-		charges = pugi::cast<uint32_t>(attr.value());
-	} else {
-		charges = 0;
-	}
-
-	hasCharges = (charges > 0);
-	if (magLevel != 0 || level != 0) {
-		//Change information in the ItemType to get accurate description
-		ItemType& iType = Item::items.getItemType(runeId);
-		iType.runeMagLevel = magLevel;
-		iType.runeLevel = level;
-		iType.charges = charges;
 	}
 
 	return true;
-}
-
-ReturnValue RuneMove::canExecuteAction(const Player* player, const Position& toPos)
-{
-	if (player->hasFlag(PlayerFlag_CannotUseMoves)) {
-		return RETURNVALUE_CANNOTUSETHISOBJECT;
-	}
-
-	ReturnValue ret = Action::canExecuteAction(player, toPos);
-	if (ret != RETURNVALUE_NOERROR) {
-		return ret;
-	}
-
-	if (toPos.x == 0xFFFF) {
-		if (needTarget) {
-			return RETURNVALUE_CANONLYUSETHISRUNEONCREATURES;
-		} else if (!selfTarget) {
-			return RETURNVALUE_NOTENOUGHROOM;
-		}
-	}
-
-	return RETURNVALUE_NOERROR;
-}
-
-bool RuneMove::executeUse(Player* player, Item* item, const Position&, Thing* target, const Position& toPosition, bool isHotkey)
-{
-	if (!playerRuneMoveCheck(player, toPosition)) {
-		return false;
-	}
-
-	if (!scripted) {
-		return false;
-	}
-
-	LuaVariant var;
-
-	if (needTarget) {
-		var.type = VARIANT_NUMBER;
-
-		if (target == nullptr) {
-			Tile* toTile = g_game.map.getTile(toPosition);
-			if (toTile) {
-				const Creature* visibleCreature = toTile->getBottomVisibleCreature(player);
-				if (visibleCreature) {
-					var.number = visibleCreature->getID();
-				}
-			}
-		} else {
-			var.number = target->getCreature()->getID();
-		}
-	} else {
-		var.type = VARIANT_POSITION;
-		var.pos = toPosition;
-	}
-
-	if (!internalCastMove(player, var, isHotkey)) {
-		return false;
-	}
-
-	postCastMove(player);
-	if (hasCharges && item && g_config.getBoolean(ConfigManager::REMOVE_RUNE_CHARGES)) {
-		int32_t newCount = std::max<int32_t>(0, item->getItemCount() - 1);
-		g_game.transformItem(item, item->getID(), newCount);
-	}
-	return true;
-}
-
-bool RuneMove::castMove(Creature* creature)
-{
-	LuaVariant var;
-	var.type = VARIANT_NUMBER;
-	var.number = creature->getID();
-	return internalCastMove(creature, var, false);
-}
-
-bool RuneMove::castMove(Creature* creature, Creature* target)
-{
-	LuaVariant var;
-	var.type = VARIANT_NUMBER;
-	var.number = target->getID();
-	return internalCastMove(creature, var, false);
-}
-
-bool RuneMove::internalCastMove(Creature* creature, const LuaVariant& var, bool isHotkey)
-{
-	bool result;
-	if (scripted) {
-		result = executeCastMove(creature, var, isHotkey);
-	} else {
-		result = false;
-	}
-	return result;
-}
-
-bool RuneMove::executeCastMove(Creature* creature, const LuaVariant& var, bool isHotkey)
-{
-	//onCastMove(creature, var, isHotkey)
-	if (!scriptInterface->reserveScriptEnv()) {
-		std::cout << "[Error - RuneMove::executeCastMove] Call stack overflow" << std::endl;
-		return false;
-	}
-
-	ScriptEnvironment* env = scriptInterface->getScriptEnv();
-	env->setScriptId(scriptId, scriptInterface);
-
-	lua_State* L = scriptInterface->getLuaState();
-
-	scriptInterface->pushFunction(scriptId);
-
-	LuaScriptInterface::pushUserdata<Creature>(L, creature);
-	LuaScriptInterface::setCreatureMetatable(L, -1, creature);
-
-	LuaScriptInterface::pushVariant(L, var);
-
-	LuaScriptInterface::pushBoolean(L, isHotkey);
-
-	return scriptInterface->callFunction(3);
 }

@@ -117,6 +117,11 @@ std::string Pokeballs::getScriptBaseName() const
 	return "pokeballs";
 }
 
+std::string Pokeballs::getScriptPrefixName() const
+{
+	return "";
+}
+
 Event_ptr Pokeballs::getEvent(const std::string& nodeName)
 {
 	return Event_ptr(new PokeballType(&scriptInterface));	

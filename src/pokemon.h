@@ -45,11 +45,11 @@ enum TargetSearchType_t {
 class Pokemon final : public Creature
 {
 	public:
-		static Pokemon* createPokemon(const std::string& name, bool spawn = true);
+		static Pokemon* createPokemon(const std::string& name, int32_t level = 1, bool spawn = true);
 		static int32_t despawnRange;
 		static int32_t despawnRadius;
 
-		explicit Pokemon(PokemonType* mType, bool spawn = true);
+		explicit Pokemon(PokemonType* mType, int32_t level = 1, bool spawn = true);
 		~Pokemon();
 
 		// non-copyable
@@ -115,14 +115,8 @@ class Pokemon final : public Creature
 		BloodType_t getBlood() const override {
 			return mType->info.blood;
 		}
-		int32_t getArmor() const override {
-			return mType->info.armor;
-		}
-		int32_t getDefense() const override {
-			return mType->info.defense;
-		}
 		bool isPushable() const override {
-			return mType->info.pushable && baseSpeed != 0;
+			return mType->info.pushable && getBaseSpeed() != 0;
 		}
 		bool isAttackable() const override {
 			return mType->info.isAttackable;
@@ -163,26 +157,18 @@ class Pokemon final : public Creature
 		uint32_t getBasePrice() const {
 			return mType->info.price;
 		}
+		uint32_t getBaseSpeed() const override {
+			return (baseSpeed + (ivs.speed + (evs.speed / 30) + mType->info.baseStats.speed) / 4) * getSpeedMultiplier();
+		}
 		Natures_t getNature() const {
 			return nature;
 		}
-		uint16_t getHP() const {
-			return ivs.hp;
-		}
-		uint16_t getAtk() const {
-			return ivs.attack;
-		}
-		uint16_t getDef() const {
-			return ivs.defense;
-		}
-		uint16_t getSpeed() const {
-			return ivs.speed;
-		}
-		uint16_t getSpAtk() const {
-			return ivs.special_attack;
-		}
-		uint16_t getSpDef() const {
-			return ivs.special_defense;
+		float getAttack() const override;
+		float getDefense() const override;
+		float getSpecialAttack() const override;
+		float getSpecialDefense() const override;
+		virtual int32_t getSpeed() const override {
+			return getBaseSpeed() + varSpeed;
 		}
 		std::vector<EvolutionBlock_t> getEvolutions() const {
 			return mType->info.evolutions;
@@ -214,6 +200,11 @@ class Pokemon final : public Creature
 		void setPokemonType(PokemonType* pokemonType) {
 			this->mType = pokemonType;
 		}
+		float getAttackMultiplier() const;
+		float getDefenseMultiplier() const;
+		float getSpecialAttackMultiplier() const;
+		float getSpecialDefenseMultiplier() const;
+		float getSpeedMultiplier() const;
 		bool canWalkOnFieldType(CombatType_t combatType) const;
 
 
@@ -254,7 +245,7 @@ class Pokemon final : public Creature
 
 		bool isTarget(const Creature* creature) const;
 		bool isFleeing() const {
-			return !isSummon() && getHealth() <= mType->info.runAwayHealth;
+			return !isSummon() && getHealth() <= (getHealth() * (mType->info.runAwayHealth / 100.0));
 		}
 
 		bool getDistanceStep(const Position& targetPos, Direction& direction, bool flee = false);
@@ -282,8 +273,8 @@ class Pokemon final : public Creature
 			return belongsToPlayer() && (getMaster()->getPlayer() == player);
 		}
 
-		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-		                     bool checkDefense = false, bool checkArmor = false, bool field = false) override;
+		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage, 
+									 bool field = false) override;
 
 		static uint32_t pokemonAutoID;
 
@@ -296,17 +287,34 @@ class Pokemon final : public Creature
 
 		int32_t getMaxHealth() const override;
 
-		int32_t getMasterLevel() const {
-			return masterLevel;
+		uint32_t getLevel() const {
+			return level;
 		}
-		void setMasterLevel(int32_t masterLevel) {
-			this->masterLevel = masterLevel;
+		void setLevel(uint32_t newLevel) {
+			level = newLevel;
 		}
+
+		bool addMove(std::pair<uint16_t, uint16_t> move) {
+			if (moves.size() > 12) {
+				return false;
+			}
+
+			moves[std::get<0>(move)] = std::get<1>(move);
+			return true;
+		}
+
+		std::map<uint16_t, uint16_t> getMoves() const {
+			return moves;
+		}
+
+		bool castMove(uint16_t moveId, bool ignoreMessages = false);
 
 	private:
 		CreatureHashSet friendList;
 		CreatureList targetList;
 		std::forward_list<Condition*> storedConditionList; // TODO: This variable is only temporarily used when logging in, get rid of it somehow
+
+		std::map<uint16_t, uint16_t> moves;
 
 		std::string name;
 		std::string strDescription;
@@ -328,12 +336,12 @@ class Pokemon final : public Creature
 		uint32_t targetChangeTicks = 0;
 		uint32_t defenseTicks = 0;
 		uint32_t yellTicks = 0;
+		uint32_t level = 1;
 		int32_t minCombatValue = 0;
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
 		int32_t stepDuration = 0;
 		int32_t price = -1;
-		int32_t masterLevel = 1;
 
 		Position masterPos;
 
@@ -376,8 +384,6 @@ class Pokemon final : public Creature
 		void onCombatRemoveCondition(Condition* condition) override;
 
 		bool canUseAttack(const Position& pos, const Creature* target) const;
-		bool canUseMove(const Position& pos, const Position& targetPos,
-		                 const moveBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks);
 		bool getRandomStep(const Position& creaturePos, Direction& direction) const;
 		bool getDanceStep(const Position& creaturePos, Direction& direction,
 		                  bool keepAttack = true, bool keepDistance = true);
@@ -412,6 +418,12 @@ class Pokemon final : public Creature
 			return mType->info.lookcorpse;
 		}
 		void dropLoot(Container* corpse, Creature* lastHitCreature) override;
+		uint32_t getDamageSuperEffective() const {
+			return mType->info.damageSuperEffective;
+		}
+		uint32_t getDamageNotVeryEffective() const {
+			return mType->info.damageNotVeryEffective;
+		}
 		uint32_t getDamageImmunities() const override {
 			return mType->info.damageImmunities;
 		}
@@ -420,8 +432,16 @@ class Pokemon final : public Creature
 		}
 		void getPathSearchParams(const Creature* creature, FindPathParams& fpp) const override;
 		bool checkSpawn();
+		void basicAttack();
 		bool useCacheMap() const override {
 			return !randomStepping;
+		}
+
+		bool isSuperEffective(CombatType_t type) const {
+			return hasBitSet(static_cast<uint32_t>(type), getDamageSuperEffective());
+		}
+		bool isNotVeryEffective(CombatType_t type) const {
+			return hasBitSet(static_cast<uint32_t>(type), getDamageNotVeryEffective());
 		}
 
 		friend class LuaScriptInterface;

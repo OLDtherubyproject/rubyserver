@@ -49,9 +49,6 @@ local reloadTypes = {
 	["talkaction"] = { targetType = RELOAD_TYPE_TALKACTIONS, name = "talk actions" },
 	["talkactions"] = { targetType = RELOAD_TYPE_TALKACTIONS, name = "talk actions" },
 
-	["weapon"] = { targetType = RELOAD_TYPE_WEAPONS, name = "weapons" },
-	["weapons"] = { targetType = RELOAD_TYPE_WEAPONS, name = "weapons" },
-
 	["pokeball"] = { targetType = RELOAD_TYPE_POKEBALLS, name = "pokeballs" },
 	["pokeballs"] = { targetType = RELOAD_TYPE_POKEBALLS, name = "pokeballs" }
 }

@@ -27,11 +27,7 @@
 #include "talkaction.h"
 #include "baseevents.h"
 
-class InstantMove;
-class RuneMove;
 class Move;
-
-using VocMoveMap = std::map<uint16_t, bool>;
 
 class Moves final : public BaseEvents
 {
@@ -43,21 +39,19 @@ class Moves final : public BaseEvents
 		Moves(const Moves&) = delete;
 		Moves& operator=(const Moves&) = delete;
 
+		Move* getMove(uint32_t moveId);
 		Move* getMoveByName(const std::string& name);
-		RuneMove* getRuneMove(uint32_t id);
-		RuneMove* getRuneMoveByName(const std::string& name);
-
-		InstantMove* getInstantMove(const std::string& words);
-		InstantMove* getInstantMoveByName(const std::string& name);
-
-		InstantMove* getInstantMoveById(uint32_t moveId);
 
 		static Position getCasterPosition(Creature* creature, Direction dir);
 		std::string getScriptBaseName() const override;
+		std::string getScriptPrefixName() const override;
 
-		const std::map<std::string, InstantMove>& getInstantMoves() const {
-			return instants;
+		const std::map<std::string, Move>& getMoves() const {
+			return moves;
 		};
+
+		PokemonType_t MoveTypeToPokemonType(MoveType_t type);
+		MoveType_t PokemonTypeToMoveType(PokemonType_t type);
 
 	private:
 		void clear() override;
@@ -65,146 +59,45 @@ class Moves final : public BaseEvents
 		Event_ptr getEvent(const std::string& nodeName) override;
 		bool registerEvent(Event_ptr event, const pugi::xml_node& node) override;
 
-		std::map<uint16_t, RuneMove> runes;
-		std::map<std::string, InstantMove> instants;
+		std::map<std::string, Move> moves;
 
-		friend class CombatMove;
 		LuaScriptInterface scriptInterface { "Move Interface" };
 };
 
-using RuneMoveFunction = std::function<bool(const RuneMove* move, Player* player, const Position& posTo)>;
-
-class BaseMove
+class Move final : public TalkAction
 {
 	public:
-		constexpr BaseMove() = default;
-		virtual ~BaseMove() = default;
+		explicit Move(LuaScriptInterface* interface) : TalkAction(interface) {}
 
-		virtual bool castMove(Creature* creature) = 0;
-		virtual bool castMove(Creature* creature, Creature* target) = 0;
-};
-
-class CombatMove final : public Event, public BaseMove
-{
-	public:
-		CombatMove(Combat* combat, bool needTarget, bool needDirection);
-		~CombatMove();
-
-		// non-copyable
-		CombatMove(const CombatMove&) = delete;
-		CombatMove& operator=(const CombatMove&) = delete;
-
-		bool castMove(Creature* creature) override;
-		bool castMove(Creature* creature, Creature* target) override;
-		bool configureEvent(const pugi::xml_node&) override {
-			return true;
-		}
-
-		//scripting
-		bool executeCastMove(Creature* creature, const LuaVariant& var);
-
-		bool loadScriptCombat();
-		Combat* getCombat() {
-			return combat;
-		}
-
-	private:
-		std::string getScriptEventName() const override {
-			return "onCastMove";
-		}
-
-		Combat* combat;
-
-		bool needDirection;
-		bool needTarget;
-};
-
-class Move : public BaseMove
-{
-	public:
-		Move() = default;
-
+		bool configureEvent(const pugi::xml_node& node) override;
 		bool configureMove(const pugi::xml_node& node);
 		const std::string& getName() const {
 			return name;
 		}
 
-		void postCastMove(Player* player, bool finishedCast = true, bool payCost = true) const;
+		bool castMove(Creature* creature);
+		bool castMove(Creature* creature, Creature* target);
 
+		uint16_t getId() const {
+			return moveId;
+		}
 		uint32_t getLevel() const {
 			return level;
 		}
-		uint32_t getMagicLevel() const {
-			return magLevel;
+		uint32_t getCooldown() const {
+			return cooldown;
+		}
+		uint16_t getAccuracy() const {
+			return accuracy;
+		}
+		MoveType_t getType() const {
+			return type;
 		}
 		bool isPremium() const {
 			return premium;
 		}
-
-		virtual bool isInstant() const = 0;
-		bool isLearnable() const {
-			return learnable;
-		}
-
-		const VocMoveMap& getVocMap() const {
-			return vocMoveMap;
-		}
-
-		bool needTarget = false;
-
-	protected:
-		bool playerMoveCheck(Player* player) const;
-		bool playerInstantMoveCheck(Player* player, const Position& toPos);
-		bool playerRuneMoveCheck(Player* player, const Position& toPos);
-
-		VocMoveMap vocMoveMap;
-
-		MoveGroup_t group = MOVEGROUP_NONE;
-		MoveGroup_t secondaryGroup = MOVEGROUP_NONE;
-
-		uint32_t cooldown = 1000;
-		uint32_t groupCooldown = 1000;
-		uint32_t secondaryGroupCooldown = 0;
-		uint32_t level = 0;
-		uint32_t magLevel = 0;
-		int32_t range = -1;
-
-		uint8_t moveId = 0;
-
-		bool selfTarget = false;
-
-	private:
-
-		bool needWeapon = false;
-		bool blockingSolid = false;
-		bool blockingCreature = false;
-		bool aggressive = true;
-		bool learnable = false;
-		bool enabled = true;
-		bool premium = false;
-
-
-	private:
-		std::string name;
-};
-
-class InstantMove final : public TalkAction, public Move
-{
-	public:
-		explicit InstantMove(LuaScriptInterface* interface) : TalkAction(interface) {}
-
-		bool configureEvent(const pugi::xml_node& node) override;
-
-		virtual bool playerCastInstant(Player* player, std::string& param);
-
-		bool castMove(Creature* creature) override;
-		bool castMove(Creature* creature, Creature* target) override;
-
-		//scripting
-		bool executeCastMove(Creature* creature, const LuaVariant& var);
-
-		bool isInstant() const override {
-			return true;
+		bool isAggressive() const {
+			return aggressive;
 		}
 		bool getHasParam() const {
 			return hasParam;
@@ -212,58 +105,50 @@ class InstantMove final : public TalkAction, public Move
 		bool getHasPlayerNameParam() const {
 			return hasPlayerNameParam;
 		}
+		void setType(MoveType_t newType) {
+			type = newType;
+		}
+		bool isPersistent() const {
+			return persistent;
+		}
+		bool executeCastMove(Creature* creature, const LuaVariant& var);
 		bool canCast(const Player* player) const;
 		bool canThrowMove(const Creature* creature, const Creature* target) const;
+		void serialize(PropWriteStream& propWriteStream);
+
+		bool needTarget = false;
+		bool ignoreSleep = false;
+
+	protected:
+		MoveCategory_t category = MOVECATEGORY_PHYSICAL;
+		MoveType_t type = MOVETYPE_NONE;
+
+		uint32_t cooldown = 1000;
+		uint32_t level = 0;
+		uint32_t accuracy = 100;
+		int32_t range = -1;
+
+		uint16_t moveId = 0;
+
+		bool selfTarget = false;
 
 	private:
-		std::string getScriptEventName() const override;
-
-		bool internalCastMove(Creature* creature, const LuaVariant& var);
-
 		bool needDirection = false;
 		bool hasParam = false;
 		bool hasPlayerNameParam = false;
 		bool checkLineOfSight = true;
 		bool casterTargetOrDirection = false;
-};
+		bool blockingSolid = false;
+		bool blockingCreature = false;
+		bool aggressive = true;
+		bool enabled = true;
+		bool premium = false;
+		bool persistent = true;
 
-class RuneMove final : public Action, public Move
-{
-	public:
-		explicit RuneMove(LuaScriptInterface* interface) : Action(interface) {}
-
-		bool configureEvent(const pugi::xml_node& node) override;
-
-		ReturnValue canExecuteAction(const Player* player, const Position& toPos) override;
-		bool hasOwnErrorHandler() override {
-			return true;
-		}
-		Thing* getTarget(Player*, Creature* targetCreature, const Position&, uint8_t) const override {
-			return targetCreature;
-		}
-
-		bool executeUse(Player* player, Item* item, const Position& fromPosition, Thing* target, const Position& toPosition, bool isHotkey) override;
-
-		bool castMove(Creature* creature) override;
-		bool castMove(Creature* creature, Creature* target) override;
-
-		//scripting
-		bool executeCastMove(Creature* creature, const LuaVariant& var, bool isHotkey);
-
-		bool isInstant() const override {
-			return false;
-		}
-		uint16_t getRuneItemId() const {
-			return runeId;
-		}
-
-	private:
+		std::string name;
 		std::string getScriptEventName() const override;
 
-		bool internalCastMove(Creature* creature, const LuaVariant& var, bool isHotkey);
-
-		uint16_t runeId = 0;
-		bool hasCharges = true;
+		bool internalCastMove(Creature* creature, const LuaVariant& var);
 };
 
 #endif

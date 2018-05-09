@@ -21,7 +21,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	if item:getId() == 8880 or item:getId() == 8881 then
 		if item:getId() == 8881 then
-			target:clearConditions();
+			target:cleanConditions();
 		end
 
 		target:addHealth(target:getMaxHealth())

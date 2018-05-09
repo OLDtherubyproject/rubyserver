@@ -41,7 +41,6 @@
 
 class House;
 class NetworkMessage;
-class Weapon;
 class ProtocolGame;
 class Npc;
 class Party;
@@ -560,7 +559,6 @@ class Player final : public Creature, public Cylinder
 		bool setAttackedCreature(Creature* creature) override;
 		bool isImmune(CombatType_t type) const override;
 		bool isImmune(ConditionType_t type) const override;
-		bool hasShield() const;
 		bool isAttackable() const override;
 		static bool lastHitIsPlayer(Creature* lastHitCreature);
 
@@ -572,7 +570,7 @@ class Player final : public Creature, public Cylinder
 			return pzLocked;
 		}
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-		                             bool checkDefense = false, bool checkArmor = false, bool field = false) override;
+		                             bool field = false) override;
 		void doAttacking(uint32_t interval) override;
 		bool hasExtraSwing() override {
 			return lastAttack > 0 && ((OTSYS_TIME() - lastAttack) >= getAttackSpeed());
@@ -594,21 +592,12 @@ class Player final : public Creature, public Cylinder
 		bool getAddAttackSkill() const {
 			return addAttackSkillPoint;
 		}
-		BlockType_t getLastAttackBlockType() const {
-			return lastAttackBlockType;
-		}
-
-		Item* getWeapon(slots_t slot, bool ignoreAmmo) const;
-		Item* getWeapon(bool ignoreAmmo = false) const;
-		WeaponType_t getWeaponType() const;
-		int32_t getWeaponSkill(const Item* item) const;
-		void getShieldAndWeapon(const Item*& shield, const Item*& weapon) const;
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void addSkillAdvance(skills_t skill, uint64_t count);
 
-		int32_t getArmor() const override;
-		int32_t getDefense() const override;
+		float getDefense() const override;
+		float getSpecialDefense() const override;
 		float getAttackFactor() const override;
 		float getDefenseFactor() const override;
 
@@ -628,8 +617,6 @@ class Player final : public Creature, public Cylinder
 		bool onKilledCreature(Creature* target, bool lastHit = true) override;
 		void onGainExperience(uint64_t gainExp, Creature* target) override;
 		void onGainSharedExperience(uint64_t gainExp, Creature* source);
-		void onAttackedCreatureBlockHit(BlockType_t blockType) override;
-		void onBlockHit() override;
 		void onChangeZone(ZoneType_t zone) override;
 		void onAttackedCreatureChangeZone(ZoneType_t zone) override;
 		void onIdleStatus() override;
@@ -664,6 +651,9 @@ class Player final : public Creature, public Cylinder
 
 		//tile
 		//send methods
+		void sendAnimatedText(const Position& pos, uint8_t color, std::string text) const {
+       		if (client) client->sendAnimatedText(pos, color, text);
+    	}
 		void sendAddTileItem(const Tile* tile, const Position& pos, const Item* item) {
 			if (client) {
 				int32_t stackpos = tile->getStackposOfItem(this, item);
@@ -796,11 +786,13 @@ class Player final : public Creature, public Cylinder
 				client->sendMoveCooldown(moveId, time);
 			}
 		}
+		/* Spell group cooldown system legacy
 		void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time) {
 			if (client) {
 				client->sendMoveGroupCooldown(groupId, time);
 			}
 		}
+		*/
 		void sendModalWindow(const ModalWindow& modalWindow);
 
 		//container
@@ -1099,6 +1091,14 @@ class Player final : public Creature, public Cylinder
 		}
 		uint32_t getNextActionTime() const;
 
+		void setNextCastMove(int64_t time) {
+			nextMove = time;
+		}
+		bool canCastMove() const {
+			return nextMove <= OTSYS_TIME();
+		}
+		uint32_t getNextCastMoveTime() const;
+
 
 		void setNextGoback(int64_t time) {
 			if (time > nextGoback) {
@@ -1117,7 +1117,7 @@ class Player final : public Creature, public Cylinder
 		void setEditHouse(House* house, uint32_t listId = 0);
 
 		void learnInstantMove(const std::string& moveName);
-		void forgetInstantMove(const std::string& moveName);
+		void forgetMove(const std::string& moveName);
 		bool hasLearnedInstantMove(const std::string& moveName) const;
 
 		Pokemon* getHisPokemon() const {
@@ -1221,6 +1221,7 @@ class Player final : public Creature, public Cylinder
 		int64_t lastPing;
 		int64_t lastPong;
 		int64_t nextAction = 0;
+		int64_t nextMove = 0;
 		int64_t nextGoback = 0;
 
 		//BedItem* bedItem = nullptr;
@@ -1265,8 +1266,6 @@ class Player final : public Creature, public Cylinder
 		int32_t saleCallback = -1;
 		int32_t MessageBufferCount = 0;
 		int32_t premiumDays = 0;
-		int32_t bloodHitCount = 0;
-		int32_t shieldBlockCount = 0;
 		int32_t idleTime = 0;
 
 		uint16_t staminaMinutes = 2520;
@@ -1280,7 +1279,6 @@ class Player final : public Creature, public Cylinder
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;
-		BlockType_t lastAttackBlockType = BLOCK_NONE;
 		tradestate_t tradeState = TRADE_NONE;
 		fightMode_t fightMode = FIGHTMODE_ATTACK;
 		AccountType_t accountType = ACCOUNT_TYPE_NORMAL;

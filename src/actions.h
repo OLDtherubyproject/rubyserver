@@ -81,6 +81,7 @@ class Actions final : public BaseEvents
 		void clear() final;
 		LuaScriptInterface& getScriptInterface() override;
 		std::string getScriptBaseName() const override;
+		std::string getScriptPrefixName() const override;
 		Event_ptr getEvent(const std::string& nodeName) override;
 		bool registerEvent(Event_ptr event, const pugi::xml_node& node) override;
 

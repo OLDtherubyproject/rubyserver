@@ -7,8 +7,16 @@ function onSay(player, words, param)
 		return false
 	end
 
+	local split = param:split(",")
+	local pType = split[1]
+	local level = split[2]
+
+	if not level then
+		level = 1
+	end
+
 	local position = player:getPosition()
-	local pokemon = Game.createPokemon(param, position)
+	local pokemon = Game.createPokemon(pType, level, position)
 	if pokemon then
 		player:addSummon(pokemon)
 		position:sendMagicEffect(CONST_ME_MAGIC_RED)

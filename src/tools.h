@@ -67,8 +67,6 @@ void trimString(std::string& str);
 
 MagicEffectClasses getMagicEffect(const std::string& strValue);
 ShootType_t getShootType(const std::string& strValue);
-Ammo_t getAmmoType(const std::string& strValue);
-WeaponAction_t getWeaponAction(const std::string& strValue);
 Genders_t getGenderType(const std::string& strValue);
 std::string getCombatName(CombatType_t combatType);
 
@@ -83,10 +81,10 @@ std::string ucfirst(std::string str);
 std::string ucwords(std::string str);
 bool booleanString(const std::string& str);
 
-std::string getWeaponName(WeaponType_t weaponType);
-
 size_t combatTypeToIndex(CombatType_t combatType);
 CombatType_t indexToCombatType(size_t v);
+
+CombatType_t pokemonTypeToCombatType(PokemonType_t pokemonType);
 
 uint8_t serverFluidToClient(uint8_t serverFluid);
 uint8_t clientFluidToServer(uint8_t clientFluid);

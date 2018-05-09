@@ -4,7 +4,7 @@
 AREA_WAVE3 = {
 {1, 1, 1},
 {1, 1, 1},
-{0, 3, 0}
+{1, 3, 1}
 }
 
 AREA_WAVE4 = {
@@ -26,6 +26,31 @@ AREA_SQUAREWAVE5 = {
 {1, 1, 1},
 {0, 1, 0},
 {0, 3, 0}
+}
+
+-- Vine Whip Area
+AREA_VINE_WHIPE_N = {
+	{1, 1, 1},
+	{1, 1, 1},
+	{0, 3, 0}
+}
+
+AREA_VINE_WHIPE_S = {
+	{0, 3, 0},
+	{1, 1, 1},
+	{1, 1, 1}
+}
+
+AREA_VINE_WHIPE_E = {
+	{0, 1, 1},
+	{3, 1, 1},
+	{0, 1, 1}
+}
+
+AREA_VINE_WHIPE_W = {
+	{1, 1, 0},
+	{1, 1, 3},
+	{1, 1, 0}
 }
 
 AREA_SQUAREWAVE6 = {

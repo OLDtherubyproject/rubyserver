@@ -43,6 +43,11 @@ bool Condition::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
+		case CONDITION_PARAM_COMBATTYPE: {
+			combatType = static_cast<CombatType_t>(value);
+			return true;
+		}
+
 		default: {
 			return false;
 		}
@@ -133,6 +138,11 @@ void Condition::setTicks(int32_t newTicks)
 	endTime = ticks + OTSYS_TIME();
 }
 
+void Condition::setCombatType(CombatType_t newCombatType)
+{
+	combatType = newCombatType;
+}
+
 bool Condition::executeCondition(Creature*, int32_t interval)
 {
 	if (ticks == -1) {
@@ -186,10 +196,7 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 			return new ConditionSleep(id, type, ticks, buff, subId);
 
 		case CONDITION_INFIGHT:
-		case CONDITION_DRUNK:
-		case CONDITION_EXHAUST_WEAPON:
-		case CONDITION_EXHAUST_COMBAT:
-		case CONDITION_EXHAUST_HEAL:
+		case CONDITION_CONFUSION:
 		case CONDITION_MUTED:
 		case CONDITION_CHANNELMUTEDTICKS:
 		case CONDITION_YELLTICKS:
@@ -327,8 +334,8 @@ uint32_t ConditionGeneric::getIcons() const
 			icons |= ICON_SWORDS;
 			break;
 
-		case CONDITION_DRUNK:
-			icons |= ICON_DRUNK;
+		case CONDITION_CONFUSION:
+			icons |= ICON_CONFUSION;
 			break;
 
 		default:
@@ -1009,12 +1016,12 @@ bool ConditionDamage::doDamage(Creature* creature, int32_t healthChange)
 
 	CombatDamage damage;
 	damage.origin = ORIGIN_CONDITION;
-	damage.primary.value = healthChange;
-	damage.primary.type = Combat::ConditionToDamageType(conditionType);
+	damage.value = healthChange;
+	damage.type = Combat::ConditionToDamageType(conditionType);
 
 	Creature* attacker = g_game.getCreatureByID(owner);
 	if (field && creature->getPlayer() && attacker && attacker->getPlayer()) {
-		damage.primary.value = static_cast<int32_t>(std::round(damage.primary.value / 2.));
+		damage.value = static_cast<int32_t>(std::round(damage.value / 2.));
 	}
 
 	if (!creature->isAttackable() || Combat::canDoCombat(attacker, creature) != RETURNVALUE_NOERROR) {
@@ -1024,7 +1031,7 @@ bool ConditionDamage::doDamage(Creature* creature, int32_t healthChange)
 		return false;
 	}
 
-	if (g_game.combatBlockHit(damage, attacker, creature, false, false, field)) {
+	if (g_game.combatBlockHit(damage, attacker, creature, field)) {
 		return false;
 	}
 	return g_game.combatChangeHealth(attacker, creature, damage);
@@ -1523,13 +1530,6 @@ void ConditionMoveGroupCooldown::addCondition(Creature* creature, const Conditio
 {
 	if (updateCondition(condition)) {
 		setTicks(condition->getTicks());
-
-		if (subId != 0 && ticks > 0) {
-			Player* player = creature->getPlayer();
-			if (player) {
-				player->sendMoveGroupCooldown(static_cast<MoveGroup_t>(subId), ticks);
-			}
-		}
 	}
 }
 
@@ -1537,13 +1537,6 @@ bool ConditionMoveGroupCooldown::startCondition(Creature* creature)
 {
 	if (!Condition::startCondition(creature)) {
 		return false;
-	}
-
-	if (subId != 0 && ticks > 0) {
-		Player* player = creature->getPlayer();
-		if (player) {
-			player->sendMoveGroupCooldown(static_cast<MoveGroup_t>(subId), ticks);
-		}
 	}
 	return true;
 }
@@ -1558,8 +1551,9 @@ bool ConditionSleep::startCondition(Creature* creature)
 	outfit.lookTypeEx = creature->getLookCorpse();
 
 	g_game.internalCreatureChangeOutfit(creature, outfit);
-	g_game.changeSpeed(creature, -creature->getBaseSpeed());
+	g_game.changeSpeed(creature, -creature->getSpeed());
 	internalSleepTicks = 3000;
+
 	return true;
 }
 

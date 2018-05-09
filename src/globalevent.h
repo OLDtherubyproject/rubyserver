@@ -60,6 +60,9 @@ class GlobalEvents final : public BaseEvents
 		std::string getScriptBaseName() const override {
 			return "globalevents";
 		}
+		std::string getScriptPrefixName() const override {
+			return "";
+		}
 		void clear() override;
 
 		Event_ptr getEvent(const std::string& nodeName) override;

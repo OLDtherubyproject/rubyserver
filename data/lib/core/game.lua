@@ -40,21 +40,6 @@ function Game.getReverseDirection(direction)
 	return NORTH
 end
 
-function Game.getSkillType(weaponType)
-	if weaponType == WEAPON_CLUB then
-		return SKILL_CLUB
-	elseif weaponType == WEAPON_SWORD then
-		return SKILL_SWORD
-	elseif weaponType == WEAPON_AXE then
-		return SKILL_AXE
-	elseif weaponType == WEAPON_DISTANCE then
-		return SKILL_DISTANCE
-	elseif weaponType == WEAPON_SHIELD then
-		return SKILL_SHIELD
-	end
-	return SKILL_FIST
-end
-
 if not globalStorageTable then
 	globalStorageTable = {}
 end

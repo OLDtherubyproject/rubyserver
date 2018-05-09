@@ -191,7 +191,6 @@ class ItemType
 		std::string article;
 		std::string pluralName;
 		std::string description;
-		std::string runeMoveName;
 		std::string vocationString;
 
 		std::unique_ptr<Abilities> abilities;
@@ -230,8 +229,6 @@ class ItemType
 
 		MagicEffectClasses magicEffect = CONST_ME_NONE;
 		Direction bedPartnerDir = DIRECTION_NONE;
-		WeaponType_t weaponType = WEAPON_NONE;
-		Ammo_t ammoType = AMMO_NONE;
 		ShootType_t shootType = CONST_ANI_NONE;
 		FluidTypes_t fluidSource = FLUID_NONE;
 
