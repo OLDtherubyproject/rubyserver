@@ -9831,7 +9831,7 @@ int LuaScriptInterface::luaPokemonCastMove(lua_State* L)
 		return 1;
 	}
 
-	Move* move;
+	Move* move = nullptr;
 
 	if (isNumber(L, 2)) {
 		move = g_moves->getMove(getNumber<uint16_t>(L, 2));
