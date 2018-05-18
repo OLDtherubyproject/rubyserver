@@ -990,9 +990,11 @@ void Pokemon::doAttacking(uint32_t interval)
 		return;
 	}
 
-	for (const auto& move : moves) {
-		if (normal_random(1, 100) <= move.second) {
-			castMove(move.first);
+	if (!isSummon()) {
+		for (const auto& move : moves) {
+			if (normal_random(1, 100) <= move.second) {
+				castMove(move.first);
+			}
 		}
 	}
 
