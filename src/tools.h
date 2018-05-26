@@ -95,6 +95,8 @@ const char* getReturnMessage(ReturnValue value);
 const char* getCallPokemonMessage(CallPokemon value);
 const char* getCallbackPokemonMessage(CallbackPokemon value);
 
+uint16_t daysUntilTheEnd(time_t start, time_t end);
+
 std::string capitalizeString(std::string name);
 
 int64_t OTSYS_TIME();

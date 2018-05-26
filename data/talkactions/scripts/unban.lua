@@ -3,7 +3,7 @@ function onSay(player, words, param)
 		return true
 	end
 
-	local resultId = db.storeQuery("SELECT `account_id`, `lastip` FROM `players` WHERE `name` = " .. db.escapeString(param))
+	local resultId = db.storeQuery("SELECT `account_id`, `lastip` FROM `characters` WHERE `name` = " .. db.escapeString(param))
 	if resultId == false then
 		return false
 	end

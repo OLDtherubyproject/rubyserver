@@ -129,7 +129,6 @@ void Game::setGameState(GameState_t newState)
 				it = players.begin();
 			}
 
-			saveMotdNum();
 			saveGameState();
 
 			g_dispatcher.addTask(
@@ -4506,40 +4505,9 @@ void Game::updatePremium(Account& account)
 		std::cout << "> ERROR: Failed to save account: " << account.name << "!" << std::endl;
 	}
 }
-
 void Game::loadMotdNum()
 {
-	Database& db = Database::getInstance();
-
-	DBResult_ptr result = db.storeQuery("SELECT `value` FROM `server_config` WHERE `config` = 'motd_num'");
-	if (result) {
-		motdNum = result->getNumber<uint32_t>("value");
-	} else {
-		db.executeQuery("INSERT INTO `server_config` (`config`, `value`) VALUES ('motd_num', '0')");
-	}
-
-	result = db.storeQuery("SELECT `value` FROM `server_config` WHERE `config` = 'motd_hash'");
-	if (result) {
-		motdHash = result->getString("value");
-		if (motdHash != transformToSHA1(g_config.getString(ConfigManager::MOTD))) {
-			++motdNum;
-		}
-	} else {
-		db.executeQuery("INSERT INTO `server_config` (`config`, `value`) VALUES ('motd_hash', '')");
-	}
-}
-
-void Game::saveMotdNum() const
-{
-	Database& db = Database::getInstance();
-
-	std::ostringstream query;
-	query << "UPDATE `server_config` SET `value` = '" << motdNum << "' WHERE `config` = 'motd_num'";
-	db.executeQuery(query.str());
-
-	query.str(std::string());
-	query << "UPDATE `server_config` SET `value` = '" << transformToSHA1(g_config.getString(ConfigManager::MOTD)) << "' WHERE `config` = 'motd_hash'";
-	db.executeQuery(query.str());
+	//
 }
 
 void Game::checkPlayersRecord()
@@ -4558,23 +4526,12 @@ void Game::checkPlayersRecord()
 
 void Game::updatePlayersRecord() const
 {
-	Database& db = Database::getInstance();
-
-	std::ostringstream query;
-	query << "UPDATE `server_config` SET `value` = '" << playersRecord << "' WHERE `config` = 'players_record'";
-	db.executeQuery(query.str());
+	//
 }
 
 void Game::loadPlayersRecord()
 {
-	Database& db = Database::getInstance();
-
-	DBResult_ptr result = db.storeQuery("SELECT `value` FROM `server_config` WHERE `config` = 'players_record'");
-	if (result) {
-		playersRecord = result->getNumber<uint32_t>("value");
-	} else {
-		db.executeQuery("INSERT INTO `server_config` (`config`, `value`) VALUES ('players_record', '0')");
-	}
+	//
 }
 
 uint64_t Game::getExperienceStage(uint32_t level)

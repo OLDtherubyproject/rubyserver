@@ -3,7 +3,7 @@ function onSay(player, words, param)
 		return true
 	end
 
-	local resultId = db.storeQuery("SELECT `name`, `account_id`, (SELECT `type` FROM `accounts` WHERE `accounts`.`id` = `account_id`) AS `account_type` FROM `players` WHERE `name` = " .. db.escapeString(param))
+	local resultId = db.storeQuery("SELECT `name`, `account_id`, (SELECT `type` FROM `accounts` WHERE `accounts`.`id` = `account_id`) AS `account_type` FROM `characters` WHERE `name` = " .. db.escapeString(param))
 	if resultId == false then
 		player:sendCancelMessage("A player with that name does not exist.")
 		return false

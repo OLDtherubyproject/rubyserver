@@ -22,6 +22,7 @@
 
 #include "tools.h"
 #include "configmanager.h"
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 extern ConfigManager g_config;
 
@@ -1299,6 +1300,23 @@ std::string capitalizeString(std::string str)
 	});
 
 	return str;
+}
+
+uint16_t daysUntilTheEnd(time_t tstart, time_t tend)
+{
+	boost::posix_time::ptime start = boost::posix_time::from_time_t(tstart);
+	boost::posix_time::ptime end = boost::posix_time::from_time_t(tend);
+
+	boost::posix_time::time_duration diff = end - start;
+
+
+	int64_t seconds = diff.total_seconds();
+
+	if (seconds <= 86400) {
+		return (seconds / (60 * 60 * 24)) + 1;
+	}
+
+	return 0;
 }
 
 int64_t OTSYS_TIME()
