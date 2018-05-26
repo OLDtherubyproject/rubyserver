@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `players` (
+CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `group_id` int(11) NOT NULL DEFAULT '1',
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `account_bans` (
   `banned_by` int(11) NOT NULL,
   PRIMARY KEY (`account_id`),
   FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `account_ban_history` (
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `account_ban_history` (
   `banned_by` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ip_bans` (
@@ -96,28 +96,28 @@ CREATE TABLE IF NOT EXISTS `ip_bans` (
   `expires_at` bigint(20) NOT NULL,
   `banned_by` int(11) NOT NULL,
   PRIMARY KEY (`ip`),
-  FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_namelocks` (
-  `player_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `character_namelocks` (
+  `character_id` int(11) NOT NULL,
   `reason` varchar(255) NOT NULL,
   `namelocked_at` bigint(20) NOT NULL,
   `namelocked_by` int(11) NOT NULL,
-  PRIMARY KEY (`player_id`),
-  FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`namelocked_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`character_id`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`namelocked_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `account_viplist` (
+CREATE TABLE IF NOT EXISTS `account_viplists` (
   `account_id` int(11) NOT NULL COMMENT 'id of account whose viplist entry it is',
-  `player_id` int(11) NOT NULL COMMENT 'id of target player of viplist entry',
+  `character_id` int(11) NOT NULL COMMENT 'id of target player of viplist entry',
   `description` varchar(128) NOT NULL DEFAULT '',
   `icon` tinyint(2) unsigned NOT NULL DEFAULT '0',
   `notify` tinyint(1) NOT NULL DEFAULT '0',
-  UNIQUE KEY `account_player_index` (`account_id`,`player_id`),
+  UNIQUE KEY `account_character_index` (`account_id`,`character_id`),
   FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `guilds` (
@@ -129,14 +129,14 @@ CREATE TABLE IF NOT EXISTS `guilds` (
   PRIMARY KEY (`id`),
   UNIQUE KEY (`name`),
   UNIQUE KEY (`ownerid`),
-  FOREIGN KEY (`ownerid`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  FOREIGN KEY (`ownerid`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `guild_invites` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
+  `character_id` int(11) NOT NULL DEFAULT '0',
   `guild_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`player_id`,`guild_id`),
-  FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+  PRIMARY KEY (`character_id`,`guild_id`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
@@ -149,15 +149,15 @@ CREATE TABLE IF NOT EXISTS `guild_ranks` (
   FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `guild_membership` (
-  `player_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `guild_memberships` (
+  `character_id` int(11) NOT NULL,
   `guild_id` int(11) NOT NULL,
-  `rank_id` int(11) NOT NULL,
+  `guild_rank_id` int(11) NOT NULL,
   `nick` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`player_id`),
-  FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (`character_id`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`guild_rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `guild_wars` (
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `house_lists` (
 
 CREATE TABLE IF NOT EXISTS `market_history` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int(11) NOT NULL,
+  `character_id` int(11) NOT NULL,
   `sale` tinyint(1) NOT NULL DEFAULT '0',
   `itemtype` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
@@ -223,13 +223,13 @@ CREATE TABLE IF NOT EXISTS `market_history` (
   `inserted` bigint(20) unsigned NOT NULL,
   `state` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `player_id` (`player_id`, `sale`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  KEY `character_id` (`character_id`, `sale`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `market_offers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int(11) NOT NULL,
+  `character_id` int(11) NOT NULL,
   `sale` tinyint(1) NOT NULL DEFAULT '0',
   `itemtype` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
@@ -239,16 +239,16 @@ CREATE TABLE IF NOT EXISTS `market_offers` (
   PRIMARY KEY (`id`),
   KEY `sale` (`sale`,`itemtype`),
   KEY `created` (`created`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `players_online` (
-  `player_id` int(11) NOT NULL,
-  PRIMARY KEY (`player_id`)
+CREATE TABLE IF NOT EXISTS `characters_online` (
+  `character_id` int(11) NOT NULL,
+  PRIMARY KEY (`character_id`)
 ) ENGINE=MEMORY DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_deaths` (
-  `player_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `character_deaths` (
+  `character_id` int(11) NOT NULL,
   `time` bigint(20) unsigned NOT NULL DEFAULT '0',
   `level` int(11) NOT NULL DEFAULT '1',
   `killed_by` varchar(255) NOT NULL,
@@ -257,56 +257,50 @@ CREATE TABLE IF NOT EXISTS `player_deaths` (
   `mostdamage_is_player` tinyint(1) NOT NULL DEFAULT '0',
   `unjustified` tinyint(1) NOT NULL DEFAULT '0',
   `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
   KEY `killed_by` (`killed_by`),
   KEY `mostdamage_by` (`mostdamage_by`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_depotitems` (
-  `player_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `character_depotitems` (
+  `character_id` int(11) NOT NULL,
   `sid` int(11) NOT NULL COMMENT 'any given range eg 0-100 will be reserved for depot lockers and all > 100 will be then normal items inside depots',
   `pid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
-  UNIQUE KEY `player_id_2` (`player_id`, `sid`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  UNIQUE KEY `character_id_2` (`character_id`, `sid`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_inboxitems` (
-  `player_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `character_inboxitems` (
+  `character_id` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
   `pid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
-  UNIQUE KEY `player_id_2` (`player_id`, `sid`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  UNIQUE KEY `character_id_2` (`character_id`, `sid`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_items` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `character_items` (
+  `character_id` int(11) NOT NULL DEFAULT '0',
   `pid` int(11) NOT NULL DEFAULT '0',
   `sid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL DEFAULT '0',
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
   KEY `sid` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `player_moves` (
-  `player_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `player_storage` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `character_storages` (
+  `character_id` int(11) NOT NULL DEFAULT '0',
   `key` int(10) unsigned NOT NULL DEFAULT '0',
   `value` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`player_id`,`key`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+  PRIMARY KEY (`character_id`,`key`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `server_config` (
@@ -315,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `server_config` (
   PRIMARY KEY `config` (`config`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
+INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('characters_record', '0');
 
 CREATE TABLE IF NOT EXISTS `tile_store` (
   `house_id` int(11) NOT NULL,
@@ -356,7 +350,7 @@ DROP TRIGGER IF EXISTS `ondelete_players`;
 DROP TRIGGER IF EXISTS `oncreate_guilds`;
 
 DELIMITER //
-CREATE TRIGGER `ondelete_players` BEFORE DELETE ON `players`
+CREATE TRIGGER `ondelete_players` BEFORE DELETE ON `characters`
  FOR EACH ROW BEGIN
     UPDATE `houses` SET `owner` = 0 WHERE `owner` = OLD.`id`;
 END

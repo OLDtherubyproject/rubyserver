@@ -479,7 +479,6 @@ class Game
 		uint64_t getExperienceStage(uint32_t level);
 
 		void loadMotdNum();
-		void saveMotdNum() const;
 		const std::string& getMotdHash() const { return motdHash; }
 		uint32_t getMotdNum() const { return motdNum; }
 		void incrementMotdNum() { motdNum++; }

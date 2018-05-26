@@ -19,7 +19,7 @@ local function getMonthString(m)
 end
 
 function onSay(player, words, param)
-	local resultId = db.storeQuery("SELECT `id`, `name` FROM `players` WHERE `name` = " .. db.escapeString(param))
+	local resultId = db.storeQuery("SELECT `id`, `name` FROM `characters` WHERE `name` = " .. db.escapeString(param))
 	if resultId ~= false then
 		local targetGUID = result.getDataInt(resultId, "id")
 		local targetName = result.getDataString(resultId, "name")
@@ -27,7 +27,7 @@ function onSay(player, words, param)
 		local str = ""
 		local breakline = ""
 
-		local resultId = db.storeQuery("SELECT `time`, `level`, `killed_by`, `is_player` FROM `player_deaths` WHERE `player_id` = " .. targetGUID .. " ORDER BY `time` DESC")
+		local resultId = db.storeQuery("SELECT `time`, `level`, `killed_by`, `is_player` FROM `character_deaths` WHERE `character_id` = " .. targetGUID .. " ORDER BY `time` DESC")
 		if resultId ~= false then
 			repeat
 				if str ~= "" then

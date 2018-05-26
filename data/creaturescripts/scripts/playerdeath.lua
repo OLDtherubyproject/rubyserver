@@ -47,8 +47,8 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 	end
 
 	local playerGuid = player:getGuid()
-	db.query("INSERT INTO `player_deaths` (`player_id`, `time`, `level`, `killed_by`, `is_player`, `mostdamage_by`, `mostdamage_is_player`, `unjustified`, `mostdamage_unjustified`) VALUES (" .. playerGuid .. ", " .. os.time() .. ", " .. player:getLevel() .. ", " .. db.escapeString(killerName) .. ", " .. byPlayer .. ", " .. db.escapeString(mostDamageName) .. ", " .. byPlayerMostDamage .. ", " .. (unjustified and 1 or 0) .. ", " .. (mostDamageUnjustified and 1 or 0) .. ")")
-	local resultId = db.storeQuery("SELECT `player_id` FROM `player_deaths` WHERE `player_id` = " .. playerGuid)
+	db.query("INSERT INTO `character_deaths` (`character_id`, `time`, `level`, `killed_by`, `is_player`, `mostdamage_by`, `mostdamage_is_player`, `unjustified`, `mostdamage_unjustified`) VALUES (" .. playerGuid .. ", " .. os.time() .. ", " .. player:getLevel() .. ", " .. db.escapeString(killerName) .. ", " .. byPlayer .. ", " .. db.escapeString(mostDamageName) .. ", " .. byPlayerMostDamage .. ", " .. (unjustified and 1 or 0) .. ", " .. (mostDamageUnjustified and 1 or 0) .. ")")
+	local resultId = db.storeQuery("SELECT `character_id` FROM `character_deaths` WHERE `character_id` = " .. playerGuid)
 
 	local deathRecords = 0
 	local tmpResultId = resultId
@@ -63,7 +63,7 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 
 	local limit = deathRecords - maxDeathRecords
 	if limit > 0 then
-		db.asyncQuery("DELETE FROM `player_deaths` WHERE `player_id` = " .. playerGuid .. " ORDER BY `time` LIMIT " .. limit)
+		db.asyncQuery("DELETE FROM `character_deaths` WHERE `character_id` = " .. playerGuid .. " ORDER BY `time` LIMIT " .. limit)
 	end
 
 	if byPlayer == 1 then
