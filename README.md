@@ -3,8 +3,8 @@
 	<img src="https://i.imgur.com/xFIGpOC.png"/>	
 </p>
 <p align="center">
-	<a href="https://travis-ci.org/rubyserver/rubyserver/" target="_blank">
-		<img src="https://travis-ci.org/rubyserver/rubyserver.svg?branch=master"/>	
+	<a href="https://travis-ci.org/therubyproject/rubyserver/" target="_blank">
+		<img src="https://travis-ci.org/therubyproject/rubyserver.svg?branch=master"/>	
 	</a>
 	<a href="https://ci.appveyor.com/project/Leohige/rubyserver" target="_blank">
 		<img src="https://ci.appveyor.com/api/projects/status/w3kku4h3thpvaopv/branch/master?svg=true"/>	
@@ -28,7 +28,10 @@ We use the [issue tracker on GitHub](https://github.com/rubyserver/rubyserver/is
 
 ### Contributors
 
-* Leonardo Viera (Deadpool)
+* Leandro Matheus (Leohige)
 * Guilherme Leandro (Kurral)
 * João Medeiros (joaotmed)
 * Mateus (Majesty)
+* Gabriel Pedro (gpedro)
+* Felipe Muniz (Mun1z)
+* Nycholas de Sousa (nycholassousa)
