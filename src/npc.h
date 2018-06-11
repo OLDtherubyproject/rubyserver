@@ -144,6 +144,9 @@ class Npc final : public Creature
 		const std::string& getNameDescription() const override {
 			return name;
 		}
+		const NameColor_t getNameColor() const override {
+			return nameColor;
+		}
 
 		CreatureType_t getType() const override {
 			return CREATURETYPE_NPC;
@@ -229,6 +232,8 @@ class Npc final : public Creature
 
 		std::string name;
 		std::string filename;
+
+		NameColor_t nameColor = NAMECOLOR_GREEN;
 
 		NpcEventsHandler* npcEventHandler;
 

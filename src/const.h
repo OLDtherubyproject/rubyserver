@@ -436,6 +436,17 @@ enum TextColor_t : uint8_t {
 	TEXTCOLOR_NONE = 255,
 };
 
+enum NameColor_t {
+	NAMECOLOR_GREEN = 0,
+	NAMECOLOR_RED = 1 << 1,
+	NAMECOLOR_ORANGE = 1 << 2,
+	NAMECOLOR_YELLOW = 1 << 3,
+	NAMECOLOR_BLUE = 1 << 4,
+	NAMECOLOR_PURPLE = 1 << 5,
+	NAMECOLOR_WHITE = 1 << 6,
+	NAMECOLOR_BLACK = 1 << 7,
+};
+
 enum Icons_t {
 	ICON_POISON = 1 << 0,
 	ICON_BURN = 1 << 1,

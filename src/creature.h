@@ -133,6 +133,9 @@ class Creature : virtual public Thing
 		virtual const std::string& getName() const = 0;
 		virtual const std::string& getNameDescription() const = 0;
 
+		virtual const NameColor_t getNameColor() const {
+			return NAMECOLOR_GREEN;
+		}
 		virtual CreatureType_t getType() const = 0;
 
 		virtual void setID() = 0;

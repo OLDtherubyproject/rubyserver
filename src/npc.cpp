@@ -155,6 +155,28 @@ bool Npc::loadFromXml()
 		baseSpeed = 100;
 	}
 
+	if ((attr = npcNode.attribute("nameColor"))) {
+		std::string tmpStrValue = asLowerCaseString(attr.as_string());
+		uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
+		if (tmpStrValue == "red" || tmpInt == 1) {
+			nameColor = NAMECOLOR_RED;
+		} else if (tmpStrValue == "orange" || tmpInt == 2) {
+			nameColor = NAMECOLOR_ORANGE;
+		} else if (tmpStrValue == "yellow" || tmpInt == 3) {
+			nameColor = NAMECOLOR_YELLOW;
+		} else if (tmpStrValue == "blue" || tmpInt == 4) {
+			nameColor = NAMECOLOR_BLUE;
+		} else if (tmpStrValue == "purple" || tmpInt == 5) {
+			nameColor = NAMECOLOR_PURPLE;
+		} else if (tmpStrValue == "white" || tmpInt == 6) {
+			nameColor = NAMECOLOR_WHITE;
+		} else if (tmpStrValue == "black" || tmpInt == 7) {
+			nameColor = NAMECOLOR_BLACK;
+		} else {
+			std::cout << "[Warning - Npc::loadFromXml] Unknown name color " << attr.as_string() << ". " << filename << std::endl;
+		}
+	}
+
 	if ((attr = npcNode.attribute("pushable"))) {
 		pushable = attr.as_bool();
 	}

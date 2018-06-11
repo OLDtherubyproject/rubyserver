@@ -144,6 +144,9 @@ class Player final : public Creature, public Cylinder
 			return name;
 		}
 		std::string getDescription(int32_t lookDistance) const override;
+		const NameColor_t getNameColor() const override {
+			return getGroup()->nameColor;
+		}
 
 		CreatureType_t getType() const override {
 			return CREATURETYPE_PLAYER;

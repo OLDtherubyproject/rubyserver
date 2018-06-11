@@ -42,6 +42,30 @@ bool Groups::load()
 		group.access = groupNode.attribute("access").as_bool();
 		group.maxDepotItems = pugi::cast<uint32_t>(groupNode.attribute("maxdepotitems").value());
 		group.maxVipEntries = pugi::cast<uint32_t>(groupNode.attribute("maxvipentries").value());
+		
+		pugi::xml_attribute attr;
+		if ((attr = groupNode.attribute("nameColor"))) {
+			std::string tmpStrValue = asLowerCaseString(attr.as_string());
+			uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
+			if (tmpStrValue == "red" || tmpInt == 1) {
+				group.nameColor = NAMECOLOR_RED;
+			} else if (tmpStrValue == "orange" || tmpInt == 2) {
+				group.nameColor = NAMECOLOR_ORANGE;
+			} else if (tmpStrValue == "yellow" || tmpInt == 3) {
+				group.nameColor = NAMECOLOR_YELLOW;
+			} else if (tmpStrValue == "blue" || tmpInt == 4) {
+				group.nameColor = NAMECOLOR_BLUE;
+			} else if (tmpStrValue == "purple" || tmpInt == 5) {
+				group.nameColor = NAMECOLOR_PURPLE;
+			} else if (tmpStrValue == "white" || tmpInt == 6) {
+				group.nameColor = NAMECOLOR_WHITE;
+			} else if (tmpStrValue == "black" || tmpInt == 7) {
+				group.nameColor = NAMECOLOR_BLACK;
+			} else {
+				std::cout << "[Warning - Groups::load] Unknown name color " << attr.as_string() << " for the group " << group.name << std::endl;
+			}
+		}
+
 		groups.push_back(group);
 	}
 	return true;

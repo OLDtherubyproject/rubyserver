@@ -86,6 +86,9 @@ class Pokemon final : public Creature
 			}
 			return strDescription + '.';			
 		}
+		const NameColor_t getNameColor() const override {
+			return mType->nameColor;
+		}
 
 		CreatureType_t getType() const override {
 			return CREATURETYPE_POKEMON;

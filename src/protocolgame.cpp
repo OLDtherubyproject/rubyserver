@@ -2803,6 +2803,7 @@ void ProtocolGame::sendModalWindow(const ModalWindow& modalWindow)
 void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bool known, uint32_t remove)
 {
 	CreatureType_t creatureType = creature->getType();
+	NameColor_t creatureColorName = creature->getNameColor();
 
 	const Player* otherPlayer = creature->getPlayer();
 
@@ -2816,6 +2817,8 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 		msg.addByte(creatureType);
 		msg.addString(creature->getName());
 	}
+
+	msg.addByte(creatureColorName);
 
 	if (creature->isHealthHidden()) {
 		msg.addByte(0x00);

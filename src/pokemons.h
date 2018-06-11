@@ -152,6 +152,8 @@ class PokemonType
 		std::string name;
 		std::string nameDescription;
 		std::string typeName;
+		
+		NameColor_t nameColor = NAMECOLOR_GREEN;
 
 		PokemonInfo info;
 

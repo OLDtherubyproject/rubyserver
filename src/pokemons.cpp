@@ -241,6 +241,28 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 	mType->name = attr.as_string();
 	mType->typeName = pokemonName;
 
+	if ((attr = pokemonNode.attribute("nameColor"))) {
+		std::string tmpStrValue = asLowerCaseString(attr.as_string());
+		uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
+		if (tmpStrValue == "red" || tmpInt == 1) {
+			mType->nameColor = NAMECOLOR_RED;
+		} else if (tmpStrValue == "orange" || tmpInt == 2) {
+			mType->nameColor = NAMECOLOR_ORANGE;
+		} else if (tmpStrValue == "yellow" || tmpInt == 3) {
+			mType->nameColor = NAMECOLOR_YELLOW;
+		} else if (tmpStrValue == "blue" || tmpInt == 4) {
+			mType->nameColor = NAMECOLOR_BLUE;
+		} else if (tmpStrValue == "purple" || tmpInt == 5) {
+			mType->nameColor = NAMECOLOR_PURPLE;
+		} else if (tmpStrValue == "white" || tmpInt == 6) {
+			mType->nameColor = NAMECOLOR_WHITE;
+		} else if (tmpStrValue == "black" || tmpInt == 7) {
+			mType->nameColor = NAMECOLOR_BLACK;
+		} else {
+			std::cout << "[Warning - Pokemons::loadPokemon] Unknown name color " << attr.as_string() << ". " << file << std::endl;
+		}
+	}
+
 	if ((attr = pokemonNode.attribute("nameDescription"))) {
 		mType->nameDescription = attr.as_string();
 	} else {
