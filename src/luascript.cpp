@@ -9912,6 +9912,7 @@ int LuaScriptInterface::luaPokemonGetMove(lua_State* L)
 			}			
 			return 1;
 		}
+		i++;
 	}
 
 	lua_pushnil(L);	
