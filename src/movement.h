@@ -131,8 +131,8 @@ class MoveEvent final : public Event
 		bool isPremium() const {
 			return premium;
 		}
-		const std::string& getVocationString() const {
-			return vocationString;
+		const std::string& getProfessionString() const {
+			return professionString;
 		}
 		uint32_t getWieldInfo() const {
 			return wieldInfo;
@@ -154,7 +154,7 @@ class MoveEvent final : public Event
 		uint32_t reqLevel = 0;
 		uint32_t reqMagLevel = 0;
 		bool premium = false;
-		std::string vocationString;
+		std::string professionString;
 		uint32_t wieldInfo = 0;
 		VocEquipMap vocEquipMap;
 };

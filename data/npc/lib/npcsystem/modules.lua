@@ -75,7 +75,7 @@ if Modules == nil then
 
 		local player = Player(cid)
 		if player:isPremium() or not parameters.premium then
-			local promotion = player:getVocation():getPromotion()
+			local promotion = player:getProfession():getPromotion()
 			if player:getStorageValue(STORAGEVALUE_PROMOTION) == 1 then
 				npcHandler:say("You are already promoted!", cid)
 			elseif player:getLevel() < parameters.level then
@@ -84,7 +84,7 @@ if Modules == nil then
 				npcHandler:say("You do not have enough money!", cid)
 			else
 				npcHandler:say(parameters.text, cid)
-				player:setVocation(promotion)
+				player:setProfession(promotion)
 				player:setStorageValue(STORAGEVALUE_PROMOTION, 1)
 			end
 		else

@@ -35,7 +35,7 @@
 
 extern Game g_game;
 extern Moves* g_moves;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern Pokeballs* g_pokeballs;
 
 Items Item::items;
@@ -1054,8 +1054,8 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			s << "premium ";
 		}
 
-		if (!it.vocationString.empty()) {
-			s << it.vocationString;
+		if (!it.professionString.empty()) {
+			s << it.professionString;
 		} else {
 			s << "trainers";
 		}

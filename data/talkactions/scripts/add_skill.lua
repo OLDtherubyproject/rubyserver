@@ -56,7 +56,7 @@ function onSay(player, words, param)
 			target:addExperience(getExpForLevel(target:getLevel() + 1) - target:getExperience(), false)
 		else
 			local skillId = getSkillId(split[2])
-			target:addSkillTries(skillId, target:getVocation():getRequiredSkillTries(skillId, target:getSkillLevel(skillId) + 1) - target:getSkillTries(skillId))
+			target:addSkillTries(skillId, target:getProfession():getRequiredSkillTries(skillId, target:getSkillLevel(skillId) + 1) - target:getSkillTries(skillId))
 		end
 	end
 	return false

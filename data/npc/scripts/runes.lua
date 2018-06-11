@@ -98,7 +98,7 @@ function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
-	local vocationId = player:getVocation():getId()
+	local professionId = player:getProfession():getId()
 	local items = {
 		[1] = 2190,
 		[2] = 2182,
@@ -107,19 +107,19 @@ function creatureSayCallback(cid, type, msg)
 	}
 
 	if msgcontains(msg, 'first rod') or msgcontains(msg, 'first wand') then
-		if table.contains({1, 2, 5, 6}, vocationId) then
+		if table.contains({1, 2, 5, 6}, professionId) then
 			if player:getStorageValue(30002) == -1 then
-				selfSay('So you ask me for a {' .. ItemType(items[vocationId]):getName() .. '} to begin your advanture?', cid)
+				selfSay('So you ask me for a {' .. ItemType(items[professionId]):getName() .. '} to begin your advanture?', cid)
 				npcHandler.topic[cid] = 1
 			else
-				selfSay('What? I have already gave you one {' .. ItemType(items[vocationId]):getName() .. '}!', cid)
+				selfSay('What? I have already gave you one {' .. ItemType(items[professionId]):getName() .. '}!', cid)
 			end
 		else
 			selfSay('Sorry, you aren\'t a druid either a sorcerer.', cid)
 		end
 	elseif msgcontains(msg, 'yes') then
 		if npcHandler.topic[cid] == 1 then
-			player:addItem(items[vocationId], 1)
+			player:addItem(items[professionId], 1)
 			selfSay('Here you are young adept, take care yourself.', cid)
 			player:setStorageValue(30002, 1)
 		end

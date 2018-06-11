@@ -2,7 +2,7 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-local vocation = {}
+local profession = {}
 local town = {}
 local destination = {}
 
@@ -20,7 +20,7 @@ local function greetCallback(cid)
 	elseif level > 9 then
 		npcHandler:say(player:getName() .. ", I CAN'T LET YOU LEAVE - YOU ARE TOO STRONG ALREADY! YOU CAN ONLY LEAVE WITH LEVEL 9 OR LOWER.", cid)
 		return false
-	elseif player:getVocation():getId() > 0 then
+	elseif player:getProfession():getId() > 0 then
 		npcHandler:say("YOU ALREADY HAVE A VOCATION!", cid)
 		return false
 	end
@@ -48,19 +48,19 @@ local function creatureSayCallback(cid, type, msg)
 		if msgcontains(msg, "sorcerer") then
 			npcHandler:say("A SORCERER! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!", cid)
 			npcHandler.topic[cid] = 3
-			vocation[cid] = 1
+			profession[cid] = 1
 		elseif msgcontains(msg, "druid") then
 			npcHandler:say("A DRUID! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!", cid)
 			npcHandler.topic[cid] = 3
-			vocation[cid] = 2
+			profession[cid] = 2
 		elseif msgcontains(msg, "paladin") then
 			npcHandler:say("A PALADIN! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!", cid)
 			npcHandler.topic[cid] = 3
-			vocation[cid] = 3
+			profession[cid] = 3
 		elseif msgcontains(msg, "knight") then
 			npcHandler:say("A KNIGHT! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!", cid)
 			npcHandler.topic[cid] = 3
-			vocation[cid] = 4
+			profession[cid] = 4
 		else
 			npcHandler:say("{KNIGHT}, {PALADIN}, {SORCERER}, OR {DRUID}?", cid)
 		end
@@ -68,7 +68,7 @@ local function creatureSayCallback(cid, type, msg)
 		if msgcontains(msg, "yes") then
 			local player = Player(cid)
 			npcHandler:say("SO BE IT!", cid)
-			player:setVocation(Vocation(vocation[cid]))
+			player:setProfession(Profession(profession[cid]))
 			player:setTown(Town(town[cid]))
 
 			local destination = destination[cid]
@@ -86,13 +86,13 @@ end
 
 local function onAddFocus(cid)
 	town[cid] = 0
-	vocation[cid] = 0
+	profession[cid] = 0
 	destination[cid] = 0
 end
 
 local function onReleaseFocus(cid)
 	town[cid] = nil
-	vocation[cid] = nil
+	profession[cid] = nil
 	destination[cid] = nil
 end
 

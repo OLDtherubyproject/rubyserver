@@ -1,5 +1,5 @@
 function canJoin(player)
-	return player:getVocation():getId() ~= VOCATION_NONE or player:getAccountType() >= ACCOUNT_TYPE_SENIORTUTOR
+	return player:getProfession():getId() ~= VOCATION_NONE or player:getAccountType() >= ACCOUNT_TYPE_SENIORTUTOR
 end
 
 local CHANNEL_ADVERTISING = 5

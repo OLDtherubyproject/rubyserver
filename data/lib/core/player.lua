@@ -5,14 +5,14 @@ function Player.feed(self, food)
 	if condition then
 		condition:setTicks(condition:getTicks() + (food * 1000))
 	else
-		local vocation = self:getVocation()
-		if not vocation then
+		local profession = self:getProfession()
+		if not profession then
 			return nil
 		end
 
 		foodCondition:setTicks(food * 1000)
-		foodCondition:setParameter(CONDITION_PARAM_HEALTHGAIN, vocation:getHealthGainAmount())
-		foodCondition:setParameter(CONDITION_PARAM_HEALTHTICKS, vocation:getHealthGainTicks() * 1000)
+		foodCondition:setParameter(CONDITION_PARAM_HEALTHGAIN, profession:getHealthGainAmount())
+		foodCondition:setParameter(CONDITION_PARAM_HEALTHTICKS, profession:getHealthGainTicks() * 1000)
 
 		self:addCondition(foodCondition)
 	end

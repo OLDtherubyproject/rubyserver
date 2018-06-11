@@ -1181,8 +1181,8 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUNEEDTOLEARNTHISMOVE:
 			return "You need to learn this move first.";
 
-		case RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE:
-			return "Your vocation cannot use this move.";
+		case RETURNVALUE_YOURPROFESSIONCANNOTUSETHISMOVE:
+			return "Your profession cannot use this move.";
 
 		case RETURNVALUE_PLAYERISPZLOCKEDLEAVEPVPZONE:
 			return "You can not leave a pvp zone after attacking another player.";

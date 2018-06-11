@@ -217,7 +217,7 @@ end
 function getPlayerSkill(cid, skillId) local p = Player(cid) return p and p:getSkillLevel(skillId) or false end
 function getPlayerLevel(cid) local p = Player(cid) return p and p:getLevel() or false end
 function getPlayerTown(cid) local p = Player(cid) return p and p:getTown():getId() or false end
-function getPlayerVocation(cid) local p = Player(cid) return p and p:getVocation():getId() or false end
+function getPlayerProfession(cid) local p = Player(cid) return p and p:getProfession():getId() or false end
 function getPlayerSex(cid) local p = Player(cid) return p and p:getSex() or false end
 function getPlayerStorageValue(cid, key) local p = Player(cid) return p and p:getStorageValue(key) or false end
 function getPlayerBalance(cid) local p = Player(cid) return p and p:getBankBalance() or false end
@@ -375,7 +375,7 @@ function setPlayerStorageValue(cid, key, value) local p = Player(cid) return p a
 function doPlayerSetBalance(cid, balance) local p = Player(cid) return p and p:setBankBalance(balance) or false end
 function doPlayerAddMoney(cid, money) local p = Player(cid) return p and p:addMoney(money) or false end
 function doPlayerRemoveMoney(cid, money) local p = Player(cid) return p and p:removeMoney(money) or false end
-function doPlayerSetVocation(cid, vocation) local p = Player(cid) return p and p:setVocation(Vocation(vocation)) or false end
+function doPlayerSetProfession(cid, profession) local p = Player(cid) return p and p:setProfession(Profession(profession)) or false end
 function doPlayerSetTown(cid, town) local p = Player(cid) return p and p:setTown(Town(town)) or false end
 function setPlayerGroupId(cid, groupId) local p = Player(cid) return p and p:setGroup(Group(groupId)) or false end
 function doPlayerSetSex(cid, sex) local p = Player(cid) return p and p:setSex(sex) or false end
@@ -590,17 +590,17 @@ function doSendMagicEffect(pos, magicEffect, ...) return Position(pos):sendMagic
 function doSendDistanceShoot(fromPos, toPos, distanceEffect, ...) return Position(fromPos):sendDistanceEffect(toPos, distanceEffect, ...) end
 function isSightClear(fromPos, toPos, floorCheck) return Position(fromPos):isSightClear(toPos, floorCheck) end
 
-function getPromotedVocation(vocationId)
-	local vocation = Vocation(vocationId)
-	if vocation == nil then
+function getPromotedProfession(professionId)
+	local profession = Profession(professionId)
+	if profession == nil then
 		return 0
 	end
 
-	local promotedVocation = vocation:getPromotion()
-	if promotedVocation == nil then
+	local promotedProfession = profession:getPromotion()
+	if promotedProfession == nil then
 		return 0
 	end
-	return promotedVocation:getId()
+	return promotedProfession:getId()
 end
 
 function getGuildId(guildName)

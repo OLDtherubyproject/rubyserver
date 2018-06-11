@@ -38,7 +38,7 @@
 extern ConfigManager g_config;
 extern Game g_game;
 extern Chat* g_chat;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
 extern CreatureEvents* g_creatureEvents;
@@ -75,18 +75,18 @@ Player::~Player()
 	setEditHouse(nullptr);
 }
 
-bool Player::setVocation(uint16_t vocId)
+bool Player::setProfession(uint16_t vocId)
 {
-	Vocation* voc = g_vocations.getVocation(vocId);
+	Profession* voc = g_professions.getProfession(vocId);
 	if (!voc) {
 		return false;
 	}
-	vocation = voc;
+	profession = voc;
 
 	Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
 	if (condition) {
-		condition->setParam(CONDITION_PARAM_HEALTHGAIN, vocation->getHealthGainAmount());
-		condition->setParam(CONDITION_PARAM_HEALTHTICKS, vocation->getHealthGainTicks() * 1000);
+		condition->setParam(CONDITION_PARAM_HEALTHGAIN, profession->getHealthGainAmount());
+		condition->setParam(CONDITION_PARAM_HEALTHTICKS, profession->getHealthGainTicks() * 1000);
 	}
 	return true;
 }
@@ -108,8 +108,8 @@ std::string Player::getDescription(int32_t lookDistance) const
 
 		if (group->access) {
 			s << " You are " << group->name << '.';
-		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " You are " << vocation->getVocDescription() << '.';
+		} else if (profession->getId() != PROFESSION_NONE) {
+			s << " You are " << profession->getProfDescription() << '.';
 		} else {
 			s << " You are a Pokemon Trainer.";
 		}
@@ -128,8 +128,8 @@ std::string Player::getDescription(int32_t lookDistance) const
 
 		if (group->access) {
 			s << " is " << group->name << '.';
-		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " is " << vocation->getVocDescription() << '.';
+		} else if (profession->getId() != PROFESSION_NONE) {
+			s << " is " << profession->getProfDescription() << '.';
 		} else {
 			s << " is a Pokemon Trainer.";
 		}
@@ -226,9 +226,9 @@ float Player::getAttackFactor() const
 float Player::getDefenseFactor() const
 {
 	switch (fightMode) {
-		case FIGHTMODE_ATTACK: return (OTSYS_TIME() - lastAttack) < getAttackSpeed() ? 0.5f : 1.0f;
-		case FIGHTMODE_BALANCED: return (OTSYS_TIME() - lastAttack) < getAttackSpeed() ? 0.75f : 1.0f;
-		case FIGHTMODE_DEFENSE: return 1.0f;
+		case FIGHTMODE_ATTACK: return 1.0f;
+		case FIGHTMODE_BALANCED: return 1.2f;
+		case FIGHTMODE_DEFENSE: return 2.0f;
 		default: return 1.0f;
 	}
 }
@@ -284,8 +284,8 @@ void Player::updateInventoryWeight()
 
 void Player::addSkillAdvance(skills_t skill, uint64_t count)
 {
-	uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
-	uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
+	uint64_t currReqTries = profession->getReqSkillTries(skill, skills[skill].level);
+	uint64_t nextReqTries = profession->getReqSkillTries(skill, skills[skill].level + 1);
 	if (currReqTries >= nextReqTries) {
 		//player has reached max skill
 		return;
@@ -311,7 +311,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 
 		sendUpdateSkills = true;
 		currReqTries = nextReqTries;
-		nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
+		nextReqTries = profession->getReqSkillTries(skill, skills[skill].level + 1);
 		if (currReqTries >= nextReqTries) {
 			count = 0;
 			break;
@@ -1383,7 +1383,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		++level;
 		healthMax += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
 		health += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
-		capacity += vocation->getCapGain();
+		capacity += profession->getCapGain();
 
 		currLevelExp = nextLevelExp;
 		nextLevelExp = Player::getExpForLevel(level + 1);
@@ -1472,7 +1472,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 	while (level > 1 && experience < currLevelExp) {
 		--level;
 		healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-		capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
+		capacity = std::max<int32_t>(0, capacity - profession->getCapGain());
 		currLevelExp = Player::getExpForLevel(level);
 	}
 
@@ -1587,7 +1587,7 @@ void Player::death(Creature* lastHitCreature)
 		for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) { //for each skill
 			uint64_t sumSkillTries = 0;
 			for (uint16_t c = 11; c <= skills[i].level; ++c) { //sum up all required tries for all skill levels
-				sumSkillTries += vocation->getReqSkillTries(i, c);
+				sumSkillTries += profession->getReqSkillTries(i, c);
 			}
 
 			sumSkillTries += skills[i].tries;
@@ -1603,12 +1603,12 @@ void Player::death(Creature* lastHitCreature)
 					break;
 				}
 
-				skills[i].tries = vocation->getReqSkillTries(i, skills[i].level);
+				skills[i].tries = profession->getReqSkillTries(i, skills[i].level);
 				skills[i].level--;
 			}
 
 			skills[i].tries = std::max<int32_t>(0, skills[i].tries - lostSkillTries);
-			skills[i].percent = Player::getPercentLevel(skills[i].tries, vocation->getReqSkillTries(i, skills[i].level));
+			skills[i].percent = Player::getPercentLevel(skills[i].tries, profession->getReqSkillTries(i, skills[i].level));
 		}
 
 		//Level loss
@@ -1618,14 +1618,14 @@ void Player::death(Creature* lastHitCreature)
 		if (expLoss != 0) {
 			uint32_t oldLevel = level;
 
-			if (vocation->getId() == VOCATION_NONE || level > 7) {
+			if (profession->getId() == PROFESSION_NONE || level > 7) {
 				experience -= expLoss;
 			}
 
 			while (level > 1 && experience < Player::getExpForLevel(level)) {
 				--level;
 				healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
-				capacity = std::max<int32_t>(0, capacity - vocation->getCapGain());
+				capacity = std::max<int32_t>(0, capacity - profession->getCapGain());
 			}
 
 			if (oldLevel != level) {
@@ -3332,8 +3332,8 @@ void Player::addUnjustifiedDead(const Player* attacked)
 
 bool Player::isPromoted() const
 {
-	uint16_t promotedVocation = g_vocations.getPromotedVocation(vocation->getId());
-	return promotedVocation == VOCATION_NONE && vocation->getId() != promotedVocation;
+	uint16_t promotedProfession = g_professions.getPromotedProfession(profession->getId());
+	return promotedProfession == PROFESSION_NONE && profession->getId() != promotedProfession;
 }
 
 double Player::getLostPercent() const

@@ -876,8 +876,8 @@ class LuaScriptInterface
 		static int luaPlayerGetItemCount(lua_State* L);
 		static int luaPlayerGetItemById(lua_State* L);
 
-		static int luaPlayerGetVocation(lua_State* L);
-		static int luaPlayerSetVocation(lua_State* L);
+		static int luaPlayerGetProfession(lua_State* L);
+		static int luaPlayerSetProfession(lua_State* L);
 
 		static int luaPlayerGetSex(lua_State* L);
 		static int luaPlayerSetSex(lua_State* L);
@@ -1056,27 +1056,27 @@ class LuaScriptInterface
 		static int luaGroupGetMaxVipEntries(lua_State* L);
 		static int luaGroupHasFlag(lua_State* L);
 
-		// Vocation
-		static int luaVocationCreate(lua_State* L);
+		// Profession
+		static int luaProfessionCreate(lua_State* L);
 
-		static int luaVocationGetId(lua_State* L);
-		static int luaVocationGetClientId(lua_State* L);
-		static int luaVocationGetName(lua_State* L);
-		static int luaVocationGetDescription(lua_State* L);
+		static int luaProfessionGetId(lua_State* L);
+		static int luaProfessionGetClientId(lua_State* L);
+		static int luaProfessionGetName(lua_State* L);
+		static int luaProfessionGetDescription(lua_State* L);
 
-		static int luaVocationGetRequiredSkillTries(lua_State* L);
+		static int luaProfessionGetRequiredSkillTries(lua_State* L);
 
-		static int luaVocationGetCapacityGain(lua_State* L);
+		static int luaProfessionGetCapacityGain(lua_State* L);
 
-		static int luaVocationGetHealthGain(lua_State* L);
-		static int luaVocationGetHealthGainTicks(lua_State* L);
-		static int luaVocationGetHealthGainAmount(lua_State* L);
+		static int luaProfessionGetHealthGain(lua_State* L);
+		static int luaProfessionGetHealthGainTicks(lua_State* L);
+		static int luaProfessionGetHealthGainAmount(lua_State* L);
 
-		static int luaVocationGetAttackSpeed(lua_State* L);
-		static int luaVocationGetBaseSpeed(lua_State* L);
+		static int luaProfessionGetAttackSpeed(lua_State* L);
+		static int luaProfessionGetBaseSpeed(lua_State* L);
 
-		static int luaVocationGetDemotion(lua_State* L);
-		static int luaVocationGetPromotion(lua_State* L);
+		static int luaProfessionGetDemotion(lua_State* L);
+		static int luaProfessionGetPromotion(lua_State* L);
 
 		// Town
 		static int luaTownCreate(lua_State* L);

@@ -27,7 +27,7 @@
 #include "cylinder.h"
 #include "outfit.h"
 #include "enums.h"
-#include "vocation.h"
+#include "profession.h"
 #include "protocolgame.h"
 #include "ioguild.h"
 #include "party.h"
@@ -240,8 +240,8 @@ class Player final : public Creature, public Cylinder
 			return guildWarVector;
 		}
 
-		Vocation* getVocation() const {
-			return vocation;
+		Profession* getProfession() const {
+			return profession;
 		}
 
 		OperatingSystem_t getOperatingSystem() const {
@@ -384,9 +384,9 @@ class Player final : public Creature, public Cylinder
 
 		uint16_t getHelpers() const;
 
-		bool setVocation(uint16_t vocId);
-		uint16_t getVocationId() const {
-			return vocation->getId();
+		bool setProfession(uint16_t vocId);
+		uint16_t getProfessionId() const {
+			return profession->getId();
 		}
 
 		PlayerSex_t getSex() const {
@@ -575,9 +575,6 @@ class Player final : public Creature, public Cylinder
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
 		                             bool field = false) override;
 		void doAttacking(uint32_t interval) override;
-		bool hasExtraSwing() override {
-			return lastAttack > 0 && ((OTSYS_TIME() - lastAttack) >= getAttackSpeed());
-		}
 
 		uint16_t getSpecialSkill(uint8_t skill) const {
 			return std::max<int32_t>(0, varSpecialSkills[skill]);
@@ -1242,7 +1239,7 @@ class Player final : public Creature, public Cylinder
 		ProtocolGame_ptr client;
 		SchedulerTask* walkTask = nullptr;
 		Town* town = nullptr;
-		Vocation* vocation = nullptr;
+		Profession* profession = nullptr;
 
 		uint32_t inventoryWeight = 0;
 		uint32_t capacity = 40000;
@@ -1303,17 +1300,13 @@ class Player final : public Creature, public Cylinder
 		}
 		void updateBaseSpeed() {
 			if (!hasFlag(PlayerFlag_SetMaxSpeed)) {
-				baseSpeed = vocation->getBaseSpeed() + (2 * (level - 1));
+				baseSpeed = profession->getBaseSpeed() + (2 * (level - 1));
 			} else {
 				baseSpeed = PLAYER_MAX_SPEED;
 			}
 		}
 
 		bool isPromoted() const;
-
-		uint32_t getAttackSpeed() const {
-			return vocation->getAttackSpeed();
-		}
 
 		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 		double getLostPercent() const;

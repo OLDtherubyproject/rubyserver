@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `group_id` int(11) NOT NULL DEFAULT '1',
   `account_id` int(11) NOT NULL DEFAULT '0',
   `level` int(11) NOT NULL DEFAULT '1',
-  `vocation` int(11) NOT NULL DEFAULT '0',
+  `profession` int(11) NOT NULL DEFAULT '0',
   `health` int(11) NOT NULL DEFAULT '150',
   `healthmax` int(11) NOT NULL DEFAULT '150',
   `pokemon_capacity` int(10) unsigned NOT NULL DEFAULT '0',
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  KEY `vocation` (`vocation`)
+  KEY `profession` (`profession`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE IF NOT EXISTS `account_bans` (
@@ -303,13 +303,13 @@ CREATE TABLE IF NOT EXISTS `character_storages` (
   FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `server_config` (
+CREATE TABLE IF NOT EXISTS `settings` (
   `config` varchar(50) NOT NULL,
   `value` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY `config` (`config`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('characters_record', '0');
+INSERT INTO `settings` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('characters_record', '0');
 
 CREATE TABLE IF NOT EXISTS `tile_store` (
   `house_id` int(11) NOT NULL,

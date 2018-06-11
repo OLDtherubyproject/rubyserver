@@ -44,7 +44,7 @@ Scheduler g_scheduler;
 Game g_game;
 ConfigManager g_config;
 Pokemons g_pokemons;
-Vocations g_vocations;
+Professions g_professions;
 RSA g_RSA;
 
 std::mutex g_loaderLock;
@@ -183,10 +183,10 @@ void mainLoader(int, char*[], ServiceManager* services)
 		std::cout << "> No tables were optimized." << std::endl;
 	}
 
-	//load vocations
-	std::cout << ">> Loading vocations" << std::endl;
-	if (!g_vocations.loadFromXml()) {
-		startupErrorMessage("Unable to load vocations!");
+	//load professions
+	std::cout << ">> Loading professions" << std::endl;
+	if (!g_professions.loadFromXml()) {
+		startupErrorMessage("Unable to load professions!");
 		return;
 	}
 

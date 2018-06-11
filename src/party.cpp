@@ -346,21 +346,21 @@ void Party::updateSharedExperience()
 
 void Party::updateSharedExperienceBonus()
 {
-	std::set<uint32_t> vocationIds;
+	std::set<uint32_t> professionIds;
 
-	uint32_t vocationId = leader->getVocation()->getFromVocation();
-	if (vocationId != VOCATION_NONE) {
-		vocationIds.insert(vocationId);
+	uint32_t professionId = leader->getProfession()->getFromProfession();
+	if (professionId != PROFESSION_NONE) {
+		professionIds.insert(professionId);
 	}
 
 	for (const Player* member : memberList) {
-		vocationId = member->getVocation()->getFromVocation();
-		if (vocationId != VOCATION_NONE) {
-			vocationIds.insert(vocationId);
+		professionId = member->getProfession()->getFromProfession();
+		if (professionId != PROFESSION_NONE) {
+			professionIds.insert(professionId);
 		}
 	}
 
-	size_t size = vocationIds.size();
+	size_t size = professionIds.size();
 	sharedExpBonus = std::max(0.2, (size * (5 * (size - 1) + 10)) / 100.);
 }
 

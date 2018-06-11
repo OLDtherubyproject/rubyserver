@@ -191,7 +191,7 @@ class ItemType
 		std::string article;
 		std::string pluralName;
 		std::string description;
-		std::string vocationString;
+		std::string professionString;
 
 		std::unique_ptr<Abilities> abilities;
 		std::unique_ptr<ConditionDamage> conditionDamage;

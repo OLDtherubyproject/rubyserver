@@ -30,7 +30,7 @@
 extern Game g_game;
 extern Moves* g_moves;
 extern Pokemons g_pokemons;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern ConfigManager g_config;
 extern LuaEnvironment g_luaEnvironment;
 

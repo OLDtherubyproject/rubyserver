@@ -28,7 +28,7 @@
 #include "pokeballs.h"
 
 extern Game g_game;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern ConfigManager g_config;
 extern Pokeballs* g_pokeballs;
 extern Pokemons g_pokemons;

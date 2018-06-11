@@ -20862,7 +20862,7 @@
   </item>
   <item fromid="13822" toid="13824" name="water pump" />
   <item fromid="13825" toid="13826" article="a" name="star ring">
-    <attribute key="description" value="If you wear it on your ring slot, it will boost your health regeneration when you're not hungry. Professions: players without vocation" />
+    <attribute key="description" value="If you wear it on your ring slot, it will boost your health regeneration when you're not hungry. Professions: players without profession" />
     <attribute key="weight" value="80" />
     <attribute key="slotType" value="ring" />
   </item>

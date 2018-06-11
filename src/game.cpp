@@ -47,7 +47,7 @@ extern Actions* g_actions;
 extern Chat* g_chat;
 extern TalkActions* g_talkActions;
 extern Moves* g_moves;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern GlobalEvents* g_globalEvents;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;

@@ -1324,7 +1324,7 @@ void ProtocolGame::sendBasicData()
 		msg.addByte(0);
 		msg.add<uint32_t>(0);
 	}
-	msg.addByte(player->getVocation()->getClientId());
+	msg.addByte(player->getProfession()->getClientId());
 	msg.add<uint16_t>(0xFF); // number of known moves
 	for (uint8_t moveId = 0x00; moveId < 0xFF; moveId++) {
 		msg.addByte(moveId);
@@ -1898,7 +1898,7 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 		msg.add<uint16_t>(0x00);
 	}
 
-	msg.addString(it.vocationString);
+	msg.addString(it.professionString);
 
 	msg.addString(""); // runeMove legacy REMOVE IT
 

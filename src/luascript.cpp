@@ -42,7 +42,7 @@ extern Chat* g_chat;
 extern Game g_game;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
-extern Vocations g_vocations;
+extern Professions g_professions;
 extern Pokeballs* g_pokeballs;
 extern Moves* g_moves;
 
@@ -1553,7 +1553,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(REPORT_TYPE_STATEMENT)
 	registerEnum(REPORT_TYPE_BOT)
 
-	registerEnum(VOCATION_NONE)
+	registerEnum(PROFESSION_NONE)
 
 	registerEnum(SKILL_FIST)
 	registerEnum(SKILL_CLUB)
@@ -1786,7 +1786,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_CREATUREISNOTREACHABLE)
 	registerEnum(RETURNVALUE_YOUNEEDPREMIUMACCOUNT)
 	registerEnum(RETURNVALUE_YOUNEEDTOLEARNTHISMOVE)
-	registerEnum(RETURNVALUE_YOURVOCATIONCANNOTUSETHISMOVE)
+	registerEnum(RETURNVALUE_YOURPROFESSIONCANNOTUSETHISMOVE)
 	registerEnum(RETURNVALUE_PLAYERISPZLOCKEDLEAVEPVPZONE)
 	registerEnum(RETURNVALUE_PLAYERISPZLOCKEDENTERPVPZONE)
 	registerEnum(RETURNVALUE_ACTIONNOTPERMITTEDINANOPVPZONE)
@@ -2286,8 +2286,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getItemCount", LuaScriptInterface::luaPlayerGetItemCount);
 	registerMethod("Player", "getItemById", LuaScriptInterface::luaPlayerGetItemById);
 
-	registerMethod("Player", "getVocation", LuaScriptInterface::luaPlayerGetVocation);
-	registerMethod("Player", "setVocation", LuaScriptInterface::luaPlayerSetVocation);
+	registerMethod("Player", "getProfession", LuaScriptInterface::luaPlayerGetProfession);
+	registerMethod("Player", "setProfession", LuaScriptInterface::luaPlayerSetProfession);
 
 	registerMethod("Player", "getSex", LuaScriptInterface::luaPlayerGetSex);
 	registerMethod("Player", "setSex", LuaScriptInterface::luaPlayerSetSex);
@@ -2468,28 +2468,27 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Group", "getMaxVipEntries", LuaScriptInterface::luaGroupGetMaxVipEntries);
 	registerMethod("Group", "hasFlag", LuaScriptInterface::luaGroupHasFlag);
 
-	// Vocation
-	registerClass("Vocation", "", LuaScriptInterface::luaVocationCreate);
-	registerMetaMethod("Vocation", "__eq", LuaScriptInterface::luaUserdataCompare);
+	// Profession
+	registerClass("Profession", "", LuaScriptInterface::luaProfessionCreate);
+	registerMetaMethod("Profession", "__eq", LuaScriptInterface::luaUserdataCompare);
 
-	registerMethod("Vocation", "getId", LuaScriptInterface::luaVocationGetId);
-	registerMethod("Vocation", "getClientId", LuaScriptInterface::luaVocationGetClientId);
-	registerMethod("Vocation", "getName", LuaScriptInterface::luaVocationGetName);
-	registerMethod("Vocation", "getDescription", LuaScriptInterface::luaVocationGetDescription);
+	registerMethod("Profession", "getId", LuaScriptInterface::luaProfessionGetId);
+	registerMethod("Profession", "getClientId", LuaScriptInterface::luaProfessionGetClientId);
+	registerMethod("Profession", "getName", LuaScriptInterface::luaProfessionGetName);
+	registerMethod("Profession", "getDescription", LuaScriptInterface::luaProfessionGetDescription);
 
-	registerMethod("Vocation", "getRequiredSkillTries", LuaScriptInterface::luaVocationGetRequiredSkillTries);
+	registerMethod("Profession", "getRequiredSkillTries", LuaScriptInterface::luaProfessionGetRequiredSkillTries);
 
-	registerMethod("Vocation", "getCapacityGain", LuaScriptInterface::luaVocationGetCapacityGain);
+	registerMethod("Profession", "getCapacityGain", LuaScriptInterface::luaProfessionGetCapacityGain);
 
-	registerMethod("Vocation", "getHealthGain", LuaScriptInterface::luaVocationGetHealthGain);
-	registerMethod("Vocation", "getHealthGainTicks", LuaScriptInterface::luaVocationGetHealthGainTicks);
-	registerMethod("Vocation", "getHealthGainAmount", LuaScriptInterface::luaVocationGetHealthGainAmount);
+	registerMethod("Profession", "getHealthGain", LuaScriptInterface::luaProfessionGetHealthGain);
+	registerMethod("Profession", "getHealthGainTicks", LuaScriptInterface::luaProfessionGetHealthGainTicks);
+	registerMethod("Profession", "getHealthGainAmount", LuaScriptInterface::luaProfessionGetHealthGainAmount);
 
-	registerMethod("Vocation", "getAttackSpeed", LuaScriptInterface::luaVocationGetAttackSpeed);
-	registerMethod("Vocation", "getBaseSpeed", LuaScriptInterface::luaVocationGetBaseSpeed);
+	registerMethod("Profession", "getBaseSpeed", LuaScriptInterface::luaProfessionGetBaseSpeed);
 
-	registerMethod("Vocation", "getDemotion", LuaScriptInterface::luaVocationGetDemotion);
-	registerMethod("Vocation", "getPromotion", LuaScriptInterface::luaVocationGetPromotion);
+	registerMethod("Profession", "getDemotion", LuaScriptInterface::luaProfessionGetDemotion);
+	registerMethod("Profession", "getPromotion", LuaScriptInterface::luaProfessionGetPromotion);
 
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
@@ -8157,45 +8156,45 @@ int LuaScriptInterface::luaPlayerGetItemById(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetVocation(lua_State* L)
+int LuaScriptInterface::luaPlayerGetProfession(lua_State* L)
 {
-	// player:getVocation()
+	// player:getProfession()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		pushUserdata<Vocation>(L, player->getVocation());
-		setMetatable(L, -1, "Vocation");
+		pushUserdata<Profession>(L, player->getProfession());
+		setMetatable(L, -1, "Profession");
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerSetVocation(lua_State* L)
+int LuaScriptInterface::luaPlayerSetProfession(lua_State* L)
 {
-	// player:setVocation(id or name or userdata)
+	// player:setProfession(id or name or userdata)
 	Player* player = getUserdata<Player>(L, 1);
 	if (!player) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	Vocation* vocation;
+	Profession* profession;
 	if (isNumber(L, 2)) {
-		vocation = g_vocations.getVocation(getNumber<uint16_t>(L, 2));
+		profession = g_professions.getProfession(getNumber<uint16_t>(L, 2));
 	} else if (isString(L, 2)) {
-		vocation = g_vocations.getVocation(g_vocations.getVocationId(getString(L, 2)));
+		profession = g_professions.getProfession(g_professions.getProfessionId(getString(L, 2)));
 	} else if (isUserdata(L, 2)) {
-		vocation = getUserdata<Vocation>(L, 2);
+		profession = getUserdata<Profession>(L, 2);
 	} else {
-		vocation = nullptr;
+		profession = nullptr;
 	}
 
-	if (!vocation) {
+	if (!profession) {
 		pushBoolean(L, false);
 		return 1;
 	}
 
-	player->setVocation(vocation->getId());
+	player->setProfession(profession->getId());
 	pushBoolean(L, true);
 	return 1;
 }
@@ -10271,205 +10270,193 @@ int LuaScriptInterface::luaGroupHasFlag(lua_State* L)
 	return 1;
 }
 
-// Vocation
-int LuaScriptInterface::luaVocationCreate(lua_State* L)
+// Profession
+int LuaScriptInterface::luaProfessionCreate(lua_State* L)
 {
-	// Vocation(id or name)
+	// Profession(id or name)
 	uint32_t id;
 	if (isNumber(L, 2)) {
 		id = getNumber<uint32_t>(L, 2);
 	} else {
-		id = g_vocations.getVocationId(getString(L, 2));
+		id = g_professions.getProfessionId(getString(L, 2));
 	}
 
-	Vocation* vocation = g_vocations.getVocation(id);
-	if (vocation) {
-		pushUserdata<Vocation>(L, vocation);
-		setMetatable(L, -1, "Vocation");
+	Profession* profession = g_professions.getProfession(id);
+	if (profession) {
+		pushUserdata<Profession>(L, profession);
+		setMetatable(L, -1, "Profession");
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetId(lua_State* L)
+int LuaScriptInterface::luaProfessionGetId(lua_State* L)
 {
-	// vocation:getId()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getId());
+	// profession:getId()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getId());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetClientId(lua_State* L)
+int LuaScriptInterface::luaProfessionGetClientId(lua_State* L)
 {
-	// vocation:getClientId()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getClientId());
+	// profession:getClientId()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getClientId());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetName(lua_State* L)
+int LuaScriptInterface::luaProfessionGetName(lua_State* L)
 {
-	// vocation:getName()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		pushString(L, vocation->getVocName());
+	// profession:getName()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		pushString(L, profession->getProfName());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetDescription(lua_State* L)
+int LuaScriptInterface::luaProfessionGetDescription(lua_State* L)
 {
-	// vocation:getDescription()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		pushString(L, vocation->getVocDescription());
+	// profession:getDescription()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		pushString(L, profession->getProfDescription());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetRequiredSkillTries(lua_State* L)
+int LuaScriptInterface::luaProfessionGetRequiredSkillTries(lua_State* L)
 {
-	// vocation:getRequiredSkillTries(skillType, skillLevel)
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
+	// profession:getRequiredSkillTries(skillType, skillLevel)
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
 		skills_t skillType = getNumber<skills_t>(L, 2);
 		uint16_t skillLevel = getNumber<uint16_t>(L, 3);
-		lua_pushnumber(L, vocation->getReqSkillTries(skillType, skillLevel));
+		lua_pushnumber(L, profession->getReqSkillTries(skillType, skillLevel));
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetCapacityGain(lua_State* L)
+int LuaScriptInterface::luaProfessionGetCapacityGain(lua_State* L)
 {
-	// vocation:getCapacityGain()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getCapGain());
+	// profession:getCapacityGain()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getCapGain());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetHealthGain(lua_State* L)
+int LuaScriptInterface::luaProfessionGetHealthGain(lua_State* L)
 {
-	// vocation:getHealthGain()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getHPGain());
+	// profession:getHealthGain()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getHPGain());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetHealthGainTicks(lua_State* L)
+int LuaScriptInterface::luaProfessionGetHealthGainTicks(lua_State* L)
 {
-	// vocation:getHealthGainTicks()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getHealthGainTicks());
+	// profession:getHealthGainTicks()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getHealthGainTicks());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetHealthGainAmount(lua_State* L)
+int LuaScriptInterface::luaProfessionGetHealthGainAmount(lua_State* L)
 {
-	// vocation:getHealthGainAmount()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getHealthGainAmount());
+	// profession:getHealthGainAmount()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getHealthGainAmount());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetAttackSpeed(lua_State* L)
+int LuaScriptInterface::luaProfessionGetBaseSpeed(lua_State* L)
 {
-	// vocation:getAttackSpeed()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getAttackSpeed());
+	// profession:getBaseSpeed()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (profession) {
+		lua_pushnumber(L, profession->getBaseSpeed());
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetBaseSpeed(lua_State* L)
+int LuaScriptInterface::luaProfessionGetDemotion(lua_State* L)
 {
-	// vocation:getBaseSpeed()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		lua_pushnumber(L, vocation->getBaseSpeed());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetDemotion(lua_State* L)
-{
-	// vocation:getDemotion()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (!vocation) {
+	// profession:getDemotion()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (!profession) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	uint16_t fromId = vocation->getFromVocation();
-	if (fromId == VOCATION_NONE) {
+	uint16_t fromId = profession->getFromProfession();
+	if (fromId == PROFESSION_NONE) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	Vocation* demotedVocation = g_vocations.getVocation(fromId);
-	if (demotedVocation && demotedVocation != vocation) {
-		pushUserdata<Vocation>(L, demotedVocation);
-		setMetatable(L, -1, "Vocation");
+	Profession* demotedProfession = g_professions.getProfession(fromId);
+	if (demotedProfession && demotedProfession != profession) {
+		pushUserdata<Profession>(L, demotedProfession);
+		setMetatable(L, -1, "Profession");
 	} else {
 		lua_pushnil(L);
 	}
 	return 1;
 }
 
-int LuaScriptInterface::luaVocationGetPromotion(lua_State* L)
+int LuaScriptInterface::luaProfessionGetPromotion(lua_State* L)
 {
-	// vocation:getPromotion()
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (!vocation) {
+	// profession:getPromotion()
+	Profession* profession = getUserdata<Profession>(L, 1);
+	if (!profession) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	uint16_t promotedId = g_vocations.getPromotedVocation(vocation->getId());
-	if (promotedId == VOCATION_NONE) {
+	uint16_t promotedId = g_professions.getPromotedProfession(profession->getId());
+	if (promotedId == PROFESSION_NONE) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	Vocation* promotedVocation = g_vocations.getVocation(promotedId);
-	if (promotedVocation && promotedVocation != vocation) {
-		pushUserdata<Vocation>(L, promotedVocation);
-		setMetatable(L, -1, "Vocation");
+	Profession* promotedProfession = g_professions.getProfession(promotedId);
+	if (promotedProfession && promotedProfession != profession) {
+		pushUserdata<Profession>(L, promotedProfession);
+		setMetatable(L, -1, "Profession");
 	} else {
 		lua_pushnil(L);
 	}
