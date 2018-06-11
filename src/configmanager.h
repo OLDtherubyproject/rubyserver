@@ -64,6 +64,8 @@ class ConfigManager
 			MYSQL_SOCK,
 			DEFAULT_PRIORITY,
 			MAP_AUTHOR,
+			PRIME1,
+			PRIME2,
 
 			LAST_STRING_CONFIG /* this must be the last one */
 		};

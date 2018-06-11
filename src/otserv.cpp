@@ -122,7 +122,7 @@ void mainLoader(int, char*[], ServiceManager* services)
 	std::cout << std::endl;
 
 	std::cout << "A server developed by " << STATUS_SERVER_DEVELOPERS << std::endl;
-	std::cout << "Visit our repository for updates, support, and resources: https://github.com/RubyServer." << std::endl;
+	std::cout << "Visit our website for updates, support, and resources: https://therubyproject.me" << std::endl;
 	std::cout << std::endl;
 
 	// check if config.lua or config.lua.dist exist
@@ -157,8 +157,8 @@ void mainLoader(int, char*[], ServiceManager* services)
 #endif
 
 	//set RSA key
-	const char* p("14299623962416399520070177382898895550795403345466153217470516082934737582776038882967213386204600674145392845853859217990626450972452084065728686565928113");
-	const char* q("7630979195970404721891201847792002125535401292779123937207447574596692788513647179235335529307251350570728407373705564708871762033017096809910315212884101");
+	const char* p(g_config.getString(ConfigManager::PRIME1).c_str());
+	const char* q(g_config.getString(ConfigManager::PRIME2).c_str());
 	g_RSA.setKey(p, q);
 
 	std::cout << ">> Establishing database connection..." << std::flush;
@@ -238,7 +238,7 @@ void mainLoader(int, char*[], ServiceManager* services)
 	}
 	std::cout << asUpperCaseString(worldType) << std::endl;
 
-	std::cout << ">> Setting world time... ";
+	std::cout << ">> Checking world time... ";
 	g_game.checkLight();
 
 	if (g_game.isDay()) {
