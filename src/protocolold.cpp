@@ -48,7 +48,7 @@ void ProtocolOld::onRecvFirstMessage(NetworkMessage& msg)
 	uint16_t version = msg.get<uint16_t>();
 	msg.skipBytes(12);
 
-	if (version <= 760) {
+	if (version <= CLIENT_VERSION_MIN) {
 		std::ostringstream ss;
 		ss << "Only clients with protocol " << CLIENT_VERSION_STR << " allowed!";
 		disconnectClient(ss.str());
@@ -67,10 +67,6 @@ void ProtocolOld::onRecvFirstMessage(NetworkMessage& msg)
 	key[3] = msg.get<uint32_t>();
 	enableXTEAEncryption();
 	setXTEAKey(key);
-
-	if (version <= 822) {
-		disableChecksum();
-	}
 
 	std::ostringstream ss;
 	ss << "Only clients with protocol " << CLIENT_VERSION_STR << " allowed!";

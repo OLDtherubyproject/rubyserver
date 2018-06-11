@@ -127,24 +127,13 @@ void ProtocolLogin::onRecvFirstMessage(NetworkMessage& msg)
 	msg.skipBytes(2); // client OS
 
 	uint16_t version = msg.get<uint16_t>();
-	if (version >= 971) {
-		msg.skipBytes(17);
-	} else {
-		msg.skipBytes(12);
-	}
+	msg.skipBytes(17);
 	/*
 	 * Skipped bytes:
 	 * 4 bytes: protocolVersion
 	 * 12 bytes: dat, spr, pic signatures (4 bytes each)
 	 * 1 byte: 0
 	 */
-
-	if (version <= 760) {
-		std::ostringstream ss;
-		ss << "Only clients with protocol " << CLIENT_VERSION_STR << " allowed!";
-		disconnectClient(ss.str(), version);
-		return;
-	}
 
 	if (!Protocol::RSA_decrypt(msg)) {
 		disconnect();

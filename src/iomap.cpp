@@ -109,10 +109,10 @@ bool IOMap::loadMap(Map* map, const std::string& fileName)
 		return false;
 	}
 
-	if (root_header.minorVersionItems < CLIENT_VERSION_810) {
-		setLastErrorString("This map needs to be updated.");
-		return false;
-	}
+	//if (root_header.minorVersionItems < CLIENT_VERSION_810) {
+	//	setLastErrorString("This map needs to be updated.");
+	//	return false;
+	//}
 
 	if (root_header.minorVersionItems > Item::items.minorVersion) {
 		std::cout << "[Warning - IOMap::loadMap] This map needs an updated items.otb." << std::endl;

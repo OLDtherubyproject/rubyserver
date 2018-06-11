@@ -22,12 +22,12 @@
 #define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
 
 static constexpr auto STATUS_SERVER_NAME = "The Ruby Server";
-static constexpr auto STATUS_SERVER_VERSION = "0.1";
+static constexpr auto STATUS_SERVER_VERSION = "1.0.0 ALPHA 1";
 static constexpr auto STATUS_SERVER_DEVELOPERS = "Mark Samman (TFS) and Leandro Matheus";
 
-static constexpr auto CLIENT_VERSION_MIN = 1097;
-static constexpr auto CLIENT_VERSION_MAX = 1098;
-static constexpr auto CLIENT_VERSION_STR = "10.98";
+static constexpr auto CLIENT_VERSION_MIN = 100;
+static constexpr auto CLIENT_VERSION_MAX = 100;
+static constexpr auto CLIENT_VERSION_STR = "1.0.0";
 
 static constexpr auto AUTHENTICATOR_DIGITS = 6U;
 static constexpr auto AUTHENTICATOR_PERIOD = 30U;
