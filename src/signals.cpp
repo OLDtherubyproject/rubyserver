@@ -142,10 +142,10 @@ void Signals::sighupHandler()
 	std::cout << "Reloaded raids." << std::endl;
 
 	g_moves->reload();
-	std::cout << "Reloaded pokemons." << std::endl;
+	std::cout << "Reload moves." << std::endl;
 
 	g_pokemons.reload();
-	std::cout << "Reloaded moves." << std::endl;
+	std::cout << "Reloaded pokemons." << std::endl;
 
 	g_talkActions->reload();
 	std::cout << "Reloaded talk actions." << std::endl;
