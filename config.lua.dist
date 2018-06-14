@@ -115,5 +115,5 @@ startupDatabaseOptimization = false
 -- Status server information
 ownerName = ""
 ownerEmail = ""
-url = "https://github.com/rubyserver/rubyserver/"
+url = "https://github.com/therubyproject/rubyserver/"
 location = "Brazil"
