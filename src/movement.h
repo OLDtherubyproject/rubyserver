@@ -46,7 +46,7 @@ struct MoveEventList {
 	std::list<MoveEvent> moveEvent[MOVE_EVENT_LAST];
 };
 
-using VocEquipMap = std::map<uint16_t, bool>;
+using PprofEquipMap = std::map<uint16_t, bool>;
 
 class MoveEvents final : public BaseEvents
 {
@@ -137,10 +137,9 @@ class MoveEvent final : public Event
 		uint32_t getWieldInfo() const {
 			return wieldInfo;
 		}
-		const VocEquipMap& getVocEquipMap() const {
-			return vocEquipMap;
+		const PprofEquipMap& getPprofEquipMap() const {
+			return profEquipMap;
 		}
-
 	private:
 		std::string getScriptEventName() const override;
 
@@ -156,7 +155,7 @@ class MoveEvent final : public Event
 		bool premium = false;
 		std::string professionString;
 		uint32_t wieldInfo = 0;
-		VocEquipMap vocEquipMap;
+		PprofEquipMap profEquipMap;
 };
 
 #endif

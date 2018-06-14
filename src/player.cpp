@@ -39,6 +39,7 @@ extern ConfigManager g_config;
 extern Game g_game;
 extern Chat* g_chat;
 extern Professions g_professions;
+extern Clans g_clans;
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
 extern CreatureEvents* g_creatureEvents;
@@ -75,19 +76,29 @@ Player::~Player()
 	setEditHouse(nullptr);
 }
 
-bool Player::setProfession(uint16_t vocId)
+bool Player::setProfession(uint16_t profId)
 {
-	Profession* voc = g_professions.getProfession(vocId);
-	if (!voc) {
+	Profession* prof = g_professions.getProfession(profId);
+	if (!prof) {
 		return false;
 	}
-	profession = voc;
+	profession = prof;
 
 	Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
 	if (condition) {
 		condition->setParam(CONDITION_PARAM_HEALTHGAIN, profession->getHealthGainAmount());
 		condition->setParam(CONDITION_PARAM_HEALTHTICKS, profession->getHealthGainTicks() * 1000);
 	}
+	return true;
+}
+
+bool Player::setClan(uint16_t clanId)
+{
+	Clan* newClan = g_clans.getClan(clanId);
+	if (!newClan) {
+		return false;
+	}
+	clan = newClan;
 	return true;
 }
 
@@ -107,12 +118,20 @@ std::string Player::getDescription(int32_t lookDistance) const
 		s << "yourself.";
 
 		if (group->access) {
-			s << " You are " << group->name << '.';
+			s << " You are " << group->name;
 		} else if (profession->getId() != PROFESSION_NONE) {
-			s << " You are " << profession->getProfDescription() << '.';
+			s << " You are " << profession->getProfDescription();
 		} else {
-			s << " You are a Pokemon Trainer.";
+			s << " You are a Pokemon Trainer";
 		}
+
+		if (clan->getId() != CLAN_NONE) {
+			s << " and belongs to " << clan->getClanDescription() << " clan";
+		} else {
+			s << " and has no clan";
+		}
+
+		s << '.';
 	} else {
 		s << name;
 		if (!group->access) {
@@ -127,12 +146,20 @@ std::string Player::getDescription(int32_t lookDistance) const
 		}
 
 		if (group->access) {
-			s << " is " << group->name << '.';
+			s << " is " << group->name;
 		} else if (profession->getId() != PROFESSION_NONE) {
-			s << " is " << profession->getProfDescription() << '.';
+			s << " is " << profession->getProfDescription();
 		} else {
-			s << " is a Pokemon Trainer.";
+			s << " is a Pokemon Trainer";
 		}
+
+		if (clan->getId() != CLAN_NONE) {
+			s << " and belongs to " << clan->getClanDescription() << " clan";
+		} else {
+			s << " and has no clan";
+		}
+
+		s << ".";
 	}
 
 	if (party) {

@@ -954,6 +954,50 @@ CombatType_t pokemonTypeToCombatType(PokemonType_t pokemonType)
 	}
 }
 
+PokemonType_t combatTypeToPokemonType(CombatType_t combatType)
+{
+	switch (combatType) {
+		case COMBAT_NORMALDAMAGE:
+			return TYPE_NORMAL;
+		case COMBAT_FIREDAMAGE:
+			return TYPE_FIRE;
+		case COMBAT_FIGHTINGDAMAGE:
+			return TYPE_FIGHTING;
+		case COMBAT_WATERDAMAGE:
+			return TYPE_WATER;
+		case COMBAT_FLYINGDAMAGE:
+			return TYPE_FLYING;
+		case COMBAT_GRASSDAMAGE:
+			return TYPE_GRASS;
+		case COMBAT_ELECTRICDAMAGE:
+			return TYPE_ELECTRIC;
+		case COMBAT_POISONDAMAGE:
+			return TYPE_POISON;
+		case COMBAT_GROUNDDAMAGE:
+			return TYPE_GROUND;
+		case COMBAT_PSYCHICDAMAGE:
+			return TYPE_PSYCHIC;
+		case COMBAT_ROCKDAMAGE:
+			return TYPE_ROCK;
+		case COMBAT_ICEDAMAGE:
+			return TYPE_ICE;
+		case COMBAT_BUGDAMAGE:
+			return TYPE_BUG;
+		case COMBAT_DRAGONDAMAGE:
+			return TYPE_DRAGON;
+		case COMBAT_GHOSTDAMAGE:
+			return TYPE_GHOST;
+		case COMBAT_DARKDAMAGE:
+			return TYPE_DARK;
+		case COMBAT_STEELDAMAGE:
+			return TYPE_STEEL;
+		case COMBAT_FAIRYDAMAGE:
+			return TYPE_FAIRY;
+		default:
+			return TYPE_NONE;
+	}
+}
+
 uint8_t serverFluidToClient(uint8_t serverFluid)
 {
 	uint8_t size = sizeof(clientToServerFluidMap) / sizeof(uint8_t);

@@ -30,6 +30,7 @@
 
 extern Game g_game;
 extern Professions g_professions;
+extern Clans g_clans;
 extern Pokemons g_pokemons;
 
 MoveEvents::MoveEvents() :
@@ -110,7 +111,6 @@ bool MoveEvents::registerEvent(Event_ptr event, const pugi::xml_node& node)
 			ItemType& it = Item::items.getItemType(id);
 			it.wieldInfo = moveEvent->getWieldInfo();
 			it.minReqLevel = moveEvent->getReqLevel();
-			it.minReqMagicLevel = moveEvent->getReqMagLv();
 			it.professionString = moveEvent->getProfessionString();
 		}
 		addEvent(std::move(*moveEvent), id, itemIdMap);
@@ -124,7 +124,6 @@ bool MoveEvents::registerEvent(Event_ptr event, const pugi::xml_node& node)
 			ItemType& it = Item::items.getItemType(id);
 			it.wieldInfo = moveEvent->getWieldInfo();
 			it.minReqLevel = moveEvent->getReqLevel();
-			it.minReqMagicLevel = moveEvent->getReqMagLv();
 			it.professionString = moveEvent->getProfessionString();
 
 			while (++id <= endId) {
@@ -133,7 +132,6 @@ bool MoveEvents::registerEvent(Event_ptr event, const pugi::xml_node& node)
 				ItemType& tit = Item::items.getItemType(id);
 				tit.wieldInfo = moveEvent->getWieldInfo();
 				tit.minReqLevel = moveEvent->getReqLevel();
-				tit.minReqMagicLevel = moveEvent->getReqMagLv();
 				tit.professionString = moveEvent->getProfessionString();
 			}
 		} else {
@@ -495,14 +493,6 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 			}
 		}
 
-		pugi::xml_attribute magLevelAttribute = node.attribute("maglevel");
-		if (magLevelAttribute) {
-			reqMagLevel = pugi::cast<uint32_t>(magLevelAttribute.value());
-			if (reqMagLevel > 0) {
-				wieldInfo |= WIELDINFO_MAGLV;
-			}
-		}
-
 		pugi::xml_attribute premiumAttribute = node.attribute("premium");
 		if (premiumAttribute) {
 			premium = premiumAttribute.as_bool();
@@ -512,7 +502,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		}
 
 		//Gather profession information
-		std::list<std::string> vocStringList;
+		std::list<std::string> profStringList;
 		for (auto professionNode : node.children()) {
 			pugi::xml_attribute professionNameAttribute = professionNode.attribute("name");
 			if (!professionNameAttribute) {
@@ -521,20 +511,20 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 
 			int32_t professionId = g_professions.getProfessionId(professionNameAttribute.as_string());
 			if (professionId != -1) {
-				vocEquipMap[professionId] = true;
+				profEquipMap[professionId] = true;
 				if (professionNode.attribute("showInDescription").as_bool(true)) {
-					vocStringList.push_back(asLowerCaseString(professionNameAttribute.as_string()));
+					profStringList.push_back(asLowerCaseString(professionNameAttribute.as_string()));
 				}
 			}
 		}
 
-		if (!vocEquipMap.empty()) {
-			wieldInfo |= WIELDINFO_VOCREQ;
+		if (!profEquipMap.empty()) {
+			wieldInfo |= WIELDINFO_PROFREQ;
 		}
 
-		for (const std::string& str : vocStringList) {
+		for (const std::string& str : profStringList) {
 			if (!professionString.empty()) {
-				if (str != vocStringList.back()) {
+				if (str != profStringList.back()) {
 					professionString.push_back(',');
 					professionString.push_back(' ');
 				} else {
@@ -601,8 +591,8 @@ uint32_t EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slo
 			return 0;
 		}
 
-		const VocEquipMap& vocEquipMap = moveEvent->getVocEquipMap();
-		if (!vocEquipMap.empty() && vocEquipMap.find(player->getProfessionId()) == vocEquipMap.end()) {
+		const PprofEquipMap& profEquipMap = moveEvent->getPprofEquipMap();
+		if (!profEquipMap.empty() && profEquipMap.find(player->getProfessionId()) == profEquipMap.end()) {
 			return 0;
 		}
 	}

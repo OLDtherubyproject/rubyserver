@@ -28,6 +28,7 @@
 #include "outfit.h"
 #include "enums.h"
 #include "profession.h"
+#include "clan.h"
 #include "protocolgame.h"
 #include "ioguild.h"
 #include "party.h"
@@ -244,6 +245,10 @@ class Player final : public Creature, public Cylinder
 			return profession;
 		}
 
+		Clan* getClan() const {
+			return clan;
+		}
+
 		OperatingSystem_t getOperatingSystem() const {
 			return operatingSystem;
 		}
@@ -384,9 +389,14 @@ class Player final : public Creature, public Cylinder
 
 		uint16_t getHelpers() const;
 
-		bool setProfession(uint16_t vocId);
+		bool setProfession(uint16_t profId);
 		uint16_t getProfessionId() const {
 			return profession->getId();
+		}
+
+		bool setClan(uint16_t clanId);
+		uint16_t getClanId() const {
+			return clan->getId();
 		}
 
 		PlayerSex_t getSex() const {
@@ -1240,6 +1250,7 @@ class Player final : public Creature, public Cylinder
 		SchedulerTask* walkTask = nullptr;
 		Town* town = nullptr;
 		Profession* profession = nullptr;
+		Clan* clan = nullptr;
 
 		uint32_t inventoryWeight = 0;
 		uint32_t capacity = 40000;

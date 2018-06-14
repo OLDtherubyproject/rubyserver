@@ -45,6 +45,7 @@ Game g_game;
 ConfigManager g_config;
 Pokemons g_pokemons;
 Professions g_professions;
+Clans g_clans;
 RSA g_RSA;
 
 std::mutex g_loaderLock;
@@ -194,6 +195,13 @@ void mainLoader(int, char*[], ServiceManager* services)
 	std::cout << ">> Loading professions" << std::endl;
 	if (!g_professions.loadFromXml()) {
 		startupErrorMessage("Unable to load professions!");
+		return;
+	}
+
+	//load clans
+	std::cout << ">> Loading clans" << std::endl;
+	if (!g_clans.loadFromXml()) {
+		startupErrorMessage("Unable to load clans!");
 		return;
 	}
 

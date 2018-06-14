@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <professions>
-	<profession id="0" clientid="0" name="Pokemon Trainer" description="a pokemon trainer" gaincap="10" gainhp="5" gainhpticks="6" gainhpamount="1" basespeed="220" fromvoc="0">
+	<profession id="0" clientid="0" name="Pokemon Trainer" description="a pokemon trainer" gaincap="10" gainhp="5" gainhpticks="6" gainhpamount="1" basespeed="220" fromprof="0">
 		<skill id="0" multiplier="1.5" />
 		<skill id="1" multiplier="2.0" />
 		<skill id="2" multiplier="2.0" />
@@ -9,7 +9,7 @@
 		<skill id="5" multiplier="1.5" />
 		<skill id="6" multiplier="1.1" />
 	</profession>
-	<profession id="1" clientid="3" name="Breeder" description="a breeder" gaincap="10" gainhp="5" gainhpticks="6" gainhpamount="5" basespeed="220" fromvoc="1">
+	<profession id="1" clientid="3" name="Breeder" description="a breeder" gaincap="10" gainhp="5" gainhpticks="6" gainhpamount="5" basespeed="220" fromprof="1">
 		<skill id="0" multiplier="1.5" />
 		<skill id="1" multiplier="2.0" />
 		<skill id="2" multiplier="2.0" />

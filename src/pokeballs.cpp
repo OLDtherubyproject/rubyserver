@@ -29,6 +29,7 @@
 
 extern Game g_game;
 extern Professions g_professions;
+extern Clans g_clans;
 extern ConfigManager g_config;
 extern Pokeballs* g_pokeballs;
 extern Pokemons g_pokemons;

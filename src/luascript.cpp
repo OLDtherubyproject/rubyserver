@@ -43,6 +43,7 @@ extern Game g_game;
 extern Pokemons g_pokemons;
 extern ConfigManager g_config;
 extern Professions g_professions;
+extern Clans g_clans;
 extern Pokeballs* g_pokeballs;
 extern Moves* g_moves;
 
@@ -1554,6 +1555,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(REPORT_TYPE_BOT)
 
 	registerEnum(PROFESSION_NONE)
+	registerEnum(CLAN_NONE)
 
 	registerEnum(SKILL_FIST)
 	registerEnum(SKILL_CLUB)
@@ -2489,6 +2491,20 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Profession", "getDemotion", LuaScriptInterface::luaProfessionGetDemotion);
 	registerMethod("Profession", "getPromotion", LuaScriptInterface::luaProfessionGetPromotion);
+
+	// Clan
+	registerClass("Clan", "", LuaScriptInterface::luaClanCreate);
+	registerMetaMethod("Clan", "__eq", LuaScriptInterface::luaUserdataCompare);
+
+	registerMethod("Clan", "getId", LuaScriptInterface::luaClanGetId);
+	registerMethod("Clan", "getClientId", LuaScriptInterface::luaClanGetClientId);
+	registerMethod("Clan", "getName", LuaScriptInterface::luaClanGetName);
+	registerMethod("Clan", "getDescription", LuaScriptInterface::luaClanGetDescription);
+
+	registerMethod("Clan", "getTypeMultiplier", LuaScriptInterface::luaClanGetTypeMultiplier);
+
+	registerMethod("Clan", "getDemotion", LuaScriptInterface::luaClanGetDemotion);
+	registerMethod("Clan", "getPromotion", LuaScriptInterface::luaClanGetPromotion);
 
 	// Town
 	registerClass("Town", "", LuaScriptInterface::luaTownCreate);
@@ -8199,6 +8215,49 @@ int LuaScriptInterface::luaPlayerSetProfession(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPlayerGetClan(lua_State* L)
+{
+	// player:getClan()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		pushUserdata<Clan>(L, player->getClan());
+		setMetatable(L, -1, "Clan");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerSetClan(lua_State* L)
+{
+	// player:setClan(id or name or userdata)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	Clan* clan;
+	if (isNumber(L, 2)) {
+		clan = g_clans.getClan(getNumber<uint16_t>(L, 2));
+	} else if (isString(L, 2)) {
+		clan = g_clans.getClan(g_clans.getClanId(getString(L, 2)));
+	} else if (isUserdata(L, 2)) {
+		clan = getUserdata<Clan>(L, 2);
+	} else {
+		clan = nullptr;
+	}
+
+	if (!clan) {
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	player->setClan(clan->getId());
+	pushBoolean(L, true);
+	return 1;
+}
+
 int LuaScriptInterface::luaPlayerGetSex(lua_State* L)
 {
 	// player:getSex()
@@ -10457,6 +10516,138 @@ int LuaScriptInterface::luaProfessionGetPromotion(lua_State* L)
 	if (promotedProfession && promotedProfession != profession) {
 		pushUserdata<Profession>(L, promotedProfession);
 		setMetatable(L, -1, "Profession");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// Clan
+int LuaScriptInterface::luaClanCreate(lua_State* L)
+{
+	// Clan(id or name)
+	uint32_t id;
+	if (isNumber(L, 2)) {
+		id = getNumber<uint32_t>(L, 2);
+	} else {
+		id = g_clans.getClanId(getString(L, 2));
+	}
+
+	Clan* clan = g_clans.getClan(id);
+	if (clan) {
+		pushUserdata<Clan>(L, clan);
+		setMetatable(L, -1, "Clan");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetId(lua_State* L)
+{
+	// clan:getId()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (clan) {
+		lua_pushnumber(L, clan->getId());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetClientId(lua_State* L)
+{
+	// clan:getClientId()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (clan) {
+		lua_pushnumber(L, clan->getClientId());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetName(lua_State* L)
+{
+	// clan:getName()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (clan) {
+		pushString(L, clan->getClanName());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetDescription(lua_State* L)
+{
+	// clan:getDescription()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (clan) {
+		pushString(L, clan->getClanDescription());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetTypeMultiplier(lua_State* L)
+{
+	// clan:getTypeMultiplier(pokemonType)
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (clan) {
+		PokemonType_t pokemonType = getNumber<PokemonType_t>(L, 2);
+		lua_pushnumber(L, clan->getTypeMultiplier(pokemonType));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetDemotion(lua_State* L)
+{
+	// clan:getDemotion()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (!clan) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	uint16_t fromId = clan->getFromClan();
+	if (fromId == CLAN_NONE) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	Clan* demotedClan = g_clans.getClan(fromId);
+	if (demotedClan && demotedClan != clan) {
+		pushUserdata<Clan>(L, demotedClan);
+		setMetatable(L, -1, "Clan");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaClanGetPromotion(lua_State* L)
+{
+	// clan:getPromotion()
+	Clan* clan = getUserdata<Clan>(L, 1);
+	if (!clan) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	uint16_t promotedId = g_clans.getPromotedClan(clan->getId());
+	if (promotedId == CLAN_NONE) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	Clan* promotedClan = g_clans.getClan(promotedId);
+	if (promotedClan && promotedClan != clan) {
+		pushUserdata<Clan>(L, promotedClan);
+		setMetatable(L, -1, "Clan");
 	} else {
 		lua_pushnil(L);
 	}

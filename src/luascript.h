@@ -879,6 +879,9 @@ class LuaScriptInterface
 		static int luaPlayerGetProfession(lua_State* L);
 		static int luaPlayerSetProfession(lua_State* L);
 
+		static int luaPlayerGetClan(lua_State* L);
+		static int luaPlayerSetClan(lua_State* L);
+
 		static int luaPlayerGetSex(lua_State* L);
 		static int luaPlayerSetSex(lua_State* L);
 
@@ -1077,6 +1080,19 @@ class LuaScriptInterface
 
 		static int luaProfessionGetDemotion(lua_State* L);
 		static int luaProfessionGetPromotion(lua_State* L);
+
+		// Clan
+		static int luaClanCreate(lua_State* L);
+
+		static int luaClanGetId(lua_State* L);
+		static int luaClanGetClientId(lua_State* L);
+		static int luaClanGetName(lua_State* L);
+		static int luaClanGetDescription(lua_State* L);
+
+		static int luaClanGetTypeMultiplier(lua_State* L);
+
+		static int luaClanGetDemotion(lua_State* L);
+		static int luaClanGetPromotion(lua_State* L);
 
 		// Town
 		static int luaTownCreate(lua_State* L);

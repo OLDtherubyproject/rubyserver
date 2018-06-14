@@ -45,42 +45,42 @@ bool Professions::loadFromXml()
 
 		auto res = professionsMap.emplace(std::piecewise_construct,
 				std::forward_as_tuple(id), std::forward_as_tuple(id));
-		Profession& voc = res.first->second;
+		Profession& prof = res.first->second;
 
 		if ((attr = professionNode.attribute("name"))) {
-			voc.name = attr.as_string();
+			prof.name = attr.as_string();
 		}
 
 		if ((attr = professionNode.attribute("clientid"))) {
-			voc.clientId = pugi::cast<uint16_t>(attr.value());
+			prof.clientId = pugi::cast<uint16_t>(attr.value());
 		}
 
 		if ((attr = professionNode.attribute("description"))) {
-			voc.description = attr.as_string();
+			prof.description = attr.as_string();
 		}
 
 		if ((attr = professionNode.attribute("gaincap"))) {
-			voc.gainCap = pugi::cast<uint32_t>(attr.value()) * 100;
+			prof.gainCap = pugi::cast<uint32_t>(attr.value()) * 100;
 		}
 
 		if ((attr = professionNode.attribute("gainhp"))) {
-			voc.gainHP = pugi::cast<uint32_t>(attr.value());
+			prof.gainHP = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = professionNode.attribute("gainhpticks"))) {
-			voc.gainHealthTicks = pugi::cast<uint32_t>(attr.value());
+			prof.gainHealthTicks = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = professionNode.attribute("gainhpamount"))) {
-			voc.gainHealthAmount = pugi::cast<uint32_t>(attr.value());
+			prof.gainHealthAmount = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = professionNode.attribute("basespeed"))) {
-			voc.baseSpeed = pugi::cast<uint32_t>(attr.value());
+			prof.baseSpeed = pugi::cast<uint32_t>(attr.value());
 		}
 
-		if ((attr = professionNode.attribute("fromvoc"))) {
-			voc.fromProfession = pugi::cast<uint32_t>(attr.value());
+		if ((attr = professionNode.attribute("fromprof"))) {
+			prof.fromProfession = pugi::cast<uint32_t>(attr.value());
 		}
 
 		for (auto childNode : professionNode.children()) {
@@ -89,12 +89,12 @@ bool Professions::loadFromXml()
 				if (skillIdAttribute) {
 					uint16_t skill_id = pugi::cast<uint16_t>(skillIdAttribute.value());
 					if (skill_id <= SKILL_LAST) {
-						voc.skillMultipliers[skill_id] = pugi::cast<float>(childNode.attribute("multiplier").value());
+						prof.skillMultipliers[skill_id] = pugi::cast<float>(childNode.attribute("multiplier").value());
 					} else {
-						std::cout << "[Notice - Professions::loadFromXml] No valid skill id: " << skill_id << " for profession: " << voc.id << std::endl;
+						std::cout << "[Notice - Professions::loadFromXml] No valid skill id: " << skill_id << " for profession: " << prof.id << std::endl;
 					}
 				} else {
-					std::cout << "[Notice - Professions::loadFromXml] Missing skill id for profession: " << voc.id << std::endl;
+					std::cout << "[Notice - Professions::loadFromXml] Missing skill id for profession: " << prof.id << std::endl;
 				}
 			}
 		}

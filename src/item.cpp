@@ -36,6 +36,7 @@
 extern Game g_game;
 extern Moves* g_moves;
 extern Professions g_professions;
+extern Clans g_clans;
 extern Pokeballs* g_pokeballs;
 
 Items Item::items;

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clans>
+	<clan id="1" clientid="1" name="Raibolt" description="raibolt" fromclan="1">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.25" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="2" clientid="2" name="Naturia" description="naturia" fromclan="2">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.25" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.25" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="3" clientid="3" name="Seavell" description="seavell" fromclan="3">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.25" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.25" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="4" clientid="4" name="Psycraft" description="psycraft" fromclan="4">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.25" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.25" />
+	</clan>
+	<clan id="5" clientid="5" name="Garderstrike" description="garderstrike" fromclan="5">
+		<type id="1" multiplier="1.25" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.25" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="6" clientid="6" name="Wingeon" description="wingeon" fromclan="6">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.25" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.25" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="7" clientid="7" name="Volcanic" description="volcanic" fromclan="7">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.25" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="8" clientid="8" name="Orebound" description="orebound" fromclan="8">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.25" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.25" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="9" clientid="9" name="Malefic" description="malefic" fromclan="9">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.25" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.25" />
+		<type id="16" multiplier="1.25" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+	<clan id="10" clientid="10" name="Ironhard" description="ironhard" fromclan="10">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.25" />
+		<type id="18" multiplier="1.0" />
+	</clan>
+</clans>

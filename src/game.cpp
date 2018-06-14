@@ -48,6 +48,7 @@ extern Chat* g_chat;
 extern TalkActions* g_talkActions;
 extern Moves* g_moves;
 extern Professions g_professions;
+extern Clans g_clans;
 extern GlobalEvents* g_globalEvents;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
@@ -3719,6 +3720,15 @@ bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* ta
 
 	if (damage.value > 0) {
 		return false;
+	}
+
+	if (attacker->getPokemon() && attacker->getPokemon()->getMaster() && attacker->getPokemon()->getMaster()->getPlayer()) {
+		Player* player = attacker->getPokemon()->getMaster()->getPlayer();
+		Clan* clan = player->getClan();
+
+		if (clan) {
+			damage.value *= clan->getTypeMultiplier(combatTypeToPokemonType(damage.type));
+		}
 	}
 
 	BlockType_t blockType;

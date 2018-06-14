@@ -460,12 +460,18 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 
 	modifier *= (uniform_random(85, 100) / 100.0);
 
+	float extra = -2.0f;
+	if (damage.value > 0) {
+		extra *= -1;
+	}
+
 	if (damage.stat == STAT_ATTACK) {
-		damage.value = (((damage.value * (caster->getAttack() / target->getDefense())) / 50.0f) + 2.0f) * modifier;
+		damage.value = (((damage.value * (caster->getAttack() / target->getDefense())) / 50.0f) + extra) * modifier;
 	} else if (damage.stat == STAT_SPECIALATTACK) {
-		damage.value = (((damage.value * (caster->getSpecialAttack() / target->getSpecialDefense())) / 50.0f) + 2.0f) * modifier;
+		damage.value = (((damage.value * (caster->getSpecialAttack() / target->getSpecialDefense())) / 50.0f) + extra) * modifier;
 	} else {
-		damage.value = ((damage.value / 50.0f) + 2.0f) * modifier;
+		if (damage.value != 0)
+			damage.value = ((damage.value / 50.0f) + extra) * modifier;
 	}
 
 	if (g_game.combatBlockHit(damage, caster, target, params.itemId != 0)) {

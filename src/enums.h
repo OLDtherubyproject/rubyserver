@@ -199,25 +199,27 @@ enum BloodType_t : uint8_t {
 };
 
 enum PokemonType_t : uint8_t {
-	TYPE_NONE,
-	TYPE_NORMAL,
-	TYPE_FIRE,
-	TYPE_FIGHTING,
-	TYPE_WATER,
-	TYPE_FLYING,
-	TYPE_GRASS,
-	TYPE_ELECTRIC,
-	TYPE_POISON,
-	TYPE_GROUND,
-	TYPE_PSYCHIC,
-	TYPE_ROCK,
-	TYPE_ICE,
-	TYPE_BUG,
-	TYPE_DRAGON,
-	TYPE_GHOST,
-	TYPE_DARK,
-	TYPE_STEEL,
-	TYPE_FAIRY,
+	TYPE_NONE = 0,
+	TYPE_NORMAL = 1,
+	TYPE_FIRE = 2,
+	TYPE_FIGHTING = 3,
+	TYPE_WATER = 4,
+	TYPE_FLYING = 5,
+	TYPE_GRASS = 6,
+	TYPE_ELECTRIC = 7,
+	TYPE_POISON = 8,
+	TYPE_GROUND = 9,
+	TYPE_PSYCHIC = 10,
+	TYPE_ROCK = 11,
+	TYPE_ICE = 12,
+	TYPE_BUG = 13,
+	TYPE_DRAGON = 14,
+	TYPE_GHOST = 15,
+	TYPE_DARK = 16,
+	TYPE_STEEL = 17,
+	TYPE_FAIRY = 18,
+
+	TYPE_LAST = TYPE_FAIRY,
 };
 
 enum CombatType_t : uint32_t {
@@ -422,6 +424,10 @@ enum PlayerSex_t : uint8_t {
 
 enum Profession_t : uint16_t {
 	PROFESSION_NONE = 0
+};
+
+enum Clan_t : uint16_t {
+	CLAN_NONE = 0
 };
 
 enum ReturnValue {
