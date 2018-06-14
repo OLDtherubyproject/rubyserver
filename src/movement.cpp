@@ -583,7 +583,7 @@ uint32_t EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slo
 	}
 
 	if (moveEvent->getWieldInfo() != 0) {
-		if (player->getLevel() < moveEvent->getReqLevel() || player->getMagicLevel() < moveEvent->getReqMagLv()) {
+		if (player->getLevel() < moveEvent->getReqLevel()) {
 			return 0;
 		}
 

@@ -206,7 +206,6 @@ function getPlayerLastLoginSaved(cid) local p = Player(cid) return p and p:getLa
 function getPlayerName(cid) local p = Player(cid) return p and p:getName() or false end
 function getPlayerFreeCap(cid) local p = Player(cid) return p and (p:getFreeCapacity() / 100) or false end
 function getPlayerPosition(cid) local p = Player(cid) return p and p:getPosition() or false end
-function getPlayerMagLevel(cid) local p = Player(cid) return p and p:getMagicLevel() or false end
 function getPlayerAccess(cid)
 	local player = Player(cid)
 	if player == nil then

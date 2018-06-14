@@ -425,10 +425,6 @@ void ConditionAttributes::updatePercentStats(Player* player)
 			case STAT_MAXHITPOINTS:
 				stats[i] = static_cast<int32_t>(player->getMaxHealth() * ((statsPercent[i] - 100) / 100.f));
 				break;
-
-			case STAT_MAGICPOINTS:
-				stats[i] = static_cast<int32_t>(player->getBaseMagicLevel() * ((statsPercent[i] - 100) / 100.f));
-				break;
 		}
 	}
 }
@@ -626,18 +622,8 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		case CONDITION_PARAM_STAT_MAGICPOINTS: {
-			stats[STAT_MAGICPOINTS] = value;
-			return true;
-		}
-
 		case CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT: {
 			statsPercent[STAT_MAXHITPOINTS] = std::max<int32_t>(0, value);
-			return true;
-		}
-
-		case CONDITION_PARAM_STAT_MAGICPOINTSPERCENT: {
-			statsPercent[STAT_MAGICPOINTS] = std::max<int32_t>(0, value);
 			return true;
 		}
 

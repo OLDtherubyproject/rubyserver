@@ -2787,7 +2787,7 @@
     <attribute key="description" value="You have a vague feeling that it looks somewhat silly." />
     <attribute key="weight" value="700" />
     <attribute key="armor" value="3" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="slotType" value="head" />
   </item>
   <item id="2324" article="a" name="broom">
@@ -14439,7 +14439,7 @@
     <attribute key="armor" value="7" />
     <attribute key="slotType" value="body" />
     <attribute key="weight" value="2550" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="8893" name="" />
   <item fromid="8894" toid="8897" article="a" name="mysterious machine" />
@@ -14447,31 +14447,31 @@
   <item id="8900" article="a" name="movebook of enlightenment">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="1950" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="defense" value="18" />
   </item>
   <item id="8901" article="a" name="movebook of warding">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2100" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="defense" value="22" />
   </item>
   <item id="8902" article="a" name="movebook of mind control">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2450" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="defense" value="16" />
   </item>
   <item id="8903" article="a" name="movebook of lost souls">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2560" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="defense" value="20" />
   </item>
   <item id="8904" article="a" name="movescroll of prophecies">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2650" />
-    <attribute key="magiclevelpoints" value="3" />
+    
     <attribute key="defense" value="12" />
   </item>
   <item id="8905" article="a" name="rainbow shield">
@@ -14533,7 +14533,7 @@
   <item id="8918" article="a" name="movebook of dark mysteries">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2850" />
-    <attribute key="magiclevelpoints" value="3" />
+    
     <attribute key="defense" value="16" />
   </item>
   <item id="8919" article="a" name="move rune">
@@ -15536,7 +15536,7 @@
     <attribute key="weight" value="3500" />
     <attribute key="armor" value="5" />
     <attribute key="slotType" value="head" />
-    <attribute key="magiclevelpoints" value="2" />
+    
   </item>
   <item id="9779" article="a" name="crystal column" />
   <item fromid="9784" toid="9791" article="a" name="crystal column" />
@@ -16214,7 +16214,7 @@
     <attribute key="weight" value="600" />
     <attribute key="armor" value="3" />
     <attribute key="slotType" value="head" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="10017" article="a" name="football" />
   <item id="10018" article="a" name="voodoo doll">
@@ -18504,7 +18504,7 @@
   <item id="11368" article="a" name="jade hat">
     <attribute key="weight" value="900" />
     <attribute key="armor" value="4" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="slotType" value="head" />
   </item>
   <item id="11369" article="a" name="terramite shell">
@@ -19578,7 +19578,7 @@
   <item id="12630" article="a" name="cobra crown">
     <attribute key="weight" value="850" />
     <attribute key="armor" value="3" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="absorbPercentFire" value="-5" />
     <attribute key="absorbPercentEarth" value="5" />
     <attribute key="slotType" value="head" />
@@ -19640,7 +19640,7 @@
     <attribute key="weight" value="4500" />
     <attribute key="armor" value="12" />
     <attribute key="slotType" value="body" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="absorbPercentFire" value="5" />
   </item>
   <item id="12644" article="a" name="shield of corruption">
@@ -19665,7 +19665,7 @@
   <item id="12647" article="a" name="snake god's wristguard">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2800" />
-    <attribute key="magiclevelpoints" value="3" />
+    
     <attribute key="defense" value="14" />
   </item>
   <item id="12648" article="a" name="snake god's sceptre">
@@ -22096,7 +22096,7 @@
   <item id="15411" article="a" name="depth scutum">
     <attribute key="weight" value="3000" />
     <attribute key="defense" value="25" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="showattributes" value="1" />
   </item>
   <item id="15412" article="an" name="ornate legs">
@@ -22285,7 +22285,7 @@
     <attribute key="weight" value="2000" />
     <attribute key="armor" value="12" />
     <attribute key="slotType" value="body" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="absorbPercentIce" value="5" />
   </item>
   <item id="15490" article="a" name="grasshopper legs">
@@ -22603,7 +22603,7 @@
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="defense" value="19" />
     <attribute key="absorbPercentDeath" value="5" />
-    <attribute key="magiclevelpoints" value="4" />
+    
     <attribute key="showattributes" value="1" />
   </item>
   <item id="16619" article="a" name="miniature house">
@@ -23379,7 +23379,7 @@
     <attribute key="description" value="It reveals devastating energy arcs." />
     <attribute key="weight" value="3700" />
     <attribute key="range" value="4" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18391" article="a" name="glowing mushroom">
     <attribute key="weight" value="1000" />
@@ -23414,7 +23414,7 @@
     <attribute key="slotType" value="head" />
     <attribute key="absorbPercentEarth" value="6" />
     <attribute key="absorbPercentFire" value="-6" />
-    <attribute key="magiclevelpoints" value="2" />
+    
   </item>
   <item id="18399" article="a" name="gill coat">
     <attribute key="weight" value="1900" />
@@ -23422,7 +23422,7 @@
     <attribute key="slotType" value="body" />
     <attribute key="absorbPercentEarth" value="10" />
     <attribute key="absorbPercentFire" value="-10" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18400" article="a" name="gill legs">
     <attribute key="weight" value="2800" />
@@ -23430,12 +23430,12 @@
     <attribute key="slotType" value="portrait" />
     <attribute key="absorbPercentEarth" value="8" />
     <attribute key="absorbPercentFire" value="-8" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18401" article="a" name="movebook of vigilance">
     <attribute key="description" value="It shows your moves and can also shield against attacks when worn." />
     <attribute key="weight" value="2700" />
-    <attribute key="magiclevelpoints" value="3" />
+    
     <attribute key="defense" value="20" />
     <attribute key="absorbPercentEarth" value="3" />
     <attribute key="absorbPercentFire" value="-3" />
@@ -23502,7 +23502,7 @@
     <attribute key="description" value="It contains the everblazing fire." />
     <attribute key="weight" value="3700" />
     <attribute key="range" value="4" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18410" article="a" name="prismatic shield">
     <attribute key="weight" value="7200" />
@@ -23516,14 +23516,14 @@
     <attribute key="weight" value="3700" />
     <attribute key="shootType" value="smallearth" />
     <attribute key="range" value="4" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18412" article="a" name="glacial rod">
     <attribute key="description" value="Hurls the icy essence of the Svargrond glaciers." />
     <attribute key="weight" value="3700" />
     <attribute key="shootType" value="smallice" />
     <attribute key="range" value="4" />
-    <attribute key="magiclevelpoints" value="1" />
+    
   </item>
   <item id="18413" article="a" name="blue crystal shard">
     <attribute key="weight" value="20" />
@@ -27723,7 +27723,7 @@
     <attribute key="armor" value="12" />
     <attribute key="slotType" value="body" />
     <attribute key="absorbPercentFire" value="5" />
-    <attribute key="magiclevelpoints" value="2" />
+    
   </item>
   <item fromid="21731" toid="21732" name="memory box">
     <attribute key="description" value="It is said to freeze time itself to capture your fondest memories." />
@@ -27942,7 +27942,7 @@
   </item>
   <item id="22422" article="a" name="crude umbral movebook">
     <attribute key="weight" value="4000" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="absorbPercentEarth" value="2" />
     <attribute key="absorbPercentFire" value="2" />
     <attribute key="absorbPercentIce" value="2" />
@@ -27951,7 +27951,7 @@
   </item>
   <item id="22423" article="a" name="umbral movebook">
     <attribute key="weight" value="3500" />
-    <attribute key="magiclevelpoints" value="2" />
+    
     <attribute key="absorbPercentEarth" value="3" />
     <attribute key="absorbPercentFire" value="3" />
     <attribute key="absorbPercentIce" value="3" />
@@ -27960,7 +27960,7 @@
   </item>
   <item id="22424" article="a" name="umbral master movebook">
     <attribute key="weight" value="3000" />
-    <attribute key="magiclevelpoints" value="4" />
+    
     <attribute key="absorbPercentEarth" value="5" />
     <attribute key="absorbPercentFire" value="5" />
     <attribute key="absorbPercentIce" value="5" />
@@ -28959,7 +28959,7 @@
     <attribute key="slotType" value="head" />
     <attribute key="absorbPercentEarth" value="3" />
     <attribute key="absorbPercentFire" value="-3" />
-    <attribute key="magiclevelpoints" value="1" />
+    
     <attribute key="weight" value="800" />
   </item>
   <item id="23537" article="a" name="mooh'tah plate">

@@ -388,7 +388,6 @@ int32_t Player::getDefaultStats(stats_t stat) const
 {
 	switch (stat) {
 		case STAT_MAXHITPOINTS: return healthMax;
-		case STAT_MAGICPOINTS: return getBaseMagicLevel();
 		default: return 0;
 	}
 }

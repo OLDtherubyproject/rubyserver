@@ -859,8 +859,6 @@ class LuaScriptInterface
 		static int luaPlayerRemoveExperience(lua_State* L);
 		static int luaPlayerGetLevel(lua_State* L);
 
-		static int luaPlayerGetMagicLevel(lua_State* L);
-		static int luaPlayerGetBaseMagicLevel(lua_State* L);
 		static int luaPlayerGetPokemonHealth(lua_State* L);
 		static int luaPlayerGetPokemonHealthMax(lua_State* L);
 		static int luaPlayerSetPokemonHealthMax(lua_State* L);

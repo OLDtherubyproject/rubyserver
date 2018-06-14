@@ -612,10 +612,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.getAbilities().stats[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "maxhitpointspercent") {
 			it.getAbilities().statsPercent[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "magicpoints" || tmpStrValue == "magiclevelpoints") {
-			it.getAbilities().stats[STAT_MAGICPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "magicpointspercent") {
-			it.getAbilities().statsPercent[STAT_MAGICPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "criticalhitchance") {
 			it.getAbilities().specialSkills[SPECIALSKILL_CRITICALHITCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "criticalhitamount") {

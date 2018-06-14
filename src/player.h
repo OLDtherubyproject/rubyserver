@@ -369,15 +369,6 @@ class Player final : public Creature, public Cylinder
 		uint8_t getLevelPercent() const {
 			return levelPercent;
 		}
-		uint32_t getMagicLevel() const {
-			return std::max<int32_t>(0, magLevel + varStats[STAT_MAGICPOINTS]);
-		}
-		uint32_t getBaseMagicLevel() const {
-			return magLevel;
-		}
-		uint8_t getMagicLevelPercent() const {
-			return magLevelPercent;
-		}
 		uint8_t getPokemonCapacity() const {
 			return pokemonCapacity;
 		}
@@ -1258,7 +1249,6 @@ class Player final : public Creature, public Cylinder
 		uint32_t conditionImmunities = 0;
 		uint32_t conditionSuppressions = 0;
 		uint32_t level = 1;
-		uint32_t magLevel = 0;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
 		uint32_t walkTaskEvent = 0;
@@ -1286,7 +1276,6 @@ class Player final : public Creature, public Cylinder
 		uint8_t pokemonCapacity = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
-		uint8_t magLevelPercent = 50;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;

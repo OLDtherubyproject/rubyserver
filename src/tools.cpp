@@ -780,9 +780,6 @@ std::string getSkillName(uint8_t skillid)
 		case SKILL_FISHING:
 			return "fishing";
 
-		case SKILL_MAGLEVEL:
-			return "magic level";
-
 		case SKILL_LEVEL:
 			return "level";
 
@@ -1185,9 +1182,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_NOTENOUGHLEVEL:
 			return "You do not have enough level.";
-
-		case RETURNVALUE_NOTENOUGHMAGICLEVEL:
-			return "You do not have enough magic level.";
 
 		case RETURNVALUE_YOUAREEXHAUSTED:
 			return "You are exhausted.";

@@ -88,7 +88,6 @@ classicAttackSpeed = false
 rateExp = 5
 rateSkill = 3
 rateLoot = 2
-rateMagic = 3
 rateSpawn = 1
 rateCatch = 1
 

@@ -1178,9 +1178,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SKILL_SHIELD)
 	registerEnum(CONDITION_PARAM_SKILL_FISHING)
 	registerEnum(CONDITION_PARAM_STAT_MAXHITPOINTS)
-	registerEnum(CONDITION_PARAM_STAT_MAGICPOINTS)
 	registerEnum(CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT)
-	registerEnum(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT)
 	registerEnum(CONDITION_PARAM_PERIODICDAMAGE)
 	registerEnum(CONDITION_PARAM_SKILL_MELEEPERCENT)
 	registerEnum(CONDITION_PARAM_SKILL_FISTPERCENT)
@@ -1564,7 +1562,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKILL_DISTANCE)
 	registerEnum(SKILL_SHIELD)
 	registerEnum(SKILL_FISHING)
-	registerEnum(SKILL_MAGLEVEL)
 	registerEnum(SKILL_LEVEL)
 
 	registerEnum(GENDER_NONE)
@@ -1775,7 +1772,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_YOUMAYNOTLOGOUTDURINGAFIGHT)
 	registerEnum(RETURNVALUE_DIRECTPLAYERSHOOT)
 	registerEnum(RETURNVALUE_NOTENOUGHLEVEL)
-	registerEnum(RETURNVALUE_NOTENOUGHMAGICLEVEL)
 	registerEnum(RETURNVALUE_YOUAREEXHAUSTED)
 	registerEnum(RETURNVALUE_PLAYERISNOTREACHABLE)
 	registerEnum(RETURNVALUE_CANONLYUSETHISRUNEONCREATURES)
@@ -1889,7 +1885,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::RATE_EXPERIENCE)
 	registerEnumIn("configKeys", ConfigManager::RATE_SKILL)
 	registerEnumIn("configKeys", ConfigManager::RATE_LOOT)
-	registerEnumIn("configKeys", ConfigManager::RATE_MAGIC)
 	registerEnumIn("configKeys", ConfigManager::RATE_SPAWN)
 	registerEnumIn("configKeys", ConfigManager::RATE_CATCH)
 	registerEnumIn("configKeys", ConfigManager::HOUSE_PRICE)
@@ -2271,8 +2266,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "removeExperience", LuaScriptInterface::luaPlayerRemoveExperience);
 	registerMethod("Player", "getLevel", LuaScriptInterface::luaPlayerGetLevel);
 
-	registerMethod("Player", "getMagicLevel", LuaScriptInterface::luaPlayerGetMagicLevel);
-	registerMethod("Player", "getBaseMagicLevel", LuaScriptInterface::luaPlayerGetBaseMagicLevel);
 	registerMethod("Player", "getPokemonHealth", LuaScriptInterface::luaPlayerGetPokemonHealth);
 	registerMethod("Player", "getPokemonHealthMax", LuaScriptInterface::luaPlayerGetPokemonHealthMax);
 	registerMethod("Player", "setPokemonHealthMax", LuaScriptInterface::luaPlayerSetPokemonHealthMax);
@@ -7967,30 +7960,6 @@ int LuaScriptInterface::luaPlayerGetLevel(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->getLevel());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetMagicLevel(lua_State* L)
-{
-	// player:getMagicLevel()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getMagicLevel());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetBaseMagicLevel(lua_State* L)
-{
-	// player:getBaseMagicLevel()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getBaseMagicLevel());
 	} else {
 		lua_pushnil(L);
 	}

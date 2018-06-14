@@ -79,7 +79,6 @@ class ConfigManager
 			RATE_EXPERIENCE,
 			RATE_SKILL,
 			RATE_LOOT,
-			RATE_MAGIC,
 			RATE_SPAWN,
 			RATE_CATCH,
 			HOUSE_PRICE,

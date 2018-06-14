@@ -1925,16 +1925,6 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 			ss << getSkillName(i) << ' ' << std::showpos << it.abilities->skills[i] << std::noshowpos;
 		}
 
-		if (it.abilities->stats[STAT_MAGICPOINTS] != 0) {
-			if (separator) {
-				ss << ", ";
-			} else {
-				separator = true;
-			}
-
-			ss << "magic level " << std::showpos << it.abilities->stats[STAT_MAGICPOINTS] << std::noshowpos;
-		}
-
 		if (it.abilities->speed != 0) {
 			if (separator) {
 				ss << ", ";
@@ -2904,9 +2894,10 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(std::min<int32_t>(player->getPokemonHealth(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getPokemonHealthMax(), std::numeric_limits<uint16_t>::max()));
 
-	msg.addByte(std::min<uint32_t>(player->getMagicLevel(), std::numeric_limits<uint8_t>::max()));
-	msg.addByte(std::min<uint32_t>(player->getBaseMagicLevel(), std::numeric_limits<uint8_t>::max()));
-	msg.addByte(player->getMagicLevelPercent());
+	// old magic level remove it
+	msg.addByte(1);
+	msg.addByte(1);
+	msg.addByte(0);
 
 	msg.addByte(player->getPokemonCapacity());
 
