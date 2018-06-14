@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <clans>
+	<clan id="0" clientid="0" name="None" description="none" fromclan="1">
+		<type id="1" multiplier="1.0" />
+		<type id="2" multiplier="1.0" />
+		<type id="3" multiplier="1.0" />
+		<type id="4" multiplier="1.0" />
+		<type id="5" multiplier="1.0" />
+		<type id="6" multiplier="1.0" />
+		<type id="7" multiplier="1.0" />
+		<type id="8" multiplier="1.0" />
+		<type id="9" multiplier="1.0" />
+		<type id="10" multiplier="1.0" />
+		<type id="11" multiplier="1.0" />
+		<type id="12" multiplier="1.0" />
+		<type id="13" multiplier="1.0" />
+		<type id="14" multiplier="1.0" />
+		<type id="15" multiplier="1.0" />
+		<type id="16" multiplier="1.0" />
+		<type id="17" multiplier="1.0" />
+		<type id="18" multiplier="1.0" />
+	</clan>
 	<clan id="1" clientid="1" name="Raibolt" description="raibolt" fromclan="1">
 		<type id="1" multiplier="1.0" />
 		<type id="2" multiplier="1.0" />
