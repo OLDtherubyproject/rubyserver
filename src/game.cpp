@@ -4536,12 +4536,23 @@ void Game::checkPlayersRecord()
 
 void Game::updatePlayersRecord() const
 {
-	//
+	Database& db = Database::getInstance();
+
+	std::ostringstream query;
+	query << "UPDATE `game` SET `value` = '" << playersRecord << "' WHERE `key` = 'characters_record'";
+	db.executeQuery(query.str());
 }
 
 void Game::loadPlayersRecord()
 {
-	//
+	Database& db = Database::getInstance();
+
+	DBResult_ptr result = db.storeQuery("SELECT `value` FROM `game` WHERE `key` = 'characters_record'");
+	if (result) {
+		playersRecord = result->getNumber<uint32_t>("value");
+	} else {
+		db.executeQuery("INSERT INTO `game` (`key`, `value`) VALUES ('characters_record', '0')");
+	}
 }
 
 uint64_t Game::getExperienceStage(uint32_t level)
