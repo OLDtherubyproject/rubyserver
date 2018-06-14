@@ -1407,8 +1407,8 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 	uint32_t prevLevel = level;
 	while (experience >= nextLevelExp) {
 		++level;
-		healthMax += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
-		health += g_config.getNumber(ConfigManager::PLAYER_GAIN_HP);
+		healthMax += profession->getHPGain();
+		health += profession->getHPGain();
 		capacity += profession->getCapGain();
 
 		currLevelExp = nextLevelExp;
@@ -1497,7 +1497,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 
 	while (level > 1 && experience < currLevelExp) {
 		--level;
-		healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
+		healthMax = std::max<int32_t>(0, healthMax - profession->getHPGain());
 		capacity = std::max<int32_t>(0, capacity - profession->getCapGain());
 		currLevelExp = Player::getExpForLevel(level);
 	}
@@ -1650,7 +1650,7 @@ void Player::death(Creature* lastHitCreature)
 
 			while (level > 1 && experience < Player::getExpForLevel(level)) {
 				--level;
-				healthMax = std::max<int32_t>(0, healthMax - g_config.getNumber(ConfigManager::PLAYER_GAIN_HP));
+				healthMax = std::max<int32_t>(0, healthMax - profession->getHPGain());
 				capacity = std::max<int32_t>(0, capacity - profession->getCapGain());
 			}
 
