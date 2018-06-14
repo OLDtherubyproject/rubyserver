@@ -12,7 +12,7 @@ function onSay(player, words, param)
 	local level = split[2]
 
 	if not level then
-		level = 1
+		level = player:getLevel()
 	end
 
 	local position = player:getPosition()
