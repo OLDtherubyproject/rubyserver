@@ -156,10 +156,17 @@ void mainLoader(int, char*[], ServiceManager* services)
 	}
 #endif
 
+	std::cout << ">> Loading RSA key" << std::endl;
+
 	//set RSA key
 	const char* p(g_config.getString(ConfigManager::PRIME1).c_str());
 	const char* q(g_config.getString(ConfigManager::PRIME2).c_str());
 	g_RSA.setKey(p, q);
+
+	if ((*p == 0) || (*q == 0)) {
+		startupErrorMessage("The RSA key is invalid.");
+		return;
+	}
 
 	std::cout << ">> Establishing database connection..." << std::flush;
 
