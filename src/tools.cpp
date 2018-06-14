@@ -1165,9 +1165,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_PLAYERWITHTHISNAMEISNOTONLINE:
 			return "A player with this name is not online.";
 
-		case RETURNVALUE_NOTREQUIREDLEVELTOUSERUNE:
-			return "You do not have the required magic level to use this rune.";
-
 		case RETURNVALUE_YOUAREALREADYTRADING:
 			return "You are already trading.";
 
@@ -1185,9 +1182,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_YOUAREEXHAUSTED:
 			return "You are exhausted.";
-
-		case RETURNVALUE_CANONLYUSETHISRUNEONCREATURES:
-			return "You can only use this rune on creatures.";
 
 		case RETURNVALUE_PLAYERISNOTREACHABLE:
 			return "Player is not reachable.";

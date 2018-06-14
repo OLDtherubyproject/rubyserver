@@ -772,7 +772,7 @@ if Modules == nil then
 	--	names = A table containing one or more strings of alternative names to this item. Used only for old buy/sell system.
 	--	itemid = The itemid of the buyable item
 	--	cost = The price of one single item
-	--	subType - The subType of each rune or fluidcontainer item. Can be left out if it is not a rune/fluidcontainer. Default value is 1.
+	--	subType - The subType of each fluidcontainer item. Can be left out if it is not a fluidcontainer. Default value is 1.
 	--	realName - The real, full name for the item. Will be used as ITEMNAME in MESSAGE_ONBUY and MESSAGE_ONSELL if defined. Default value is nil (getItemName will be used)
 	function ShopModule:addBuyableItem(names, itemid, cost, itemSubType, realName)
 		if SHOPMODULE_MODE ~= SHOPMODULE_MODE_TALK then
@@ -839,7 +839,7 @@ if Modules == nil then
 	--	container = Backpack, bag or any other itemid of container where bought items will be stored
 	--	itemid = The itemid of the buyable item
 	--	cost = The price of one single item
-	--	subType - The subType of each rune or fluidcontainer item. Can be left out if it is not a rune/fluidcontainer. Default value is 1.
+	--	subType - The subType of each fluidcontainer item. Can be left out if it is not a fluidcontainer. Default value is 1.
 	--	realName - The real, full name for the item. Will be used as ITEMNAME in MESSAGE_ONBUY and MESSAGE_ONSELL if defined. Default value is nil (getItemName will be used)
 	function ShopModule:addBuyableItemContainer(names, container, itemid, cost, subType, realName)
 		if names then

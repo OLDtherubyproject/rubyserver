@@ -2621,145 +2621,145 @@
   <item id="2268" article="a" name="fresh ball">
     <attribute key="slotType" value="pokeball" />
   </item>
-  <item id="2269" article="a" name="wild growth rune">
+  <item id="2269" article="a" name="wild growth">
     <attribute key="weight" value="105" />
     <attribute key="charges" value="2" />
   </item>
-  <item id="2270" article="a" name="move rune">
+  <item id="2270" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2271" article="an" name="icicle rune">
+  <item id="2271" article="an" name="icicle">
     <attribute key="weight" value="42" />
     <attribute key="charges" value="5" />
   </item>
-  <item id="2272" article="a" name="move rune">
+  <item id="2272" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2273" article="an" name="ultimate healing rune">
+  <item id="2273" article="an" name="ultimate healing">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="1" />
   </item>
-  <item id="2274" article="an" name="avalanche rune">
+  <item id="2274" article="an" name="avalanche">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item fromid="2275" toid="2276" article="a" name="move rune">
+  <item fromid="2275" toid="2276" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2277" article="an" name="energy field rune">
+  <item id="2277" article="an" name="energy field">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2278" article="a" name="paralyze rune">
+  <item id="2278" article="a" name="paralyze">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="1" />
   </item>
-  <item id="2279" article="an" name="energy wall rune">
+  <item id="2279" article="an" name="energy wall">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item fromid="2280" toid="2284" article="a" name="move rune">
+  <item fromid="2280" toid="2284" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2285" article="a" name="poison field rune">
+  <item id="2285" article="a" name="poison field">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2286" article="a" name="poison bomb rune">
+  <item id="2286" article="a" name="poison bomb">
     <attribute key="weight" value="105" />
     <attribute key="charges" value="2" />
   </item>
-  <item id="2287" article="a" name="light magic missile rune">
+  <item id="2287" article="a" name="light magic missile">
     <attribute key="weight" value="21" />
     <attribute key="charges" value="10" />
   </item>
-  <item id="2288" article="a" name="stone shower rune">
+  <item id="2288" article="a" name="stone shower">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="2289" article="a" name="poison wall rune">
+  <item id="2289" article="a" name="poison wall">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="2290" article="a" name="convince creature rune">
+  <item id="2290" article="a" name="convince creature">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="1" />
   </item>
-  <item id="2291" article="a" name="chameleon rune">
+  <item id="2291" article="a" name="chameleon">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="1" />
   </item>
-  <item id="2292" article="a" name="stalagmite rune">
+  <item id="2292" article="a" name="stalagmite">
     <attribute key="weight" value="21" />
     <attribute key="charges" value="10" />
   </item>
-  <item id="2293" article="a" name="magic wall rune">
+  <item id="2293" article="a" name="magic wall">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2294" article="a" name="move rune">
+  <item id="2294" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2295" article="a" name="holy missile rune">
+  <item id="2295" article="a" name="holy missile">
     <attribute key="weight" value="42" />
     <attribute key="charges" value="5" />
   </item>
-  <item fromid="2296" toid="2300" article="a" name="move rune">
+  <item fromid="2296" toid="2300" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2301" article="a" name="fire field rune">
+  <item id="2301" article="a" name="fire field">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2302" article="a" name="fireball rune">
+  <item id="2302" article="a" name="fireball">
     <attribute key="weight" value="42" />
     <attribute key="charges" value="5" />
   </item>
-  <item id="2303" article="a" name="fire wall rune">
+  <item id="2303" article="a" name="fire wall">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="2304" article="a" name="great fireball rune">
+  <item id="2304" article="a" name="great fireball">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="2305" article="a" name="fire bomb rune">
+  <item id="2305" article="a" name="fire bomb">
     <attribute key="weight" value="105" />
     <attribute key="charges" value="2" />
   </item>
-  <item fromid="2306" toid="2307" article="a" name="move rune">
+  <item fromid="2306" toid="2307" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2308" article="a" name="soulfire rune">
+  <item id="2308" article="a" name="soulfire">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2309" article="a" name="move rune">
+  <item id="2309" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2310" article="a" name="disintegrate rune">
+  <item id="2310" article="a" name="disintegrate">
     <attribute key="weight" value="70" />
     <attribute key="charges" value="3" />
   </item>
-  <item id="2311" article="a" name="heavy magic missile rune">
+  <item id="2311" article="a" name="heavy magic missile">
     <attribute key="weight" value="21" />
     <attribute key="charges" value="10" />
   </item>
-  <item id="2312" article="a" name="move rune">
+  <item id="2312" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2313" article="an" name="explosion rune">
+  <item id="2313" article="an" name="explosion">
     <attribute key="weight" value="35" />
     <attribute key="charges" value="6" />
   </item>
-  <item id="2314" article="a" name="move rune">
+  <item id="2314" article="a" name="move">
     <attribute key="weight" value="120" />
   </item>
-  <item id="2315" article="a" name="thunderstorm rune">
+  <item id="2315" article="a" name="thunderstorm">
     <attribute key="weight" value="52" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="2316" article="an" name="animate dead rune">
+  <item id="2316" article="an" name="animate dead">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="1" />
   </item>
@@ -2883,8 +2883,8 @@
     <attribute key="weight" value="1500" />
     <attribute key="description" value="It contains several exotic recipes." />
   </item>
-  <item id="2348" article="an" name="ancient rune">
-    <attribute key="description" value="This rune vibrates with ancient powers. It seems to be rotting rapidly." />
+  <item id="2348" article="an" name="ancient">
+    <attribute key="description" value="This vibrates with ancient powers. It seems to be rotting rapidly." />
     <attribute key="weight" value="300" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="86400" />
@@ -14536,8 +14536,8 @@
     
     <attribute key="defense" value="16" />
   </item>
-  <item id="8919" article="a" name="move rune">
-    <attribute key="description" value="It is Yandur's healing rune. You can't remove it from his house, but you may use it." />
+  <item id="8919" article="a" name="move">
+    <attribute key="description" value="It is Yandur's healing. You can't remove it from his house, but you may use it." />
   </item>
   <item id="8920" article="a" name="wand of starstorm">
     <attribute key="description" value="It is sparkling with universal energy." />
@@ -19295,196 +19295,196 @@
     <attribute key="description" value="It's said to have incredible effects if you drink it while wearing a magical ring with time limit." />
     <attribute key="weight" value="300" />
   </item>
-  <item id="12559" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned ultimate healing rune." />
+  <item id="12559" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned ultimate healing." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12560" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned ultimate healing rune." />
+  <item id="12560" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned ultimate healing." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12561" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned heavy magic missile rune." />
+  <item id="12561" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned heavy magic missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12562" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned heavy magic missile rune." />
+  <item id="12562" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned heavy magic missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12563" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned explosion rune." />
+  <item id="12563" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned explosion." />
     <attribute key="weight" value="210" />
   </item>
-  <item id="12564" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned explosion rune." />
+  <item id="12564" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned explosion." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12565" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned sudden death rune." />
+  <item id="12565" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned sudden death." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12566" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned sudden death rune." />
+  <item id="12566" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned sudden death." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12567" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned magic wall rune." />
+  <item id="12567" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned magic wall." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12568" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned magic wall rune." />
+  <item id="12568" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned magic wall." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12569" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned animate dead rune." />
+  <item id="12569" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned animate dead." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12570" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned animate dead rune." />
+  <item id="12570" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned animate dead." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12571" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned great fireball rune." />
+  <item id="12571" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned great fireball." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12572" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned great fireball rune." />
+  <item id="12572" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned great fireball." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12573" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned fireball rune." />
+  <item id="12573" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned fireball." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12574" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned fireball rune." />
+  <item id="12574" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned fireball." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12575" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned thunderstorm rune." />
+  <item id="12575" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned thunderstorm." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12576" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned thunderstorm rune." />
+  <item id="12576" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned thunderstorm." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12577" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned icicle rune." />
+  <item id="12577" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned icicle." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12578" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned icicle rune." />
+  <item id="12578" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned icicle." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12579" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned avalanche rune." />
+  <item id="12579" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned avalanche." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12580" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned avalanche rune." />
+  <item id="12580" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned avalanche." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12581" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned holy missile rune." />
+  <item id="12581" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned holy missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12582" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned holy missile rune." />
+  <item id="12582" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned holy missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12583" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned energy bomb rune." />
+  <item id="12583" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned energy bomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12584" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned energy bomb rune." />
+  <item id="12584" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned energy bomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12585" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned paralyze rune." />
+  <item id="12585" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned paralyze." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12586" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned paralyze rune." />
+  <item id="12586" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned paralyze." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12587" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned desintegrate rune." />
+  <item id="12587" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned desintegrate." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12588" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned desintegrate rune." />
+  <item id="12588" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned desintegrate." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12589" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned chameleon rune." />
+  <item id="12589" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned chameleon." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12590" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned chameleon rune." />
+  <item id="12590" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned chameleon." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12591" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned energy wall rune." />
+  <item id="12591" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned energy wall." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12592" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned energy wall rune." />
+  <item id="12592" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned energy wall." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12593" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned soulfire rune." />
+  <item id="12593" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned soulfire." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12594" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned soulfire rune." />
+  <item id="12594" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned soulfire." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12595" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned destroy field rune." />
+  <item id="12595" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned destroy field." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12596" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned destroy field rune." />
+  <item id="12596" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned destroy field." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12597" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned wild growth rune." />
+  <item id="12597" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned wild growth." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12598" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned wild growth rune." />
+  <item id="12598" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned wild growth." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12599" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned firebomb rune." />
+  <item id="12599" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned firebomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12600" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned firebomb rune." />
+  <item id="12600" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned firebomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12601" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned poison bomb rune." />
+  <item id="12601" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned poison bomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12602" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned poison bomb rune." />
+  <item id="12602" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned poison bomb." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12603" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned light magic missile rune." />
+  <item id="12603" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned light magic missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12604" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned light magic missile rune." />
+  <item id="12604" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned light magic missile." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12605" article="a" name="silver rune emblem">
-    <attribute key="description" value="It's an adorned fire field rune." />
+  <item id="12605" article="a" name="silver emblem">
+    <attribute key="description" value="It's an adorned fire field." />
     <attribute key="weight" value="120" />
   </item>
-  <item id="12606" article="a" name="golden rune emblem">
-    <attribute key="description" value="It's an adorned fire field rune." />
+  <item id="12606" article="a" name="golden emblem">
+    <attribute key="description" value="It's an adorned fire field." />
     <attribute key="weight" value="120" />
   </item>
   <item id="12607" article="an" name="elite draken mail">
@@ -24043,7 +24043,7 @@
   <item fromid="19332" toid="19342" article="a" name="brown stone wall" />
   <item fromid="19354" toid="19375" article="an" name="ornate wall" />
   <item fromid="19376" toid="19388" article="a" name="stone wall" />
-  <item id="19392" article="a" name="lightest magic missile rune">
+  <item id="19392" article="a" name="lightest magic missile">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="10" />
   </item>
@@ -29180,11 +29180,11 @@
     <attribute key="shootType" value="smallice" />
     <attribute key="range" value="3" />
   </item>
-  <item id="23722" article="a" name="light stone shower rune">
+  <item id="23722" article="a" name="light stone shower">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="4" />
   </item>
-  <item id="23723" article="a" name="lightest missile rune">
+  <item id="23723" article="a" name="lightest missile">
     <attribute key="weight" value="210" />
     <attribute key="charges" value="4" />
   </item>
@@ -29236,13 +29236,13 @@
   <item id="23802" article="the" name="scorcher">
     <attribute key="description" value="Ideal for young sorcerers to practise the ways of their magic." />
   </item>
-  <item id="23803" article="a" name="light missile rune">
+  <item id="23803" article="a" name="light missile">
     <attribute key="description" value="It stores a small amount of vibrant magical energy." />
   </item>
   <item id="23804" article="the" name="chiller">
     <attribute key="description" value="Ideally suited to teach young druids the first steps in their craft." />
   </item>
-  <item id="23805" article="a" name="light stone shower rune">
+  <item id="23805" article="a" name="light stone shower">
     <attribute key="description" value="It holds some fragment of the power of the earth." />
   </item>
   <item id="23806" article="an" name="black knight doll">

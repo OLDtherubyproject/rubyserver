@@ -620,7 +620,6 @@ function getHouseTown(houseId) local h = House(houseId) if h == nil then return 
 function getHouseTilesSize(houseId) local h = House(houseId) return h and h:getTileCount() or false end
 
 function isItemStackable(itemId) return ItemType(itemId):isStackable() end
-function isItemRune(itemId) return ItemType(itemId):isRune() end
 function isItemDoor(itemId) return ItemType(itemId):isDoor() end
 function isItemContainer(itemId) return ItemType(itemId):isContainer() end
 function isItemFluidContainer(itemId) return ItemType(itemId):isFluidContainer() end

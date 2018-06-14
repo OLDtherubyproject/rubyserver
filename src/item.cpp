@@ -370,8 +370,7 @@ void Item::setSubType(uint16_t n)
 Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 {
 	switch (attr) {
-		case ATTR_COUNT:
-		case ATTR_RUNE_CHARGES: {
+		case ATTR_COUNT: {
 			uint8_t count;
 			if (!propStream.read<uint8_t>(count)) {
 				return ATTR_READ_ERROR;
