@@ -1,365 +1,1109 @@
-CREATE TABLE IF NOT EXISTS `accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `password` char(40) NOT NULL,
-  `secret` char(16) DEFAULT NULL,
-  `type` int(11) NOT NULL DEFAULT '1',
-  `premdays` int(11) NOT NULL DEFAULT '0',
-  `lastday` int(10) unsigned NOT NULL DEFAULT '0',
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `creation` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+-- phpMyAdmin SQL Dump
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jun 14, 2018 at 02:36 PM
+-- Server version: 5.7.22-0ubuntu0.16.04.1
+-- PHP Version: 7.2.6-1+ubuntu16.04.1+deb.sury.org+1
 
-CREATE TABLE IF NOT EXISTS `characters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `group_id` int(11) NOT NULL DEFAULT '1',
-  `account_id` int(11) NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '1',
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `rubyserver`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recovery_key` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` int(11) NOT NULL DEFAULT '1',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `premdays` int(11) NOT NULL DEFAULT '0',
+  `lastday` int(11) DEFAULT NULL,
+  `points` int(11) NOT NULL DEFAULT '0',
+  `points_spent` int(11) NOT NULL DEFAULT '0',
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_bans`
+--
+
+CREATE TABLE `account_bans` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
+  `reason` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banned_at` bigint(20) NOT NULL,
+  `expires_at` bigint(20) NOT NULL,
+  `banned_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_viplists`
+--
+
+CREATE TABLE `account_viplists` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` int(10) UNSIGNED NOT NULL,
+  `notify` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `characters`
+--
+
+CREATE TABLE `characters` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
+  `group_id` int(10) UNSIGNED NOT NULL DEFAULT '3',
+  `level` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `experience` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `profession` int(11) NOT NULL DEFAULT '0',
-  `health` int(11) NOT NULL DEFAULT '150',
-  `healthmax` int(11) NOT NULL DEFAULT '150',
-  `pokemon_capacity` int(10) unsigned NOT NULL DEFAULT '0',
-  `experience` bigint(20) NOT NULL DEFAULT '0',
-  `lookbody` int(11) NOT NULL DEFAULT '0',
-  `lookfeet` int(11) NOT NULL DEFAULT '0',
-  `lookhead` int(11) NOT NULL DEFAULT '0',
-  `looklegs` int(11) NOT NULL DEFAULT '0',
-  `looktype` int(11) NOT NULL DEFAULT '136',
+  `clan` int(11) NOT NULL DEFAULT '0',
+  `health` int(11) NOT NULL DEFAULT '500',
+  `healthmax` int(11) NOT NULL DEFAULT '500',
+  `pokemon_capacity` int(11) NOT NULL DEFAULT '6',
+  `lookbody` int(11) NOT NULL DEFAULT '1',
+  `lookfeet` int(11) NOT NULL DEFAULT '1',
+  `lookhead` int(11) NOT NULL DEFAULT '1',
+  `looklegs` int(11) NOT NULL DEFAULT '1',
+  `looktype` int(11) NOT NULL DEFAULT '1',
   `lookaddons` int(11) NOT NULL DEFAULT '0',
   `maglevel` int(11) NOT NULL DEFAULT '0',
   `town_id` int(11) NOT NULL DEFAULT '1',
-  `posx` int(11) NOT NULL DEFAULT '0',
-  `posy` int(11) NOT NULL DEFAULT '0',
-  `posz` int(11) NOT NULL DEFAULT '0',
-  `conditions` blob NOT NULL,
-  `cap` int(11) NOT NULL DEFAULT '400',
-  `sex` int(11) NOT NULL DEFAULT '0',
-  `lastlogin` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `lastip` int(10) unsigned NOT NULL DEFAULT '0',
+  `posx` int(11) NOT NULL DEFAULT '1',
+  `posy` int(11) NOT NULL DEFAULT '1',
+  `posz` int(11) NOT NULL DEFAULT '1',
+  `conditions` blob,
+  `cap` int(11) NOT NULL DEFAULT '1000',
+  `sex` int(11) NOT NULL DEFAULT '1',
+  `lastlogin` bigint(20) NOT NULL DEFAULT '0',
+  `lastip` int(11) NOT NULL DEFAULT '0',
   `save` tinyint(1) NOT NULL DEFAULT '1',
-  `lastlogout` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `blessings` tinyint(2) NOT NULL DEFAULT '0',
+  `lastlogout` bigint(20) NOT NULL DEFAULT '0',
+  `blessings` int(11) NOT NULL DEFAULT '0',
   `onlinetime` int(11) NOT NULL DEFAULT '0',
-  `deletion` bigint(15) NOT NULL DEFAULT '0',
-  `balance` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `stamina` smallint(5) unsigned NOT NULL DEFAULT '2520',
-  `skill_fist` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_fist_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_club` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_club_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_sword` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_sword_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_axe` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_axe_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_dist` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_dist_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_shielding` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_shielding_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `skill_fishing` int(10) unsigned NOT NULL DEFAULT 10,
-  `skill_fishing_tries` bigint(20) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  KEY `profession` (`profession`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+  `stamina` int(11) NOT NULL DEFAULT '5000',
+  `skill_fist` int(11) NOT NULL DEFAULT '1',
+  `skill_fist_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_club` int(11) NOT NULL DEFAULT '1',
+  `skill_club_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_sword` int(11) NOT NULL DEFAULT '1',
+  `skill_sword_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_axe` int(11) NOT NULL DEFAULT '1',
+  `skill_axe_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_dist` int(11) NOT NULL DEFAULT '1',
+  `skill_dist_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_shielding` int(11) NOT NULL DEFAULT '1',
+  `skill_shielding_tries` int(11) NOT NULL DEFAULT '0',
+  `skill_fishing` int(11) NOT NULL DEFAULT '1',
+  `skill_fishing_tries` int(11) NOT NULL DEFAULT '0',
+  `deletion` bigint(20) NOT NULL DEFAULT '0',
+  `balance` bigint(20) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `account_bans` (
-  `account_id` int(11) NOT NULL,
-  `reason` varchar(255) NOT NULL,
-  `banned_at` bigint(20) NOT NULL,
-  `expires_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`account_id`),
-  FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `account_ban_history` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `account_id` int(11) NOT NULL,
-  `reason` varchar(255) NOT NULL,
-  `banned_at` bigint(20) NOT NULL,
-  `expired_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS `ip_bans` (
-  `ip` int(10) unsigned NOT NULL,
-  `reason` varchar(255) NOT NULL,
-  `banned_at` bigint(20) NOT NULL,
-  `expires_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`ip`),
-  FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_namelocks` (
-  `character_id` int(11) NOT NULL,
-  `reason` varchar(255) NOT NULL,
-  `namelocked_at` bigint(20) NOT NULL,
-  `namelocked_by` int(11) NOT NULL,
-  PRIMARY KEY (`character_id`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`namelocked_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `account_viplists` (
-  `account_id` int(11) NOT NULL COMMENT 'id of account whose viplist entry it is',
-  `character_id` int(11) NOT NULL COMMENT 'id of target player of viplist entry',
-  `description` varchar(128) NOT NULL DEFAULT '',
-  `icon` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `notify` tinyint(1) NOT NULL DEFAULT '0',
-  UNIQUE KEY `account_character_index` (`account_id`,`character_id`),
-  FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guilds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `ownerid` int(11) NOT NULL,
-  `creationdata` int(11) NOT NULL,
-  `motd` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY (`name`),
-  UNIQUE KEY (`ownerid`),
-  FOREIGN KEY (`ownerid`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guild_invites` (
-  `character_id` int(11) NOT NULL DEFAULT '0',
-  `guild_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`character_id`,`guild_id`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guild_ranks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `guild_id` int(11) NOT NULL COMMENT 'guild',
-  `name` varchar(255) NOT NULL COMMENT 'rank name',
-  `level` int(11) NOT NULL COMMENT 'rank level - leader, vice, member, maybe something else',
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guild_memberships` (
-  `character_id` int(11) NOT NULL,
-  `guild_id` int(11) NOT NULL,
-  `guild_rank_id` int(11) NOT NULL,
-  `nick` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`character_id`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`guild_rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guild_wars` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `guild1` int(11) NOT NULL DEFAULT '0',
-  `guild2` int(11) NOT NULL DEFAULT '0',
-  `name1` varchar(255) NOT NULL,
-  `name2` varchar(255) NOT NULL,
-  `status` tinyint(2) NOT NULL DEFAULT '0',
-  `started` bigint(15) NOT NULL DEFAULT '0',
-  `ended` bigint(15) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `guild1` (`guild1`),
-  KEY `guild2` (`guild2`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `guildwar_kills` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `killer` varchar(50) NOT NULL,
-  `target` varchar(50) NOT NULL,
-  `killerguild` int(11) NOT NULL DEFAULT '0',
-  `targetguild` int(11) NOT NULL DEFAULT '0',
-  `warid` int(11) NOT NULL DEFAULT '0',
-  `time` bigint(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`warid`) REFERENCES `guild_wars` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `houses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `owner` int(11) NOT NULL,
-  `paid` int(10) unsigned NOT NULL DEFAULT '0',
-  `warnings` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `rent` int(11) NOT NULL DEFAULT '0',
-  `town_id` int(11) NOT NULL DEFAULT '0',
-  `bid` int(11) NOT NULL DEFAULT '0',
-  `bid_end` int(11) NOT NULL DEFAULT '0',
-  `last_bid` int(11) NOT NULL DEFAULT '0',
-  `highest_bidder` int(11) NOT NULL DEFAULT '0',
-  `size` int(11) NOT NULL DEFAULT '0',
-  `beds` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `owner` (`owner`),
-  KEY `town_id` (`town_id`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `house_lists` (
-  `house_id` int(11) NOT NULL,
-  `listid` int(11) NOT NULL,
-  `list` text NOT NULL,
-  FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `market_history` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `character_id` int(11) NOT NULL,
-  `sale` tinyint(1) NOT NULL DEFAULT '0',
-  `itemtype` int(10) unsigned NOT NULL,
-  `amount` smallint(5) unsigned NOT NULL,
-  `price` int(10) unsigned NOT NULL DEFAULT '0',
-  `expires_at` bigint(20) unsigned NOT NULL,
-  `inserted` bigint(20) unsigned NOT NULL,
-  `state` tinyint(1) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `character_id` (`character_id`, `sale`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `market_offers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `character_id` int(11) NOT NULL,
-  `sale` tinyint(1) NOT NULL DEFAULT '0',
-  `itemtype` int(10) unsigned NOT NULL,
-  `amount` smallint(5) unsigned NOT NULL,
-  `created` bigint(20) unsigned NOT NULL,
-  `anonymous` tinyint(1) NOT NULL DEFAULT '0',
-  `price` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`,`itemtype`),
-  KEY `created` (`created`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `characters_online` (
-  `character_id` int(11) NOT NULL,
-  PRIMARY KEY (`character_id`)
-) ENGINE=MEMORY DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_deaths` (
-  `character_id` int(11) NOT NULL,
-  `time` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '1',
-  `killed_by` varchar(255) NOT NULL,
-  `is_player` tinyint(1) NOT NULL DEFAULT '1',
-  `mostdamage_by` varchar(100) NOT NULL,
-  `mostdamage_is_player` tinyint(1) NOT NULL DEFAULT '0',
-  `unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
-  KEY `killed_by` (`killed_by`),
-  KEY `mostdamage_by` (`mostdamage_by`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_depotitems` (
-  `character_id` int(11) NOT NULL,
-  `sid` int(11) NOT NULL COMMENT 'any given range eg 0-100 will be reserved for depot lockers and all > 100 will be then normal items inside depots',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL,
-  `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  UNIQUE KEY `character_id_2` (`character_id`, `sid`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_inboxitems` (
-  `character_id` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL,
-  `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  UNIQUE KEY `character_id_2` (`character_id`, `sid`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_items` (
-  `character_id` int(11) NOT NULL DEFAULT '0',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL DEFAULT '0',
-  `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
-  KEY `sid` (`sid`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `character_storages` (
-  `character_id` int(11) NOT NULL DEFAULT '0',
-  `key` int(10) unsigned NOT NULL DEFAULT '0',
-  `value` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`character_id`,`key`),
-  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `settings` (
-  `config` varchar(50) NOT NULL,
-  `value` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY `config` (`config`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-INSERT INTO `settings` (`config`, `value`) VALUES ('db_version', '26'), ('motd_hash', ''), ('motd_num', '0'), ('characters_record', '0');
-
-CREATE TABLE IF NOT EXISTS `tile_store` (
-  `house_id` int(11) NOT NULL,
-  `data` longblob NOT NULL,
-  FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `towns` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `posx` int(11) NOT NULL DEFAULT '0',
-  `posy` int(11) NOT NULL DEFAULT '0',
-  `posz` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `pokemon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pokeball` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `shiny` boolean NOT NULL DEFAULT 0,
-  `nickname` varchar(255) NOT NULL,
-  `gender` int(1) NOT NULL DEFAULT '0',
-  `nature` int(2) NOT NULL DEFAULT '0',
-  `hpnow` int(11) NOT NULL DEFAULT '0',
-  `hp` int(2) NOT NULL DEFAULT '0',
-  `atk` int(2) NOT NULL DEFAULT '0',
-  `def` int(2) NOT NULL DEFAULT '0',
-  `speed` int(2) NOT NULL DEFAULT '0',
-  `spatk` int(2) NOT NULL DEFAULT '0',
-  `spdef` int(2) NOT NULL DEFAULT '0',
-  `conditions` blob NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-DROP TRIGGER IF EXISTS `ondelete_players`;
-DROP TRIGGER IF EXISTS `oncreate_guilds`;
-
-DELIMITER //
-CREATE TRIGGER `ondelete_players` BEFORE DELETE ON `characters`
- FOR EACH ROW BEGIN
-    UPDATE `houses` SET `owner` = 0 WHERE `owner` = OLD.`id`;
-END
-//
-CREATE TRIGGER `oncreate_guilds` AFTER INSERT ON `guilds`
- FOR EACH ROW BEGIN
-    INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ('the Leader', 3, NEW.`id`);
-    INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ('a Vice-Leader', 2, NEW.`id`);
-    INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ('a Member', 1, NEW.`id`);
-END
-//
+--
+-- Triggers `characters`
+--
+DELIMITER $$
+CREATE TRIGGER `ondelete_characters` BEFORE DELETE ON `characters` FOR EACH ROW BEGIN
+                            UPDATE `houses` SET `owner` = 0 WHERE `owner` = OLD.`id`;
+                        END
+$$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `characters_online`
+--
+
+CREATE TABLE `characters_online` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_deaths`
+--
+
+CREATE TABLE `character_deaths` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `time` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `killed_by` int(10) UNSIGNED NOT NULL,
+  `is_character` tinyint(1) NOT NULL,
+  `mostdamage_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mostdamage_is_character` tinyint(1) NOT NULL,
+  `unjustified` tinyint(1) NOT NULL,
+  `mostdamage_unjustified` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_depotitems`
+--
+
+CREATE TABLE `character_depotitems` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `pid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `itemtype` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `attributes` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_inboxitems`
+--
+
+CREATE TABLE `character_inboxitems` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `pid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `itemtype` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `attributes` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_items`
+--
+
+CREATE TABLE `character_items` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `pid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `itemtype` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `attributes` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_namelocks`
+--
+
+CREATE TABLE `character_namelocks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `reason` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `namelocked_at` bigint(20) NOT NULL,
+  `namelocked_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_storages`
+--
+
+CREATE TABLE `character_storages` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `key` int(11) NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `game`
+--
+
+CREATE TABLE `game` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups`
+--
+
+CREATE TABLE `groups` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flags` bigint(20) NOT NULL,
+  `access` tinyint(1) NOT NULL,
+  `maxdepotitems` int(11) NOT NULL,
+  `maxvipentries` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guilds`
+--
+
+CREATE TABLE `guilds` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_id` int(10) UNSIGNED NOT NULL,
+  `motd` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Triggers `guilds`
+--
+DELIMITER $$
+CREATE TRIGGER `oncreate_guilds` AFTER INSERT ON `guilds` FOR EACH ROW BEGIN
+                            INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ("the Leader", 3, NEW.`id`);
+                            INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ("a Vice-Leader", 2, NEW.`id`);
+                            INSERT INTO `guild_ranks` (`name`, `level`, `guild_id`) VALUES ("a Member", 1, NEW.`id`);
+                        END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guild_invites`
+--
+
+CREATE TABLE `guild_invites` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `guild_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guild_memberships`
+--
+
+CREATE TABLE `guild_memberships` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `guild_id` int(10) UNSIGNED NOT NULL,
+  `guild_rank_id` int(10) UNSIGNED NOT NULL,
+  `nick` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guild_ranks`
+--
+
+CREATE TABLE `guild_ranks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `guild_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guild_wars`
+--
+
+CREATE TABLE `guild_wars` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `guild1` int(10) UNSIGNED NOT NULL,
+  `guild2` int(10) UNSIGNED NOT NULL,
+  `name1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `started` bigint(20) NOT NULL,
+  `ended` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `houses`
+--
+
+CREATE TABLE `houses` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `owner` int(10) UNSIGNED NOT NULL,
+  `town_id` int(10) UNSIGNED NOT NULL,
+  `paid` int(11) NOT NULL,
+  `warnings` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rent` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `bid_end` int(11) NOT NULL,
+  `last_bid` int(11) NOT NULL,
+  `highest_bidder` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `beds` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `house_lists`
+--
+
+CREATE TABLE `house_lists` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `house_id` int(10) UNSIGNED NOT NULL,
+  `listid` int(11) NOT NULL,
+  `list` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ip_bans`
+--
+
+CREATE TABLE `ip_bans` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ip` int(11) NOT NULL,
+  `reason` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banned_at` bigint(20) NOT NULL,
+  `expires_at` bigint(20) NOT NULL,
+  `banned_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `items`
+--
+
+CREATE TABLE `items` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `fromid` int(11) NOT NULL,
+  `toid` int(11) DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attributes` json DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `market_history`
+--
+
+CREATE TABLE `market_history` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `sale` tinyint(1) NOT NULL,
+  `itemtype` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `expires_at` bigint(20) NOT NULL,
+  `inserted` bigint(20) NOT NULL,
+  `state` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `market_offers`
+--
+
+CREATE TABLE `market_offers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `character_id` int(10) UNSIGNED NOT NULL,
+  `sale` tinyint(1) NOT NULL,
+  `itemtype` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `created` bigint(20) NOT NULL,
+  `anonymous` tinyint(1) NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pokemon`
+--
+
+CREATE TABLE `pokemon` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `pokeball` int(11) NOT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shiny` tinyint(1) NOT NULL,
+  `nickname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` int(11) NOT NULL,
+  `nature` int(11) NOT NULL,
+  `hpnow` int(11) NOT NULL,
+  `hp` int(11) NOT NULL,
+  `atk` int(11) NOT NULL,
+  `def` int(11) NOT NULL,
+  `speed` int(11) NOT NULL,
+  `spatk` int(11) NOT NULL,
+  `spdef` int(11) NOT NULL,
+  `conditions` blob NOT NULL,
+  `moves` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `priority` int(11) NOT NULL,
+  `department` int(11) NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tile_store`
+--
+
+CREATE TABLE `tile_store` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `house_id` int(10) UNSIGNED NOT NULL,
+  `data` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `towns`
+--
+
+CREATE TABLE `towns` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `z` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `accounts_name_unique` (`name`),
+  ADD UNIQUE KEY `accounts_email_unique` (`email`),
+  ADD UNIQUE KEY `accounts_recovery_key_unique` (`recovery_key`);
+
+--
+-- Indexes for table `account_bans`
+--
+ALTER TABLE `account_bans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `account_bans_account_id_foreign` (`account_id`),
+  ADD KEY `account_bans_banned_by_foreign` (`banned_by`);
+
+--
+-- Indexes for table `account_viplists`
+--
+ALTER TABLE `account_viplists`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `account_viplists_character_id_unique` (`character_id`),
+  ADD KEY `account_viplists_account_id_foreign` (`account_id`);
+
+--
+-- Indexes for table `characters`
+--
+ALTER TABLE `characters`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `characters_name_unique` (`name`),
+  ADD KEY `characters_account_id_foreign` (`account_id`),
+  ADD KEY `characters_group_id_foreign` (`group_id`);
+
+--
+-- Indexes for table `characters_online`
+--
+ALTER TABLE `characters_online`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `characters_online_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `character_deaths`
+--
+ALTER TABLE `character_deaths`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `character_deaths_character_id_foreign` (`character_id`),
+  ADD KEY `character_deaths_killed_by_foreign` (`killed_by`);
+
+--
+-- Indexes for table `character_depotitems`
+--
+ALTER TABLE `character_depotitems`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `character_depotitems_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `character_inboxitems`
+--
+ALTER TABLE `character_inboxitems`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `character_inboxitems_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `character_items`
+--
+ALTER TABLE `character_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `character_items_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `character_namelocks`
+--
+ALTER TABLE `character_namelocks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `character_namelocks_character_id_foreign` (`character_id`),
+  ADD KEY `character_namelocks_namelocked_by_foreign` (`namelocked_by`);
+
+--
+-- Indexes for table `character_storages`
+--
+ALTER TABLE `character_storages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `character_storages_key_unique` (`key`),
+  ADD KEY `character_storages_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `groups_name_unique` (`name`);
+
+--
+-- Indexes for table `guilds`
+--
+ALTER TABLE `guilds`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `guilds_name_unique` (`name`),
+  ADD UNIQUE KEY `guilds_owner_id_unique` (`owner_id`);
+
+--
+-- Indexes for table `guild_invites`
+--
+ALTER TABLE `guild_invites`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guild_invites_character_id_foreign` (`character_id`),
+  ADD KEY `guild_invites_guild_id_foreign` (`guild_id`);
+
+--
+-- Indexes for table `guild_memberships`
+--
+ALTER TABLE `guild_memberships`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guild_memberships_character_id_foreign` (`character_id`),
+  ADD KEY `guild_memberships_guild_id_foreign` (`guild_id`),
+  ADD KEY `guild_memberships_guild_rank_id_foreign` (`guild_rank_id`);
+
+--
+-- Indexes for table `guild_ranks`
+--
+ALTER TABLE `guild_ranks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `guild_ranks_name_unique` (`name`),
+  ADD KEY `guild_ranks_guild_id_foreign` (`guild_id`);
+
+--
+-- Indexes for table `guild_wars`
+--
+ALTER TABLE `guild_wars`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guild_wars_guild1_foreign` (`guild1`),
+  ADD KEY `guild_wars_guild2_foreign` (`guild2`);
+
+--
+-- Indexes for table `houses`
+--
+ALTER TABLE `houses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `houses_owner_foreign` (`owner`),
+  ADD KEY `houses_town_id_foreign` (`town_id`);
+
+--
+-- Indexes for table `house_lists`
+--
+ALTER TABLE `house_lists`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `house_lists_house_id_foreign` (`house_id`);
+
+--
+-- Indexes for table `ip_bans`
+--
+ALTER TABLE `ip_bans`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ip_bans_ip_unique` (`ip`),
+  ADD KEY `ip_bans_banned_by_foreign` (`banned_by`);
+
+--
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `items_fromid_unique` (`fromid`),
+  ADD UNIQUE KEY `items_toid_unique` (`toid`);
+
+--
+-- Indexes for table `market_history`
+--
+ALTER TABLE `market_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `market_history_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `market_offers`
+--
+ALTER TABLE `market_offers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `market_offers_character_id_foreign` (`character_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `pokemon`
+--
+ALTER TABLE `pokemon`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `settings_key_unique` (`key`),
+  ADD UNIQUE KEY `settings_value_unique` (`value`);
+
+--
+-- Indexes for table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tile_store`
+--
+ALTER TABLE `tile_store`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `towns`
+--
+ALTER TABLE `towns`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `towns_name_unique` (`name`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `account_bans`
+--
+ALTER TABLE `account_bans`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `account_viplists`
+--
+ALTER TABLE `account_viplists`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `characters`
+--
+ALTER TABLE `characters`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `characters_online`
+--
+ALTER TABLE `characters_online`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_deaths`
+--
+ALTER TABLE `character_deaths`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_depotitems`
+--
+ALTER TABLE `character_depotitems`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_inboxitems`
+--
+ALTER TABLE `character_inboxitems`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_items`
+--
+ALTER TABLE `character_items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_namelocks`
+--
+ALTER TABLE `character_namelocks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `character_storages`
+--
+ALTER TABLE `character_storages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `game`
+--
+ALTER TABLE `game`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `guilds`
+--
+ALTER TABLE `guilds`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guild_invites`
+--
+ALTER TABLE `guild_invites`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guild_memberships`
+--
+ALTER TABLE `guild_memberships`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guild_ranks`
+--
+ALTER TABLE `guild_ranks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guild_wars`
+--
+ALTER TABLE `guild_wars`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `houses`
+--
+ALTER TABLE `houses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `house_lists`
+--
+ALTER TABLE `house_lists`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `ip_bans`
+--
+ALTER TABLE `ip_bans`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `market_history`
+--
+ALTER TABLE `market_history`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `market_offers`
+--
+ALTER TABLE `market_offers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pokemon`
+--
+ALTER TABLE `pokemon`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tile_store`
+--
+ALTER TABLE `tile_store`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `towns`
+--
+ALTER TABLE `towns`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `account_bans`
+--
+ALTER TABLE `account_bans`
+  ADD CONSTRAINT `account_bans_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `account_bans_banned_by_foreign` FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `account_viplists`
+--
+ALTER TABLE `account_viplists`
+  ADD CONSTRAINT `account_viplists_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `account_viplists_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `characters`
+--
+ALTER TABLE `characters`
+  ADD CONSTRAINT `characters_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `characters_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `characters_online`
+--
+ALTER TABLE `characters_online`
+  ADD CONSTRAINT `characters_online_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_deaths`
+--
+ALTER TABLE `character_deaths`
+  ADD CONSTRAINT `character_deaths_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `character_deaths_killed_by_foreign` FOREIGN KEY (`killed_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_depotitems`
+--
+ALTER TABLE `character_depotitems`
+  ADD CONSTRAINT `character_depotitems_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_inboxitems`
+--
+ALTER TABLE `character_inboxitems`
+  ADD CONSTRAINT `character_inboxitems_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_items`
+--
+ALTER TABLE `character_items`
+  ADD CONSTRAINT `character_items_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_namelocks`
+--
+ALTER TABLE `character_namelocks`
+  ADD CONSTRAINT `character_namelocks_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `character_namelocks_namelocked_by_foreign` FOREIGN KEY (`namelocked_by`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `character_storages`
+--
+ALTER TABLE `character_storages`
+  ADD CONSTRAINT `character_storages_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guilds`
+--
+ALTER TABLE `guilds`
+  ADD CONSTRAINT `guilds_owner_id_foreign` FOREIGN KEY (`owner_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_invites`
+--
+ALTER TABLE `guild_invites`
+  ADD CONSTRAINT `guild_invites_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guild_invites_guild_id_foreign` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_memberships`
+--
+ALTER TABLE `guild_memberships`
+  ADD CONSTRAINT `guild_memberships_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guild_memberships_guild_id_foreign` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guild_memberships_guild_rank_id_foreign` FOREIGN KEY (`guild_rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_ranks`
+--
+ALTER TABLE `guild_ranks`
+  ADD CONSTRAINT `guild_ranks_guild_id_foreign` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_wars`
+--
+ALTER TABLE `guild_wars`
+  ADD CONSTRAINT `guild_wars_guild1_foreign` FOREIGN KEY (`guild1`) REFERENCES `guilds` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guild_wars_guild2_foreign` FOREIGN KEY (`guild2`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `houses`
+--
+ALTER TABLE `houses`
+  ADD CONSTRAINT `houses_owner_foreign` FOREIGN KEY (`owner`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `houses_town_id_foreign` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`) ON DELETE NO ACTION;
+
+--
+-- Constraints for table `house_lists`
+--
+ALTER TABLE `house_lists`
+  ADD CONSTRAINT `house_lists_house_id_foreign` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ip_bans`
+--
+ALTER TABLE `ip_bans`
+  ADD CONSTRAINT `ip_bans_banned_by_foreign` FOREIGN KEY (`banned_by`) REFERENCES `characters` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `market_history`
+--
+ALTER TABLE `market_history`
+  ADD CONSTRAINT `market_history_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `market_offers`
+--
+ALTER TABLE `market_offers`
+  ADD CONSTRAINT `market_offers_character_id_foreign` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
