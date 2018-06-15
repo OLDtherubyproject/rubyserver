@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Bulbasaur" nameDescription="a Bulbasaur" blood="green" experience="100" catchRate="10">
+<pokemon number="1"  name="Bulbasaur" nameDescription="a Bulbasaur" blood="green" experience="100" catchRate="10">
 	<look type="1" corpse="2806" />
 	<type first="grass" second="poison" />
 	<spawn at="anytime" />
@@ -51,10 +51,10 @@
 		<voice sentence="Saur" />
 	</voices>
   	<shiny chance="0">
-        <look type="150" corpse="6047" />
-        <portrait id="7002" />
-        <icon charged="900" discharged="901" />
-    </shiny>
+        	<look type="150" corpse="6047" />
+        	<portrait id="7002" />
+        	<icon charged="900" discharged="901" />
+    	</shiny>
 	<loot>
 	</loot>
 </pokemon>

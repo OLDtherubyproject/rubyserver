@@ -163,6 +163,9 @@ class Pokemon final : public Creature
 		uint32_t getBaseSpeed() const override {
 			return (baseSpeed + (ivs.speed + (evs.speed / 30) + mType->info.baseStats.speed) / 4) * getSpeedMultiplier();
 		}
+		uint16_t getNumber() const {
+			return mType->number;
+		}
 		Natures_t getNature() const {
 			return nature;
 		}

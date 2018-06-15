@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Eevee" nameDescription="an Eevee" blood="green" experience="23" speed="150" catchRate="0">
+<pokemon number="133"  name="Eevee" nameDescription="an Eevee" blood="green" experience="23" speed="150" catchRate="0">
 	<look type="133" corpse="2951" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />

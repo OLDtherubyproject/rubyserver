@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Lickitung" nameDescription="a Lickitung" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="108"  name="Lickitung" nameDescription="a Lickitung" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="108" corpse="6049" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />

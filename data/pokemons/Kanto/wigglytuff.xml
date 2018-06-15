@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Wigglytuff" nameDescription="a Wigglytuff" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="40"  name="Wigglytuff" nameDescription="a Wigglytuff" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="40" corpse="2849" />
 	<type first="normal" second="fairy" />
 	<targetchange interval="4000" chance="0" />

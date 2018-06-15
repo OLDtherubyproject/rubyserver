@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Ditto" nameDescription="a Ditto" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="132"  name="Ditto" nameDescription="a Ditto" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="132" corpse="2813" />
 	<type first="normal" />
 	<targetchange interval="4000" chance="0" />

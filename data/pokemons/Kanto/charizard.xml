@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Charizard" nameDescription="a Charizard" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="6"  name="Charizard" nameDescription="a Charizard" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="6" corpse="2930" />
 	<type first="fire" second="flying" />
 	<targetchange interval="4000" chance="0" />

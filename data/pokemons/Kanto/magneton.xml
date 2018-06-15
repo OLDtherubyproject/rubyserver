@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Magneton" nameDescription="a Magneton" blood="gray" experience="23" speed="150" catchRate="50">
+<pokemon number="82"  name="Magneton" nameDescription="a Magneton" blood="gray" experience="23" speed="150" catchRate="50">
 	<look type="82" corpse="2899" />
 	<type first="electric" second="steel" />
 	<targetchange interval="4000" chance="0" />

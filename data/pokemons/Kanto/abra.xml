@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Abra" nameDescription="an Abra" blood="green" experience="23" speed="150" catchRate="50" price="500000">
+<pokemon number="63" name="Abra" nameDescription="an Abra" blood="red" experience="23" speed="150" catchRate="50" price="500000">
 	<look type="63" corpse="2871" />
 	<type first="psychic" />
 	<targetchange interval="4000" chance="0" />

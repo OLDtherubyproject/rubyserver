@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Jynx" nameDescription="a Jynx" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="124"  name="Jynx" nameDescription="a Jynx" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="124" corpse="2943" />
 	<type first="ice" second="psychic" />
 	<targetchange interval="4000" chance="0" />

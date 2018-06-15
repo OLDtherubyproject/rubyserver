@@ -263,6 +263,12 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		}
 	}
 
+	if ((attr = pokemonNode.attribute("number"))) {
+		mType->number = pugi::cast<uint16_t>(attr.value());
+	} else {
+		std::cout << "[Warning - Pokemons::loadPokemon] Number invalid. " << file << std::endl;
+	}
+
 	if ((attr = pokemonNode.attribute("nameDescription"))) {
 		mType->nameDescription = attr.as_string();
 	} else {

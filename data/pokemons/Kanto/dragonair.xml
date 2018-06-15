@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dragonair" nameDescription="a Dragonair" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="148"  name="Dragonair" nameDescription="a Dragonair" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="148" corpse="2967" />
 	<type first="dragon" />
 	<targetchange interval="4000" chance="0" />

@@ -149,6 +149,8 @@ class PokemonType
 		PokemonType(const PokemonType&) = delete;
 		PokemonType& operator=(const PokemonType&) = delete;
 
+		uint16_t number;
+
 		std::string name;
 		std::string nameDescription;
 		std::string typeName;

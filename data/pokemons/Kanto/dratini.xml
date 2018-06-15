@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Dratini" nameDescription="a Dratini" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="147"  name="Dratini" nameDescription="a Dratini" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="147" corpse="2966" />
 	<type first="dragon" />
 	<targetchange interval="4000" chance="0" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Articuno" nameDescription="an Articuno" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="144"  name="Articuno" nameDescription="an Articuno" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="144" corpse="2963" />
 	<type first="ice" second="flying" />
 	<targetchange interval="4000" chance="0" />

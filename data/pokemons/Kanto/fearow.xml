@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Fearow" nameDescription="a Fearow" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="22"  name="Fearow" nameDescription="a Fearow" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="22" corpse="2831" />
 	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />

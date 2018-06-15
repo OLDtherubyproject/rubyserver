@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Electrode" nameDescription="an Electrode" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="101"  name="Electrode" nameDescription="an Electrode" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="101" corpse="2919" />
 	<type first="electric" />
 	<targetchange interval="4000" chance="0" />

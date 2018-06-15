@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Cubone" nameDescription="a Cubone" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="104"  name="Cubone" nameDescription="a Cubone" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="104" corpse="2922" />
 	<type first="ground" />
 	<targetchange interval="4000" chance="0" />

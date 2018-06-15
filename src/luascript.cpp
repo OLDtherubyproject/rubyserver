@@ -2366,6 +2366,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "isFemale", LuaScriptInterface::luaPokemonIsFemale);
 	registerMethod("Pokemon", "isUndefined", LuaScriptInterface::luaPokemonIsUndefined);
 
+	registerMethod("Pokemon", "getNumber", LuaScriptInterface::luaPokemonGetNumber);
 	registerMethod("Pokemon", "getType", LuaScriptInterface::luaPokemonGetType);
 	registerMethod("Pokemon", "getNature", LuaScriptInterface::luaPokemonGetNature);
 	registerMethod("Pokemon", "getAttack", LuaScriptInterface::luaPokemonGetAttack);
@@ -9499,6 +9500,18 @@ int LuaScriptInterface::luaPokemonIsUndefined(lua_State* L)
 	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
 	if (pokemon) {
 		pushBoolean(L, pokemon->getGender() == GENDER_UNDEFINED);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetNumber(lua_State* L)
+{
+	// pokemon:getNumber()
+	const Pokemon* pokemon = getUserdata<const Pokemon>(L, 1);
+	if (pokemon) {
+		lua_pushnumber(L, pokemon->getNumber());
 	} else {
 		lua_pushnil(L);
 	}

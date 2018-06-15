@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Squirtle" nameDescription="a Squirtle" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
+<pokemon number="7"  name="Squirtle" nameDescription="a Squirtle" blood="green" experience="23" speed="150" manacost="300" catchRate="50">
 	<look type="7" corpse="2814" />
 	<type first="water" />
 	<targetchange interval="4000" chance="0" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pokemon name="Exeggutor" nameDescription="an Exeggutor" blood="green" experience="23" speed="150" catchRate="50">
+<pokemon number="103"  name="Exeggutor" nameDescription="an Exeggutor" blood="green" experience="23" speed="150" catchRate="50">
 	<look type="103" corpse="2921" />
 	<type first="grass" second="psychic" />
 	<targetchange interval="4000" chance="0" />
