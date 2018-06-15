@@ -28,31 +28,6 @@ AREA_SQUAREWAVE5 = {
 {0, 3, 0}
 }
 
--- Vine Whip Area
-AREA_VINE_WHIPE_N = {
-	{1, 1, 1},
-	{1, 1, 1},
-	{0, 3, 0}
-}
-
-AREA_VINE_WHIPE_S = {
-	{0, 3, 0},
-	{1, 1, 1},
-	{1, 1, 1}
-}
-
-AREA_VINE_WHIPE_E = {
-	{0, 1, 1},
-	{3, 1, 1},
-	{0, 1, 1}
-}
-
-AREA_VINE_WHIPE_W = {
-	{1, 1, 0},
-	{1, 1, 3},
-	{1, 1, 0}
-}
-
 AREA_SQUAREWAVE6 = {
 {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
 {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
@@ -285,40 +260,6 @@ function Player:addPartyCondition(combat, variant, condition, baseMana)
 	for _, position in ipairs(positions) do
 		position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	end
-	return true
-end
-
-function Player:conjureItem(reagentId, conjureId, conjureCount, effect)
-	if not conjureCount and conjureId ~= 0 then
-		local itemType = ItemType(conjureId)
-		if itemType:getId() == 0 then
-			return false
-		end
-
-		local charges = itemType:getCharges()
-		if charges ~= 0 then
-			conjureCount = charges
-		end
-	end
-
-	if reagentId ~= 0 and not self:removeItem(reagentId, 1, -1) then
-		self:sendCancelMessage(RETURNVALUE_YOUNEEDAMAGICITEMTOCASTMOVE)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
-
-	local item = self:addItem(conjureId, conjureCount)
-	if not item then
-		self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
-
-	if item:hasAttribute(ITEM_ATTRIBUTE_DURATION) then
-		item:decay()
-	end
-
-	self:getPosition():sendMagicEffect(effect)
 	return true
 end
 

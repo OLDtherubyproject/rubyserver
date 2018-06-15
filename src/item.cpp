@@ -161,12 +161,6 @@ Item::Item(const uint16_t type, uint16_t count /*= 0*/) :
 		} else if (it.charges != 0) {
 			setItemCount(it.charges);
 		}
-	} else if (it.charges != 0) {
-		if (count != 0) {
-			setCharges(count);
-		} else {
-			setCharges(it.charges);
-		}
 	}
 
 	setDefaultDuration();
@@ -226,17 +220,7 @@ bool Item::equals(const Item* otherItem) const
 
 void Item::setDefaultSubtype()
 {
-	const ItemType& it = items[id];
-
 	setItemCount(1);
-
-	if (it.charges != 0) {
-		if (it.stackable) {
-			setItemCount(it.charges);
-		} else {
-			setCharges(it.charges);
-		}
-	}
 }
 
 void Item::onRemoved()
@@ -334,8 +318,6 @@ uint16_t Item::getSubType() const
 		return getFluidType();
 	} else if (it.stackable) {
 		return count;
-	} else if (it.charges != 0) {
-		return getCharges();
 	}
 	return count;
 }
@@ -360,8 +342,6 @@ void Item::setSubType(uint16_t n)
 		setFluidType(n);
 	} else if (it.stackable) {
 		setItemCount(n);
-	} else if (it.charges != 0) {
-		setCharges(n);
 	} else {
 		setItemCount(n);
 	}
@@ -440,16 +420,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_CHARGES: {
-			uint16_t charges;
-			if (!propStream.read<uint16_t>(charges)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setSubType(charges);
-			break;
-		}
-
 		case ATTR_DURATION: {
 			int32_t duration;
 			if (!propStream.read<int32_t>(duration)) {
@@ -512,66 +482,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_POKEBALLISCHARGED: {
-			uint8_t attack;
-			if (!propStream.read<uint8_t>(attack)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED, attack);
-			break;
-		}
-
-		case ATTR_POKEBALLID: {
-			uint32_t pokeballId;
-			if (!propStream.read<uint32_t>(pokeballId)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_POKEBALLID, pokeballId);
-			break;
-		}
-
-		case ATTR_EXTRADEFENSE: {
-			int32_t extraDefense;
-			if (!propStream.read<int32_t>(extraDefense)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_EXTRADEFENSE, extraDefense);
-			break;
-		}
-
-		case ATTR_ARMOR: {
-			int32_t armor;
-			if (!propStream.read<int32_t>(armor)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_ARMOR, armor);
-			break;
-		}
-
-		case ATTR_HITCHANCE: {
-			int8_t hitChance;
-			if (!propStream.read<int8_t>(hitChance)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_HITCHANCE, hitChance);
-			break;
-		}
-
-		case ATTR_SHOOTRANGE: {
-			uint8_t shootRange;
-			if (!propStream.read<uint8_t>(shootRange)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_SHOOTRANGE, shootRange);
-			break;
-		}
-
 		case ATTR_PRICE: {
 			int32_t price;
 			if (!propStream.read<int32_t>(price)) {
@@ -588,7 +498,7 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 				return ATTR_READ_ERROR;
 			}
 
-			setIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER, gender);
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSEGENDER, gender);
 			break;
 		}
 
@@ -738,12 +648,6 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint8_t>(getSubType());
 	}
 
-	uint16_t charges = getCharges();
-	if (charges != 0) {
-		propWriteStream.write<uint8_t>(ATTR_CHARGES);
-		propWriteStream.write<uint16_t>(charges);
-	}
-
 	if (it.moveable) {
 		uint16_t actionId = getActionId();
 		if (actionId != 0) {
@@ -807,44 +711,14 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_WEIGHT));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_POKEBALLISCHARGED)) {
-		propWriteStream.write<uint8_t>(ATTR_POKEBALLISCHARGED);
-		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEBALLISCHARGED));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_POKEBALLID)) {
-		propWriteStream.write<uint8_t>(ATTR_POKEBALLID);
-		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_POKEBALLID));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_EXTRADEFENSE)) {
-		propWriteStream.write<uint8_t>(ATTR_EXTRADEFENSE);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_EXTRADEFENSE));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_ARMOR)) {
-		propWriteStream.write<uint8_t>(ATTR_ARMOR);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_ARMOR));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_HITCHANCE)) {
-		propWriteStream.write<uint8_t>(ATTR_HITCHANCE);
-		propWriteStream.write<int8_t>(getIntAttr(ITEM_ATTRIBUTE_HITCHANCE));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_SHOOTRANGE)) {
-		propWriteStream.write<uint8_t>(ATTR_SHOOTRANGE);
-		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_SHOOTRANGE));
-	}
-
 	if (hasAttribute(ITEM_ATTRIBUTE_PRICE)) {
 		propWriteStream.write<uint8_t>(ATTR_PRICE);
 		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_PRICE));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_CORPSEGENDER)) {
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONCORPSEGENDER)) {
 		propWriteStream.write<uint8_t>(ATTR_CORPSEGENDER);
-		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_CORPSEGENDER));
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSEGENDER));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CORPSETYPE)) {
@@ -1418,12 +1292,7 @@ bool Item::hasMarketAttributes() const
 	}
 
 	for (const auto& attr : attributes->getList()) {
-		if (attr.type == ITEM_ATTRIBUTE_CHARGES) {
-			uint16_t charges = static_cast<uint16_t>(attr.value.integer);
-			if (charges != items[id].charges) {
-				return false;
-			}
-		} else if (attr.type == ITEM_ATTRIBUTE_DURATION) {
+		if (attr.type == ITEM_ATTRIBUTE_DURATION) {
 			uint32_t duration = static_cast<uint32_t>(attr.value.integer);
 			if (duration != getDefaultDuration()) {
 				return false;

@@ -1946,14 +1946,8 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 	        (slotPosition & SLOTP_PORTRAIT) || (slotPosition & SLOTP_POKEBALL) ||
 	        (slotPosition & SLOTP_RING) || ((slotPosition & SLOTP_SUPPORT) || (slotPosition & SLOTP_POKEBALL))) {
 		ret = RETURNVALUE_CANNOTBEDRESSED;
-	} else if (slotPosition & SLOTP_TWO_HAND) {
-		ret = RETURNVALUE_PUTTHISOBJECTINBOTHHANDS;
 	} else if ((slotPosition & SLOTP_RIGHT) || (slotPosition & SLOTP_LEFT)) {
-		if (!g_config.getBoolean(ConfigManager::CLASSIC_EQUIPMENT_SLOTS)) {
-			ret = RETURNVALUE_CANNOTBEDRESSED;
-		} else {
-			ret = RETURNVALUE_PUTTHISOBJECTINYOURHAND;
-		}
+		ret = RETURNVALUE_CANNOTBEDRESSED;
 	}
 
 	switch (index) {

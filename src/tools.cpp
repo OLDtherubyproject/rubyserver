@@ -1037,18 +1037,6 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_PLURALNAME;
 	} else if (str == "weight") {
 		return ITEM_ATTRIBUTE_WEIGHT;
-	} else if (str == "pokeballischarged") {
-		return ITEM_ATTRIBUTE_POKEBALLISCHARGED;
-	} else if (str == "pokeballid") {
-		return ITEM_ATTRIBUTE_POKEBALLID;
-	} else if (str == "extradefense") {
-		return ITEM_ATTRIBUTE_EXTRADEFENSE;
-	} else if (str == "armor") {
-		return ITEM_ATTRIBUTE_ARMOR;
-	} else if (str == "hitchance") {
-		return ITEM_ATTRIBUTE_HITCHANCE;
-	} else if (str == "shootrange") {
-		return ITEM_ATTRIBUTE_SHOOTRANGE;
 	} else if (str == "owner") {
 		return ITEM_ATTRIBUTE_OWNER;
 	} else if (str == "duration") {
@@ -1057,8 +1045,6 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_DECAYSTATE;
 	} else if (str == "corpseowner") {
 		return ITEM_ATTRIBUTE_CORPSEOWNER;
-	} else if (str == "charges") {
-		return ITEM_ATTRIBUTE_CHARGES;
 	} else if (str == "fluidtype") {
 		return ITEM_ATTRIBUTE_FLUIDTYPE;
 	} else if (str == "doorid") {
@@ -1066,7 +1052,7 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 	} else if (str == "price") {
 		return ITEM_ATTRIBUTE_PRICE;
 	} else if (str == "corpsegender") {
-		return ITEM_ATTRIBUTE_CORPSEGENDER;
+		return ITEM_ATTRIBUTE_POKEMONCORPSEGENDER;
 	} else if (str == "corpsetype") {
 		return ITEM_ATTRIBUTE_CORPSETYPE;
 	} else if (str == "pokemonid") {
@@ -1101,20 +1087,8 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_NOTMOVEABLE:
 			return "You cannot move this object.";
 
-		case RETURNVALUE_DROPTWOHANDEDITEM:
-			return "Drop the double-handed object first.";
-
-		case RETURNVALUE_BOTHHANDSNEEDTOBEFREE:
-			return "Both hands need to be free.";
-
 		case RETURNVALUE_CANNOTBEDRESSED:
-			return "You cannot dress this object there.";
-
-		case RETURNVALUE_PUTTHISOBJECTINYOURHAND:
-			return "Put this object in your hand.";
-
-		case RETURNVALUE_PUTTHISOBJECTINBOTHHANDS:
-			return "Put this object in both hands.";
+			return "You cannot put this object there.";
 
 		case RETURNVALUE_TOOFARAWAY:
 			return "Too far away.";
@@ -1210,9 +1184,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUNEEDPREMIUMACCOUNT:
 			return "You need a premium account.";
 
-		case RETURNVALUE_YOUNEEDTOLEARNTHISMOVE:
-			return "You need to learn this move first.";
-
 		case RETURNVALUE_YOURPROFESSIONCANNOTUSETHISMOVE:
 			return "Your profession cannot use this move.";
 
@@ -1228,9 +1199,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUCANNOTLOGOUTHERE:
 			return "You can not logout here.";
 
-		case RETURNVALUE_YOUNEEDAMAGICITEMTOCASTMOVE:
-			return "You need a magic item to cast this move.";
-
 		case RETURNVALUE_CANNOTCONJUREITEMHERE:
 			return "You cannot conjure items here.";
 
@@ -1239,9 +1207,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_NAMEISTOOAMBIGUOUS:
 			return "Player name is ambiguous.";
-
-		case RETURNVALUE_CANONLYUSEONESHIELD:
-			return "You may use only one shield.";
 
 		case RETURNVALUE_NOPARTYMEMBERSINRANGE:
 			return "No party members in range.";

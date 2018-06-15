@@ -697,7 +697,6 @@ class LuaScriptInterface
 		static int luaItemSetActionId(lua_State* L);
 
 		static int luaItemGetCount(lua_State* L);
-		static int luaItemGetCharges(lua_State* L);
 		static int luaItemGetFluidType(lua_State* L);
 		static int luaItemGetWeight(lua_State* L);
 		static int luaItemGetPrice(lua_State* L);
@@ -1156,7 +1155,6 @@ class LuaScriptInterface
 		static int luaItemTypeGetDescription(lua_State* L);
 		static int luaItemTypeGetSlotPosition(lua_State *L);
 
-		static int luaItemTypeGetCharges(lua_State* L);
 		static int luaItemTypeGetFluidSource(lua_State* L);
 		static int luaItemTypeGetCapacity(lua_State* L);
 		static int luaItemTypeGetWeight(lua_State* L);

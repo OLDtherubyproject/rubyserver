@@ -593,9 +593,6 @@ if Modules == nil then
 			end
 
 			local it = ItemType(itemid)
-			if subType == nil and it:getCharges() ~= 0 then
-				subType = it:getCharges()
-			end
 
 			if SHOPMODULE_MODE == SHOPMODULE_MODE_TRADE then
 				if itemid and cost then
