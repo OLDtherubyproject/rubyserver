@@ -48,10 +48,10 @@ Pokemon::Pokemon(PokemonType* mType, int32_t plevel /* = 1 */, bool spawn /* = t
 	mType(mType)
 {
 	if (spawn) {
-		isDitto = (boolean_random(mType->info.dittoChance / 100) == 1);
-		isShiny = (boolean_random(mType->info.shiny.chance / 100) == 1);
-		defaultOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
-		currentOutfit = (isShiny ? mType->info.shiny.outfit : mType->info.outfit);
+		setDittoStatus(boolean_random(mType->info.dittoChance / 100) == 1);
+		setShinyStatus(boolean_random(mType->info.shiny.chance / 100) == 1);
+		defaultOutfit = (getShinyStatus() ? mType->info.shiny.outfit : mType->info.outfit);
+		currentOutfit = (getShinyStatus() ? mType->info.shiny.outfit : mType->info.outfit);
 		gender = mType->info.gender;
 		internalLight = mType->info.light;
 		hiddenHealth = mType->info.hiddenHealth;
@@ -75,6 +75,10 @@ Pokemon::Pokemon(PokemonType* mType, int32_t plevel /* = 1 */, bool spawn /* = t
 
 	level = plevel;
 	health = getMaxHealth();
+
+	if (getNumber() == 132 && !getDittoStatus()) {
+		setDittoStatus(true);
+	}
 
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
@@ -1901,14 +1905,14 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 {
 	Item* corpse;
 
-	if (isDitto) {
-		if (isShiny) {
+	if (getDittoStatus()) {
+		if (getShinyStatus()) {
 			corpse = Item::CreateItem(ITEM_DITTO_CORPSE); // Shiny Ditto Corpse
 		} else {
 			corpse = Item::CreateItem(ITEM_DITTO_CORPSE); // Ditto Corpse
 		}
 	} else{
-		if (isShiny) {
+		if (getShinyStatus()) {
 			corpse = Item::CreateItem(mType->info.shiny.corpse); // Shiny Corpse
 		} else {
 			corpse = Creature::getCorpse(lastHitCreature, mostDamageCreature); // Normal Corpse
@@ -1926,9 +1930,10 @@ Item* Pokemon::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature
 				}
 			}
 		}
-		corpse->setCorpseGender(getGender());
-		corpse->setCorpseType(mType->typeName);
-		corpse->setPokemonIsShiny(isShiny);
+		corpse->setPokemonCorpseGender(getGender());
+		corpse->setPokemonCorpseType(mType->typeName);
+		corpse->setPokemonCorpseShinyStatus(getShinyStatus());
+		corpse->setPokemonCorpseNature(getNature());
 	}
 
 	return corpse;

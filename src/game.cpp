@@ -5216,7 +5216,7 @@ void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballTyp
 		return;
 	}
 
-	PokemonType* pokemonType = g_pokemons.getPokemonType(corpse->getCorpseType());
+	PokemonType* pokemonType = g_pokemons.getPokemonType(corpse->getPokemonCorpseType());
 	if (!pokemonType) {
 		return;
 	}
@@ -5276,7 +5276,9 @@ void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corp
 		return;
 	}
 
-	pokemon->setIsShiny(corpse->getPokemonIsShiny());
+	pokemon->setGender(corpse->getPokemonCorpseGender());
+	pokemon->setNature(corpse->getPokemonCorpseNature());
+	pokemon->setShinyStatus(corpse->getPokemonCorpseShinyStatus());
 	pokemon->setPokeballType(pokeballType);
 	pokemon->setLevel(player->getLevel());
 	pokemon->setHealth(pokemon->getMaxHealth());
@@ -5494,7 +5496,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`) VALUES ");		
 		query << "'" << pbServerID << "', ";
 		query << "'" << pokemon->mType->typeName << "', ";
-		query << "'" << pokemon->isShiny << "', ";
+		query << "'" << pokemon->getShinyStatus() << "', ";
 		query << "'" << pokemon->getName() << "', ";
 		query << "'" << pokemon->getGender() << "', ";
 		query << "'" << pokemon->getNature() << "', ";
@@ -5522,7 +5524,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "UPDATE `pokemon` SET ";
 		query << "`pokeball` = '" << pbServerID << "', ";
 		query << "`type` = '" << pokemon->mType->typeName << "', ";
-		query << "`shiny` = '" << pokemon->isShiny << "', ";
+		query << "`shiny` = '" << pokemon->getShinyStatus() << "', ";
 		query << "`nickname` = '" << pokemon->getName() << "', ";
 		query << "`gender` = " << pokemon->getGender() << ", ";
 		query << "`nature` = " << pokemon->getNature() << ", ";
@@ -5572,7 +5574,7 @@ Pokemon* Game::preloadPokemon(uint32_t id, Player* player /* = nullptr */)
 	pokemon->pokeballType = pokeballType;
 	pokemon->setName(result->getString("nickname"));
 	pokemon->ivs.hp = result->getNumber<uint16_t>("hp");
-	pokemon->isShiny = result->getNumber<uint16_t>("shiny");
+	pokemon->setShinyStatus(result->getNumber<uint16_t>("shiny"));
 	pokemon->setLevel((player) ? player->getLevel() : 1);
 
 	//load hp
@@ -5615,13 +5617,13 @@ Pokemon* Game::loadPokemon(uint32_t id, Player* player /* = nullptr */)
 	pokemon->ivs.speed = result->getNumber<uint16_t>("speed");
 	pokemon->ivs.special_attack = result->getNumber<uint16_t>("spatk");
 	pokemon->ivs.special_defense = result->getNumber<uint16_t>("spdef");
-	pokemon->isShiny = result->getNumber<uint16_t>("shiny");
+	pokemon->setShinyStatus(result->getNumber<uint16_t>("shiny"));
 	pokemon->setLevel((player) ? player->getLevel() : 1);
 
 	//load hp
 	pokemon->setHealth(result->getNumber<int32_t>("hpnow"));
 
-	if (pokemon->isShiny && (pokemon->mType->info.shiny.outfit.lookType)) {
+	if (pokemon->getShinyStatus() && (pokemon->mType->info.shiny.outfit.lookType)) {
 		pokemon->setCurrentOutfit(pokemon->mType->info.shiny.outfit);
 		pokemon->defaultOutfit = pokemon->mType->info.shiny.outfit;
 	} else {

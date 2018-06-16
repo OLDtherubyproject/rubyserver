@@ -1051,16 +1051,16 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_DOORID;
 	} else if (str == "price") {
 		return ITEM_ATTRIBUTE_PRICE;
-	} else if (str == "corpsegender") {
+	} else if (str == "pokemoncorpsegender") {
 		return ITEM_ATTRIBUTE_POKEMONCORPSEGENDER;
-	} else if (str == "corpsetype") {
-		return ITEM_ATTRIBUTE_CORPSETYPE;
+	} else if (str == "pokemoncorpsetype") {
+		return ITEM_ATTRIBUTE_POKEMONCORPSETYPE;
 	} else if (str == "pokemonid") {
 		return ITEM_ATTRIBUTE_POKEMONID;
-	} else if (str == "pokemontype") {
-		return ITEM_ATTRIBUTE_POKEMONTYPE;
-	} else if (str == "pokemonisshiny") {
-		return ITEM_ATTRIBUTE_POKEMONISSHINY;
+	} else if (str == "pokemoncorpsenature") {
+		return ITEM_ATTRIBUTE_POKEMONCORPSENATURE;
+	} else if (str == "pokemoncorpseshinystatus") {
+		return ITEM_ATTRIBUTE_POKEMONCORPSESHINYSTATUS;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

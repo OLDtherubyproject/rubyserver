@@ -102,7 +102,7 @@ class Pokemon final : public Creature
 		}
 		void randomGender() {
 			// set pokemon gender
-			if (isDitto) {
+			if (getDittoStatus()) {
 				return;
 			}
 
@@ -197,8 +197,11 @@ class Pokemon final : public Creature
 		void setPrice(uint32_t price) {
 			this->price = price;
 		}
-		void setIsShiny(bool isShiny) {
+		void setShinyStatus(bool isShiny) {
 			this->isShiny = isShiny;
+		}
+		void setDittoStatus(bool isDitto) {
+			this->isDitto = isDitto;
 		}
 		void setPokeballType(const PokeballType* pokeballType) {
 			this->pokeballType = pokeballType;
@@ -381,6 +384,12 @@ class Pokemon final : public Creature
 		void updateIdleStatus();
 		bool getIdleStatus() const {
 			return isIdle;
+		}
+		bool getShinyStatus() const {
+			return isShiny;
+		}
+		bool getDittoStatus() const {
+			return isDitto;
 		}
 
 		//combat event functions

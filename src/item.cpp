@@ -492,7 +492,7 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_CORPSEGENDER: {
+		case ATTR_POKEMONCORPSEGENDER: {
 			uint8_t gender;
 			if (!propStream.read<uint8_t>(gender)) {
 				return ATTR_READ_ERROR;
@@ -502,13 +502,13 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_CORPSETYPE: {
+		case ATTR_POKEMONCORPSETYPE: {
 			std::string type;
 			if (!propStream.readString(type)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setStrAttr(ITEM_ATTRIBUTE_CORPSETYPE, type);
+			setStrAttr(ITEM_ATTRIBUTE_POKEMONCORPSETYPE, type);
 			break;
 		}
 
@@ -522,23 +522,23 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
-		case ATTR_POKEMONTYPE: {
-			std::string type;
-			if (!propStream.readString(type)) {
+		case ATTR_POKEMONCORPSENATURE: {
+			uint8_t nature;
+			if (!propStream.read(nature)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE, type);
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSENATURE, nature);
 			break;
 		}
 
-		case ATTR_POKEMONISSHINY: {
-			uint8_t pokemonisshiny;
-			if (!propStream.read<uint8_t>(pokemonisshiny)) {
+		case ATTR_CORPSEPOKEMONSHINYSTATUS: {
+			uint8_t pokemoncorpseshinystatus;
+			if (!propStream.read<uint8_t>(pokemoncorpseshinystatus)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY, pokemonisshiny);
+			setIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSESHINYSTATUS, pokemoncorpseshinystatus);
 			break;
 		}
 
@@ -717,13 +717,13 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONCORPSEGENDER)) {
-		propWriteStream.write<uint8_t>(ATTR_CORPSEGENDER);
+		propWriteStream.write<uint8_t>(ATTR_POKEMONCORPSEGENDER);
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSEGENDER));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_CORPSETYPE)) {
-		propWriteStream.write<uint8_t>(ATTR_CORPSETYPE);
-		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_CORPSETYPE));
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONCORPSETYPE)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEMONCORPSETYPE);
+		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_POKEMONCORPSETYPE));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONID)) {
@@ -731,14 +731,14 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONID));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONTYPE)) {
-		propWriteStream.write<uint8_t>(ATTR_POKEMONTYPE);
-		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_POKEMONTYPE));
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONCORPSENATURE)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEMONCORPSENATURE);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSENATURE));
 	}
 
-	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONISSHINY)) {
-		propWriteStream.write<uint8_t>(ATTR_POKEMONISSHINY);
-		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONISSHINY));
+	if (hasAttribute(ITEM_ATTRIBUTE_POKEMONCORPSESHINYSTATUS)) {
+		propWriteStream.write<uint8_t>(ATTR_CORPSEPOKEMONSHINYSTATUS);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_POKEMONCORPSESHINYSTATUS));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {

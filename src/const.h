@@ -480,6 +480,7 @@ enum Genders_t : uint8_t {
 };
 
 enum Natures_t : uint8_t {
+	NATURE_NONE = 0,
 	NATURE_HARDY = 1,
 	NATURE_LONELY = 2,
 	NATURE_BRAVE = 3,

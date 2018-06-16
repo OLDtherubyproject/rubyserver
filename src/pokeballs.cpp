@@ -241,7 +241,7 @@ ReturnValue PokeballType::playerPokeballCheck(Player* player, const Position& to
 		return RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON;
 	}
 
-	PokemonType* pokemonType = g_pokemons.getPokemonType(corpse->getCorpseType());
+	PokemonType* pokemonType = g_pokemons.getPokemonType(corpse->getPokemonCorpseType());
 	if (!pokemonType) {
 		return RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON;
 	}
