@@ -27,7 +27,7 @@ function onCastMove(creature, variant)
 		dir = creature:getDirection()
 		pos = creature:getPosition()
 		pos = pos + positions[dir]
-		pos:sendMagicEffect(effects[dir])
+		pos:sendEffect(effects[dir])
 		return true
 	end
 

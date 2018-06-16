@@ -3990,7 +3990,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 	} else {
 		if (!target->isAttackable()) {
 			if (!target->isInGhostMode()) {
-				addMagicEffect(targetPos, CONST_ME_POFF);
+				addEffect(targetPos, CONST_ME_POFF);
 			}
 			return true;
 		}
@@ -4023,7 +4023,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
 			if (chance != 0 && uniform_random(1, 100) <= chance) {
 				healthChange += std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT) / 100.));
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+				g_game.addEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 			}
 		}*/
 
@@ -4068,7 +4068,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		if (message.primary.value) {
 			combatGetTypeInfo(damage.type, target, message.primary.color, hitEffect);
 			if (hitEffect != CONST_ME_NONE) {
-				addMagicEffect(spectators, targetPos, hitEffect);
+				addEffect(spectators, targetPos, hitEffect);
 			}
 		}
 
@@ -4169,18 +4169,18 @@ void Game::addCreatureHealth(const SpectatorHashSet& spectators, const Creature*
 	}
 }
 
-void Game::addMagicEffect(const Position& pos, uint16_t effect)
+void Game::addEffect(const Position& pos, uint16_t effect)
 {
 	SpectatorHashSet spectators;
 	map.getSpectators(spectators, pos, true, true);
-	addMagicEffect(spectators, pos, effect);
+	addEffect(spectators, pos, effect);
 }
 
-void Game::addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect)
+void Game::addEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect)
 {
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
-			tmpPlayer->sendMagicEffect(pos, effect);
+			tmpPlayer->sendEffect(pos, effect);
 		}
 	}
 }
@@ -5248,7 +5248,7 @@ void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballTyp
 	internalRemoveItem(corpse, 1);
 	addDistanceEffect(player->getPosition(), toPos, pokeballType->getShotEffect());
 
-	g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addMagicEffect), this, toPos, tryEffect)));
+	g_scheduler.addEvent(createSchedulerTask(delay, std::bind(static_cast<void(Game::*)(const Position&, uint16_t)>(&Game::addEffect), this, toPos, tryEffect)));
 	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::playerSendPokemonEmot, this, player->getGUID(), pokemonEmot)));
 	g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnTryCatchPokemon, g_events, player, pokemonType, pokeballType)));
 	g_scheduler.addEvent(createSchedulerTask(2999 + delay, std::bind(static_cast<void(Player::*)(MessageClasses, const std::string&)const>(&Player::sendTextMessage), player, MESSAGE_STATUS_CONSOLE_BLUE, message.str())));
@@ -5262,7 +5262,7 @@ void Game::playerSendPokemonEmot(uint32_t playerGUID, uint16_t pokemonEmot) {
 	}
 
 	if (Pokemon* pokemonPlayer = player->getHisPokemon()) {
-		g_game.addMagicEffect(pokemonPlayer->getPosition(), pokemonEmot);
+		g_game.addEffect(pokemonPlayer->getPosition(), pokemonEmot);
 	}
 }
 
@@ -6058,7 +6058,7 @@ void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
 
 			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Congratulations! " + oldName + " evolved to " + pokemonType->nameDescription + "!");
 			//player->sendStats();
-			addMagicEffect(newPokemon->getPosition(), CONST_ME_EVOLUTION);
+			addEffect(newPokemon->getPosition(), CONST_ME_EVOLUTION);
 			return;
 		}
 	}

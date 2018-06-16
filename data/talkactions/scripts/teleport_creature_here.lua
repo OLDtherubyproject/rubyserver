@@ -16,8 +16,8 @@ function onSay(player, words, param)
 		return false
 	elseif creature:teleportTo(newPosition) then
 		if not creature:isInGhostMode() then
-			oldPosition:sendMagicEffect(CONST_ME_POFF)
-			newPosition:sendMagicEffect(CONST_ME_TELEPORT)
+			oldPosition:sendEffect(CONST_ME_POFF)
+			newPosition:sendEffect(CONST_ME_TELEPORT)
 		end
 	end
 	return false

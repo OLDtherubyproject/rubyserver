@@ -594,7 +594,7 @@ void Combat::combatTileEffects(const SpectatorHashSet& spectators, Creature* cas
 	}
 
 	if (params.impactEffect != CONST_ME_NONE) {
-		Game::addMagicEffect(spectators, tile->getPosition(), params.impactEffect);
+		Game::addEffect(spectators, tile->getPosition(), params.impactEffect);
 	}
 }
 
@@ -708,7 +708,7 @@ void Combat::doCombatHealth(Creature* caster, Creature* target, CombatDamage& da
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
 	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addMagicEffect(target->getPosition(), params.impactEffect);
+		g_game.addEffect(target->getPosition(), params.impactEffect);
 	}
 
 	if (canCombat) {
@@ -737,7 +737,7 @@ void Combat::doCombatCondition(Creature* caster, Creature* target, const CombatP
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
 	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addMagicEffect(target->getPosition(), params.impactEffect);
+		g_game.addEffect(target->getPosition(), params.impactEffect);
 	}
 
 	if (canCombat) {
@@ -761,7 +761,7 @@ void Combat::doCombatDispel(Creature* caster, Creature* target, const CombatPara
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
 	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addMagicEffect(target->getPosition(), params.impactEffect);
+		g_game.addEffect(target->getPosition(), params.impactEffect);
 	}
 
 	if (canCombat) {
@@ -790,7 +790,7 @@ void Combat::doCombatDefault(Creature* caster, Creature* target, const CombatPar
 		}
 
 		if (params.impactEffect != CONST_ME_NONE) {
-			g_game.addMagicEffect(target->getPosition(), params.impactEffect);
+			g_game.addEffect(target->getPosition(), params.impactEffect);
 		}
 
 		if (caster && params.distanceEffect != CONST_ANI_NONE) {

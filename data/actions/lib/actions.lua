@@ -36,6 +36,6 @@ function destroyItem(player, target, toPosition)
 		target:remove(1)
 	end
 
-	toPosition:sendMagicEffect(CONST_ME_POFF)
+	toPosition:sendEffect(CONST_ME_POFF)
 	return true
 end

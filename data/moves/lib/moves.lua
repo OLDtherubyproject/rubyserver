@@ -219,7 +219,7 @@ function Player:addPartyCondition(combat, variant, condition, baseMana)
 	local party = self:getParty()
 	if not party then
 		self:sendCancelMessage(RETURNVALUE_NOPARTYMEMBERSINRANGE)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
+		self:getPosition():sendEffect(CONST_ME_POFF)
 		return false
 	end
 
@@ -249,7 +249,7 @@ function Player:addPartyCondition(combat, variant, condition, baseMana)
 
 	if #affectedMembers == 1 then
 		self:sendCancelMessage(RETURNVALUE_NOPARTYMEMBERSINRANGE)
-		self:getPosition():sendMagicEffect(CONST_ME_POFF)
+		self:getPosition():sendEffect(CONST_ME_POFF)
 		return false
 	end
 
@@ -258,7 +258,7 @@ function Player:addPartyCondition(combat, variant, condition, baseMana)
 	end
 
 	for _, position in ipairs(positions) do
-		position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		position:sendEffect(CONST_ME_MAGIC_BLUE)
 	end
 	return true
 end

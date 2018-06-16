@@ -227,7 +227,7 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 		}
 
 		if (displayEffect && player->getHealth() > 0) {
-			g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
+			g_game.addEffect(player->getPosition(), CONST_ME_POFF);
 		}
 	}
 
@@ -2235,7 +2235,7 @@ void ProtocolGame::sendDistanceShoot(const Position& from, const Position& to, u
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendMagicEffect(const Position& pos, uint16_t type)
+void ProtocolGame::sendEffect(const Position& pos, uint16_t type)
 {
 	if (!canSee(pos)) {
 		return;
@@ -2398,7 +2398,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 		}
 
 		if (isLogin && !(creature->isSummon() && creature->getMaster()->getPlayer())) {
-			sendMagicEffect(pos, CONST_ME_TELEPORT);
+			sendEffect(pos, CONST_ME_TELEPORT);
 		}
 		return;
 	}
@@ -2433,7 +2433,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	sendMapDescription(pos);
 
 	if (isLogin) {
-		sendMagicEffect(pos, CONST_ME_TELEPORT);
+		sendEffect(pos, CONST_ME_TELEPORT);
 	}
 
 	sendInventoryItem(CONST_SLOT_HEAD, player->getInventoryItem(CONST_SLOT_HEAD));

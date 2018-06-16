@@ -25,7 +25,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, "You may construct this only inside a house.")
 	else
 		item:transform(kit)
-		fromPosition:sendMagicEffect(CONST_ME_POFF)
+		fromPosition:sendEffect(CONST_ME_POFF)
 	end
 	return true
 end

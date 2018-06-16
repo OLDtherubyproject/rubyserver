@@ -12,7 +12,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		else
 			player:addItem(2145) -- 49% chance of getting small diamond
 		end
-		target:getPosition():sendMagicEffect(CONST_ME_BLOCKHIT)
+		target:getPosition():sendEffect(CONST_ME_BLOCKHIT)
 		target:remove(1)
 		return true
 	end

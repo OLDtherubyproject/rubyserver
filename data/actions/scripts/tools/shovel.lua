@@ -24,7 +24,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		elseif randomValue > 95 then
 			Game.createPokemon("Scarab", toPosition)
 		end
-		toPosition:sendMagicEffect(CONST_ME_POFF)
+		toPosition:sendEffect(CONST_ME_POFF)
 	else
 		return false
 	end

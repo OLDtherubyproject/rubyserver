@@ -18,11 +18,11 @@ function onSay(player, words, param)
 	local position = player:getPosition()
 	local pokemon = Game.createPokemon(pType, level, position)
 	if pokemon then
-		pokemon:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-		position:sendMagicEffect(CONST_ME_MAGIC_RED)
+		pokemon:getPosition():sendEffect(CONST_ME_TELEPORT)
+		position:sendEffect(CONST_ME_MAGIC_RED)
 	else
 		player:sendCancelMessage("There is not enough room.")
-		position:sendMagicEffect(CONST_ME_POFF)
+		position:sendEffect(CONST_ME_POFF)
 	end
 	return false
 end

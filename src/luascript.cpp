@@ -1958,7 +1958,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Position", "getDistance", LuaScriptInterface::luaPositionGetDistance);
 	registerMethod("Position", "isSightClear", LuaScriptInterface::luaPositionIsSightClear);
 
-	registerMethod("Position", "sendMagicEffect", LuaScriptInterface::luaPositionSendMagicEffect);
+	registerMethod("Position", "sendEffect", LuaScriptInterface::luaPositionsendEffect);
 	registerMethod("Position", "sendDistanceEffect", LuaScriptInterface::luaPositionSendDistanceEffect);
 
 	// Tile
@@ -4520,9 +4520,9 @@ int LuaScriptInterface::luaPositionIsSightClear(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPositionSendMagicEffect(lua_State* L)
+int LuaScriptInterface::luaPositionsendEffect(lua_State* L)
 {
-	// position:sendMagicEffect(magicEffect[, player = nullptr])
+	// position:sendEffect(magicEffect[, player = nullptr])
 	SpectatorHashSet spectators;
 	if (lua_gettop(L) >= 3) {
 		Player* player = getPlayer(L, 3);
@@ -4534,9 +4534,9 @@ int LuaScriptInterface::luaPositionSendMagicEffect(lua_State* L)
 	MagicEffectClasses magicEffect = getNumber<MagicEffectClasses>(L, 2);
 	const Position& position = getPosition(L, 1);
 	if (!spectators.empty()) {
-		Game::addMagicEffect(spectators, position, magicEffect);
+		Game::addEffect(spectators, position, magicEffect);
 	} else {
-		g_game.addMagicEffect(position, magicEffect);
+		g_game.addEffect(position, magicEffect);
 	}
 
 	pushBoolean(L, true);
@@ -11699,7 +11699,7 @@ int LuaScriptInterface::luaCombatExecute(lua_State* L)
 				combat->doCombat(creature, variant.pos);
 			} else {
 				combat->postCombatEffects(creature, variant.pos);
-				g_game.addMagicEffect(variant.pos, CONST_ME_POFF);
+				g_game.addEffect(variant.pos, CONST_ME_POFF);
 			}
 			break;
 		}

@@ -13,7 +13,7 @@ function onSay(player, words, param)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "You have changed your sex for " .. premiumDaysCost .. " days of your premium account.")
 	else
 		player:sendCancelMessage("You do not have enough premium days, changing sex costs " .. premiumDaysCost .. " days of your premium account.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		player:getPosition():sendEffect(CONST_ME_POFF)
 	end
 	return false
 end

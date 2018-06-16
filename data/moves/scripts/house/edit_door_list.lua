@@ -3,7 +3,7 @@ function onCastMove(creature, variant)
 	local doorId = house and house:getDoorIdByPosition(variant:getPosition())
 	if not doorId or not house:canEditAccessList(doorId, creature) then
 		creature:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-		creature:getPosition():sendMagicEffect(CONST_ME_POFF)
+		creature:getPosition():sendEffect(CONST_ME_POFF)
 		return false
 	end
 

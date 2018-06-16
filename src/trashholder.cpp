@@ -73,7 +73,7 @@ void TrashHolder::addThing(int32_t, Thing* thing)
 	g_game.internalRemoveItem(item);
 
 	if (it.magicEffect != CONST_ME_NONE) {
-		g_game.addMagicEffect(getPosition(), it.magicEffect);
+		g_game.addEffect(getPosition(), it.magicEffect);
 	}
 }
 

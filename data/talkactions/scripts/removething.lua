@@ -28,6 +28,6 @@ function onSay(player, words, param)
 		thing:remove(tonumber(param) or -1)
 	end
 
-	position:sendMagicEffect(CONST_ME_MAGIC_RED)
+	position:sendEffect(CONST_ME_MAGIC_RED)
 	return false
 end

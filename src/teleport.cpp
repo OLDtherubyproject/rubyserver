@@ -85,13 +85,13 @@ void Teleport::addThing(int32_t, Thing* thing)
 		g_game.internalCreatureTurn(creature, origPos.x > destPos.x ? DIRECTION_WEST : DIRECTION_EAST);
 		g_game.map.moveCreature(*creature, *destTile);
 		if (effect != CONST_ME_NONE) {
-			g_game.addMagicEffect(origPos, effect);
-			g_game.addMagicEffect(destTile->getPosition(), effect);
+			g_game.addEffect(origPos, effect);
+			g_game.addEffect(destTile->getPosition(), effect);
 		}
 	} else if (Item* item = thing->getItem()) {
 		if (effect != CONST_ME_NONE) {
-			g_game.addMagicEffect(destTile->getPosition(), effect);
-			g_game.addMagicEffect(item->getPosition(), effect);
+			g_game.addEffect(destTile->getPosition(), effect);
+			g_game.addEffect(item->getPosition(), effect);
 		}
 		g_game.internalMoveItem(getTile(), destTile, INDEX_WHEREEVER, item, item->getItemCount(), nullptr);
 	}

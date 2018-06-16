@@ -8,10 +8,10 @@ local beds = {
 
 local function internalBedTransform(item, targetItem, toPosition, itemArray)
 	targetItem:transform(itemArray[1])
-	targetItem:getPosition():sendMagicEffect(CONST_ME_POFF)
+	targetItem:getPosition():sendEffect(CONST_ME_POFF)
 
 	Tile(toPosition):getItemByType(ITEM_TYPE_BED):transform(itemArray[2])
-	toPosition:sendMagicEffect(CONST_ME_POFF)
+	toPosition:sendEffect(CONST_ME_POFF)
 
 	item:remove()
 end
@@ -35,12 +35,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	for _, bed in pairs(beds) do
 		if bed[1][1] == targetItemId or table.contains({1758, 5502, 18027}, targetItemId) then
-			toPosition:sendMagicEffect(CONST_ME_POFF)
+			toPosition:sendEffect(CONST_ME_POFF)
 			toPosition.y = toPosition.y + 1
 			internalBedTransform(item, target, toPosition, newBed[1])
 			break
 		elseif bed[2][1] == targetItemId or table.contains({1756, 5500, 18029}, targetItemId) then
-			toPosition:sendMagicEffect(CONST_ME_POFF)
+			toPosition:sendEffect(CONST_ME_POFF)
 			toPosition.x = toPosition.x + 1
 			internalBedTransform(item, target, toPosition, newBed[2])
 			break

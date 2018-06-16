@@ -22,6 +22,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	player:addItem(gift, count)
 	item:remove(1)
-	fromPosition:sendMagicEffect(CONST_ME_GIFT_WRAPS)
+	fromPosition:sendEffect(CONST_ME_GIFT_WRAPS)
 	return true
 end

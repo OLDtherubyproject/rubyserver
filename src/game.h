@@ -460,8 +460,8 @@ class Game
 		//animation help functions
 		void addCreatureHealth(const Creature* target);
 		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
-		void addMagicEffect(const Position& pos, uint16_t effect);
-		static void addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
+		void addEffect(const Position& pos, uint16_t effect);
+		static void addEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
 		void addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text);
 		static void addAnimatedText(const SpectatorHashSet& list, const Position& pos, uint8_t textColor, const std::string& text);
 		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect);

@@ -937,14 +937,14 @@ void Pokemon::onThink(uint32_t interval)
 					if (getHealth() <= (0.15 * getMaxHealth())) {
 						if (canSendEmot()) {
 							setNextEmot(OTSYS_TIME() + EVENT_SEND_PBEMOT_INTERVAL);
-							g_game.addMagicEffect(getPosition(), 91);
+							g_game.addEffect(getPosition(), 91);
 						}
 					} else {
 						Tile* tile = g_game.map.getTile(getPosition());
 						HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
 						if (houseTile && canSendEmot()) {
 							setNextEmot(OTSYS_TIME() + EVENT_SEND_HOUSEEMOT_INTERVAL);
-							g_game.addMagicEffect(getPosition(), 99);
+							g_game.addEffect(getPosition(), 99);
 						}
 					}
 				}
@@ -1147,7 +1147,7 @@ void Pokemon::pushItems(Tile* tile)
 		}
 
 		if (removeCount > 0) {
-			g_game.addMagicEffect(tile->getPosition(), CONST_ME_POFF);
+			g_game.addEffect(tile->getPosition(), CONST_ME_POFF);
 		}
 	}
 }
@@ -1198,7 +1198,7 @@ void Pokemon::pushCreatures(Tile* tile)
 		}
 
 		if (removeCount > 0) {
-			g_game.addMagicEffect(tile->getPosition(), CONST_ME_BLOCKHIT);
+			g_game.addEffect(tile->getPosition(), CONST_ME_BLOCKHIT);
 		}
 	}
 }
@@ -1879,8 +1879,8 @@ bool Pokemon::teleportToPlayer()
 		return false;
 	}
 
-	g_game.addMagicEffect(pokemonPosition, CONST_ME_POFF);
-	g_game.addMagicEffect(getPosition(), CONST_ME_TELEPORT);
+	g_game.addEffect(pokemonPosition, CONST_ME_POFF);
+	g_game.addEffect(getPosition(), CONST_ME_TELEPORT);
 	isMasterInRange = true;
 	needTeleportToPlayer = false;
 	return true;
@@ -2115,13 +2115,13 @@ bool Pokemon::checkSpawn()
 	if (!belongsToPlayer() && getPokemonType()->info.spawnAt != 0) {
 		if (getPokemonType()->info.spawnAt == 1 && !getTile()->hasFlag(TILESTATE_CAVE)) {
 			if (!g_game.isNight() && !g_game.isSunset()) {
-				g_game.addMagicEffect(getPosition(), 3);
+				g_game.addEffect(getPosition(), 3);
 				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, getName() + " ran away...", false);
 				g_game.removeCreature(this, true);
 				return true;
 			}
 		} else if (getPokemonType()->info.spawnAt == 2 && !g_game.isDay() && !g_game.isSunrise()) {
-			g_game.addMagicEffect(getPosition(), 3);
+			g_game.addEffect(getPosition(), 3);
 			g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, getName() + " ran away...", false);
 			g_game.removeCreature(this, true);
 			return true;

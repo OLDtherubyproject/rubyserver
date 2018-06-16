@@ -229,7 +229,7 @@ void Creature::onWalk(Direction& dir)
 		uint32_t r = uniform_random(0, 20);
 		if (r < DIRECTION_DIAGONAL_MASK) {
 			dir = static_cast<Direction>(r);
-			g_game.addMagicEffect(getPosition(), 948);
+			g_game.addEffect(getPosition(), 948);
 
 			if (uniform_random(1, 100) <= 10) {
 				CombatDamage damage;
@@ -701,7 +701,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 				deathEvent->executeOnDeath(this, nullptr, lastHitCreature, mostDamageCreature, lastHitUnjustified, mostDamageUnjustified);
 			}
 		} else{
-			g_game.addMagicEffect(getPosition(), CONST_ME_POFF);
+			g_game.addEffect(getPosition(), CONST_ME_POFF);
 		}
 	} else {
 		Tile* tile = getTile();

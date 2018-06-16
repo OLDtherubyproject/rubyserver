@@ -4,6 +4,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return false
 	end
 
-	player:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
+	player:getPosition():sendEffect(CONST_ME_GIFT_WRAPS)
 	return true
 end

@@ -18,7 +18,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			return true
 		end
 
-		toPosition:sendMagicEffect(CONST_ME_WATERSPLASH)
+		toPosition:sendEffect(CONST_ME_WATERSPLASH)
 		target:remove()
 
 		local rareChance = math.random(1, 100)
@@ -35,7 +35,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	if targetId ~= 7236 then
-		toPosition:sendMagicEffect(CONST_ME_LOSEENERGY)
+		toPosition:sendEffect(CONST_ME_LOSEENERGY)
 	end
 
 	if targetId == 493 or targetId == 15402 then

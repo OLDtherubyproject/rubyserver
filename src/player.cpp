@@ -3527,11 +3527,11 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 	pos = pokemon->getPosition();
 
 	if (!pokeballType) {
-		g_game.addMagicEffect(pos, CONST_ME_GOBACK_POKEBALL);
+		g_game.addEffect(pos, CONST_ME_GOBACK_POKEBALL);
 		return true;
 	}
 
-	g_game.addMagicEffect(pos, pokeballType->getGobackEffect());
+	g_game.addEffect(pos, pokeballType->getGobackEffect());
 	return true;
 }
 

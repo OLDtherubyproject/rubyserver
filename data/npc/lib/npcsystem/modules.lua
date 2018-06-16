@@ -176,8 +176,8 @@ if Modules == nil then
 				local position = player:getPosition()
 				player:teleportTo(destination)
 
-				position:sendMagicEffect(CONST_ME_TELEPORT)
-				destination:sendMagicEffect(CONST_ME_TELEPORT)
+				position:sendEffect(CONST_ME_TELEPORT)
+				destination:sendEffect(CONST_ME_TELEPORT)
 			end
 		else
 			npcHandler:say("I'm sorry, but you need a premium account in order to travel onboard our ships.", cid)
@@ -453,8 +453,8 @@ if Modules == nil then
 				local position = player:getPosition()
 				player:teleportTo(destination)
 
-				position:sendMagicEffect(CONST_ME_TELEPORT)
-				destination:sendMagicEffect(CONST_ME_TELEPORT)
+				position:sendEffect(CONST_ME_TELEPORT)
+				destination:sendEffect(CONST_ME_TELEPORT)
 			end
 		else
 			npcHandler:say("I can only allow premium players to travel there.", cid)
@@ -493,8 +493,8 @@ if Modules == nil then
 				local position = player:getPosition()
 				player:teleportTo(destination)
 
-				position:sendMagicEffect(CONST_ME_TELEPORT)
-				destination:sendMagicEffect(CONST_ME_TELEPORT)
+				position:sendEffect(CONST_ME_TELEPORT)
+				destination:sendEffect(CONST_ME_TELEPORT)
 			end
 		end
 		return true

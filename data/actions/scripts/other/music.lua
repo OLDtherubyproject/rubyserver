@@ -48,7 +48,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 	end
 
-	item:getPosition():sendMagicEffect(instrument.effect or instrument.effects and chance and instrument.effects.success or instrument.effects.failure)
+	item:getPosition():sendEffect(instrument.effect or instrument.effects and chance and instrument.effects.success or instrument.effects.failure)
 
 	if instrument.transformId then
 		player:say(instrument.text, TALKTYPE_POKEMON_SAY, false, nil, item:getPosition())

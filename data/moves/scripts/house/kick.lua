@@ -3,7 +3,7 @@ function onCastMove(creature, variant)
 	local house = target:getTile():getHouse()
 	if not house or not house:kickPlayer(creature, target) then
 		creature:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-		creature:getPosition():sendMagicEffect(CONST_ME_POFF)
+		creature:getPosition():sendEffect(CONST_ME_POFF)
 		return false
 	end
 	return true

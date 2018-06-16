@@ -74,8 +74,8 @@ local function creatureSayCallback(cid, type, msg)
 			local destination = destination[cid]
 			npcHandler:releaseFocus(cid)
 			player:teleportTo(destination)
-			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-			destination:sendMagicEffect(CONST_ME_TELEPORT)
+			player:getPosition():sendEffect(CONST_ME_TELEPORT)
+			destination:sendEffect(CONST_ME_TELEPORT)
 		else
 			npcHandler:say("THEN WHAT? {KNIGHT}, {PALADIN}, {SORCERER}, OR {DRUID}?", cid)
 			npcHandler.topic[cid] = 2

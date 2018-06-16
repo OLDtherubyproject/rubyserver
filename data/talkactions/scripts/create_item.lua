@@ -54,7 +54,7 @@ function onSay(player, words, param)
 				result:decay()
 			end
 		end
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		player:getPosition():sendEffect(CONST_ME_MAGIC_GREEN)
 	end
 	return false
 end

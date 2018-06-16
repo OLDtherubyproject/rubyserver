@@ -6,7 +6,7 @@ condition:setParameter(CONDITION_PARAM_TICKINTERVAL, 2000)
 function onStepIn(creature, item, position, fromPosition)
 	if creature:isPlayer() then
 		if math.random(1, 10) == 1 then
-			position:sendMagicEffect(CONST_ME_BUBBLES)
+			position:sendEffect(CONST_ME_BUBBLES)
 		end
 		creature:addCondition(condition)
 	end

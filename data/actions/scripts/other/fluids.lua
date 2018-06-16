@@ -46,7 +46,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				player:addCondition(poison)
 			elseif item.type == 10 then
 				player:addHealth(60)
-				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)
+				fromPosition:sendEffect(CONST_ME_MAGIC_BLUE)
 			end
 			player:say(fluidMessage[item.type] or "Gulp.", TALKTYPE_POKEMON_SAY)
 			item:transform(item:getId(), 0)

@@ -585,7 +585,7 @@ function doAddContainerItemEx(uid, virtualId)
 	return res
 end
 
-function doSendMagicEffect(pos, magicEffect, ...) return Position(pos):sendMagicEffect(magicEffect, ...) end
+function dosendEffect(pos, magicEffect, ...) return Position(pos):sendEffect(magicEffect, ...) end
 function doSendDistanceShoot(fromPos, toPos, distanceEffect, ...) return Position(fromPos):sendDistanceEffect(toPos, distanceEffect, ...) end
 function isSightClear(fromPos, toPos, floorCheck) return Position(fromPos):isSightClear(toPos, floorCheck) end
 

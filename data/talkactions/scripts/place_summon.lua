@@ -19,10 +19,10 @@ function onSay(player, words, param)
 	local pokemon = Game.createPokemon(pType, level, position)
 	if pokemon then
 		player:addSummon(pokemon)
-		position:sendMagicEffect(CONST_ME_MAGIC_RED)
+		position:sendEffect(CONST_ME_MAGIC_RED)
 	else
 		player:sendCancelMessage("There is not enough room.")
-		position:sendMagicEffect(CONST_ME_POFF)
+		position:sendEffect(CONST_ME_POFF)
 	end
 	return false
 end

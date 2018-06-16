@@ -1012,7 +1012,7 @@ bool ConditionDamage::doDamage(Creature* creature, int32_t healthChange)
 
 	if (!creature->isAttackable() || Combat::canDoCombat(attacker, creature) != RETURNVALUE_NOERROR) {
 		if (!creature->isInGhostMode()) {
-			g_game.addMagicEffect(creature->getPosition(), CONST_ME_POFF);
+			g_game.addEffect(creature->getPosition(), CONST_ME_POFF);
 		}
 		return false;
 	}
@@ -1553,7 +1553,7 @@ bool ConditionSleep::executeCondition(Creature* creature, int32_t interval)
 		const Position& cPos = creature->getPosition();
 		const Position& ePos = Position(cPos.x, cPos.y - 1, cPos.z);
 
-		g_game.addMagicEffect(ePos, CONST_ME_SLEEP);
+		g_game.addEffect(ePos, CONST_ME_SLEEP);
 	}
 
 	return Condition::executeCondition(creature, interval);
