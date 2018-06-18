@@ -908,7 +908,7 @@ class Item : virtual public Thing
 			return items[id].slotPosition;
 		}
 
-		uint32_t getWorth() const;
+		uint64_t getWorth() const;
 		LightInfo getLightInfo() const;
 
 		bool hasProperty(ITEMPROPERTY prop) const;

@@ -1144,17 +1144,23 @@ bool Item::canDecay() const
 	return true;
 }
 
-uint32_t Item::getWorth() const
+uint64_t Item::getWorth() const
 {
 	switch (id) {
-		case ITEM_GOLD_COIN:
+		case ITEM_COIN:
 			return count;
 
-		case ITEM_PLATINUM_COIN:
+		case ITEM_DOLLAR_NOTE:
 			return count * 100;
 
-		case ITEM_CRYSTAL_COIN:
+		case ITEM_HUNDRED_DOLLAR_NOTE:
 			return count * 10000;
+
+		case ITEM_TEN_THOUSAND_DOLLAR_NOTE:
+			return (uint64_t)count * 1000000;
+
+		case ITEM_MILLION_DOLLAR_NOTE:
+			return (uint64_t)count * 100000000;
 
 		default:
 			return 0;
