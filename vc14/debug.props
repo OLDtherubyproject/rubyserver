@@ -12,10 +12,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ObjectFileName>$(IntDir)\obj_d\</ObjectFileName>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>$(TRS_LIBDEPS_D)</AdditionalDependencies>
-    </Link>
+    </ClCompile>    
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

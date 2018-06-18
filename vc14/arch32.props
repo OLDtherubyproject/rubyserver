@@ -4,8 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
-    <Link>
-      <AdditionalLibraryDirectories>$(TRS_LIBS)</AdditionalLibraryDirectories>
+    <Link>      
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>

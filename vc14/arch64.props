@@ -4,8 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
-    <Link>
-      <AdditionalLibraryDirectories>$(TRS_LIBS64)</AdditionalLibraryDirectories>
+    <Link>      
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
