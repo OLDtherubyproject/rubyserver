@@ -1469,7 +1469,7 @@ bool Game::removeMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*
 
 	std::vector<Container*> containers;
 
-	std::multimap<uint32_t, Item*> moneyMap;
+	std::multimap<uint64_t, Item*> moneyMap;
 	uint64_t moneyCount = 0;
 
 	for (size_t i = cylinder->getFirstIndex(), j = cylinder->getLastIndex(); i < j; ++i) {
@@ -1487,7 +1487,7 @@ bool Game::removeMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*
 		if (container) {
 			containers.push_back(container);
 		} else {
-			const uint32_t worth = item->getWorth();
+			const uint64_t worth = item->getWorth();
 			if (worth != 0) {
 				moneyCount += worth;
 				moneyMap.emplace(worth, item);
@@ -1503,7 +1503,7 @@ bool Game::removeMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*
 			if (tmpContainer) {
 				containers.push_back(tmpContainer);
 			} else {
-				const uint32_t worth = item->getWorth();
+				const uint64_t worth = item->getWorth();
 				if (worth != 0) {
 					moneyCount += worth;
 					moneyMap.emplace(worth, item);
@@ -1522,8 +1522,8 @@ bool Game::removeMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*
 			internalRemoveItem(item);
 			money -= moneyEntry.first;
 		} else if (moneyEntry.first > money) {
-			const uint32_t worth = moneyEntry.first / item->getItemCount();
-			const uint32_t removeCount = std::ceil(money / static_cast<double>(worth));
+			const uint64_t worth = moneyEntry.first / item->getItemCount();
+			const uint64_t removeCount = std::ceil(money / static_cast<double>(worth));
 
 			addMoney(cylinder, (worth * removeCount) - money, flags);
 			internalRemoveItem(item, removeCount);
@@ -1542,35 +1542,59 @@ void Game::addMoney(Cylinder* cylinder, uint64_t money, uint32_t flags /*= 0*/)
 		return;
 	}
 
-	uint32_t crystalCoins = money / 10000;
-	money -= crystalCoins * 10000;
-	while (crystalCoins > 0) {
-		const uint16_t count = std::min<uint32_t>(100, crystalCoins);
+	uint64_t millionDollarNotes = money / 100000000;
+	money -= millionDollarNotes * 100000000;
+	while (millionDollarNotes > 0) {
+		const uint16_t count = std::min<uint32_t>(100, millionDollarNotes);
 
-		Item* remaindItem = Item::CreateItem(ITEM_CRYSTAL_COIN, count);
+		Item* remaindItem = Item::CreateItem(ITEM_MILLION_DOLLAR_NOTE, count);
 
 		ReturnValue ret = internalAddItem(cylinder, remaindItem, INDEX_WHEREEVER, flags);
 		if (ret != RETURNVALUE_NOERROR) {
 			internalAddItem(cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
 		}
 
-		crystalCoins -= count;
+		millionDollarNotes -= count;
 	}
 
-	uint16_t platinumCoins = money / 100;
-	if (platinumCoins != 0) {
-		Item* remaindItem = Item::CreateItem(ITEM_PLATINUM_COIN, platinumCoins);
+	uint32_t tenThousandDollarNotes = money / 1000000;
+	if (tenThousandDollarNotes != 0) {
+		Item* remaindItem = Item::CreateItem(ITEM_TEN_THOUSAND_DOLLAR_NOTE, tenThousandDollarNotes);
 
 		ReturnValue ret = internalAddItem(cylinder, remaindItem, INDEX_WHEREEVER, flags);
 		if (ret != RETURNVALUE_NOERROR) {
 			internalAddItem(cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
 		}
 
-		money -= platinumCoins * 100;
+		money -= tenThousandDollarNotes * 1000000;
+	}
+
+	uint16_t hundredDollarNotes = money / 10000;
+	if (hundredDollarNotes != 0) {
+		Item* remaindItem = Item::CreateItem(ITEM_HUNDRED_DOLLAR_NOTE, hundredDollarNotes);
+
+		ReturnValue ret = internalAddItem(cylinder, remaindItem, INDEX_WHEREEVER, flags);
+		if (ret != RETURNVALUE_NOERROR) {
+			internalAddItem(cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
+		}
+
+		money -= hundredDollarNotes * 10000;
+	}
+
+	uint16_t dollarNotes = money / 100;
+	if (dollarNotes != 0) {
+		Item* remaindItem = Item::CreateItem(ITEM_DOLLAR_NOTE, dollarNotes);
+
+		ReturnValue ret = internalAddItem(cylinder, remaindItem, INDEX_WHEREEVER, flags);
+		if (ret != RETURNVALUE_NOERROR) {
+			internalAddItem(cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
+		}
+
+		money -= dollarNotes * 100;
 	}
 
 	if (money != 0) {
-		Item* remaindItem = Item::CreateItem(ITEM_GOLD_COIN, money);
+		Item* remaindItem = Item::CreateItem(ITEM_COIN, money);
 
 		ReturnValue ret = internalAddItem(cylinder, remaindItem, INDEX_WHEREEVER, flags);
 		if (ret != RETURNVALUE_NOERROR) {

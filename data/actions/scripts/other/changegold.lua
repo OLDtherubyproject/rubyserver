@@ -1,7 +1,9 @@
 local config = {
-	[ITEM_GOLD_COIN] = {changeTo = ITEM_PLATINUM_COIN},
-	[ITEM_PLATINUM_COIN] = {changeBack = ITEM_GOLD_COIN, changeTo = ITEM_CRYSTAL_COIN},
-	[ITEM_CRYSTAL_COIN] = {changeBack = ITEM_PLATINUM_COIN}
+	[ITEM_COIN] = {changeTo = ITEM_DOLLAR_NOTE},
+	[ITEM_DOLLAR_NOTE] = {changeBack = ITEM_COIN, changeTo = ITEM_HUNDRED_DOLLAR_NOTE},
+	[ITEM_HUNDRED_DOLLAR_NOTE] = {changeBack = ITEM_DOLLAR_NOTE, changeTo = ITEM_TEN_THOUSAND_DOLLAR_NOTE},
+	[ITEM_TEN_THOUSAND_DOLLAR_NOTE] = {changeBack = ITEM_HUNDRED_DOLLAR_NOTE, changeTo = ITEM_MILLION_DOLLAR_NOTE},
+	[ITEM_MILLION_DOLLAR_NOTE] = {changeBack = ITEM_TEN_THOUSAND_DOLLAR_NOTE}
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)

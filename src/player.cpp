@@ -2663,7 +2663,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 bool Player::updateSaleShopList(const Item* item)
 {
 	uint16_t itemId = item->getID();
-	if (itemId != ITEM_GOLD_COIN && itemId != ITEM_PLATINUM_COIN && itemId != ITEM_CRYSTAL_COIN) {
+	if (itemId != ITEM_COIN && itemId != ITEM_DOLLAR_NOTE && itemId != ITEM_HUNDRED_DOLLAR_NOTE && itemId != ITEM_TEN_THOUSAND_DOLLAR_NOTE && itemId != ITEM_MILLION_DOLLAR_NOTE) {
 		auto it = std::find_if(shopItemList.begin(), shopItemList.end(), [itemId](const ShopInfo& shopInfo) { return shopInfo.itemId == itemId && shopInfo.sellPrice != 0; });
 		if (it == shopItemList.end()) {
 			const Container* container = item->getContainer();

@@ -280,7 +280,7 @@ class ItemAttributes
 			struct PushLuaVisitor : public boost::static_visitor<> {
 				lua_State* L;
 
-				explicit PushLuaVisitor(lua_State* L) : boost::static_visitor<>(), L(L) {}
+				PushLuaVisitor(lua_State* L) : boost::static_visitor<>(), L(L) {}
 
 				void operator()(const boost::blank&) const {
 					lua_pushnil(L);
@@ -310,7 +310,7 @@ class ItemAttributes
 			struct SerializeVisitor : public boost::static_visitor<> {
 				PropWriteStream& propWriteStream;
 
-				explicit SerializeVisitor(PropWriteStream& propWriteStream) : boost::static_visitor<>(), propWriteStream(propWriteStream) {}
+				SerializeVisitor(PropWriteStream& propWriteStream) : boost::static_visitor<>(), propWriteStream(propWriteStream) {}
 
 				void operator()(const boost::blank&) const {
 				}
@@ -908,7 +908,7 @@ class Item : virtual public Thing
 			return items[id].slotPosition;
 		}
 
-		uint32_t getWorth() const;
+		uint64_t getWorth() const;
 		LightInfo getLightInfo() const;
 
 		bool hasProperty(ITEMPROPERTY prop) const;

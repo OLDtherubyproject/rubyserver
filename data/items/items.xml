@@ -2097,8 +2097,9 @@
   <item id="2147" article="a" name="small ruby">
     <attribute key="weight" value="10" />
   </item>
-  <item id="2148" article="a" name="gold coin">
+  <item id="2148" article="a" name="coin" plural="coins">
     <attribute key="weight" value="10" />
+    <attribute key="description" value="One hundred of these can be converted in a dollar note." />
   </item>
   <item id="2149" article="a" name="poke ball">
     <attribute key="price" value="250" />
@@ -2110,8 +2111,9 @@
     <attribute key="weight" value="20" />
     <attribute key="description" value="There are many rumours about these magic gems." />
   </item>
-  <item id="2152" article="a" name="platinum coin">
+  <item id="2152" article="a" name="dollar note" plural="dollar notes">
     <attribute key="weight" value="10" />
+    <attribute key="description" value="One hundred of these can be converted in a hundred dollar note." />
   </item>
   <item id="2153" article="a" name="violet gem">
     <attribute key="weight" value="30" />
@@ -2134,16 +2136,12 @@
   <item id="2159" article="a" name="scarab coin">
     <attribute key="weight" value="20" />
   </item>
-  <item id="2160" article="a" name="crystal coin">
+  <item id="2160" article="a" name="hundred dollar note" plural="hundred dollar notes">
     <attribute key="weight" value="10" />
+    <attribute key="description" value="One hundred of these can be converted in a ten thousand dollar note." />
   </item>
-  <item id="2161" article="a" name="strange talisman">
-    <attribute key="weight" value="290" />
-    <attribute key="slotType" value="necklace" />
-    <attribute key="charges" value="200" />
-    <attribute key="showcharges" value="1" />
-    <attribute key="absorbPercentEnergy" value="10" />
-    <attribute key="showattributes" value="1" />
+  <item id="2161" article="a" name="million dollar note" plural="million dollar notes">
+    <attribute key="weight" value="10" />
   </item>
   <item id="2162" article="a" name="magic light wand">
     <attribute key="weight" value="1500" />
@@ -6211,8 +6209,8 @@
   <item id="3955" article="a" name="voodoo doll">
     <attribute key="weight" value="650" />
   </item>
-  <item id="3956" article="a" name="tusk">
-    <attribute key="weight" value="1000" />
+  <item id="3956" article="a" name="ten thousand dollar note" plural="ten thousand dollar notes">
+    <attribute key="description" value="One hundred of these can be converted in a million dollar note." />
   </item>
   <item id="3957" article="a" name="cornucopia">
     <attribute key="weight" value="1400" />

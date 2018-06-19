@@ -4,11 +4,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if target.itemid == 11227 then -- shiny stone refining
 		local chance = math.random(1, 100)
 		if chance == 1 then
-			player:addItem(ITEM_CRYSTAL_COIN) -- 1% chance of getting crystal coin
+			player:addItem(ITEM_HUNDRED_DOLLAR_NOTE) -- 1% chance of getting crystal coin
 		elseif chance <= 6 then
-			player:addItem(ITEM_GOLD_COIN) -- 5% chance of getting gold coin
+			player:addItem(ITEM_COIN) -- 5% chance of getting gold coin
 		elseif chance <= 51 then
-			player:addItem(ITEM_PLATINUM_COIN) -- 45% chance of getting platinum coin
+			player:addItem(ITEM_DOLLAR_NOTE) -- 45% chance of getting platinum coin
 		else
 			player:addItem(2145) -- 49% chance of getting small diamond
 		end
