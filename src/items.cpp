@@ -415,7 +415,7 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.type = ITEM_TYPE_BED;
 			} else if (tmpStrValue == "corpse") {
 				it.type = ITEM_TYPE_CORPSE;
-			} else if (tmpStrValue == "evolution stone") {
+			} else if (tmpStrValue == "evolutionstone") {
 				it.type = ITEM_TYPE_EVOLUTION_STONE;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown type: " << valueAttribute.as_string() << std::endl;

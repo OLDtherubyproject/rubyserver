@@ -14551,37 +14551,37 @@
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="1000000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8923" article="a" name="thunder stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="1000000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8924" article="a" name="sun stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8925" article="an" name="ice stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8926" article="a" name="fire stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8927" article="a" name="leaf stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8928" article="a" name="moon stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
@@ -14592,25 +14592,25 @@
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8930" article="a" name="dusk stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8931" article="a" name="shiny stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8932" article="a" name="dawn stone">
     <attribute key="description" value="Evolves certain kinds of Pokemon." />
     <attribute key="weight" value="3000" />
     <attribute key="price" value="10000" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8933" name="remains of an earth elemental">
     <attribute key="weight" value="50000" />
@@ -14618,7 +14618,7 @@
     <attribute key="decayTo" value="8934" />
     <attribute key="duration" value="10" />
     <attribute key="type" value="corpse" />
-    <attribute key="type" value="evolution stone" />
+    <attribute key="type" value="evolutionstone" />
   </item>
   <item id="8934" name="remains of an earth elemental">
     <attribute key="weight" value="40000" />
