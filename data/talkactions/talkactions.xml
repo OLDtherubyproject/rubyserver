@@ -60,6 +60,28 @@
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 
+	<!-- emoticons -->
+	<talkaction words="!:@" script="emoticons.lua" />
+	<talkaction words="!:|" script="emoticons.lua" />
+	<talkaction words="!pb" script="emoticons.lua" />
+	<talkaction words="!idea" script="emoticons.lua" />
+	<talkaction words="!lol" script="emoticons.lua" />
+	<talkaction words="!:(" script="emoticons.lua" />
+	<talkaction words="!xD" script="emoticons.lua" />
+	<talkaction words="!!" script="emoticons.lua" />
+	<talkaction words="!?" script="emoticons.lua" />
+	<talkaction words="!go" script="emoticons.lua" />
+	<talkaction words="!:)" script="emoticons.lua" />
+	<talkaction words="!O.o" script="emoticons.lua" />
+	<talkaction words="!..." script="emoticons.lua" />
+	<talkaction words="!damn" script="emoticons.lua" />
+	<talkaction words="!no" script="emoticons.lua" />
+	<talkaction words="!:D" script="emoticons.lua" />
+	<talkaction words="!:S" script="emoticons.lua" />
+	<talkaction words="!$" script="emoticons.lua" />
+	<talkaction words="!pikachu" script="emoticons.lua" />
+	<talkaction words="!yes" script="emoticons.lua" />
+
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />
 	<talkaction words="!x" separator=" " script="animationeffect.lua" />
