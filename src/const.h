@@ -506,6 +506,7 @@ enum Natures_t : uint8_t {
 	NATURE_SERIOUS = 23,
 	NATURE_JOLLY = 24,
 	NATURE_NAIVE = 25,
+	NATURE_LAST = NATURE_NAIVE,
 };
 
 enum PartyShields_t : uint8_t {
@@ -648,6 +649,7 @@ enum ReloadTypes_t : uint8_t  {
 	RELOAD_TYPE_MOVES,
 	RELOAD_TYPE_TALKACTIONS,
 	RELOAD_TYPE_POKEBALLS,
+	RELOAD_TYPE_FOODS
 };
 
 static constexpr int32_t CHANNEL_GUILD = 0x00;

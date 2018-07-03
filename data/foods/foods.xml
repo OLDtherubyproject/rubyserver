@@ -1,0 +1,2046 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foods>
+	<food itemid="2666" premium="false" for="everyone" sound="Munch." regen="15">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2667" premium="false" for="everyone" sound="Munch." regen="12">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2668" premium="false" for="everyone" sound="Mmmm." regen="10">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2669" premium="false" for="everyone" sound="Munch." regen="17">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2670" premium="false" for="everyone" sound="Gulp." regen="4">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2671" premium="false" for="everyone" sound="Chomp." regen="30">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2672" premium="false" for="everyone" sound="Chomp." regen="60">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2673" premium="false" for="everyone" sound="Yum." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2674" premium="false" for="everyone" sound="Yum." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2675" premium="false" for="everyone" sound="Yum." regen="13">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2676" premium="false" for="everyone" sound="Yum." regen="8">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2677" premium="false" for="everyone" sound="Yum." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2678" premium="false" for="everyone" sound="Slurp." regen="18">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2679" premium="false" for="everyone" sound="Yum." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2680" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2681" premium="false" for="everyone" sound="Yum." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2682" premium="false" for="everyone" sound="Yum." regen="20">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2683" premium="false" for="everyone" sound="Munch." regen="17">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2684" premium="false" for="everyone" sound="Crunch." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2685" premium="false" for="everyone" sound="Munch." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2686" premium="false" for="everyone" sound="Crunch." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2687" premium="false" for="everyone" sound="Crunch." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2688" premium="false" for="everyone" sound="Munch." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2689" premium="false" for="everyone" sound="Crunch." regen="10">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2690" premium="false" for="everyone" sound="Crunch." regen="3">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2691" premium="false" for="everyone" sound="Munch." regen="8">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2695" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2696" premium="false" for="everyone" sound="Smack." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2787" premium="false" for="everyone" sound="Munch." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2788" premium="false" for="everyone" sound="Munch." regen="4">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2789" premium="false" for="everyone" sound="Munch." regen="22">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2790" premium="false" for="everyone" sound="Munch." regen="30">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2791" premium="false" for="everyone" sound="Munch." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2792" premium="false" for="everyone" sound="Munch." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2793" premium="false" for="everyone" sound="Munch." regen="12">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2794" premium="false" for="everyone" sound="Munch." regen="3">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2795" premium="false" for="everyone" sound="Munch." regen="36">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="2796" premium="false" for="everyone" sound="Munch." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="5097" premium="false" for="everyone" sound="Yum." regen="4">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6125" premium="false" for="everyone" sound="Gulp." regen="8">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6278" premium="false" for="everyone" sound="Mmmm." regen="10">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6279" premium="false" for="everyone" sound="Mmmm." regen="15">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6393" premium="false" for="everyone" sound="Mmmm." regen="12">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6394" premium="false" for="everyone" sound="Mmmm." regen="15">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6501" premium="false" for="everyone" sound="Mmmm." regen="20">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6541" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6542" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6543" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6544" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6545" premium="false" for="everyone" sound="Gulp." regen="6">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6569" premium="false" for="everyone" sound="Mmmm." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="6574" premium="false" for="everyone" sound="Mmmm." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7372" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7373" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7374" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7375" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7376" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7377" premium="false" for="everyone" sound="Yum." regen="2">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7909" premium="false" for="everyone" sound="Crunch." regen="4">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="7910" premium="false" for="everyone" sound="Crunch." regen="4">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8112" premium="false" for="everyone" sound="Urgh." regen="9">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8838" premium="false" for="everyone" sound="Gulp." regen="10">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8839" premium="false" for="everyone" sound="Yum." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8840" premium="false" for="everyone" sound="Yum." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8841" premium="false" for="everyone" sound="Urgh." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8842" premium="false" for="everyone" sound="Munch." regen="7">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8843" premium="false" for="everyone" sound="Crunch." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8844" premium="false" for="everyone" sound="Gulp." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8845" premium="false" for="everyone" sound="Munch." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="8847" premium="false" for="everyone" sound="Yum." regen="11">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="9005" premium="false" for="everyone" sound="Slurp." regen="7">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="9114" premium="false" for="everyone" sound="Crunch." regen="5">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+
+	<food itemid="9996" premium="false" for="everyone" sound="Slurp." regen="1">
+		<nature id="1" likes="true"/>
+		<nature id="2" likes="true"/>
+		<nature id="3" likes="true"/>
+		<nature id="4" likes="true"/>
+		<nature id="5" likes="true"/>
+		<nature id="6" likes="true"/>
+		<nature id="7" likes="true"/>
+		<nature id="8" likes="true"/>
+		<nature id="9" likes="true"/>
+		<nature id="10" likes="true"/>
+		<nature id="11" likes="true"/>
+		<nature id="12" likes="true"/>
+		<nature id="13" likes="true"/>
+		<nature id="14" likes="true"/>
+		<nature id="15" likes="true"/>
+		<nature id="16" likes="true"/>
+		<nature id="17" likes="true"/>
+		<nature id="18" likes="true"/>
+		<nature id="19" likes="true"/>
+		<nature id="20" likes="true"/>
+		<nature id="21" likes="true"/>
+		<nature id="22" likes="true"/>
+		<nature id="23" likes="true"/>
+		<nature id="24" likes="true"/>
+		<nature id="25" likes="true"/>
+	</food>
+</foods>

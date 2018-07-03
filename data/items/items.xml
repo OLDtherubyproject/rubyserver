@@ -3501,87 +3501,112 @@
   <item id="2666" name="meat">
     <attribute key="weight" value="1300" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2667" article="a" name="fish" plural="fish">
     <attribute key="weight" value="520" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2668" article="a" name="salmon">
     <attribute key="weight" value="320" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2669" article="a" name="northern pike">
     <attribute key="weight" value="830" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2670" name="shrimp">
     <attribute key="weight" value="50" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2671" name="ham">
     <attribute key="weight" value="2000" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
-  <item id="2672" name="dragon ham">
-    <attribute key="description" value="It still contains a small part of the power of a dragon." />
+  <item id="2672" name="special ham">
     <attribute key="weight" value="3000" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2673" article="a" name="pear">
     <attribute key="weight" value="140" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2674" article="a" name="red apple">
     <attribute key="weight" value="150" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2675" article="an" name="orange">
     <attribute key="weight" value="110" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2676" article="a" name="banana">
     <attribute key="weight" value="180" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2677" article="a" name="blueberry" plural="blueberries">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2678" article="a" name="coconut">
     <attribute key="weight" value="480" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2679" article="a" name="cherry" plural="cherries">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2680" article="a" name="strawberry" plural="strawberries">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2681" name="grapes" plural="grapes">
+    <attribute key="type" value="food" />
     <attribute key="weight" value="250" />
     <attribute key="showcount" value="0" />
   </item>
   <item id="2682" article="a" name="melon">
     <attribute key="weight" value="950" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2683" article="a" name="pumpkin">
     <attribute key="weight" value="1350" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2684" article="a" name="carrot">
     <attribute key="weight" value="160" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2685" article="a" name="tomato" plural="tomatoes">
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2686" article="a" name="corncob">
     <attribute key="weight" value="350" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2687" article="a" name="cookie">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2688" article="a" name="candy cane">
     <attribute key="weight" value="50" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2689" name="bread">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2690" article="a" name="roll">
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2691" name="brown bread">
     <attribute key="weight" value="400" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2692" name="flour">
     <attribute key="weight" value="100" />
@@ -3594,9 +3619,11 @@
   </item>
   <item id="2695" article="an" name="egg">
     <attribute key="weight" value="30" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2696" name="cheese">
     <attribute key="weight" value="400" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2697" article="a" name="snowy dead tree" />
   <item id="2698" article="a" name="snowy fir tree" />
@@ -3694,31 +3721,40 @@
   </item>
   <item id="2787" article="a" name="white mushroom">
     <attribute key="weight" value="40" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2788" article="a" name="red mushroom">
     <attribute key="weight" value="50" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2789" article="a" name="brown mushroom">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2790" article="an" name="orange mushroom">
     <attribute key="weight" value="30" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2791" article="a" name="wood mushroom">
     <attribute key="weight" value="30" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2792" article="a" name="dark mushroom">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item fromid="2793" toid="2794" name="some mushrooms" plural="some mushrooms">
     <attribute key="weight" value="10" />
     <attribute key="showcount" value="0" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2795" article="a" name="fire mushroom">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2796" article="a" name="green mushroom">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item id="2797" article="a" name="stone" />
   <item id="2798" article="a" name="blood herb">
@@ -7230,6 +7266,7 @@
   <item id="5096" article="a" name="coconut palm" />
   <item id="5097" article="a" name="mango">
     <attribute key="weight" value="180" />
+    <attribute key="type" value="food" />
   </item>
   <item id="5098" article="a" name="closed door">
     <attribute key="type" value="door" />
@@ -9454,6 +9491,7 @@
   <item id="6125" article="a" name="tortoise egg from Nargor">
     <attribute key="description" value="Handle with care and don't try to eat it." />
     <attribute key="weight" value="30" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6126" article="a" name="peg leg">
     <attribute key="description" value="It belonged once to a pirate." />
@@ -9626,10 +9664,12 @@
   </item>
   <item id="6278" article="a" name="cake">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6279" article="a" name="cake">
     <attribute key="weight" value="500" />
     <attribute key="description" value="It is nicely decorated with fruits and icing." />
+    <attribute key="type" value="food" />
   </item>
   <item id="6280" article="a" name="party cake">
     <attribute key="weight" value="500" />
@@ -10077,9 +10117,11 @@
   <item id="6392" article="a" name="hawser" />
   <item id="6393" name="valentine's cake" article="a">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6394" article="a" name="cream cake">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item fromid="6395" toid="6412" name="bones" />
   <item id="6413" article="a" name="bone pillar" />
@@ -10194,6 +10236,7 @@
   </item>
   <item id="6501" article="a" name="gingerbreadman">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6502" article="a" name="christmas wreath">
     <attribute key="weight" value="1000" />
@@ -10326,6 +10369,7 @@
   </item>
   <item fromid="6541" toid="6545" article="a" name="coloured egg">
     <attribute key="weight" value="30" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6546" name="Dracola's eye">
     <attribute key="weight" value="1500" />
@@ -10397,6 +10441,7 @@
   </item>
   <item id="6569" article="a" name="candy">
     <attribute key="weight" value="5" />
+    <attribute key="type" value="food" />
   </item>
   <item fromid="6570" toid="6571" article="a" name="surprise bag">
     <attribute key="weight" value="1000" />
@@ -10409,6 +10454,7 @@
   </item>
   <item id="6574" article="a" name="bar of chocolate">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item id="6575" name="red balloons">
     <attribute key="weight" value="10" />
@@ -11311,26 +11357,32 @@
   <item id="7372" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;crispy chocolate chips&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7373" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;velvet vanilla&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7374" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;sweet strawberry&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7375" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;chilly cherry&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7376" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;mellow melon&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7377" article="an" name="ice cream cone">
     <attribute key="description" value="It's the famous &quot;blue-barian&quot; flavour." />
     <attribute key="weight" value="100" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7378" article="a" name="royal spear">
     <attribute key="weight" value="2500" />
@@ -13307,9 +13359,11 @@
   <item id="7908" article="a" name="dead human" />
   <item id="7909" article="a" name="walnut">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item id="7910" article="a" name="peanut">
     <attribute key="weight" value="10" />
+    <attribute key="type" value="food" />
   </item>
   <item fromid="7911" toid="7918" article="a" name="mysterious machine" />
   <item id="7919" article="an" name="armillary sphere" />
@@ -13529,6 +13583,7 @@
     <attribute key="weight" value="400" />
     <attribute key="decayTo" value="2235" />
     <attribute key="duration" value="1800" />
+    <attribute key="type" value="food" />
   </item>
   <item fromid="8113" toid="8116" name="" />
   <item fromid="8117" toid="8138" name="earth" />
@@ -14232,33 +14287,42 @@
   <item fromid="8836" toid="8837" article="a" name="guardian statue" />
   <item id="8838" article="a" name="potato">
     <attribute key="weight" value="170" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8839" article="a" name="plum">
     <attribute key="weight" value="130" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8840" article="a" name="raspberry">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8841" article="a" name="lemon">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8842" article="a" name="cucumber">
     <attribute key="weight" value="200" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8843" article="an" name="onion">
     <attribute key="weight" value="140" />
+    <attribute key="type" value="food" />
   </item>
-  <item id="8844" name="jalape�o pepper" article="a">
+  <item id="8844" name="jalapeño pepper" article="a">
+    <attribute key="type" value="food" />
     <attribute key="weight" value="30" />
   </item>
   <item id="8845" article="a" name="beetroot">
     <attribute key="weight" value="130" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8846" article="a" name="lump of chocolate dough">
     <attribute key="weight" value="100" />
   </item>
   <item id="8847" article="a" name="chocolate cake">
     <attribute key="weight" value="500" />
+    <attribute key="type" value="food" />
   </item>
   <item id="8848" article="a" name="baking tray">
     <attribute key="description" value="There is cookie dough on it." />
@@ -14921,6 +14985,7 @@
   </item>
   <item id="9005" article="a" name="yummy gummy worm">
     <attribute key="weight" value="20" />
+    <attribute key="type" value="food" />
   </item>
   <item id="9006" article="a" name="toy spider">
     <attribute key="weight" value="20" />
@@ -15055,6 +15120,7 @@
   </item>
   <item id="9114" article="a" name="bulb of garlic">
     <attribute key="weight" value="140" />
+    <attribute key="type" value="food" />
   </item>
   <item id="9115" article="a" name="baking tray">
     <attribute key="weight" value="1200" />
@@ -16132,6 +16198,7 @@
   <item id="9996" article="a" name="banana chocolate shake">
     <attribute key="description" value="Sweetness." />
     <attribute key="weight" value="300" />
+    <attribute key="type" value="food" />
   </item>
   <item id="9997" article="a" name="veggie casserole">
     <attribute key="description" value="This one would be quite healthy if it wasn't for all the melted cheese on top." />

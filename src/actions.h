@@ -96,6 +96,7 @@ class Actions final : public BaseEvents
 		LuaScriptInterface scriptInterface;
 
 		friend class PokeballType;
+		friend class FoodType;
 };
 
 #endif

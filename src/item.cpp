@@ -32,12 +32,14 @@
 #include "actions.h"
 #include "moves.h"
 #include "pokeballs.h"
+#include "foods.h"
 
 extern Game g_game;
 extern Moves* g_moves;
 extern Professions g_professions;
 extern Clans g_clans;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 
 Items Item::items;
 
@@ -922,7 +924,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.wieldInfo != 0) {
-		s << "\nIt can only be wielded properly by ";
+		s << "\nIt can only be used properly by ";
 
 		if (it.wieldInfo & WIELDINFO_PREMIUM) {
 			s << "premium ";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pokeballs>
-	<pokeball2 serverid="1" itemid="27786" name="poke ball" charged="27776" discharged="27781" goback="214" catchSuccess="212" catchFail="213" shotEffect="1" rate="1" />
+	<pokeball serverid="1" itemid="27786" name="poke ball" charged="27776" discharged="27781" goback="214" catchSuccess="212" catchFail="213" shotEffect="1" rate="1" />
 	<pokeball serverid="2" itemid="27787" name="great ball" charged="27777" discharged="27782" goback="217" catchSuccess="215" catchFail="216" shotEffect="2" rate="2" />
 	<pokeball serverid="3" itemid="27788" name="ultra ball" charged="27778" discharged="27783" goback="220" catchSuccess="218" catchFail="219" shotEffect="3" rate="4" />
 	<pokeball serverid="4" itemid="27789" name="saffari ball" charged="27780" discharged="27784" goback="225" catchSuccess="223" catchFail="224" shotEffect="4" rate="1" />

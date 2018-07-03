@@ -34,6 +34,7 @@
 #include "movement.h"
 #include "scheduler.h"
 #include "pokeballs.h"
+#include "foods.h"
 
 extern ConfigManager g_config;
 extern Game g_game;
@@ -42,6 +43,7 @@ extern Professions g_professions;
 extern Clans g_clans;
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
 extern Pokemons g_pokemons;
@@ -3422,6 +3424,33 @@ void Player::tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, Ite
 
 void Player::sendPokemonEmot(uint16_t pokemonEmot) const {
 	g_game.playerSendPokemonEmot(getGUID(), pokemonEmot);
+}
+
+void Player::sendPokemonTextMessage(const std::string& message) const {
+	g_game.internalCreatureSay(getHisPokemon(), TALKTYPE_POKEMON_YELL, message, false);
+}
+
+bool Player::feed(const FoodType* foodType) {
+	Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
+	if (condition) {
+		if ((condition->getTicks() / 1000 + (foodType->getRegen() * 12)) > 1200) {
+			sendTextMessage(MESSAGE_STATUS_SMALL, "You are full.");
+			return false;
+		}
+		
+		condition->setTicks(condition->getTicks() + (foodType->getRegen() * 12 * 1000));
+		condition->setParam(CONDITION_PARAM_HEALTHGAIN, profession->getHealthGainAmount());
+		condition->setParam(CONDITION_PARAM_HEALTHTICKS, profession->getHealthGainTicks() * 1000);
+	} else {
+		condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_REGENERATION, foodType->getRegen() * 12 * 1000, 0);
+		condition->setTicks(foodType->getRegen() * 12 * 1000);
+		condition->setParam(CONDITION_PARAM_HEALTHGAIN, getProfession()->getHealthGainAmount());
+		condition->setParam(CONDITION_PARAM_HEALTHTICKS, getProfession()->getHealthGainTicks() * 1000);
+		addCondition(condition);
+	}
+
+	g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, foodType->getSound(), false);
+	return true;
 }
 
 bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransformPokeball) {

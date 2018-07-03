@@ -29,7 +29,6 @@ local reloadTypes = {
 	["mount"] = { targetType = RELOAD_TYPE_MOUNTS, name = "mounts" },
 	["mounts"] = { targetType = RELOAD_TYPE_MOUNTS, name = "mounts" },
 
-	["move"] = { targetType = RELOAD_TYPE_MOVEMENTS, name = "movements" },
 	["movement"] = { targetType = RELOAD_TYPE_MOVEMENTS, name = "movements" },
 	["movements"] = { targetType = RELOAD_TYPE_MOVEMENTS, name = "movements" },
 
@@ -50,7 +49,10 @@ local reloadTypes = {
 	["talkactions"] = { targetType = RELOAD_TYPE_TALKACTIONS, name = "talk actions" },
 
 	["pokeball"] = { targetType = RELOAD_TYPE_POKEBALLS, name = "pokeballs" },
-	["pokeballs"] = { targetType = RELOAD_TYPE_POKEBALLS, name = "pokeballs" }
+	["pokeballs"] = { targetType = RELOAD_TYPE_POKEBALLS, name = "pokeballs" },
+
+	["food"] = { targetType = RELOAD_TYPE_FOODS, name = "foods" },
+	["foods"] = { targetType = RELOAD_TYPE_FOODS, name = "foods" }
 }
 
 function onSay(player, words, param)

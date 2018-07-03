@@ -23,10 +23,13 @@
 #include "pokemon.h"
 #include "game.h"
 #include "moves.h"
+#include "foods.h"
+#include "events.h"
 
 extern Game g_game;
 extern Pokemons g_pokemons;
 extern Moves* g_moves;
+extern Events* g_events;
 
 int32_t Pokemon::despawnRange;
 int32_t Pokemon::despawnRadius;
@@ -756,6 +759,34 @@ bool Pokemon::castMove(uint16_t moveId, bool ignoreMessages /* = false */)
 	return true;
 }
 
+bool Pokemon::feed(const FoodType* foodType) {
+	Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
+	if (condition) {
+		if ((condition->getTicks() / 1000 + (foodType->getRegen() * 12)) > 1200) {
+			if (!belongsToPlayer()) {
+				return false;
+			}
+
+			getMaster()->getPlayer()->sendTextMessage(MESSAGE_STATUS_SMALL, "Your Pokemon is full.");
+			return false;
+		}
+		
+		condition->setTicks(condition->getTicks() + (foodType->getRegen() * 12 * 1000));
+		condition->setParam(CONDITION_PARAM_HEALTHGAIN, 5);
+		condition->setParam(CONDITION_PARAM_HEALTHTICKS, 10 * 1000);
+	} else {
+		condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_REGENERATION, foodType->getRegen() * 12 * 1000, 0);
+		condition->setTicks(foodType->getRegen() * 12 * 1000);
+		condition->setParam(CONDITION_PARAM_HEALTHGAIN, 5);
+		condition->setParam(CONDITION_PARAM_HEALTHTICKS, 10 * 1000);
+		addCondition(condition);
+	}
+
+	g_game.addEffect(getPosition(), CONST_ME_EMOT_SOHAPPY);
+	g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, foodType->getSound(), false);
+	return true;
+}
+
 bool Pokemon::isTarget(const Creature* creature) const
 {
 	if (creature->isRemoved() || !creature->isAttackable() ||
@@ -933,22 +964,6 @@ void Pokemon::onThink(uint32_t interval)
 				if(needTeleportToPlayer && teleportToPlayer())
 					needTeleportToPlayer = false;
 
-				if (belongsToPlayer()) {
-					if (getHealth() <= (0.15 * getMaxHealth())) {
-						if (canSendEmot()) {
-							setNextEmot(OTSYS_TIME() + EVENT_SEND_PBEMOT_INTERVAL);
-							g_game.addEffect(getPosition(), 91);
-						}
-					} else {
-						Tile* tile = g_game.map.getTile(getPosition());
-						HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
-						if (houseTile && canSendEmot()) {
-							setNextEmot(OTSYS_TIME() + EVENT_SEND_HOUSEEMOT_INTERVAL);
-							g_game.addEffect(getPosition(), 99);
-						}
-					}
-				}
-
 				if (!attackedCreature) {
 					if (getMaster() && getMaster()->getAttackedCreature()) {
 						//This happens if the pokemon is summoned during combat
@@ -982,6 +997,7 @@ void Pokemon::onThink(uint32_t interval)
 			onThinkTarget(interval);
 			onThinkYell(interval);
 			onThinkDefense(interval);
+			onThinkEmoticon(interval);
 		}
 	}
 }
@@ -1091,6 +1107,46 @@ void Pokemon::onThinkYell(uint32_t interval)
 			} else {
 				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, vb.text, false);
 			}
+		}
+	}
+}
+
+void Pokemon::onThinkEmoticon(uint32_t interval)
+{
+	if (!belongsToPlayer()) {
+		return;
+	}
+
+	// low hp pokeball emot
+	emotsTicks[0] += interval;
+	if (emotsTicks[0] >= 3000) {
+		if (getHealth() <= (0.5 * getMaxHealth())) {
+			g_game.addEffect(getPosition(), CONST_ME_EMOT_POKEBALL);
+			emotsTicks[0] = 0;
+			return;
+		}		
+	}
+
+	// inside house emot
+	emotsTicks[1] += interval;
+	if (emotsTicks[1] >= 15000) {
+		Tile* tile = g_game.map.getTile(getPosition());
+		HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
+		if (houseTile) {
+			g_game.addEffect(getPosition(), CONST_ME_EMOT_HOME);
+			emotsTicks[1] = 0;
+			return;
+		}
+	}
+
+	// hungry pokemon emot
+	emotsTicks[2] += interval;
+	if (emotsTicks[2] >= 60000) {
+		Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
+		if (!condition || (condition->getTicks() / 1000) <= 120) {
+			g_game.addEffect(getPosition(), CONST_ME_EMOT_FOOD);
+			emotsTicks[2] = 0;
+			return;
 		}
 	}
 }

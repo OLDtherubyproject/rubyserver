@@ -1022,6 +1022,8 @@ class LuaScriptInterface
 		static int luaPokemonGetLevel(lua_State* L);
 		static int luaPokemonSetLevel(lua_State* L);
 
+		static int luaPokemonLikesFood(lua_State* L);
+
 		// Npc
 		static int luaNpcCreate(lua_State* L);
 
@@ -1315,6 +1317,20 @@ class LuaScriptInterface
 		static int luaPokeballTypeGetCatchFailEffect(lua_State* L);
 		static int luaPokeballTypeGetShotEffect(lua_State* L);
 		static int luaPokeballTypeIsPremium(lua_State* L);
+
+		// FoodType
+		static int luaFoodTypeCreate(lua_State* L);
+
+		static int luaFoodTypeGetItemId(lua_State* L);
+		static int luaFoodTypeGetName(lua_State* L);
+		static int luaFoodTypeGetReqLevel(lua_State* L);
+		static int luaFoodTypeGetRegen(lua_State* L);
+		static int luaFoodTypeCanEveryoneEat(lua_State* L);
+		static int luaFoodTypeCanPokemonEat(lua_State* L);
+		static int luaFoodTypeCanPlayerEat(lua_State* L);
+		static int luaFoodTypeGetSound(lua_State* L);
+		static int luaFoodTypeGetNatureLike(lua_State* L);
+		static int luaFoodTypeIsPremium(lua_State* L);
 
 		//
 		std::string lastLuaError;

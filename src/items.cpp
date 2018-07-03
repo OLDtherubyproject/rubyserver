@@ -24,11 +24,13 @@
 #include "moves.h"
 #include "movement.h"
 #include "pokeballs.h"
+#include "foods.h"
 
 #include "pugicast.h"
 
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 
 Items::Items()
 {
@@ -417,6 +419,10 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.type = ITEM_TYPE_CORPSE;
 			} else if (tmpStrValue == "evolutionstone") {
 				it.type = ITEM_TYPE_EVOLUTION_STONE;
+			} else if (tmpStrValue == "usedpokeball") {
+				it.type = ITEM_TYPE_USEDPOKEBALL;
+			} else if (tmpStrValue == "food") {
+				it.type = ITEM_TYPE_FOOD;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown type: " << valueAttribute.as_string() << std::endl;
 			}

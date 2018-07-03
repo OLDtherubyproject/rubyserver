@@ -41,6 +41,7 @@
 #include "moves.h"
 #include "talkaction.h"
 #include "pokeballs.h"
+#include "foods.h"
 
 extern ConfigManager g_config;
 extern Actions* g_actions;
@@ -56,6 +57,7 @@ extern CreatureEvents* g_creatureEvents;
 extern Pokemons g_pokemons;
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 
 Game::Game()
 {
@@ -2127,9 +2129,7 @@ void Game::playerUseItemEx(uint32_t playerId, const Position& fromPos, uint8_t f
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	if (!g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
-		g_actions->useItemEx(player, fromPos, toPos, toStackPos, item, isHotkey);
-	}
+	g_actions->useItemEx(player, fromPos, toPos, toStackPos, item, isHotkey);
 }
 
 void Game::playerUseItem(uint32_t playerId, const Position& pos, uint8_t stackPos,
@@ -2286,7 +2286,16 @@ void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uin
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	if (g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+	if (item->isUsedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+		return;
+	}
+
+	if (item->isFood() && g_foods->useFood(player, fromPos, toPos, item, isHotkey, creature)) {
+		return;
+	}
+
+	if (item->isEvolutionStone()) {
+		g_game.evolvePokemon(player, item, creature);
 		return;
 	}
 
@@ -5852,6 +5861,8 @@ bool Game::reload(ReloadTypes_t reloadType)
 		case RELOAD_TYPE_TALKACTIONS: return g_talkActions->reload();
 
 		case RELOAD_TYPE_POKEBALLS: return g_pokeballs->reload();
+
+		case RELOAD_TYPE_FOODS: return g_foods->reload();
 
 		default: {
 			if (!g_moves->reload()) {

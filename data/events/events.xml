@@ -29,4 +29,7 @@
 	<event class="Player" method="onCatchPokemon" enabled="1" />
 	<event class="Player" method="onDontCatchPokemon" enabled="1" />
 	<event class="Player" method="onTryCatchPokemon" enabled="1" />
+	<event class="Player" method="onFeed" enabled="1" />
+	<event class="Player" method="onFeedPokemon" enabled="1" />
+	<event class="Player" method="onFeedHimself" enabled="1" />
 </events>

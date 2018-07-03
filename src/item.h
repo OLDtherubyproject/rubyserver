@@ -949,6 +949,12 @@ class Item : virtual public Thing
 		bool isEvolutionStone() const {
 			return items[id].isEvolutionStone();
 		}
+		bool isFood() const {
+			return items[id].isFood();
+		}
+		bool isUsedPokeball() const {
+			return items[id].isUsedPokeball();
+		}
 
 		const std::string& getName() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_NAME)) {

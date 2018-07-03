@@ -24,7 +24,6 @@
 #include "pokemon.h"
 #include "moves.h"
 #include "combat.h"
-#include "pokeballs.h"
 #include "configmanager.h"
 #include "game.h"
 

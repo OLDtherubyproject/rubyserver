@@ -120,6 +120,12 @@ bool Events::load()
 				info.playerOnDontCatchPokemon = event;
 			} else if (methodName == "onTryCatchPokemon") {
 				info.playerOnTryCatchPokemon = event;
+			} else if (methodName == "onFeedPokemon") {
+				info.playerOnFeedPokemon = event;
+			} else if (methodName == "onFeedHimself") {
+				info.playerOnFeedHimself = event;
+			} else if (methodName == "onFeed") {
+				info.playerOnFeed = event;
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
 			}
@@ -896,4 +902,100 @@ void Events::eventPlayerOnTryCatchPokemon(Player* player, PokemonType* pokemonTy
 	LuaScriptInterface::setMetatable(L, -1, "PokeballType");
 
 	return scriptInterface.callVoidFunction(3);
+}
+
+bool Events::eventPlayerOnFeed(Player* player, Creature* creature, const FoodType* foodType) {
+	// Player:onFeed(player, creature, foodType)
+	if (info.playerOnFeed == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnFeed] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	if (!player || !creature || !foodType){
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnFeed, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnFeed);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<Creature>(L, creature);
+	LuaScriptInterface::setMetatable(L, -1, "Creature");
+
+	LuaScriptInterface::pushUserdata<const FoodType>(L, foodType);
+	LuaScriptInterface::setMetatable(L, -1, "FoodType");
+
+	return scriptInterface.callFunction(3);
+}
+
+bool Events::eventPlayerOnFeedPokemon(Player* player, Pokemon* pokemon, const FoodType* foodType) {
+	// Player:onFeedPokemon(player, pokemon, foodType)
+	if (info.playerOnFeedPokemon == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnFeedPokemon] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	if (!player || !pokemon || !foodType){
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnFeedPokemon, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnFeedPokemon);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<Pokemon>(L, pokemon);
+	LuaScriptInterface::setMetatable(L, -1, "Pokemon");
+
+	LuaScriptInterface::pushUserdata<const FoodType>(L, foodType);
+	LuaScriptInterface::setMetatable(L, -1, "FoodType");
+
+	return scriptInterface.callFunction(3);
+}
+
+bool Events::eventPlayerOnFeedHimself(Player* player, const FoodType* foodType) {
+	// Player:onFeedHimself(player, foodType)
+	if (info.playerOnFeed == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnFeedHimself] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	if (!player || !foodType){
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnFeedHimself, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnFeedHimself);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<const FoodType>(L, foodType);
+	LuaScriptInterface::setMetatable(L, -1, "FoodType");
+
+	return scriptInterface.callFunction(2);
 }

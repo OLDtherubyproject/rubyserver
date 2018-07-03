@@ -1244,6 +1244,18 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_MAXPOKEMONINBAG:
 			return "You can only have 6 Pokemon.";
 
+		case RETURNVALUE_CANONLYUSEFOODINYOURPOKEMON:
+			return "You can only use a food in your Pokemon.";
+
+		case RETURNVALUE_CANONLYUSEFOODINYOURSELF:
+			return "You can only use a food in yourself.";
+
+		case RETURNVALUE_CANONLYUSEFOODINYOURPOKEMONORINYOURSELF:
+			return "You can only use a food in your Pokemon or in yourself.";
+
+		case RETURNVALUE_YOURPOKEMONDONOTLIKEIT:
+			return "Your Pokemon do not like it.";
+
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";
 	}

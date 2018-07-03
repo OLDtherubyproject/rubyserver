@@ -296,8 +296,6 @@ void PokeballType::internalUsePokeball(Player* player, Item* pokeball, const Pos
 
 double PokeballType::executeUsePokeball(Player* player, Item* pokeball, const Position& fromPos, Item* corpse, const Position& toPos, bool isHotkey) const
 {
-	std::cout << "call function...";
-
 	//onUsePokeball(player, pokeball, corpse)
 	if (!scriptInterface->reserveScriptEnv()) {
 		std::cout << "[Error - PokeballType::executeUsePokeball] Call stack overflow" << std::endl;

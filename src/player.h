@@ -48,6 +48,7 @@ class Party;
 class SchedulerTask;
 class Bed;
 class Guild;
+class FoodType;
 
 enum skillsid_t {
 	SKILLVALUE_LEVEL = 0,
@@ -1134,6 +1135,8 @@ class Player final : public Creature, public Cylinder
 
 		void tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
 		void sendPokemonEmot(uint16_t pokemonEmot) const;
+		void sendPokemonTextMessage(const std::string& message) const;
+		bool feed(const FoodType* foodType) override;
 		bool gobackPokemon(Item* pokeball, bool ignoreDelay = false, bool ignoreTransformPokeball = false);
 
 	private:
@@ -1333,6 +1336,7 @@ class Player final : public Creature, public Cylinder
 		friend class IOLoginData;
 		friend class ProtocolGame;
 		friend class PokeballType;
+		friend class FoodType;
 };
 
 #endif

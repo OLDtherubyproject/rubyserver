@@ -28,6 +28,7 @@ class Creature;
 class Game;
 class Spawn;
 class PokeballType;
+class FoodType;
 
 using CreatureHashSet = std::unordered_set<Creature*>;
 using CreatureList = std::list<Creature*>;
@@ -317,6 +318,7 @@ class Pokemon final : public Creature
 		}
 
 		bool castMove(uint16_t moveId, bool ignoreMessages = false);
+		bool feed(const FoodType* foodType) override;
 
 	private:
 		CreatureHashSet friendList;
@@ -324,6 +326,8 @@ class Pokemon final : public Creature
 		std::forward_list<Condition*> storedConditionList; // TODO: This variable is only temporarily used when logging in, get rid of it somehow
 
 		std::map<uint16_t, uint16_t> moves;
+
+		uint32_t emotsTicks[3] = {0, 0, 0};
 
 		std::string name;
 		std::string strDescription;
@@ -422,6 +426,7 @@ class Pokemon final : public Creature
 		void onThinkTarget(uint32_t interval);
 		void onThinkYell(uint32_t interval);
 		void onThinkDefense(uint32_t interval);
+		void onThinkEmoticon(uint32_t interval);
 
 		bool isFriend(const Creature* creature) const;
 		bool isOpponent(const Creature* creature) const;

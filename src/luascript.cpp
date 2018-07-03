@@ -37,6 +37,7 @@
 #include "scheduler.h"
 #include "databasetasks.h"
 #include "pokeballs.h"
+#include "foods.h"
 
 extern Chat* g_chat;
 extern Game g_game;
@@ -45,6 +46,7 @@ extern ConfigManager g_config;
 extern Professions g_professions;
 extern Clans g_clans;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 extern Moves* g_moves;
 
 ScriptEnvironment::DBResultMap ScriptEnvironment::tempResults;
@@ -1474,6 +1476,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_TYPE_CORPSE)
 	registerEnum(ITEM_TYPE_KEY)
 	registerEnum(ITEM_TYPE_EVOLUTION_STONE)
+	registerEnum(ITEM_TYPE_USEDPOKEBALL)
+	registerEnum(ITEM_TYPE_FOOD)
 
 	registerEnum(ITEM_BAG)
 	registerEnum(ITEM_COIN)
@@ -1812,6 +1816,10 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_YOUCANNOTTRADETHISHOUSE)
 	registerEnum(RETURNVALUE_CANONLYUSEPOKEBALLINPOKEMON)
 	registerEnum(RETURNVALUE_CANNOTCAPTURETHISPOKEMON)
+	registerEnum(RETURNVALUE_CANONLYUSEFOODINYOURPOKEMON)
+	registerEnum(RETURNVALUE_CANONLYUSEFOODINYOURSELF)
+	registerEnum(RETURNVALUE_CANONLYUSEFOODINYOURPOKEMONORINYOURSELF)
+	registerEnum(RETURNVALUE_YOURPOKEMONDONOTLIKEIT)
 
 	registerEnum(RELOAD_TYPE_ALL)
 	registerEnum(RELOAD_TYPE_ACTIONS)
@@ -1831,6 +1839,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_MOVES)
 	registerEnum(RELOAD_TYPE_TALKACTIONS)
 	registerEnum(RELOAD_TYPE_POKEBALLS)
+	registerEnum(RELOAD_TYPE_FOODS)
 
 	registerEnum(ZONE_PROTECTION)
 	registerEnum(ZONE_NOPVP)
@@ -1900,6 +1909,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::ACTIONS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::EX_ACTIONS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::POKEBALLS_DELAY_INTERVAL)
+	registerEnumIn("configKeys", ConfigManager::FOODS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::GOBACK_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::KICK_AFTER_MINUTES)
 	registerEnumIn("configKeys", ConfigManager::PROTECTION_LEVEL)
@@ -2431,6 +2441,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "getLevel", LuaScriptInterface::luaPokemonGetLevel);
 	registerMethod("Pokemon", "setLevel", LuaScriptInterface::luaPokemonSetLevel);
 
+	registerMethod("Pokemon", "likesFood", LuaScriptInterface::luaPokemonLikesFood);
+
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
 	registerMetaMethod("Npc", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2738,6 +2750,21 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("PokeballType", "getCatchFailEffect", LuaScriptInterface::luaPokeballTypeGetCatchFailEffect);
 	registerMethod("PokeballType", "getShotEffect", LuaScriptInterface::luaPokeballTypeGetShotEffect);
 	registerMethod("PokeballType", "isPremium", LuaScriptInterface::luaPokeballTypeIsPremium);
+
+	// FoodType
+	registerClass("FoodType", "", LuaScriptInterface::luaFoodTypeCreate);
+	registerMetaMethod("FoodType", "__eq", LuaScriptInterface::luaUserdataCompare);
+
+	registerMethod("FoodType", "getItemId", LuaScriptInterface::luaFoodTypeGetItemId);
+	registerMethod("FoodType", "getName", LuaScriptInterface::luaFoodTypeGetName);
+	registerMethod("FoodType", "getReqLevel", LuaScriptInterface::luaFoodTypeGetReqLevel);
+	registerMethod("FoodType", "getRegen", LuaScriptInterface::luaFoodTypeGetRegen);
+	registerMethod("FoodType", "canEveryoneEat", LuaScriptInterface::luaFoodTypeCanEveryoneEat);
+	registerMethod("FoodType", "canPokemonEat", LuaScriptInterface::luaFoodTypeCanPokemonEat);
+	registerMethod("FoodType", "canPlayerEat", LuaScriptInterface::luaFoodTypeCanPlayerEat);
+	registerMethod("FoodType", "getSound", LuaScriptInterface::luaFoodTypeGetSound);
+	registerMethod("FoodType", "getNatureLikes", LuaScriptInterface::luaFoodTypeGetNatureLike);
+	registerMethod("FoodType", "isPremium", LuaScriptInterface::luaFoodTypeIsPremium);
 }
 
 #undef registerEnum
@@ -9978,6 +10005,33 @@ int LuaScriptInterface::luaPokemonSetLevel(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPokemonLikesFood(lua_State* L)
+{
+	// pokemon:likesFood(itemid or name)
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	FoodType* foodType;
+	if (isNumber(L, 2)) {
+		foodType = g_foods->getFoodTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else if (isString(L, 2)) {
+		foodType = g_foods->getFoodTypeByName(getString(L, 2));
+	} else {
+		foodType = nullptr;
+	}
+
+	if (foodType) {
+		lua_pushboolean(L, foodType->getNatureLikes(pokemon->getNature()));
+	} else {
+		lua_pushnil(L);
+	}
+	
+	return 1;
+}
+
 // Npc
 int LuaScriptInterface::luaNpcCreate(lua_State* L)
 {
@@ -12959,6 +13013,147 @@ int LuaScriptInterface::luaPokeballTypeIsPremium(lua_State* L)
 	const PokeballType* pokeballType = getUserdata<const PokeballType>(L, 1);
 	if (pokeballType) {
 		lua_pushnumber(L, pokeballType->isPremium());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// FoodType
+int LuaScriptInterface::luaFoodTypeCreate(lua_State* L)
+{
+	// foodType(itemid or name)
+	const FoodType* foodType;
+	if (isNumber(L, 2)) {
+		foodType = g_foods->getFoodTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else {
+		foodType = nullptr;
+	}
+
+	if (foodType) {
+		pushUserdata<const FoodType>(L, foodType);
+		setMetatable(L, -1, "foodType");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetItemId(lua_State* L)
+{
+	// foodType:getItemId()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushnumber(L, foodType->getItemId());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetName(lua_State* L)
+{
+	// foodType:getName()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		pushString(L, foodType->getItemType().name);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetReqLevel(lua_State* L)
+{
+	// foodType:getReqLevel()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushnumber(L, foodType->getReqLevel());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetRegen(lua_State* L)
+{
+	// foodType:getRegen()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushnumber(L, foodType->getRegen());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeCanEveryoneEat(lua_State* L)
+{
+	// foodType:canEveryoneEat()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushboolean(L, foodType->canEveryoneEat());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeCanPokemonEat(lua_State* L)
+{
+	// foodType:canPokemonEat()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushboolean(L, foodType->canPokemonEat());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeCanPlayerEat(lua_State* L)
+{
+	// foodType:canPlayerEat()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushboolean(L, foodType->canPlayerEat());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetSound(lua_State* L)
+{
+	// foodType:getSound()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		pushString(L, foodType->getSound());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeGetNatureLike(lua_State* L)
+{
+	// foodType:getNatureLikes()
+	Natures_t nature = getNumber<Natures_t>(L, 2);
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushboolean(L, foodType->getNatureLikes(nature));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaFoodTypeIsPremium(lua_State* L)
+{
+	// foodType:isPremium()
+	const FoodType* foodType = getUserdata<const FoodType>(L, 1);
+	if (foodType) {
+		lua_pushnumber(L, foodType->isPremium());
 	} else {
 		lua_pushnil(L);
 	}

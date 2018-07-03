@@ -28,6 +28,7 @@ class ItemType;
 class Tile;
 class PokemonType;
 class PokeballType;
+class FoodType;
 
 class Events
 {
@@ -61,6 +62,9 @@ class Events
 		int32_t playerOnCatchPokemon = -1;
 		int32_t playerOnDontCatchPokemon = -1;
 		int32_t playerOnTryCatchPokemon = -1;
+		int32_t playerOnFeedPokemon = -1;
+		int32_t playerOnFeedHimself = -1;
+		int32_t playerOnFeed = -1;
 	};
 
 	public:
@@ -97,6 +101,9 @@ class Events
 		void eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType, Item* pokeball);
 		void eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType);
 		void eventPlayerOnTryCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType);
+		bool eventPlayerOnFeedPokemon(Player* player, Pokemon* pokemon, const FoodType* foodType);
+		bool eventPlayerOnFeedHimself(Player* player, const FoodType* foodType);
+		bool eventPlayerOnFeed(Player* player, Creature* creature, const FoodType* foodType);
 
 	private:
 		LuaScriptInterface scriptInterface;

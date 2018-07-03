@@ -28,6 +28,7 @@
 #include "moves.h"
 #include "movement.h"
 #include "pokeballs.h"
+#include "foods.h"
 #include "globalevent.h"
 #include "events.h"
 
@@ -40,6 +41,7 @@ Moves* g_moves = nullptr;
 TalkActions* g_talkActions = nullptr;
 MoveEvents* g_moveEvents = nullptr;
 Pokeballs* g_pokeballs = nullptr;
+Foods* g_foods = nullptr;
 
 extern LuaEnvironment g_luaEnvironment;
 
@@ -67,6 +69,12 @@ bool ScriptingManager::loadScriptSystems()
 	g_pokeballs = new Pokeballs();
 	if (!g_pokeballs->loadFromXml()) {
 		std::cout << "> ERROR: Unable to load pokeballs!" << std::endl;
+		return false;
+	}
+
+	g_foods = new Foods();
+	if (!g_foods->loadFromXml()) {
+		std::cout << "> ERROR: Unable to load foods!" << std::endl;
 		return false;
 	}
 

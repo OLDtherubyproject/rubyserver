@@ -258,3 +258,15 @@ end
 
 function Player:onTryCatchPokemon(pokemonType, pokeballType)
 end
+
+function Player:onFeed(creature, foodType)
+	return true
+end
+
+function Player:onFeedPokemon(pokemon, foodType)
+	return true
+end
+
+function Player:onFeedHimself(foodType)
+	return true
+end

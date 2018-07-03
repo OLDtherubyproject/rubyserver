@@ -30,6 +30,7 @@
 #include "talkaction.h"
 #include "movement.h"
 #include "pokeballs.h"
+#include "foods.h"
 #include "raids.h"
 #include "quests.h"
 #include "mounts.h"
@@ -47,6 +48,7 @@ extern TalkActions* g_talkActions;
 extern MoveEvents* g_moveEvents;
 extern Moves* g_moves;
 extern Pokeballs* g_pokeballs;
+extern Foods* g_foods;
 extern Game g_game;
 extern CreatureEvents* g_creatureEvents;
 extern GlobalEvents* g_globalEvents;
@@ -155,6 +157,9 @@ void Signals::sighupHandler()
 
 	g_pokeballs->reload();
 	std::cout << "Reloaded pokeballs." << std::endl;
+
+	g_foods->reload();
+	std::cout << "Reloaded foods." << std::endl;
 
 	g_game.quests.reload();
 	std::cout << "Reloaded quests." << std::endl;

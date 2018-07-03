@@ -67,6 +67,7 @@ class Pokemon;
 class Npc;
 class Item;
 class Tile;
+class FoodType;
 
 static constexpr int32_t EVENT_CREATURECOUNT = 10;
 static constexpr int32_t EVENT_CREATURE_THINK_INTERVAL = 500;
@@ -468,6 +469,9 @@ class Creature : virtual public Thing
 		bool needTeleportToPlayer = false;
 
 		void cleanConditions();
+		virtual bool feed(const FoodType* foodType) {
+			return false;
+		}
 
 	protected:
 		virtual bool useCacheMap() const {
