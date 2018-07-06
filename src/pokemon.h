@@ -255,7 +255,7 @@ class Pokemon final : public Creature
 
 		bool isTarget(const Creature* creature) const;
 		bool isFleeing() const {
-			return !isSummon() && getHealth() <= (getHealth() * (mType->info.runAwayHealth / 100.0));
+			return !isSummon() && getHealth() <= (getHealth() * (mType->info.runAwayHealth / 100.0f));
 		}
 
 		bool getDistanceStep(const Position& targetPos, Direction& direction, bool flee = false);

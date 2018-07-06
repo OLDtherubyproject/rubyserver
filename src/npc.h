@@ -81,7 +81,7 @@ class NpcEventsHandler
 		void onCreatureDisappear(Creature* creature);
 		void onCreatureMove(Creature* creature, const Position& oldPos, const Position& newPos);
 		void onCreatureSay(Creature* creature, SpeakClasses, const std::string& text);
-		void onPlayerTrade(Player* player, int32_t callback, uint16_t itemId, uint8_t count, uint8_t amount, bool ignore = false, bool inBackpacks = false);
+		void onPlayerTrade(Player* player, int32_t callback, uint16_t itemId, uint16_t count, uint16_t amount, bool ignore = false, bool inBackpacks = false);
 		void onPlayerCloseChannel(Player* player);
 		void onPlayerEndTrade(Player* player);
 		void onThink();
@@ -178,8 +178,8 @@ class Npc final : public Creature
 		}
 
 		void onPlayerCloseChannel(Player* player);
-		void onPlayerTrade(Player* player, int32_t callback, uint16_t itemId, uint8_t count,
-		                   uint8_t amount, bool ignore = false, bool inBackpacks = false);
+		void onPlayerTrade(Player* player, int32_t callback, uint16_t itemId, uint16_t count,
+		                   uint16_t amount, bool ignore = false, bool inBackpacks = false);
 		void onPlayerEndTrade(Player* player, int32_t buyCallback, int32_t sellCallback);
 
 		void turnToCreature(Creature* creature);

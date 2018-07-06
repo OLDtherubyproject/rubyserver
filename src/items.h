@@ -165,6 +165,8 @@ class ItemType
 			return (isFluidContainer() || isSplash() || stackable || charges != 0);
 		}
 
+		uint16_t getItemMaxCount() const;
+
 		Abilities& getAbilities() {
 			if (!abilities) {
 				abilities.reset(new Abilities());
@@ -217,6 +219,7 @@ class ItemType
 		int32_t extraDefense = 0;
 		int32_t armor = 0;
 		uint16_t rotateTo = 0;
+		uint16_t maxCount = 0;
 
 		CombatType_t combatType = COMBAT_NONE;
 
@@ -236,6 +239,7 @@ class ItemType
 		Direction bedPartnerDir = DIRECTION_NONE;
 		ShootType_t shootType = CONST_ANI_NONE;
 		FluidTypes_t fluidSource = FLUID_NONE;
+		ItemTypes_t containerType = ITEM_TYPE_NONE;
 
 		uint8_t floorChange = 0;
 		uint8_t alwaysOnTopOrder = 0;

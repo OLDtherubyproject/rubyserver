@@ -25,12 +25,14 @@
 #include "movement.h"
 #include "pokeballs.h"
 #include "foods.h"
+#include "configmanager.h"
 
 #include "pugicast.h"
 
 extern MoveEvents* g_moveEvents;
 extern Pokeballs* g_pokeballs;
 extern Foods* g_foods;
+extern ConfigManager g_config;
 
 Items::Items()
 {
@@ -550,6 +552,37 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown slotType: " << valueAttribute.as_string() << std::endl;
 			}
+		} else if (tmpStrValue == "containertype") {
+			tmpStrValue = asLowerCaseString(valueAttribute.as_string());
+			if (tmpStrValue == "key") {
+				it.containerType = ITEM_TYPE_KEY;
+			} else if (tmpStrValue == "magicfield") {
+				it.containerType = ITEM_TYPE_MAGICFIELD;
+			} else if (tmpStrValue == "container") {
+				it.containerType = ITEM_TYPE_CONTAINER;
+			} else if (tmpStrValue == "depot") {
+				it.containerType = ITEM_TYPE_DEPOT;
+			} else if (tmpStrValue == "mailbox") {
+				it.containerType = ITEM_TYPE_MAILBOX;
+			} else if (tmpStrValue == "trashholder") {
+				it.containerType = ITEM_TYPE_TRASHHOLDER;
+			} else if (tmpStrValue == "teleport") {
+				it.containerType = ITEM_TYPE_TELEPORT;
+			} else if (tmpStrValue == "door") {
+				it.containerType = ITEM_TYPE_DOOR;
+			} else if (tmpStrValue == "bed") {
+				it.containerType = ITEM_TYPE_BED;
+			} else if (tmpStrValue == "corpse") {
+				it.containerType = ITEM_TYPE_CORPSE;
+			} else if (tmpStrValue == "evolutionstone") {
+				it.containerType = ITEM_TYPE_EVOLUTION_STONE;
+			} else if (tmpStrValue == "usedpokeball") {
+				it.containerType = ITEM_TYPE_USEDPOKEBALL;
+			} else if (tmpStrValue == "food") {
+				it.containerType = ITEM_TYPE_FOOD;
+			} else {
+				std::cout << "[Warning - Items::parseItemNode] Unknown containerType: " << valueAttribute.as_string() << std::endl;
+			}
 		} else if (tmpStrValue == "shoottype") {
 			ShootType_t shoot = getShootType(asLowerCaseString(valueAttribute.as_string()));
 			if (shoot != CONST_ANI_NONE) {
@@ -588,6 +621,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.hitChance = std::min<int8_t>(100, std::max<int8_t>(-100, pugi::cast<int16_t>(valueAttribute.value())));
 		} else if (tmpStrValue == "maxhitchance") {
 			it.maxHitChance = std::min<uint32_t>(100, pugi::cast<uint32_t>(valueAttribute.value()));
+		} else if (tmpStrValue == "maxcount") {
+			it.maxCount = pugi::cast<uint16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "invisible") {
 			it.getAbilities().invisible = valueAttribute.as_bool();
 		} else if (tmpStrValue == "speed") {
@@ -885,4 +920,9 @@ uint16_t Items::getItemIdByName(const std::string& name)
 		return 0;
 
 	return result->second;
+}
+
+uint16_t ItemType::getItemMaxCount() const
+{
+	return (maxCount != 0 ? maxCount : g_config.getNumber(ConfigManager::MAX_STACKED_ITEMS));
 }

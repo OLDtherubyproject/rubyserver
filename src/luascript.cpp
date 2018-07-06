@@ -1820,6 +1820,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RETURNVALUE_CANONLYUSEFOODINYOURSELF)
 	registerEnum(RETURNVALUE_CANONLYUSEFOODINYOURPOKEMONORINYOURSELF)
 	registerEnum(RETURNVALUE_YOURPOKEMONDONOTLIKEIT)
+	registerEnum(RETURNVALUE_YOUCANNOTPUTTHISITEM)
 
 	registerEnum(RELOAD_TYPE_ALL)
 	registerEnum(RELOAD_TYPE_ACTIONS)
@@ -1906,6 +1907,9 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::KILLS_TO_RED)
 	registerEnumIn("configKeys", ConfigManager::KILLS_TO_BLACK)
 	registerEnumIn("configKeys", ConfigManager::MAX_MESSAGEBUFFER)
+	registerEnumIn("configKeys", ConfigManager::MAX_STACKED_ITEMS)
+	registerEnumIn("configKeys", ConfigManager::MAX_TRADE_ITEMS)
+	registerEnumIn("configKeys", ConfigManager::MAX_BUYORSELL_ITEMS)
 	registerEnumIn("configKeys", ConfigManager::ACTIONS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::EX_ACTIONS_DELAY_INTERVAL)
 	registerEnumIn("configKeys", ConfigManager::POKEBALLS_DELAY_INTERVAL)
@@ -2116,6 +2120,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "setActionId", LuaScriptInterface::luaItemSetActionId);
 
 	registerMethod("Item", "getCount", LuaScriptInterface::luaItemGetCount);
+	registerMethod("Item", "getMaxCount", LuaScriptInterface::luaItemGetMaxCount);
 	registerMethod("Item", "getFluidType", LuaScriptInterface::luaItemGetFluidType);
 	registerMethod("Item", "getWeight", LuaScriptInterface::luaItemGetWeight);
 	registerMethod("Item", "getPrice", LuaScriptInterface::luaItemGetPrice);
@@ -2595,6 +2600,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getDefense", LuaScriptInterface::luaItemTypeGetDefense);
 	registerMethod("ItemType", "getExtraDefense", LuaScriptInterface::luaItemTypeGetExtraDefense);
 	registerMethod("ItemType", "getArmor", LuaScriptInterface::luaItemTypeGetArmor);
+	registerMethod("ItemType", "getMaxCount", LuaScriptInterface::luaItemTypeGetMaxCount);
 
 	registerMethod("ItemType", "getElementType", LuaScriptInterface::luaItemTypeGetElementType);
 	registerMethod("ItemType", "getElementDamage", LuaScriptInterface::luaItemTypeGetElementDamage);
@@ -2929,7 +2935,7 @@ int LuaScriptInterface::luaDoPlayerAddItem(lua_State* L)
 		itemCount = std::max<int32_t>(1, count);
 	} else if (it.hasSubType()) {
 		if (it.stackable) {
-			itemCount = static_cast<int32_t>(std::ceil(static_cast<float>(count) / 100));
+			itemCount = static_cast<int32_t>(std::ceil(static_cast<float>(count) / it.getItemMaxCount()));
 		} else {
 			itemCount = 1;
 		}
@@ -2940,8 +2946,8 @@ int LuaScriptInterface::luaDoPlayerAddItem(lua_State* L)
 
 	while (itemCount > 0) {
 		uint16_t stackCount = subType;
-		if (it.stackable && stackCount > 100) {
-			stackCount = 100;
+		if (it.stackable && stackCount > it.getItemMaxCount()) {
+			stackCount = it.getItemMaxCount();
 		}
 
 		Item* newItem = Item::CreateItem(itemId, stackCount);
@@ -3322,7 +3328,7 @@ int LuaScriptInterface::luaDoAddContainerItem(lua_State* L)
 
 	if (it.hasSubType()) {
 		if (it.stackable) {
-			itemCount = static_cast<int32_t>(std::ceil(static_cast<float>(count) / 100));
+			itemCount = static_cast<int32_t>(std::ceil(static_cast<float>(count) / it.getItemMaxCount()));
 		}
 
 		subType = count;
@@ -3331,7 +3337,7 @@ int LuaScriptInterface::luaDoAddContainerItem(lua_State* L)
 	}
 
 	while (itemCount > 0) {
-		int32_t stackCount = std::min<int32_t>(100, subType);
+		int32_t stackCount = std::min<int32_t>(it.getItemMaxCount(), subType);
 		Item* newItem = Item::CreateItem(itemId, stackCount);
 		if (!newItem) {
 			reportErrorFunc(getErrorDesc(LUA_ERROR_ITEM_NOT_FOUND));
@@ -4136,7 +4142,7 @@ int LuaScriptInterface::luaGameCreateItem(lua_State* L)
 
 	const ItemType& it = Item::items[id];
 	if (it.stackable) {
-		count = std::min<uint16_t>(count, 100);
+		count = std::min<uint16_t>(count, it.getItemMaxCount());
 	}
 
 	Item* item = Item::CreateItem(id, count);
@@ -5227,7 +5233,7 @@ int LuaScriptInterface::luaTileAddItem(lua_State* L)
 
 	uint32_t subType = getNumber<uint32_t>(L, 3, 1);
 
-	Item* item = Item::CreateItem(itemId, std::min<uint32_t>(subType, 100));
+	Item* item = Item::CreateItem(itemId, std::min<uint32_t>(subType, Item::items[itemId].getItemMaxCount()));
 	if (!item) {
 		lua_pushnil(L);
 		return 1;
@@ -6023,6 +6029,18 @@ int LuaScriptInterface::luaItemGetCount(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaItemGetMaxCount(lua_State* L)
+{
+	// item:getMaxCount()
+	Item* item = getUserdata<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getItemMaxCount());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaItemGetFluidType(lua_State* L)
 {
 	// item:getFluidType()
@@ -6431,7 +6449,7 @@ int LuaScriptInterface::luaItemTransform(lua_State* L)
 
 	const ItemType& it = Item::items[itemId];
 	if (it.stackable) {
-		subType = std::min<int32_t>(subType, 100);
+		subType = std::min<int32_t>(subType, it.getItemMaxCount());
 	}
 
 	ScriptEnvironment* env = getScriptEnv();
@@ -6637,7 +6655,7 @@ int LuaScriptInterface::luaContainerAddItem(lua_State* L)
 	uint32_t count = getNumber<uint32_t>(L, 3, 1);
 	const ItemType& it = Item::items[itemId];
 	if (it.stackable) {
-		count = std::min<uint16_t>(count, 100);
+		count = std::min<uint16_t>(count, it.getItemMaxCount());
 	}
 
 	Item* item = Item::CreateItem(itemId, count);
@@ -8588,7 +8606,7 @@ int LuaScriptInterface::luaPlayerAddItem(lua_State* L)
 		itemCount = std::max<int32_t>(1, count);
 	} else if (it.hasSubType()) {
 		if (it.stackable) {
-			itemCount = std::ceil(count / 100.f);
+			itemCount = std::ceil(count / (it.getItemMaxCount() * 1.0f));
 		}
 
 		subType = count;
@@ -8609,7 +8627,7 @@ int LuaScriptInterface::luaPlayerAddItem(lua_State* L)
 	for (int32_t i = 1; i <= itemCount; ++i) {
 		int32_t stackCount = subType;
 		if (it.stackable) {
-			stackCount = std::min<int32_t>(stackCount, 100);
+			stackCount = std::min<int32_t>(stackCount, it.getItemMaxCount());
 			subType -= stackCount;
 		}
 
@@ -11498,6 +11516,18 @@ int LuaScriptInterface::luaItemTypeGetArmor(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		lua_pushnumber(L, itemType->armor);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaItemTypeGetMaxCount(lua_State* L)
+{
+	// itemType:getMaxCount()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->getItemMaxCount());
 	} else {
 		lua_pushnil(L);
 	}

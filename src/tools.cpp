@@ -1256,6 +1256,9 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOURPOKEMONDONOTLIKEIT:
 			return "Your Pokemon do not like it.";
 
+		case RETURNVALUE_YOUCANNOTPUTTHISITEM:
+			return "You cannot put this item in this container.";
+
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";
 	}

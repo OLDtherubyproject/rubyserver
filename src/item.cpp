@@ -33,6 +33,7 @@
 #include "moves.h"
 #include "pokeballs.h"
 #include "foods.h"
+#include "configmanager.h"
 
 extern Game g_game;
 extern Moves* g_moves;
@@ -40,6 +41,7 @@ extern Professions g_professions;
 extern Clans g_clans;
 extern Pokeballs* g_pokeballs;
 extern Foods* g_foods;
+extern ConfigManager g_config;
 
 Items Item::items;
 
@@ -353,8 +355,8 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 {
 	switch (attr) {
 		case ATTR_COUNT: {
-			uint8_t count;
-			if (!propStream.read<uint8_t>(count)) {
+			uint16_t count;
+			if (!propStream.read<uint16_t>(count)) {
 				return ATTR_READ_ERROR;
 			}
 
@@ -647,7 +649,7 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	const ItemType& it = items[id];
 	if (it.stackable || it.isFluidContainer() || it.isSplash()) {
 		propWriteStream.write<uint8_t>(ATTR_COUNT);
-		propWriteStream.write<uint8_t>(getSubType());
+		propWriteStream.write<uint16_t>(getSubType());
 	}
 
 	if (it.moveable) {
@@ -1095,7 +1097,7 @@ std::string Item::getPriceDescription(const ItemType& it, int32_t price)
 	if (price < 0) {
 		ss << "Unsellable";
 	} else {
-		std::string priceString = dbl2str(price / 100.0);
+		std::string priceString = dbl2str(price / 100.0f);
 		ss << "$" << priceString;
 	}
 

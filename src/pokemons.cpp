@@ -96,19 +96,22 @@ void PokemonType::createLoot(Container* corpse)
 std::vector<Item*> PokemonType::createLootItem(const LootBlock& lootBlock)
 {
 	int32_t itemCount = 0;
+	uint16_t itemMaxCount = 1;
 
 	uint32_t randvalue = Pokemons::getLootRandom();
 	if (randvalue < lootBlock.chance) {
 		if (Item::items[lootBlock.id].stackable) {
 			itemCount = randvalue % lootBlock.countmax + 1;
+			itemMaxCount = Item::items[lootBlock.id].getItemMaxCount();
 		} else {
 			itemCount = 1;
+			itemMaxCount = 1;
 		}
 	}
 
 	std::vector<Item*> itemList;
 	while (itemCount > 0) {
-		uint16_t n = static_cast<uint16_t>(std::min<int32_t>(itemCount, 100));
+		uint16_t n = static_cast<uint16_t>(std::min<int32_t>(itemCount, itemMaxCount));
 		Item* tmpItem = Item::CreateItem(lootBlock.id, n);
 		if (!tmpItem) {
 			break;

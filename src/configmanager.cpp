@@ -155,6 +155,9 @@ bool ConfigManager::load()
 	integer[RATE_SPAWN] = getGlobalNumber(L, "rateSpawn", 1);
 	integer[RATE_CATCH] = getGlobalNumber(L, "rateCatch", 1);
 	integer[HOUSE_PRICE] = getGlobalNumber(L, "housePriceEachSQM", 1000);
+	integer[MAX_STACKED_ITEMS] = getGlobalNumber(L, "maxStackedItems", 100);
+	integer[MAX_TRADE_ITEMS] = getGlobalNumber(L, "maxTradeItems", 100);
+	integer[MAX_BUYORSELL_ITEMS] = getGlobalNumber(L, "maxBuyOrSellItems", 100);
 	integer[ACTIONS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenActions", 200);
 	integer[EX_ACTIONS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenExActions", 1000);
 	integer[POKEBALLS_DELAY_INTERVAL] = getGlobalNumber(L, "timeBetweenPokeballs", 200);

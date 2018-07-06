@@ -641,7 +641,7 @@ int32_t Pokemon::getMaxHealth() const
 float Pokemon::getAttack() const
 {
 	float level = (float) getLevel();
-	float attack = (((2.0 * mType->info.baseStats.attack + ivs.attack + (evs.attack / 30.0) * level) / 100.0) + 5.0) * getAttackMultiplier();
+	float attack = (((2.0 * mType->info.baseStats.attack + ivs.attack + (evs.attack / 30.0) * level) / 100.0f) + 5.0f) * getAttackMultiplier();
 
 	return attack;
 }
@@ -649,7 +649,7 @@ float Pokemon::getAttack() const
 float Pokemon::getDefense() const
 {
 	float level = (float) getLevel();
-	float defense = (((2.0 * mType->info.baseStats.defense + ivs.defense + (evs.defense / 30.0) * level) / 100.0) + 5.0) * getDefenseMultiplier();
+	float defense = (((2.0 * mType->info.baseStats.defense + ivs.defense + (evs.defense / 30.0) * level) / 100.0f) + 5.0f) * getDefenseMultiplier();
 
 	return defense;
 }
@@ -657,7 +657,7 @@ float Pokemon::getDefense() const
 float Pokemon::getSpecialAttack() const
 {
 	float level = (float) getLevel();
-	float special_attack = (((2.0 * mType->info.baseStats.special_attack + ivs.special_attack + (evs.special_attack / 30.0) * level) / 100) + 5) * getSpecialAttackMultiplier();
+	float special_attack = (((2.0 * mType->info.baseStats.special_attack + ivs.special_attack + (evs.special_attack / 30.0) * level) / 100.0f) + 5.0f) * getSpecialAttackMultiplier();
 	
 	return special_attack;
 }
@@ -665,7 +665,7 @@ float Pokemon::getSpecialAttack() const
 float Pokemon::getSpecialDefense() const
 {
 	float level = (float) getLevel();
-	float special_defense = (((2.0 * mType->info.baseStats.special_defense + ivs.special_defense + (evs.special_defense / 30.0) * level) / 100.0) + 5.0) * getSpecialDefenseMultiplier();
+	float special_defense = (((2.0 * mType->info.baseStats.special_defense + ivs.special_defense + (evs.special_defense / 30.0) * level) / 100.0f) + 5.0f) * getSpecialDefenseMultiplier();
 
 	return special_defense;
 }

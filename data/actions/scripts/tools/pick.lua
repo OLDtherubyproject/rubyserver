@@ -6,7 +6,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		if chance == 1 then
 			player:addItem(ITEM_HUNDRED_DOLLAR_NOTE) -- 1% chance of getting crystal coin
 		elseif chance <= 6 then
-			player:addItem(ITEM_COIN) -- 5% chance of getting gold coin
+			player:addItem(ITEM_COIN) -- 5% chance of getting dollars coin
 		elseif chance <= 51 then
 			player:addItem(ITEM_DOLLAR_NOTE) -- 45% chance of getting platinum coin
 		else

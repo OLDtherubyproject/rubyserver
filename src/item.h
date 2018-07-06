@@ -956,6 +956,18 @@ class Item : virtual public Thing
 			return items[id].isUsedPokeball();
 		}
 
+		uint16_t getItemMaxCount() const {
+			return items[id].getItemMaxCount();
+		}
+
+		ItemTypes_t getContainerType() const {
+			return items[id].containerType;
+		}
+
+		ItemTypes_t getItemType() const {
+			return items[id].type;
+		}
+
 		const std::string& getName() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_NAME)) {
 				return getStrAttr(ITEM_ATTRIBUTE_NAME);
@@ -979,7 +991,7 @@ class Item : virtual public Thing
 		uint16_t getItemCount() const {
 			return count;
 		}
-		void setItemCount(uint8_t n) {
+		void setItemCount(uint16_t n) {
 			count = n;
 		}
 
@@ -1074,7 +1086,7 @@ class Item : virtual public Thing
 
 		uint32_t referenceCounter = 0;
 
-		uint8_t count = 1; // number of stacked items
+		uint16_t count = 1; // number of stacked items
 
 		bool loadedFromMap = false;
 

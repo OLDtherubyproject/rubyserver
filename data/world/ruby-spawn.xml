@@ -1,2 +1,21 @@
 <?xml version="1.0"?>
-<spawns />
+<spawns>
+	<spawn centerx="844" centery="1083" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="-1" z="7" spawntime="180" />
+	</spawn>
+	<spawn centerx="836" centery="1084" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="-1" z="7" spawntime="180" />
+	</spawn>
+	<spawn centerx="855" centery="1084" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="-1" z="7" spawntime="180" />
+	</spawn>
+	<spawn centerx="848" centery="1091" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="-1" z="7" spawntime="180" />
+	</spawn>
+	<spawn centerx="831" centery="1092" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="-1" z="7" spawntime="180" />
+	</spawn>
+	<spawn centerx="840" centery="1092" centerz="7" radius="2" minlevel="1" maxlevel="1">
+		<pokemon name="Diglett" x="0" y="1" z="7" spawntime="180" />
+	</spawn>
+</spawns>

@@ -60,7 +60,7 @@ if Modules == nil then
 	end
 
 	--Usage:
-		-- local node1 = keywordHandler:addKeyword({"promot"}, StdModule.say, {npcHandler = npcHandler, text = "I can promote you for 20000 gold coins. Do you want me to promote you?"})
+		-- local node1 = keywordHandler:addKeyword({"promot"}, StdModule.say, {npcHandler = npcHandler, text = "I can promote you for 20000 dollars coins. Do you want me to promote you?"})
 		-- node1:addChildKeyword({"yes"}, StdModule.promotePlayer, {npcHandler = npcHandler, cost = 20000, level = 20}, text = "Congratulations! You are now promoted.")
 		-- node1:addChildKeyword({"no"}, StdModule.say, {npcHandler = npcHandler, text = "Allright then. Come back when you are ready."}, reset = true)
 	function StdModule.promotePlayer(cid, message, keywords, parameters, node)
@@ -111,7 +111,7 @@ if Modules == nil then
 			elseif not player:canLearnMove(parameters.moveName) then
 				npcHandler:say("You cannot learn this move.", cid)
 			elseif not player:removeMoney(parameters.price) then
-				npcHandler:say("You do not have enough money, this move costs " .. parameters.price .. " gold.", cid)
+				npcHandler:say("You do not have enough money, this move costs " .. parameters.price .. " dollars.", cid)
 			else
 				npcHandler:say("You have learned " .. parameters.moveName .. ".", cid)
 				player:learnMove(parameters.moveName)
@@ -421,7 +421,7 @@ if Modules == nil then
 		local destination = parameters.destination
 		local premium = parameters.premium
 
-		module.npcHandler:say("Do you want to travel to " .. keywords[1] .. " for " .. cost .. " gold coins?", cid)
+		module.npcHandler:say("Do you want to travel to " .. keywords[1] .. " for " .. cost .. " dollars?", cid)
 		return true
 	end
 
@@ -531,7 +531,7 @@ if Modules == nil then
 		yesNode = nil,
 		noNode = nil,
 		noText = "",
-		maxCount = 100,
+		maxCount = configManager.getNumber(MAX_BUYORSELL_ITEMS),
 		amount = 0
 	}
 
@@ -929,7 +929,7 @@ if Modules == nil then
 		local parseInfo = {
 			[TAG_PLAYERNAME] = getPlayerName(cid),
 			[TAG_ITEMCOUNT] = amount,
-			[TAG_TOTALCOST] = totalCost,
+			[TAG_TOTALCOST] = totalCost / 100.0,
 			[TAG_ITEMNAME] = shopItem.name
 		}
 
@@ -986,7 +986,7 @@ if Modules == nil then
 		local parseInfo = {
 			[TAG_PLAYERNAME] = getPlayerName(cid),
 			[TAG_ITEMCOUNT] = amount,
-			[TAG_TOTALCOST] = amount * shopItem.sell,
+			[TAG_TOTALCOST] = (amount * shopItem.sell) / 100.0,
 			[TAG_ITEMNAME] = shopItem.name
 		}
 
@@ -1054,7 +1054,7 @@ if Modules == nil then
 		local parseInfo = {
 			[TAG_PLAYERNAME] = getPlayerName(cid),
 			[TAG_ITEMCOUNT] = shop_amount[cid],
-			[TAG_TOTALCOST] = shop_cost[cid] * shop_amount[cid],
+			[TAG_TOTALCOST] = (shop_cost[cid] * shop_amount[cid]) / 100.0,
 			[TAG_ITEMNAME] = shop_rlname[cid]
 		}
 
@@ -1135,7 +1135,7 @@ if Modules == nil then
 		local parseInfo = {
 			[TAG_PLAYERNAME] = getPlayerName(cid),
 			[TAG_ITEMCOUNT] = shop_amount[cid],
-			[TAG_TOTALCOST] = shop_cost[cid] * shop_amount[cid],
+			[TAG_TOTALCOST] = (shop_cost[cid] * shop_amount[cid]) / 100.0,
 			[TAG_ITEMNAME] = shop_rlname[cid]
 		}
 
@@ -1171,7 +1171,7 @@ if Modules == nil then
 		local parseInfo = {
 			[TAG_PLAYERNAME] = getPlayerName(cid),
 			[TAG_ITEMCOUNT] = shop_amount[cid],
-			[TAG_TOTALCOST] = shop_cost[cid] * shop_amount[cid],
+			[TAG_TOTALCOST] = (shop_cost[cid] * shop_amount[cid]) / 100.0,
 			[TAG_ITEMNAME] = shop_rlname[cid]
 		}
 

@@ -17,9 +17,9 @@ function doNpcSellItem(cid, itemid, amount, subType, ignoreCap, inBackpacks, bac
 	if isItemStackable(itemid) then
 		if inBackpacks then
 			stuff = doCreateItemEx(backpack, 1)
-			item = doAddContainerItem(stuff, itemid, math.min(100, amount))
+			item = doAddContainerItem(stuff, itemid, ItemType(itemid):getMaxCount(), amount)
 		else
-			stuff = doCreateItemEx(itemid, math.min(100, amount))
+			stuff = doCreateItemEx(itemid, math.min(ItemType(itemid):getMaxCount(), amount))
 		end
 		return doPlayerAddItemEx(cid, stuff, ignoreCap) ~= RETURNVALUE_NOERROR and 0 or amount, 0
 	end
@@ -77,7 +77,7 @@ function doPlayerTakeItem(cid, itemid, count)
 	while count > 0 do
 		local tempcount = 0
 		if isItemStackable(itemid) then
-			tempcount = math.min (100, count)
+			tempcount = math.min(ItemType(itemid):getMaxCount(), count)
 		else
 			tempcount = 1
 		end

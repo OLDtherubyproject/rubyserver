@@ -307,7 +307,7 @@ enum MessageClasses : uint8_t {
 	MESSAGE_STATUS_CONSOLE_ORANGE = 37,  /*Orange message in the console*/
 };
 
-enum FluidColors_t : uint8_t {
+enum FluidColors_t : uint16_t {
 	FLUID_EMPTY,
 	FLUID_BLUE,
 	FLUID_RED,
@@ -318,7 +318,7 @@ enum FluidColors_t : uint8_t {
 	FLUID_PURPLE,
 };
 
-enum FluidTypes_t : uint8_t {
+enum FluidTypes_t : uint16_t {
 	FLUID_NONE = FLUID_EMPTY,
 	FLUID_WATER = FLUID_BLUE,
 	FLUID_BLOOD = FLUID_RED,
@@ -345,7 +345,7 @@ enum FluidTypes_t : uint8_t {
 	FLUID_MEAD = FLUID_BROWN + 40,
 };
 
-const uint8_t reverseFluidMap[] = {
+const uint16_t reverseFluidMap[] = {
 	FLUID_EMPTY,
 	FLUID_WATER,
 	FLUID_BEER,
@@ -357,7 +357,7 @@ const uint8_t reverseFluidMap[] = {
 	FLUID_MILK,
 };
 
-const uint8_t clientToServerFluidMap[] = {
+const uint16_t clientToServerFluidMap[] = {
 	FLUID_EMPTY,
 	FLUID_WATER,
 	FLUID_BEER,
@@ -377,7 +377,7 @@ const uint8_t clientToServerFluidMap[] = {
 	FLUID_MEAD,
 };
 
-enum ClientFluidTypes_t : uint8_t {
+enum ClientFluidTypes_t : uint16_t {
 	CLIENTFLUID_EMPTY = 0,
 	CLIENTFLUID_BLUE = 1,
 	CLIENTFLUID_PURPLE = 2,
@@ -390,7 +390,7 @@ enum ClientFluidTypes_t : uint8_t {
 	CLIENTFLUID_WHITE = 9,
 };
 
-const uint8_t fluidMap[] = {
+const uint16_t fluidMap[] = {
 	CLIENTFLUID_EMPTY,
 	CLIENTFLUID_BLUE,
 	CLIENTFLUID_RED,

@@ -289,6 +289,10 @@ ReturnValue Container::queryAdd(int32_t index, const Thing& thing, uint32_t coun
 		return RETURNVALUE_THISISIMPOSSIBLE;
 	}
 
+	if (this->getContainerType() != ITEM_TYPE_NONE && this->getContainerType() != item->getItemType()) {
+		return RETURNVALUE_YOUCANNOTPUTTHISITEM;
+	}
+
 	const Cylinder* cylinder = getParent();
 	if (!hasBitSet(FLAG_NOLIMIT, flags)) {
 		while (cylinder) {
@@ -347,8 +351,8 @@ ReturnValue Container::queryMaxCount(int32_t index, const Thing& thing, uint32_t
 			//Iterate through every item and check how much free stackable slots there is.
 			uint32_t slotIndex = 0;
 			for (Item* containerItem : itemlist) {
-				if (containerItem != item && containerItem->equals(item) && containerItem->getItemCount() < 100) {
-					uint32_t remainder = (100 - containerItem->getItemCount());
+				if (containerItem != item && containerItem->equals(item) && containerItem->getItemCount() < item->getItemMaxCount()) {
+					uint32_t remainder = (item->getItemMaxCount() - containerItem->getItemCount());
 					if (queryAdd(slotIndex++, *item, remainder, flags) == RETURNVALUE_NOERROR) {
 						n += remainder;
 					}
@@ -356,15 +360,15 @@ ReturnValue Container::queryMaxCount(int32_t index, const Thing& thing, uint32_t
 			}
 		} else {
 			const Item* destItem = getItemByIndex(index);
-			if (item->equals(destItem) && destItem->getItemCount() < 100) {
-				uint32_t remainder = 100 - destItem->getItemCount();
+			if (item->equals(destItem) && destItem->getItemCount() < item->getItemMaxCount()) {
+				uint32_t remainder = item->getItemMaxCount() - destItem->getItemCount();
 				if (queryAdd(index, *item, remainder, flags) == RETURNVALUE_NOERROR) {
 					n = remainder;
 				}
 			}
 		}
 
-		maxQueryCount = freeSlots * 100 + n;
+		maxQueryCount = freeSlots * item->getItemMaxCount() + n;
 		if (maxQueryCount < count) {
 			return RETURNVALUE_CONTAINERNOTENOUGHROOM;
 		}
@@ -457,7 +461,7 @@ Cylinder* Container::queryDestination(int32_t& index, const Thing& thing, Item**
 		//try find a suitable item to stack with
 		uint32_t n = 0;
 		for (Item* listItem : itemlist) {
-			if (listItem != item && listItem->equals(item) && listItem->getItemCount() < 100) {
+			if (listItem != item && listItem->equals(item) && listItem->getItemCount() < item->getItemMaxCount()) {
 				*destItem = listItem;
 				index = n;
 				return this;
@@ -565,7 +569,7 @@ void Container::removeThing(Thing* thing, uint32_t count)
 	}
 
 	if (item->isStackable() && count != item->getItemCount()) {
-		uint8_t newCount = static_cast<uint8_t>(std::max<int32_t>(0, item->getItemCount() - count));
+		uint16_t newCount = static_cast<uint16_t>(std::max<int32_t>(0, item->getItemCount() - count));
 		const int32_t oldWeight = item->getWeight();
 		item->setItemCount(newCount);
 		updateItemWeight(-oldWeight + item->getWeight());

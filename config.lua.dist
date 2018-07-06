@@ -43,6 +43,11 @@ deathLosePercent = -1
 housePriceEachSQM = 1000
 houseRentPeriod = "never"
 
+-- Items
+maxStackedItems = 250
+maxTradeItems = 250
+maxBuyOrSellItems = 250
+
 -- Item Usage
 timeBetweenActions = 200
 timeBetweenExActions = 1000
