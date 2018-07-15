@@ -29718,20 +29718,48 @@
   <item id="27788" article="a" name="ultra ball">
     <attribute key="price" value="5000" />
   </item>
-  <item id="27789" article="a" name="saffari ball" />
-  <item id="27790" article="a" name="master ball" />
-  <item id="27791" article="a" name="dusk ball" />
-  <item id="27792" article="a" name="cherish ball" />
-  <item id="27793" article="a" name="dive ball" />
-  <item id="27794" article="a" name="love ball" />
-  <item id="27795" article="a" name="fast ball" />
-  <item id="27796" article="a" name="heavy ball" />
-  <item id="27797" article="a" name="lure ball" />
-  <item id="27798" article="a" name="moon ball" />
-  <item id="27799" article="a" name="net ball" />
-  <item id="27800" article="a" name="nest ball" />
-  <item id="27801" article="a" name="premier ball" />
-  <item id="27802" article="a" name="quick ball" />
+  <item id="27789" article="a" name="saffari ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27790" article="a" name="master ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27791" article="a" name="dusk ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27792" article="a" name="cherish ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27793" article="a" name="dive ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27794" article="a" name="love ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27795" article="a" name="fast ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27796" article="a" name="heavy ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27797" article="a" name="lure ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27798" article="a" name="moon ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27799" article="a" name="net ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27800" article="a" name="nest ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27801" article="a" name="premier ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27802" article="a" name="quick ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
   <item id="27803" article="a" name="dusk ball">
     <attribute key="slotType" value="pokeball" />
     <attribute key="type" value="usedpokeball" />

@@ -1063,7 +1063,7 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 	if (toItem && item->equals(toItem) && toItem->getItemCount() >= item->getItemMaxCount()) {
 		toItem = nullptr;
 	}
-
+	
 	//check if we can add this item
 	ReturnValue ret = toCylinder->queryAdd(index, *item, count, flags, actor);
 	if (ret == RETURNVALUE_NEEDEXCHANGE) {
@@ -2134,6 +2134,14 @@ void Game::playerUseItemEx(uint32_t playerId, const Position& fromPos, uint8_t f
 		return;
 	}
 
+	if ((item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+		return;
+	}
+
+	if (item->isFood() && g_foods->useFood(player, fromPos, toPos, item, isHotkey, nullptr)) {
+		return;
+	}
+
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
@@ -2294,7 +2302,7 @@ void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uin
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	if (item->isUsedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+	if (item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
 		return;
 	}
 

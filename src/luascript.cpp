@@ -1477,6 +1477,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_TYPE_KEY)
 	registerEnum(ITEM_TYPE_EVOLUTION_STONE)
 	registerEnum(ITEM_TYPE_USEDPOKEBALL)
+	registerEnum(ITEM_TYPE_UNUSEDPOKEBALL)
 	registerEnum(ITEM_TYPE_FOOD)
 
 	registerEnum(ITEM_BAG)

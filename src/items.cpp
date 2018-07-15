@@ -423,6 +423,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.type = ITEM_TYPE_EVOLUTION_STONE;
 			} else if (tmpStrValue == "usedpokeball") {
 				it.type = ITEM_TYPE_USEDPOKEBALL;
+			} else if (tmpStrValue == "unusedpokeball") {
+				it.type = ITEM_TYPE_UNUSEDPOKEBALL;
 			} else if (tmpStrValue == "food") {
 				it.type = ITEM_TYPE_FOOD;
 			} else {
@@ -578,6 +580,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.containerType = ITEM_TYPE_EVOLUTION_STONE;
 			} else if (tmpStrValue == "usedpokeball") {
 				it.containerType = ITEM_TYPE_USEDPOKEBALL;
+			} else if (tmpStrValue == "unusedpokeball") {
+				it.containerType = ITEM_TYPE_UNUSEDPOKEBALL;
 			} else if (tmpStrValue == "food") {
 				it.containerType = ITEM_TYPE_FOOD;
 			} else {
