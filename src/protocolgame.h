@@ -241,8 +241,8 @@ class ProtocolGame final : public Protocol
 
 		void sendCreatureSquare(const Creature* creature, SquareColor_t color);
 
-		void sendMoveCooldown(uint8_t moveId, uint32_t time);
-		//void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time);
+		void sendPokemonMoveCooldown(uint16_t moveId, uint32_t time);
+		void sendPokemonMoves(Pokemon* pokemon);
 
 		//tiles
 		void sendMapDescription(const Position& pos);

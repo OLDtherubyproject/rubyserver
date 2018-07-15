@@ -1488,10 +1488,10 @@ void ConditionMoveCooldown::addCondition(Creature* creature, const Condition* co
 	if (updateCondition(condition)) {
 		setTicks(condition->getTicks());
 
-		if (subId != 0 && ticks > 0) {
-			Player* player = creature->getPlayer();
+		if (subId != 0 && ticks > 0 && creature->getPokemon() && creature->getPokemon()->getMaster()) {
+			Player* player = creature->getPokemon()->getMaster()->getPlayer();
 			if (player) {
-				player->sendMoveCooldown(subId, ticks);
+				player->sendPokemonMoveCooldown(subId, ticks);
 			}
 		}
 	}
@@ -1503,10 +1503,10 @@ bool ConditionMoveCooldown::startCondition(Creature* creature)
 		return false;
 	}
 
-	if (subId != 0 && ticks > 0) {
-		Player* player = creature->getPlayer();
+	if (subId != 0 && ticks > 0 && creature->getPokemon() && creature->getPokemon()->getMaster()) {
+		Player* player = creature->getPokemon()->getMaster()->getPlayer();
 		if (player) {
-			player->sendMoveCooldown(subId, ticks);
+			player->sendPokemonMoveCooldown(subId, ticks);
 		}
 	}
 	return true;

@@ -955,6 +955,9 @@ class Item : virtual public Thing
 		bool isUsedPokeball() const {
 			return items[id].isUsedPokeball();
 		}
+		bool isUnusedPokeball() const {
+			return items[id].isUnusedPokeball();
+		}
 
 		uint16_t getItemMaxCount() const {
 			return items[id].getItemMaxCount();

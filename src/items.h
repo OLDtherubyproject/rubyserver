@@ -57,6 +57,7 @@ enum ItemTypes_t {
 	ITEM_TYPE_CORPSE,
 	ITEM_TYPE_EVOLUTION_STONE,
 	ITEM_TYPE_USEDPOKEBALL,
+	ITEM_TYPE_UNUSEDPOKEBALL,
 	ITEM_TYPE_FOOD,
 	ITEM_TYPE_LAST
 };
@@ -160,6 +161,9 @@ class ItemType
 		}
 		bool isUsedPokeball() const {
 			return (type == ITEM_TYPE_USEDPOKEBALL);
+		}
+		bool isUnusedPokeball() const {
+			return (type == ITEM_TYPE_UNUSEDPOKEBALL);
 		}
 		bool hasSubType() const {
 			return (isFluidContainer() || isSplash() || stackable || charges != 0);

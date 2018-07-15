@@ -3505,6 +3505,7 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 		}
 		
 		pokeball->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
+		sendPokemonMoves(nullptr);
 	} else {
 		pokemon = g_game.loadPokemon(pokeball->getPokemonId(), this);
 
@@ -3551,6 +3552,7 @@ bool Player::gobackPokemon(Item* pokeball, bool ignoreDelay, bool ignoreTransfor
 		}
 
 		pokeball->setIntAttr(ITEM_ATTRIBUTE_UNIQUEID, 1);
+		sendPokemonMoves(pokemon);
 	}
 
 	pos = pokemon->getPosition();

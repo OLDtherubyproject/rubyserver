@@ -690,6 +690,11 @@ bool Pokemon::castMove(uint16_t moveId, bool ignoreMessages /* = false */)
 		player->setNextCastMove(OTSYS_TIME() + 1000);
 	}
 
+	if (move->getLevel() > player->getLevel()) {
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You need level " + std::to_string(move->getLevel()) + " to cast " + move->getName());
+		return false;
+	}
+
 	if (hasCondition(CONDITION_SLEEP) && !move->ignoreSleep) {
 		if (player) {
 			player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your Pokemon can not use any move.");
