@@ -87,7 +87,7 @@ bool Moves::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return false;
 }
 
-Move* Moves::getMove(uint32_t moveId)
+Move* Moves::getMove(uint16_t moveId)
 {
 	for (auto& it : moves) {
 		if (it.second.getId() == moveId) {
@@ -124,7 +124,7 @@ bool Move::configureMove(const pugi::xml_node& node)
 
 	pugi::xml_attribute attr;
 	if ((attr = node.attribute("moveid"))) {
-		moveId = pugi::cast<uint32_t>(attr.value());
+		moveId = pugi::cast<uint16_t>(attr.value());
 	} else {
 		std::cout << "[Error - Move::configureMove] Move without id" << std::endl;
 		return false;
@@ -498,21 +498,4 @@ bool Move::executeCastMove(Creature* creature, const LuaVariant& var)
 	LuaScriptInterface::pushVariant(L, var);
 
 	return scriptInterface->callFunction(2);
-}
-
-bool Move::canCast(const Player* player) const
-{
-	if (player->hasFlag(PlayerFlag_CannotUseMoves)) {
-		return false;
-	}
-
-	if (getLevel() > player->getLevel()) {
-		return false;
-	}
-
-	if (!player->canCastMove()) {
-		return false;
-	}
-
-	return true;
 }

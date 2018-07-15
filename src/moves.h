@@ -39,7 +39,7 @@ class Moves final : public BaseEvents
 		Moves(const Moves&) = delete;
 		Moves& operator=(const Moves&) = delete;
 
-		Move* getMove(uint32_t moveId);
+		Move* getMove(uint16_t moveId);
 		Move* getMoveByName(const std::string& name);
 
 		static Position getCasterPosition(Creature* creature, Direction dir);

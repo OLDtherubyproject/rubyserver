@@ -783,18 +783,16 @@ class Player final : public Creature, public Cylinder
 				client->sendCreatureHelpers(creatureId, helpers);
 			}
 		}
-		void sendMoveCooldown(uint8_t moveId, uint32_t time) {
+		void sendPokemonMoveCooldown(uint16_t moveId, uint32_t time) {
 			if (client) {
-				client->sendMoveCooldown(moveId, time);
+				client->sendPokemonMoveCooldown(moveId, time);
 			}
 		}
-		/* Spell group cooldown system legacy
-		void sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time) {
+		void sendPokemonMoves(Pokemon* pokemon) {
 			if (client) {
-				client->sendMoveGroupCooldown(groupId, time);
+				client->sendPokemonMoves(pokemon);
 			}
 		}
-		*/
 		void sendModalWindow(const ModalWindow& modalWindow);
 
 		//container
@@ -1097,6 +1095,10 @@ class Player final : public Creature, public Cylinder
 			nextMove = time;
 		}
 		bool canCastMove() const {
+			if (hasFlag(PlayerFlag_CannotUseMoves)) {
+				return false;
+			}
+			
 			return nextMove <= OTSYS_TIME();
 		}
 		uint32_t getNextCastMoveTime() const;

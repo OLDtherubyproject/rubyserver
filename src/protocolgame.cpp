@@ -36,11 +36,13 @@
 #include "waitlist.h"
 #include "ban.h"
 #include "scheduler.h"
+#include "moves.h"
 
 extern ConfigManager g_config;
 extern Actions actions;
 extern CreatureEvents* g_creatureEvents;
 extern Chat* g_chat;
+extern Moves* g_moves;
 
 void ProtocolGame::release()
 {
@@ -2746,25 +2748,51 @@ void ProtocolGame::sendVIPEntries()
 	}
 }
 
-void ProtocolGame::sendMoveCooldown(uint8_t moveId, uint32_t time)
+void ProtocolGame::sendPokemonMoveCooldown(uint16_t moveId, uint32_t time)
 {
 	NetworkMessage msg;
 	msg.addByte(0xA4);
-	msg.addByte(moveId);
+	msg.add<uint16_t>(moveId);
 	msg.add<uint32_t>(time);
 	writeToOutputBuffer(msg);
 }
 
-/* Spell group cooldown system legacy
-void ProtocolGame::sendMoveGroupCooldown(MoveGroup_t groupId, uint32_t time)
+void ProtocolGame::sendPokemonMoves(Pokemon* pokemon)
 {
 	NetworkMessage msg;
 	msg.addByte(0xA5);
-	msg.addByte(groupId);
-	msg.add<uint32_t>(time);
+
+	if (pokemon) {
+		msg.addByte(pokemon->getMoves().size());
+		for (const auto& moveId : pokemon->getMoves()) {
+			Move* move = g_moves->getMove(moveId.first);
+
+			if (!move) {
+				continue;
+			}
+
+			msg.add<uint16_t>(move->getId());
+
+			if (pokemon->hasCondition(CONDITION_MOVECOOLDOWN, move->getId())) {
+				Condition* condition = pokemon->getCondition(CONDITION_MOVECOOLDOWN, CONDITIONID_DEFAULT, move->getId());
+				if (condition) {
+					msg.add<uint32_t>(condition->getEndTime() - OTSYS_TIME());
+				} else {
+					msg.add<uint32_t>(0);
+				}
+			} else {
+				msg.add<uint32_t>(0);
+			}
+			
+			msg.add<uint8_t>(move->isPremium());
+			msg.add<uint32_t>(move->getLevel());
+		}
+	} else {
+		msg.addByte(0);
+	}
+
 	writeToOutputBuffer(msg);
 }
-*/
 
 void ProtocolGame::sendModalWindow(const ModalWindow& modalWindow)
 {
