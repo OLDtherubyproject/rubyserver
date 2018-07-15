@@ -29675,33 +29675,43 @@
   <item id="27775" article="a" name="Market Stash" />
   <item id="27776" article="a" name="poke ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27777" article="a" name="great ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27778" article="a" name="ultra ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27779" article="a" name="master ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27780" article="a" name="saffari ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27781" article="a" name="discharged poke ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27782" article="a" name="discharged great ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27783" article="a" name="discharged ultra ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27784" article="a" name="discharged saffari ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27785" article="a" name="discharged master ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27786" article="a" name="poke ball" />
   <item id="27787" article="a" name="great ball" />
@@ -29724,75 +29734,99 @@
   <item id="27802" article="a" name="quick ball" />
   <item id="27803" article="a" name="dusk ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27804" article="a" name="cherish ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27805" article="a" name="dive ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27806" article="a" name="love ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27807" article="a" name="fast ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27808" article="a" name="heavy ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27809" article="a" name="lure ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27810" article="a" name="moon ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27811" article="a" name="net ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27812" article="a" name="nest ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27813" article="a" name="premier ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="27814" article="a" name="quick ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28512" article="a" name="discharged dusk ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28513" article="a" name="discharged cherish ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28514" article="a" name="discharged dive ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28515" article="a" name="discharged love ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28516" article="a" name="discharged fast ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28517" article="a" name="discharged heavy ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28518" article="a" name="discharged lure ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28519" article="a" name="discharged moon ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28520" article="a" name="discharged net ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28521" article="a" name="discharged nest ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28522" article="a" name="discharged premier ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item id="28523" article="a" name="discharged quick ball">
     <attribute key="slotType" value="pokeball" />
+    <attribute key="type" value="usedpokeball" />
   </item>
   <item fromid="27815" toid="27880" article="a" name="floor" />
   <item fromid="27881" toid="27898" article="a" name="tapestry wall" />
