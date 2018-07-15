@@ -2134,7 +2134,7 @@ void Game::playerUseItemEx(uint32_t playerId, const Position& fromPos, uint8_t f
 		return;
 	}
 
-	if ((item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+	if (item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
 		return;
 	}
 
