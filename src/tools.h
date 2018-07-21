@@ -65,7 +65,7 @@ std::string convertIPToString(uint32_t ip);
 
 void trimString(std::string& str);
 
-MagicEffectClasses getMagicEffect(const std::string& strValue);
+EffectClasses getEffect(const std::string& strValue);
 ShootType_t getShootType(const std::string& strValue);
 Genders_t getGenderType(const std::string& strValue);
 std::string getCombatName(CombatType_t combatType);
