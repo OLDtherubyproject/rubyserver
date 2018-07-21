@@ -29713,10 +29713,15 @@
     <attribute key="slotType" value="pokeball" />
     <attribute key="type" value="usedpokeball" />
   </item>
-  <item id="27786" article="a" name="poke ball" />
-  <item id="27787" article="a" name="great ball" />
+  <item id="27786" article="a" name="poke ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
+  <item id="27787" article="a" name="great ball">
+    <attribute key="type" value="unusedpokeball" />
+  </item>
   <item id="27788" article="a" name="ultra ball">
     <attribute key="price" value="5000" />
+    <attribute key="type" value="unusedpokeball" />
   </item>
   <item id="27789" article="a" name="saffari ball">
     <attribute key="type" value="unusedpokeball" />
