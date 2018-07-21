@@ -164,17 +164,18 @@ bool Pokemons::loadFromXml(bool reloading /*= false*/)
 {
 	unloadedPokemons = {};
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("data/pokemons/pokemons.xml");
+	pugi::xml_parse_result result = doc.load_file("data/pokemon/pokemon.xml");
 	if (!result) {
-		printXMLError("Error - Pokemons::loadFromXml", "data/pokemons/pokemons.xml", result);
+		printXMLError("Error - Pokemons::loadFromXml", "data/pokemon/pokemon.xml", result);
 		return false;
 	}
 
 	loaded = true;
 
-	for (auto pokemonNode : doc.child("pokemons").children()) {
+	for (auto pokemonNode : doc.child("pokemon").children()) {
 		std::string name = asLowerCaseString(pokemonNode.attribute("name").as_string());
-		std::string file = "data/pokemons/" + std::string(pokemonNode.attribute("file").as_string());
+		std::string region = std::string(pokemonNode.attribute("region").as_string());
+		std::string file = "data/pokemon/" + region + "/" + std::string(pokemonNode.attribute("file").as_string());
 		if (reloading && pokemons.find(name) != pokemons.end()) {
 			loadPokemon(file, name, true);
 		} else {

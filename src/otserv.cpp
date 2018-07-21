@@ -223,9 +223,9 @@ void mainLoader(int, char*[], ServiceManager* services)
 		return;
 	}
 
-	std::cout << ">> Loading pokemons" << std::endl;
+	std::cout << ">> Loading pokemon" << std::endl;
 	if (!g_pokemons.loadFromXml()) {
-		startupErrorMessage("Unable to load pokemons!");
+		startupErrorMessage("Unable to load pokemon!");
 		return;
 	}
 
