@@ -499,13 +499,13 @@ Direction getDirectionTo(const Position& from, const Position& to)
 	return dir;
 }
 
-using MagicEffectNames = std::unordered_map<std::string, MagicEffectClasses>;
+using EffectNames = std::unordered_map<std::string, EffectClasses>;
 using ShootTypeNames = std::unordered_map<std::string, ShootType_t>;
 using CombatTypeNames = std::unordered_map<CombatType_t, std::string, std::hash<int32_t>>;
 using GenderNames = std::unordered_map<std::string, Genders_t>;
 using PokemonTypeNames = std::unordered_map<std::string, PokemonType_t>;
 
-MagicEffectNames magicEffectNames = {
+EffectNames effectNames = {
 	{"redspark",			CONST_ME_DRAWBLOOD},
 	{"bluebubble",			CONST_ME_LOSEENERGY},
 	{"poff",				CONST_ME_POFF},
@@ -691,11 +691,11 @@ PokemonTypeNames pokemonTypes = {
 	{"fairy",		TYPE_FAIRY},
 };
 
-MagicEffectClasses getMagicEffect(const std::string& strValue)
+EffectClasses getEffect(const std::string& strValue)
 {
-	auto magicEffect = magicEffectNames.find(strValue);
-	if (magicEffect != magicEffectNames.end()) {
-		return magicEffect->second;
+	auto effect = effectNames.find(strValue);
+	if (effect != effectNames.end()) {
+		return effect->second;
 	}
 	return CONST_ME_NONE;
 }

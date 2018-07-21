@@ -4581,7 +4581,7 @@ int LuaScriptInterface::luaPositionIsSightClear(lua_State* L)
 
 int LuaScriptInterface::luaPositionsendEffect(lua_State* L)
 {
-	// position:sendEffect(magicEffect[, player = nullptr])
+	// position:sendEffect(effect[, player = nullptr])
 	SpectatorHashSet spectators;
 	if (lua_gettop(L) >= 3) {
 		Player* player = getPlayer(L, 3);

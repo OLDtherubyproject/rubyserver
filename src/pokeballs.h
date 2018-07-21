@@ -97,8 +97,8 @@ class PokeballType : public Event
 			return discharged;
 		}
 
-		MagicEffectClasses getGobackEffect() const {
-			return static_cast<MagicEffectClasses>(goback);
+		EffectClasses getGobackEffect() const {
+			return static_cast<EffectClasses>(goback);
 		}
 
 		uint16_t getCatchSuccessEffect() const {

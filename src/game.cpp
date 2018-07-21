@@ -5274,7 +5274,7 @@ void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballTyp
 	const Position& pos = pokeball->getTopParent()->getPosition();
 	uint16_t delay = 75 * (sqrt(pow((pos.x - toPos.x), 2) + pow((pos.y - toPos.y), 2)));
 	uint16_t tryEffect = pokeballType->getCatchFailEffect();
-	MagicEffectClasses pokemonEmot = CONST_ME_EMOT_THREE_POINTS;
+	EffectClasses pokemonEmot = CONST_ME_EMOT_THREE_POINTS;
 	std::ostringstream message;
 	message << "Sorry, your pokeball broke.";
 	rate = (pokemonType->info.catchRate * rate) * g_config.getNumber(ConfigManager::RATE_CATCH);

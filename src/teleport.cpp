@@ -78,7 +78,7 @@ void Teleport::addThing(int32_t, Thing* thing)
 		return;
 	}
 
-	const MagicEffectClasses effect = Item::items[id].magicEffect;
+	const EffectClasses effect = Item::items[id].effect;
 
 	if (Creature* creature = thing->getCreature()) {
 		Position origPos = creature->getPosition();
