@@ -14,6 +14,7 @@
 	<talkaction words="m11" script="pokemon/m11.lua" />
 	<talkaction words="m12" script="pokemon/m12.lua" />
 	<!-- commands -->
+	<talkaction words="/makepokemon" separator=" " script="make_pokemon.lua" />
 	<talkaction words="/ban" separator=" " script="ban.lua" />
 	<talkaction words="/ipban" separator=" " script="ipban.lua" />
 	<talkaction words="/unban" separator=" " script="unban.lua" />
