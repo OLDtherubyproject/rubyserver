@@ -601,6 +601,13 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown effect: " << valueAttribute.as_string() << std::endl;
 			}
+		} else if (tmpStrValue == "sound") {
+			SoundEffectClasses soundEffect = getSoundEffect(asLowerCaseString(valueAttribute.as_string()));
+			if (soundEffect != CONST_SE_NONE) {
+				it.sound = soundEffect;
+			} else {
+				std::cout << "[Warning - Items::parseItemNode] Unknown sound effect: " << valueAttribute.as_string() << std::endl;
+			}
 		} else if (tmpStrValue == "range") {
 			it.shootRange = pugi::cast<uint16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "stopduration") {

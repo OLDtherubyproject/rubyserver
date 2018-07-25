@@ -79,6 +79,7 @@ void Teleport::addThing(int32_t, Thing* thing)
 	}
 
 	const EffectClasses effect = Item::items[id].effect;
+	const SoundEffectClasses sound = Item::items[id].sound;
 
 	if (Creature* creature = thing->getCreature()) {
 		Position origPos = creature->getPosition();
@@ -88,10 +89,18 @@ void Teleport::addThing(int32_t, Thing* thing)
 			g_game.addEffect(origPos, effect);
 			g_game.addEffect(destTile->getPosition(), effect);
 		}
+		if (sound != CONST_SE_NONE) {
+			g_game.addSound(origPos, sound);
+			g_game.addSound(destTile->getPosition(), sound);
+		}
 	} else if (Item* item = thing->getItem()) {
 		if (effect != CONST_ME_NONE) {
 			g_game.addEffect(destTile->getPosition(), effect);
 			g_game.addEffect(item->getPosition(), effect);
+		}
+		if (sound != CONST_SE_NONE) {
+			g_game.addSound(destTile->getPosition(), sound);
+			g_game.addSound(item->getPosition(), sound);
 		}
 		g_game.internalMoveItem(getTile(), destTile, INDEX_WHEREEVER, item, item->getItemCount(), nullptr);
 	}

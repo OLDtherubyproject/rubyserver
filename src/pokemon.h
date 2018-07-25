@@ -283,6 +283,14 @@ class Pokemon final : public Creature
 			return belongsToPlayer() && (getMaster()->getPlayer() == player);
 		}
 
+		Player* getTrainer() const {
+			if (!getMaster() || !belongsToPlayer()) {
+				return nullptr;
+			}
+
+			return getMaster()->getPlayer();
+		}
+
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage, 
 									 bool field = false) override;
 

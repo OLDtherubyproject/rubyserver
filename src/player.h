@@ -27,6 +27,7 @@
 #include "cylinder.h"
 #include "outfit.h"
 #include "enums.h"
+#include "const.h"
 #include "profession.h"
 #include "clan.h"
 #include "protocolgame.h"
@@ -418,6 +419,13 @@ class Player final : public Creature, public Cylinder
 		}
 		void setTown(Town* town) {
 			this->town = town;
+		}
+
+		SoundEffectClasses getListeningMusic() const {
+			return listeningMusic;
+		}
+		void setListeningMusic(SoundEffectClasses listeningMusic) {
+			this->listeningMusic = listeningMusic;
 		}
 
 		void clearModalWindows();
@@ -892,6 +900,16 @@ class Player final : public Creature, public Cylinder
 				client->sendEffect(pos, type);
 			}
 		}
+		void sendSound(const Position& pos, uint16_t type, uint8_t channel = SOUND_CHANNEL_EFFECT) const {
+			if (client) {
+				client->sendSound(pos, type, channel);
+			}
+		}
+		void sendDistanceSound(const Position& from, const Position& to, uint16_t type, uint8_t channel = SOUND_CHANNEL_EFFECT) const {
+			if (client) {
+				client->sendDistanceSound(from, to, type, channel);
+			}
+		}
 		void sendPing();
 		void sendPingBack() const {
 			if (client) {
@@ -1213,6 +1231,7 @@ class Player final : public Creature, public Cylinder
 		LightInfo itemsLight;
 		Position loginPosition;
 		Position lastWalkthroughPosition;
+		SoundEffectClasses listeningMusic = CONST_SE_NONE;
 
 		time_t lastLoginSaved = 0;
 		time_t lastLogout = 0;

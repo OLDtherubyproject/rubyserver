@@ -83,6 +83,7 @@
 	<talkaction words="!yes" script="emoticons.lua" />
 
 	<!-- test talkactions -->
-	<talkaction words="!z" separator=" " script="magiceffect.lua" />
+	<talkaction words="!z" separator=" " script="effect.lua" />
+	<talkaction words="!y" separator=" " script="sound.lua" />
 	<talkaction words="!x" separator=" " script="animationeffect.lua" />
 </talkactions>

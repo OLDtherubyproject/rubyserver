@@ -286,6 +286,13 @@ class Tile : public Cylinder
 			ground = item;
 		}
 
+		SoundEffectClasses getMusic() const {
+			return music;
+		}
+		void setMusic(SoundEffectClasses music) {
+			this->music = music;
+		}
+
 	private:
 		void onAddTileItem(Item* item);
 		void onUpdateTileItem(Item* oldItem, const ItemType& oldType, Item* newItem, const ItemType& newType);
@@ -298,6 +305,7 @@ class Tile : public Cylinder
 		Item* ground = nullptr;
 		Position tilePos;
 		uint32_t flags = 0;
+		SoundEffectClasses music = CONST_SE_NONE;
 };
 
 // Used for walkable tiles, where there is high likeliness of

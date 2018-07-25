@@ -500,6 +500,7 @@ Direction getDirectionTo(const Position& from, const Position& to)
 }
 
 using EffectNames = std::unordered_map<std::string, EffectClasses>;
+using SoundEffectNames = std::unordered_map<std::string, SoundEffectClasses>;
 using ShootTypeNames = std::unordered_map<std::string, ShootType_t>;
 using CombatTypeNames = std::unordered_map<CombatType_t, std::string, std::hash<int32_t>>;
 using GenderNames = std::unordered_map<std::string, Genders_t>;
@@ -583,6 +584,59 @@ EffectNames effectNames = {
 	{"yellowsmoke",			CONST_ME_YELLOWSMOKE},
 	{"greensmoke",			CONST_ME_GREENSMOKE},
 	{"purplesmoke",			CONST_ME_PURPLESMOKE},
+};
+
+SoundEffectNames soundEffectNames = {
+	{"catchsuccess",				CONST_SE_CATCHSUCCESS},
+	{"saffronmusic",				CONST_SE_SAFFRONMUSIC},
+	{"pokemonlowhp",				CONST_SE_POKEMONLOWHP},
+	{"vinewhip",					CONST_SE_VINEWHIP},
+	{"craps",						CONST_SE_CRAPS},
+	{"teleport",					CONST_SE_TELEPORT},
+	{"pokemoncenter",				CONST_SE_POKEMONCENTER},
+	{"levelup",						CONST_SE_LEVELUP},
+	{"pokemonhealed",				CONST_SE_POKEMONHEALED},
+	{"newbarktown",					CONST_SE_NEWBARKTOWN},
+	{"lyra",						CONST_SE_LYRA},
+	{"elmpokemonlab",				CONST_SE_ELMPOKEMONLAB},
+	{"obtainedakeyitem",			CONST_SE_OBTAINEDAKEYITEM},
+	{"route29",						CONST_SE_ROUTE29},
+	{"battlewildjohto",				CONST_SE_BATTLEWILDJOHTO},
+	{"victorywildpokemon",			CONST_SE_VICTORYWILDPOKEMON},
+	{"cherrygrovecity",				CONST_SE_CHERRYGROVECITY},
+	{"battletrainerjohto",			CONST_SE_BATTLETRAINERJOHTO},
+	{"victorytrainerjohto",			CONST_SE_VICTORYTRAINERJOHTO},
+	{"route30",						CONST_SE_ROUTE30},
+	{"pokedexevaluationnogood",		CONST_SE_POKEDEXEVALUATIONNOGOOD},
+	{"violetcity",					CONST_SE_VIOLETCITY},
+	{"sprouttower",					CONST_SE_SPROUTTOWER},
+	{"pokemart",					CONST_SE_POKEMART},
+	{"receivedpokemonegg",			CONST_SE_RECEIVEDPOKEMONEGG},
+	{"kimonogirl",					CONST_SE_KIMONOGIRL},
+	{"unioncave",					CONST_SE_UNIONCAVE},
+	{"obtainedaitem",				CONST_SE_OBTAINEDAITEM},
+	{"ruinsofalph",					CONST_SE_RUINSOFALPH},
+	{"pokegearradiounown",			CONST_SE_POKEGEARRADIOUNOWN},
+	{"pokedexevaluationyouareony",	CONST_SE_POKEDEXEVALUATIONYOUAREONY},
+	{"azaleatown",					CONST_SE_AZALEATOWN},
+	{"battleteamrocket",			CONST_SE_BATTLETEAMROCKET},
+	{"route34",						CONST_SE_ROUTE34},
+	{"arivalappears",				CONST_SE_ARIVALAPPEARS},
+	{"battlerival",					CONST_SE_BATTLERIVAL},
+	{"evolution",					CONST_SE_EVOLUTION},
+	{"congratulations",				CONST_SE_CONGRATULATIONS},
+	{"goldenrodcity",				CONST_SE_GOLDENRODCITY},
+	{"battlegymleaderjohto",		CONST_SE_BATTLEGYMLEADERJOHTO},
+	{"victorygymleader",			CONST_SE_VICTORYGYMLEADER},
+	{"receivedgymbadge",			CONST_SE_RECEIVEDGYMBADGE},
+	{"pokegearradiopokemonchannel",	CONST_SE_POKEGEARRADIOPOKEMONCHANNEL},
+	{"pokegearradiobuenapassword",	CONST_SE_POKEGEARRADIOBUENAPASSWORD},
+	{"receivedtm",					CONST_SE_RECEIVEDTM},
+	{"goldenrodgamecorner",			CONST_SE_GOLDENRODGAMECORNER},
+	{"youareawinner",				CONST_SE_YOUAREAWINNER},
+	{"obtainedanaccessory",			CONST_SE_OBTAINEDANACCESSORY},
+	{"globalterminal",				CONST_SE_GLOBALTERMINAL},
+	{"waterdrop",					CONST_SE_WATERDROP},
 };
 
 ShootTypeNames shootTypeNames = {
@@ -698,6 +752,15 @@ EffectClasses getEffect(const std::string& strValue)
 		return effect->second;
 	}
 	return CONST_ME_NONE;
+}
+
+SoundEffectClasses getSoundEffect(const std::string& strValue)
+{
+	auto soundEffect = soundEffectNames.find(strValue);
+	if (soundEffect != soundEffectNames.end()) {
+		return soundEffect->second;
+	}
+	return CONST_SE_NONE;
 }
 
 ShootType_t getShootType(const std::string& strValue)

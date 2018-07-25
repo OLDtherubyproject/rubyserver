@@ -70,6 +70,8 @@ struct CombatParams {
 
 	uint16_t impactEffect = CONST_ME_NONE;
 	uint16_t distanceEffect = CONST_ANI_NONE;
+	uint16_t impactSound = CONST_SE_NONE;
+	uint16_t distanceSound = CONST_SE_NONE;
 
 	bool targetCasterOrTopMost = false;
 	bool aggressive = true;
@@ -260,8 +262,10 @@ class Combat
 		static ReturnValue canDoCombat(Creature* caster, Tile* tile, bool aggressive);
 		static ReturnValue canDoCombat(Creature* attacker, Creature* target);
 		static void postCombatEffects(Creature* caster, const Position& pos, const CombatParams& params);
+		static void postCombatSoundEffects(const SpectatorHashSet& spectators, const CombatParams& params);
 
 		static void addDistanceEffect(Creature* caster, const Position& fromPos, const Position& toPos, uint16_t effect);
+		static void addDistanceSound(Creature* caster, const Position& fromPos, const Position& toPos, uint16_t effect);
 
 		void doCombat(Creature* caster, Creature* target) const;
 		void doCombat(Creature* caster, const Position& position) const;
@@ -282,6 +286,9 @@ class Combat
 		void setPlayerCombatValues(formulaType_t formulaType, double mina, double minb, double maxa, double maxb);
 		void postCombatEffects(Creature* caster, const Position& pos) const {
 			postCombatEffects(caster, pos, params);
+		}
+		void postCombatSoundEffects(const SpectatorHashSet& spectators) const {
+			postCombatSoundEffects(spectators, params);
 		}
 
 		void setOrigin(CombatOrigin origin) {

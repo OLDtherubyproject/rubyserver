@@ -384,6 +384,16 @@ bool Combat::setParam(CombatParam_t param, uint32_t value)
 			params.dispelType = static_cast<ConditionType_t>(value);
 			return true;
 		}
+
+		case COMBAT_PARAM_SOUND: {
+			params.impactSound = static_cast<uint16_t>(value);
+			return true;
+		}
+
+		case COMBAT_PARAM_DISTANCESOUND: {
+			params.distanceSound = static_cast<uint16_t>(value);
+			return true;
+		}
 	}
 	return false;
 }
@@ -598,10 +608,27 @@ void Combat::combatTileEffects(const SpectatorHashSet& spectators, Creature* cas
 	}
 }
 
+void Combat::postCombatSoundEffects(const SpectatorHashSet& spectators, const CombatParams& params)
+{
+	if (params.impactSound != CONST_SE_NONE) {
+		for (Creature* spectator : spectators) {
+			if (Player* tmpPlayer = spectator->getPlayer()) {
+				tmpPlayer->sendSound(tmpPlayer->getPosition(), params.impactSound);
+			}
+		}
+	}
+}
+
 void Combat::postCombatEffects(Creature* caster, const Position& pos, const CombatParams& params)
 {
-	if (caster && params.distanceEffect != CONST_ANI_NONE) {
-		addDistanceEffect(caster, caster->getPosition(), pos, params.distanceEffect);
+	if (caster) {
+		if (params.distanceEffect != CONST_ANI_NONE) {
+			addDistanceEffect(caster, caster->getPosition(), pos, params.distanceEffect);
+		}
+
+		if (params.distanceSound != CONST_SE_NONE) {
+			addDistanceSound(caster, caster->getPosition(), pos, params.distanceSound);
+		}
 	}
 }
 
@@ -609,6 +636,13 @@ void Combat::addDistanceEffect(Creature* caster, const Position& fromPos, const 
 {
 	if (effect != CONST_ANI_NONE) {
 		g_game.addDistanceEffect(fromPos, toPos, effect);
+	}
+}
+
+void Combat::addDistanceSound(Creature* caster, const Position& fromPos, const Position& toPos, uint16_t sound)
+{
+	if (sound != CONST_SE_NONE) {
+		g_game.addDistanceSound(fromPos, toPos, sound);
 	}
 }
 
@@ -646,6 +680,7 @@ void Combat::CombatFunc(Creature* caster, const Position& pos, const AreaCombat*
 	g_game.map.getSpectators(spectators, pos, true, true, rangeX, rangeX, rangeY, rangeY);
 
 	postCombatEffects(caster, pos, params);
+	postCombatSoundEffects(spectators, params);
 
 	for (Tile* tile : tileList) {
 		if (canDoCombat(caster, tile, params.aggressive) != RETURNVALUE_NOERROR) {
@@ -707,13 +742,25 @@ void Combat::doCombat(Creature* caster, const Position& position) const
 void Combat::doCombatHealth(Creature* caster, Creature* target, CombatDamage& damage, const CombatParams& params)
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
-	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addEffect(target->getPosition(), params.impactEffect);
+	if (caster == target || canCombat) {
+		if (params.impactEffect != CONST_ME_NONE) {
+			g_game.addEffect(target->getPosition(), params.impactEffect);
+		}
+
+		if (params.impactSound != CONST_SE_NONE) {
+			g_game.addSound(target->getPosition(), params.impactSound);
+		}		
 	}
 
 	if (canCombat) {
-		if (caster && params.distanceEffect != CONST_ANI_NONE) {
-			addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+		if (caster) {
+			if (params.distanceEffect != CONST_ANI_NONE) {
+				addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+			}
+
+			if (params.distanceSound != CONST_SE_NONE) {
+				addDistanceSound(caster, caster->getPosition(), target->getPosition(), params.distanceSound);
+			}
 		}
 
 		CombatHealthFunc(caster, target, params, &damage);
@@ -736,13 +783,25 @@ void Combat::doCombatCondition(Creature* caster, const Position& position, const
 void Combat::doCombatCondition(Creature* caster, Creature* target, const CombatParams& params)
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
-	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addEffect(target->getPosition(), params.impactEffect);
+	if (caster == target || canCombat) {
+		if (params.impactEffect != CONST_ME_NONE) {
+			g_game.addEffect(target->getPosition(), params.impactEffect);
+		}
+
+		if (params.impactSound != CONST_SE_NONE) {
+			g_game.addSound(target->getPosition(), params.impactSound);
+		}
 	}
 
 	if (canCombat) {
-		if (caster && params.distanceEffect != CONST_ANI_NONE) {
-			addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+		if (caster) {
+			if (params.distanceEffect != CONST_ANI_NONE) {
+				addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+			}
+
+			if (params.distanceSound != CONST_SE_NONE) {
+				addDistanceSound(caster, caster->getPosition(), target->getPosition(), params.distanceSound);
+			}
 		}
 
 		CombatConditionFunc(caster, target, params, nullptr);
@@ -760,8 +819,14 @@ void Combat::doCombatDispel(Creature* caster, const Position& position, const Ar
 void Combat::doCombatDispel(Creature* caster, Creature* target, const CombatParams& params)
 {
 	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR);
-	if ((caster == target || canCombat) && params.impactEffect != CONST_ME_NONE) {
-		g_game.addEffect(target->getPosition(), params.impactEffect);
+	if (caster == target || canCombat) {
+		if (params.impactEffect != CONST_ME_NONE) {
+			g_game.addEffect(target->getPosition(), params.impactEffect);
+		}
+
+		if (params.impactSound != CONST_ME_NONE) {
+			g_game.addSound(target->getPosition(), params.impactSound);
+		}
 	}
 
 	if (canCombat) {
@@ -770,8 +835,14 @@ void Combat::doCombatDispel(Creature* caster, Creature* target, const CombatPara
 			params.targetCallback->onTargetCombat(caster, target);
 		}
 
-		if (caster && params.distanceEffect != CONST_ANI_NONE) {
-			addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+		if (caster) {
+			if (params.distanceEffect != CONST_ANI_NONE) {
+				addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+			}
+
+			if (params.distanceSound != CONST_SE_NONE) {
+				addDistanceSound(caster, caster->getPosition(), target->getPosition(), params.distanceSound);
+			}
 		}
 	}
 }
@@ -793,8 +864,14 @@ void Combat::doCombatDefault(Creature* caster, Creature* target, const CombatPar
 			g_game.addEffect(target->getPosition(), params.impactEffect);
 		}
 
-		if (caster && params.distanceEffect != CONST_ANI_NONE) {
-			addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+		if (caster) {
+			if (params.distanceEffect != CONST_ANI_NONE) {
+				addDistanceEffect(caster, caster->getPosition(), target->getPosition(), params.distanceEffect);
+			}
+
+			if (params.distanceSound != CONST_SE_NONE) {
+				addDistanceSound(caster, caster->getPosition(), target->getPosition(), params.distanceSound);
+			}
 		}
 	}
 }

@@ -240,6 +240,7 @@ class ItemType
 		uint16_t wareId = 0;
 
 		EffectClasses effect = CONST_ME_NONE;
+		SoundEffectClasses sound = CONST_SE_NONE;
 		Direction bedPartnerDir = DIRECTION_NONE;
 		ShootType_t shootType = CONST_ANI_NONE;
 		FluidTypes_t fluidSource = FLUID_NONE;

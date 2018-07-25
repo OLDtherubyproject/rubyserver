@@ -1032,6 +1032,15 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 				std::cout << "[Warning - Pokemons::loadPokemon] Missing voice sentence. " << file << std::endl;
 			}
 
+			if ((attr = voiceNode.attribute("sound"))) {
+				SoundEffectClasses soundEffect = getSoundEffect(asLowerCaseString(attr.as_string()));
+				if (soundEffect) {
+					vb.sound = soundEffect;
+				} else {
+					std::cout << "[Warning - Pokemons::loadPokemon] Unknown sound effect: " << attr.as_string() << std::endl;
+				}
+			}
+
 			if ((attr = voiceNode.attribute("yell"))) {
 				vb.yellText = attr.as_bool();
 			} else {

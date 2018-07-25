@@ -2250,6 +2250,28 @@ void ProtocolGame::sendEffect(const Position& pos, uint16_t type)
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendSound(const Position& pos, uint16_t type, uint8_t channel /*= SOUND_CHANNEL_EFFECT*/)
+{
+	if (!canSee(pos)) {
+		return;
+	}
+
+	NetworkMessage msg;
+	msg.addByte(0xFF);
+	msg.addByte(channel);
+	msg.add<uint16_t>(type);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendDistanceSound(const Position& from, const Position& to, uint16_t type, uint8_t channel /*= SOUND_CHANNEL_EFFECT*/)
+{
+	if (canSee(from)) {
+		sendSound(from, type, channel);
+	} else if (canSee(to)) {
+		sendSound(to, type, channel);
+	}
+}
+
 void ProtocolGame::sendAnimatedText(const Position& pos, uint8_t color, std::string text)
 {
    if (!canSee(pos)) {

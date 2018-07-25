@@ -581,7 +581,9 @@ class LuaScriptInterface
 		static int luaPositionIsSightClear(lua_State* L);
 
 		static int luaPositionsendEffect(lua_State* L);
+		static int luaPositionSendSound(lua_State* L);
 		static int luaPositionSendDistanceEffect(lua_State* L);
+		static int luaPositionSendDistanceSound(lua_State* L);
 
 		// Tile
 		static int luaTileCreate(lua_State* L);

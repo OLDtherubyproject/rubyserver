@@ -690,7 +690,7 @@ bool Pokemon::castMove(uint16_t moveId, bool ignoreMessages /* = false */)
 		player->setNextCastMove(OTSYS_TIME() + 1000);
 	}
 
-	if (move->getLevel() > player->getLevel()) {
+	if (player && (move->getLevel() > player->getLevel())) {
 		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You need level " + std::to_string(move->getLevel()) + " to cast " + move->getName());
 		return false;
 	}
@@ -1112,6 +1112,8 @@ void Pokemon::onThinkYell(uint32_t interval)
 			} else {
 				g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, vb.text, false);
 			}
+
+			g_game.addSound(getPosition(), vb.sound);
 		}
 	}
 }
@@ -1122,18 +1124,21 @@ void Pokemon::onThinkEmoticon(uint32_t interval)
 		return;
 	}
 
-	// low hp pokeball emot
 	emotsTicks[0] += interval;
-	if (emotsTicks[0] >= 3000) {
-		if (getHealth() <= (0.5 * getMaxHealth())) {
+	emotsTicks[1] += interval;
+	emotsTicks[2] += interval;
+
+	// low hp pokeball emot
+	if (emotsTicks[0] >= 2000) {
+		if (getHealth() <= (0.15 * getMaxHealth())) {
 			g_game.addEffect(getPosition(), CONST_ME_EMOT_POKEBALL);
+			getTrainer()->sendSound(getPosition(), CONST_SE_POKEMONLOWHP, SOUND_CHANNEL_EFFECT);
 			emotsTicks[0] = 0;
 			return;
-		}		
+		}
 	}
 
 	// inside house emot
-	emotsTicks[1] += interval;
 	if (emotsTicks[1] >= 15000) {
 		Tile* tile = g_game.map.getTile(getPosition());
 		HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
@@ -1145,7 +1150,6 @@ void Pokemon::onThinkEmoticon(uint32_t interval)
 	}
 
 	// hungry pokemon emot
-	emotsTicks[2] += interval;
 	if (emotsTicks[2] >= 60000) {
 		Condition* condition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
 		if (!condition || (condition->getTicks() / 1000) <= 120) {

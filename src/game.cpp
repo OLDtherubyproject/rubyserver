@@ -4235,6 +4235,31 @@ void Game::addEffect(const SpectatorHashSet& spectators, const Position& pos, ui
 	}
 }
 
+void Game::addSoundToPlayer(Player* player, uint16_t sound, uint8_t channel /*= SOUND_CHANNEL_EFFECT*/)
+{
+	if (!player) {
+		return;
+	}
+
+	player->sendSound(player->getPosition(), sound, channel);
+}
+
+void Game::addSound(const Position& pos, uint16_t sound, uint8_t channel /*= SOUND_CHANNEL_EFFECT*/)
+{
+	SpectatorHashSet spectators;
+	map.getSpectators(spectators, pos, true, true);
+	addSound(spectators, pos, sound, channel);
+}
+
+void Game::addSound(const SpectatorHashSet& spectators, const Position& pos, uint16_t sound, uint8_t channel /*= SOUND_CHANNEL_EFFECT*/)
+{
+	for (Creature* spectator : spectators) {
+		if (Player* tmpPlayer = spectator->getPlayer()) {
+			tmpPlayer->sendSound(pos, sound, channel);
+		}
+	}
+}
+
 void Game::addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text)
 {
 	SpectatorHashSet spectators;
@@ -4264,6 +4289,23 @@ void Game::addDistanceEffect(const SpectatorHashSet& spectators, const Position&
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
 			tmpPlayer->sendDistanceShoot(fromPos, toPos, effect);
+		}
+	}
+}
+
+void Game::addDistanceSound(const Position& fromPos, const Position& toPos, uint16_t sound, uint8_t channel /*= SOUND_CHANNEL_EFFECT */)
+{
+	SpectatorHashSet spectators;
+	map.getSpectators(spectators, fromPos, false, true);
+	map.getSpectators(spectators, toPos, false, true);
+	addDistanceSound(spectators, fromPos, toPos, sound, channel);
+}
+
+void Game::addDistanceSound(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t sound, uint8_t channel /*= SOUND_CHANNEL_EFFECT */)
+{
+	for (Creature* spectator : spectators) {
+		if (Player* tmpPlayer = spectator->getPlayer()) {
+			tmpPlayer->sendDistanceSound(fromPos, toPos, sound, channel);
 		}
 	}
 }
@@ -5291,6 +5333,7 @@ void Game::playerTryCatchPokemon(Player* player, const PokeballType* pokeballTyp
 		message.str(std::string());
 		message << "You caught a Pokemon! (" + pokemon->getName() + ").";
 		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::sendPokemonToPlayer, this, player->getGUID(), pokemon, corpse->clone(), pokeballType)));
+		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Game::addSoundToPlayer, this, player, CONST_SE_CATCHSUCCESS, SOUND_CHANNEL_EFFECT)));
 	} else {
 		g_scheduler.addEvent(createSchedulerTask(3000 + delay, std::bind(&Events::eventPlayerOnDontCatchPokemon, g_events, player, pokemonType, pokeballType)));
 	}

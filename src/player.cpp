@@ -1094,6 +1094,12 @@ void Player::onCreatureMove(Creature* creature, const Tile* newTile, const Posit
 		return;
 	}
 
+	if (getListeningMusic() != newTile->getMusic()) {
+		setListeningMusic(newTile->getMusic());
+		sendSound(getPosition(), newTile->getMusic(), SOUND_CHANNEL_MUSIC);
+		setListeningMusic(newTile->getMusic());
+	}
+
 	if (tradeState != TRADE_TRANSFER) {
 		//check if we should close trade
 		if (tradeItem && !Position::areInRange<1, 1, 0>(tradeItem->getPosition(), getPosition())) {
@@ -3000,6 +3006,12 @@ void Player::onPlacedCreature()
 	//scripting event - onLogin
 	if (!g_creatureEvents->playerLogin(this)) {
 		kickPlayer(true);
+	}
+
+	Tile* tile = getTile();
+	if (tile->getMusic() != CONST_SE_NONE) {
+		sendSound(getPosition(), tile->getMusic(), SOUND_CHANNEL_MUSIC);
+		setListeningMusic(tile->getMusic());
 	}
 }
 

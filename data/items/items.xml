@@ -459,6 +459,7 @@
     <attribute key="description" value="You can see the other side through it." />
     <attribute key="type" value="teleport" />
     <attribute key="effect" value="teleport" />
+    <attribute key="sound" value="teleport" />
   </item>
   <item id="1388" article="a" name="ramp">
     <attribute key="floorchange" value="east" />
@@ -6893,6 +6894,7 @@
     <attribute key="description" value="You see the silvery movement of fish." />
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6901,6 +6903,7 @@
     <attribute key="duration" value="1200" />
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6909,6 +6912,7 @@
     <attribute key="duration" value="1200" />
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6917,12 +6921,14 @@
     <attribute key="duration" value="1200" />
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
   <item fromid="4620" toid="4625" name="shallow water">
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6936,6 +6942,7 @@
   <item fromid="4664" toid="4666" name="shallow water">
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6957,6 +6964,7 @@
   <item fromid="4796" toid="4819" name="dirt" />
   <item fromid="4820" toid="4825" name="shallow water">
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -6964,6 +6972,7 @@
   <item fromid="4828" toid="4831" name="shallow water">
     <attribute key="type" value="trashholder" />
     <attribute key="effect" value="bluebubble" />
+    <attribute key="sound" value="waterdrop" />
     <attribute key="allowpickupable" value="1" />
     <attribute key="fluidSource" value="water" />
   </item>
@@ -7193,6 +7202,7 @@
     <attribute key="type" value="teleport" />
     <attribute key="description" value="You can see the other side trough it." />
     <attribute key="effect" value="teleport" />
+    <attribute key="sound" value="teleport" />
   </item>
   <item fromid="5025" toid="5044" article="a" name="bamboo lamp" />
   <item id="5045" article="a" name="flat roof" />

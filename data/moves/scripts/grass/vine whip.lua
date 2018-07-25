@@ -1,5 +1,6 @@
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_GRASSDAMAGE)
+combat:setParameter(COMBAT_PARAM_SOUND, CONST_SE_VINEWHIP)
 combat:setArea(createCombatArea(AREA_WAVE3, AREA_WAVE3))
 
 function onGetFormulaValues(pokemon, level)

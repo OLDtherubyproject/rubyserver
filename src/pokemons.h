@@ -66,6 +66,7 @@ struct summonBlock_t {
 
 struct voiceBlock_t {
 	std::string text;
+	SoundEffectClasses sound = CONST_SE_NONE;
 	bool yellText;
 };
 

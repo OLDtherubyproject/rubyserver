@@ -180,6 +180,8 @@ class ProtocolGame final : public Protocol
 
 		void sendDistanceShoot(const Position& from, const Position& to, uint16_t type);
 		void sendEffect(const Position& pos, uint16_t type);
+		void sendSound(const Position& pos, uint16_t type, uint8_t channel = SOUND_CHANNEL_EFFECT);
+		void sendDistanceSound(const Position& from, const Position& to, uint16_t type, uint8_t channel = SOUND_CHANNEL_EFFECT);
 		void sendCreatureHealth(const Creature* creature);
 		void sendSkills();
 		void sendPing();

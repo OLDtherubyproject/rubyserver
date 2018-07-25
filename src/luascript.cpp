@@ -1119,6 +1119,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(COMBAT_PARAM_CREATEITEM)
 	registerEnum(COMBAT_PARAM_AGGRESSIVE)
 	registerEnum(COMBAT_PARAM_DISPEL)
+	registerEnum(COMBAT_PARAM_SOUND)
+	registerEnum(COMBAT_PARAM_DISTANCESOUND)
 
 	registerEnum(CONDITION_NONE)
 	registerEnum(CONDITION_POISON)
@@ -1849,6 +1851,63 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ZONE_NOLOGOUT)
 	registerEnum(ZONE_NORMAL)
 
+	registerEnum(SOUND_CHANNEL_MUSIC)
+	registerEnum(SOUND_CHANNEL_AMBIENT)
+	registerEnum(SOUND_CHANNEL_EFFECT)
+
+	registerEnum(CONST_SE_NONE)
+	registerEnum(CONST_SE_CATCHSUCCESS)
+	registerEnum(CONST_SE_SAFFRONMUSIC)
+	registerEnum(CONST_SE_VINEWHIP)
+	registerEnum(CONST_SE_POKEMONLOWHP)
+	registerEnum(CONST_SE_CRAPS)
+	registerEnum(CONST_SE_TELEPORT)
+	registerEnum(CONST_SE_POKEMONCENTER)
+	registerEnum(CONST_SE_LEVELUP)
+	registerEnum(CONST_SE_POKEMONHEALED)
+	registerEnum(CONST_SE_NEWBARKTOWN)
+	registerEnum(CONST_SE_LYRA)
+	registerEnum(CONST_SE_ELMPOKEMONLAB)
+	registerEnum(CONST_SE_OBTAINEDAKEYITEM)
+	registerEnum(CONST_SE_ROUTE29)
+	registerEnum(CONST_SE_BATTLEWILDJOHTO)
+	registerEnum(CONST_SE_VICTORYWILDPOKEMON)
+	registerEnum(CONST_SE_CHERRYGROVECITY)
+	registerEnum(CONST_SE_BATTLETRAINERJOHTO)
+	registerEnum(CONST_SE_VICTORYTRAINERJOHTO)
+	registerEnum(CONST_SE_ROUTE30)
+	registerEnum(CONST_SE_POKEDEXEVALUATIONNOGOOD)
+	registerEnum(CONST_SE_VIOLETCITY)
+	registerEnum(CONST_SE_SPROUTTOWER)
+	registerEnum(CONST_SE_POKEMART)
+	registerEnum(CONST_SE_RECEIVEDPOKEMONEGG)
+	registerEnum(CONST_SE_KIMONOGIRL)
+	registerEnum(CONST_SE_UNIONCAVE)
+	registerEnum(CONST_SE_OBTAINEDAITEM)
+	registerEnum(CONST_SE_RUINSOFALPH)
+	registerEnum(CONST_SE_POKEGEARRADIOUNOWN)
+	registerEnum(CONST_SE_POKEDEXEVALUATIONYOUAREONY)
+	registerEnum(CONST_SE_AZALEATOWN)
+	registerEnum(CONST_SE_BATTLETEAMROCKET)
+	registerEnum(CONST_SE_ROUTE34)
+	registerEnum(CONST_SE_ARIVALAPPEARS)
+	registerEnum(CONST_SE_BATTLERIVAL)
+	registerEnum(CONST_SE_EVOLUTION)
+	registerEnum(CONST_SE_CONGRATULATIONS)
+	registerEnum(CONST_SE_GOLDENRODCITY)
+	registerEnum(CONST_SE_POKEMONGYM)
+	registerEnum(CONST_SE_BATTLEGYMLEADERJOHTO)
+	registerEnum(CONST_SE_VICTORYGYMLEADER)
+	registerEnum(CONST_SE_RECEIVEDGYMBADGE)
+	registerEnum(CONST_SE_POKEGEARRADIOPOKEMONCHANNEL)
+	registerEnum(CONST_SE_POKEGEARRADIOBUENAPASSWORD)
+	registerEnum(CONST_SE_RECEIVEDTM)
+	registerEnum(CONST_SE_GOLDENRODGAMECORNER)
+	registerEnum(CONST_SE_YOUAREAWINNER)
+	registerEnum(CONST_SE_OBTAINEDANACCESSORY)
+	registerEnum(CONST_SE_GLOBALTERMINAL)
+	registerEnum(CONST_SE_WATERDROP)
+
 	// _G
 	registerGlobalVariable("INDEX_WHEREEVER", INDEX_WHEREEVER);
 	registerGlobalBoolean("VIRTUAL_PARENT", true);
@@ -1999,7 +2058,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Position", "isSightClear", LuaScriptInterface::luaPositionIsSightClear);
 
 	registerMethod("Position", "sendEffect", LuaScriptInterface::luaPositionsendEffect);
+	registerMethod("Position", "sendSound", LuaScriptInterface::luaPositionSendSound);
 	registerMethod("Position", "sendDistanceEffect", LuaScriptInterface::luaPositionSendDistanceEffect);
+	registerMethod("Position", "sendDistanceSound", LuaScriptInterface::luaPositionSendDistanceSound);
 
 	// Tile
 	registerClass("Tile", "", LuaScriptInterface::luaTileCreate);
@@ -4602,6 +4663,29 @@ int LuaScriptInterface::luaPositionsendEffect(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPositionSendSound(lua_State* L)
+{
+	// position:sendSound(soundEffect[, player = nullptr])
+	SpectatorHashSet spectators;
+	if (lua_gettop(L) >= 3) {
+		Player* player = getPlayer(L, 3);
+		if (player) {
+			spectators.insert(player);
+		}
+	}
+
+	SoundEffectClasses soundEffect = getNumber<SoundEffectClasses>(L, 2);
+	const Position& position = getPosition(L, 1);
+	if (!spectators.empty()) {
+		Game::addSound(spectators, position, soundEffect);
+	} else {
+		g_game.addSound(position, soundEffect);
+	}
+
+	pushBoolean(L, true);
+	return 1;
+}
+
 int LuaScriptInterface::luaPositionSendDistanceEffect(lua_State* L)
 {
 	// position:sendDistanceEffect(positionEx, distanceEffect[, player = nullptr])
@@ -4620,6 +4704,30 @@ int LuaScriptInterface::luaPositionSendDistanceEffect(lua_State* L)
 		Game::addDistanceEffect(spectators, position, positionEx, distanceEffect);
 	} else {
 		g_game.addDistanceEffect(position, positionEx, distanceEffect);
+	}
+
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaPositionSendDistanceSound(lua_State* L)
+{
+	// position:sendDistanceSound(positionEx, soundEffect[, player = nullptr])
+	SpectatorHashSet spectators;
+	if (lua_gettop(L) >= 4) {
+		Player* player = getPlayer(L, 4);
+		if (player) {
+			spectators.insert(player);
+		}
+	}
+
+	ShootType_t soundEffect = getNumber<ShootType_t>(L, 3);
+	const Position& positionEx = getPosition(L, 2);
+	const Position& position = getPosition(L, 1);
+	if (!spectators.empty()) {
+		Game::addDistanceSound(spectators, position, positionEx, soundEffect);
+	} else {
+		g_game.addDistanceSound(position, positionEx, soundEffect);
 	}
 
 	pushBoolean(L, true);

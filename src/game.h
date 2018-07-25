@@ -462,10 +462,16 @@ class Game
 		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
 		void addEffect(const Position& pos, uint16_t effect);
 		static void addEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
+		void addSoundToPlayer(Player* player, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
+		void addSound(const Position& pos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
+		static void addSound(const SpectatorHashSet& spectators, const Position& pos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
 		void addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text);
 		static void addAnimatedText(const SpectatorHashSet& list, const Position& pos, uint8_t textColor, const std::string& text);
 		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint16_t effect);
 		static void addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t effect);
+		void addDistanceSound(const Position& fromPos, const Position& toPos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
+		static void addDistanceSound(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
+
 
 		void startDecay(Item* item);
 		int8_t getLightHour() const {

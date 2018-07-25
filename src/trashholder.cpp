@@ -75,6 +75,9 @@ void TrashHolder::addThing(int32_t, Thing* thing)
 	if (it.effect != CONST_ME_NONE) {
 		g_game.addEffect(getPosition(), it.effect);
 	}
+	if (it.sound != CONST_SE_NONE) {
+		g_game.addSound(getPosition(), it.sound);
+	}
 }
 
 void TrashHolder::updateThing(Thing*, uint16_t, uint32_t)
