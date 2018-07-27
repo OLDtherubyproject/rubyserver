@@ -2844,6 +2844,10 @@ std::string Game::getTradeErrorDescription(ReturnValue ret, Item* item)
 			}
 
 			return ss.str();
+		} else if (ret == RETURNVALUE_NOTENOUGHCAPACITY) {
+			std::ostringstream ss;
+			ss << "You can only have 6 Pokemon.";
+			return ss.str();
 		}
 	}
 	return "Trade could not be completed.";
@@ -4114,8 +4118,8 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 
 		message.primary.value = damage.value;
 
-		uint8_t hitEffect;
 		if (message.primary.value) {
+			uint8_t hitEffect;
 			combatGetTypeInfo(damage.type, target, message.primary.color, hitEffect);
 			if (hitEffect != CONST_ME_NONE) {
 				addEffect(spectators, targetPos, hitEffect);
@@ -4395,10 +4399,10 @@ void Game::checkLight()
 	time_t theTime = time(NULL);
   	struct tm *aTime = localtime(&theTime);
 	int gameHour = aTime->tm_hour;
-	bool lightChange = false;
 	lightMinutes = aTime->tm_min;
 
 	if (gameHour != lightHour) {
+		bool lightChange = false;
 		if (gameHour >= 5 && gameHour <= 10) {
 			lightLevel = LIGHT_LEVEL_SUNRISE;
 			lightState = LIGHT_STATE_SUNRISE;
@@ -5392,7 +5396,7 @@ void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corp
 
 	g_events->eventPlayerOnCatchPokemon(player, pokemon->mType, pokeballType, pokeball);
 
-	if (player->getPokemonCapacity() >= 6) {
+	if (player->getFreePokemonCapacity() == 0) {
 		s << "You already hold six pokemon, your new pokemon will be teleported to the Pokemon Center!";
 		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, s.str());
 

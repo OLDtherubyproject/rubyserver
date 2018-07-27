@@ -371,9 +371,6 @@ class Player final : public Creature, public Cylinder
 		uint8_t getLevelPercent() const {
 			return levelPercent;
 		}
-		uint8_t getPokemonCapacity() const {
-			return pokemonCapacity;
-		}
 		bool isAccessPlayer() const {
 			return group->access;
 		}
@@ -455,6 +452,25 @@ class Player final : public Creature, public Cylinder
 				return std::numeric_limits<uint32_t>::max();
 			} else {
 				return std::max<int32_t>(0, capacity - inventoryWeight);
+			}
+		}
+
+		uint8_t getPokemonCapacity() const {
+			if (hasFlag(PlayerFlag_CannotPickupItem)) {
+				return 0;
+			} else if (hasFlag(PlayerFlag_HasInfinitePokemonCapacity)) {
+				return std::numeric_limits<uint8_t>::max();
+			}
+			return 6;
+		}
+
+		uint8_t getFreePokemonCapacity() const {
+			if (hasFlag(PlayerFlag_CannotPickupItem)) {
+				return 0;
+			} else if (hasFlag(PlayerFlag_HasInfinitePokemonCapacity)) {
+				return std::numeric_limits<uint8_t>::max();
+			} else {
+				return std::max<uint8_t>(0, 6 - inventoryPokemonCount);
 			}
 		}
 
@@ -577,7 +593,6 @@ class Player final : public Creature, public Cylinder
 
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) override;
 		void changePokemonHealth(int32_t hpChange);
-		void changePokemonCapacity(int32_t pkCapacityChange);
 
 		bool isPzLocked() const {
 			return pzLocked;
@@ -1164,12 +1179,14 @@ class Player final : public Creature, public Cylinder
 
 		void checkTradeState(const Item* item);
 		bool hasCapacity(const Item* item, uint32_t count) const;
+		bool hasPokemonCapacity(const Item* item) const;
 
 		void gainExperience(uint64_t gainExp, Creature* source);
 		void addExperience(Creature* source, uint64_t exp, bool sendText = false);
 		void removeExperience(uint64_t exp, bool sendText = false);
 
 		void updateInventoryWeight();
+		void updateInventoryPokemonCount();
 
 		void setNextWalkActionTask(SchedulerTask* task);
 		void setNextWalkTask(SchedulerTask* task);
@@ -1297,7 +1314,7 @@ class Player final : public Creature, public Cylinder
 		uint16_t maxWriteLen = 0;
 		int16_t lastDepotId = -1;
 
-		uint8_t pokemonCapacity = 0;
+		uint8_t inventoryPokemonCount = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
 

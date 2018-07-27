@@ -62,7 +62,7 @@ FoodType* Foods::getFoodTypeByItemID(const uint16_t id) const
 	return nullptr;
 }
 
-FoodType* Foods::getFoodTypeByName(const std::string name) const
+FoodType* Foods::getFoodTypeByName(const std::string& name) const
 {
 	for (std::map<uint32_t, FoodType*>::const_iterator it = foods.begin(); it != foods.end(); ++it) {
 		if (strcasecmp(Item::items.getItemType(it->second->getItemId()).name.c_str(), name.c_str()) == 1) {

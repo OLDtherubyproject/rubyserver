@@ -253,8 +253,6 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 	OperatingSystem_t operatingSystem = static_cast<OperatingSystem_t>(msg.get<uint16_t>());
 	version = msg.get<uint16_t>();
 
-	msg.skipBytes(7); // U32 client version, U8 client type, U16 dat revision
-
 	if (!Protocol::RSA_decrypt(msg)) {
 		disconnect();
 		return;
@@ -275,8 +273,6 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		opcodeMessage.add<uint16_t>(0x00);
 		writeToOutputBuffer(opcodeMessage);
 	}
-
-	msg.skipBytes(1); // gamemaster flag
 
 	std::string sessionKey = msg.getString();
 
@@ -857,7 +853,6 @@ void ProtocolGame::parseThrow(NetworkMessage& msg)
 void ProtocolGame::parseLookAt(NetworkMessage& msg)
 {
 	Position pos = msg.getPosition();
-	msg.skipBytes(2); // spriteId
 	uint8_t stackpos = msg.getByte();
 	addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerLookAt, player->getID(), pos, stackpos);
 }
@@ -1336,10 +1331,7 @@ void ProtocolGame::sendBasicData()
 		msg.add<uint32_t>(0);
 	}
 	msg.addByte(player->getProfession()->getClientId());
-	msg.add<uint16_t>(0xFF); // number of known moves
-	for (uint8_t moveId = 0x00; moveId < 0xFF; moveId++) {
-		msg.addByte(moveId);
-	}
+	msg.addByte(player->getClan()->getClientId());
 	writeToOutputBuffer(msg);
 }
 
@@ -2272,7 +2264,7 @@ void ProtocolGame::sendDistanceSound(const Position& from, const Position& to, u
 	}
 }
 
-void ProtocolGame::sendAnimatedText(const Position& pos, uint8_t color, std::string text)
+void ProtocolGame::sendAnimatedText(const Position& pos, uint8_t color, const std::string& text)
 {
    if (!canSee(pos)) {
      return;
@@ -2944,12 +2936,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(std::min<int32_t>(player->getPokemonHealth(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getPokemonHealthMax(), std::numeric_limits<uint16_t>::max()));
 
-	// old magic level remove it
-	msg.addByte(1);
-	msg.addByte(1);
-	msg.addByte(0);
-
-	msg.addByte(player->getPokemonCapacity());
+	msg.addByte(player->getPokemonCapacity() - player->getFreePokemonCapacity());
 
 	msg.add<uint16_t>(player->getStaminaMinutes());
 

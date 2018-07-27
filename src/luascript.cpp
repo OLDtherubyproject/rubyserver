@@ -262,7 +262,7 @@ std::string LuaScriptInterface::getErrorDesc(ErrorCode_t code)
 ScriptEnvironment LuaScriptInterface::scriptEnv[16];
 int32_t LuaScriptInterface::scriptEnvIndex = -1;
 
-LuaScriptInterface::LuaScriptInterface(std::string interfaceName) : interfaceName(std::move(interfaceName))
+LuaScriptInterface::LuaScriptInterface(const std::string& interfaceName) : interfaceName(std::move(interfaceName))
 {
 	if (!g_luaEnvironment.getLuaState()) {
 		g_luaEnvironment.initState();
@@ -1521,7 +1521,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_CanSenseInvisibility)
 	registerEnum(PlayerFlag_IgnoredByPokemons)
 	registerEnum(PlayerFlag_NotGainInFight)
-	//registerEnum(PlayerFlag_HasInfiniteMana)
+	registerEnum(PlayerFlag_HasInfinitePokemonCapacity)
 	registerEnum(PlayerFlag_HasNoExhaustion)
 	registerEnum(PlayerFlag_CannotUseMoves)
 	registerEnum(PlayerFlag_CannotPickupItem)
@@ -2388,7 +2388,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "setStamina", LuaScriptInterface::luaPlayerSetStamina);
 
 	registerMethod("Player", "getPokemonCapacity", LuaScriptInterface::luaPlayerGetPokemonCapacity);
-	registerMethod("Player", "addPokemonCapacity", LuaScriptInterface::luaPlayerAddPokemonCapacity);
 
 	registerMethod("Player", "getBankBalance", LuaScriptInterface::luaPlayerGetBankBalance);
 	registerMethod("Player", "setBankBalance", LuaScriptInterface::luaPlayerSetBankBalance);
@@ -8588,21 +8587,7 @@ int LuaScriptInterface::luaPlayerGetPokemonCapacity(lua_State* L)
 	// player:getPokemonCapacity()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->getPokemonCapacity());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddPokemonCapacity(lua_State* L)
-{
-	// player:addPokemonCapacity(capacityChange)
-	int32_t capacityChange = getNumber<int32_t>(L, 2);
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->changePokemonCapacity(capacityChange);
-		pushBoolean(L, true);
+		lua_pushnumber(L, player->getFreePokemonCapacity());
 	} else {
 		lua_pushnil(L);
 	}

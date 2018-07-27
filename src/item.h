@@ -897,6 +897,9 @@ class Item : virtual public Thing
 			}
 			return items[id].weight;
 		}
+
+		virtual uint8_t getPokemonCount() const;
+
 		virtual int32_t getPrice() const;
 		int32_t getBasePrice() const {
 			if (hasAttribute(ITEM_ATTRIBUTE_PRICE)) {

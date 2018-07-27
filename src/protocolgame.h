@@ -165,7 +165,7 @@ class ProtocolGame final : public Protocol
 		void parseCloseChannel(NetworkMessage& msg);
 
 		//Send functions
-		void sendAnimatedText(const Position& pos, uint8_t color, std::string text);
+		void sendAnimatedText(const Position& pos, uint8_t color, const std::string& text);
 		void sendChannelMessage(const std::string& author, const std::string& text, SpeakClasses type, uint16_t channel);
 		void sendChannelEvent(uint16_t channelId, const std::string& playerName, ChannelEvent_t channelEvent);
 		void sendClosePrivate(uint16_t channelId);

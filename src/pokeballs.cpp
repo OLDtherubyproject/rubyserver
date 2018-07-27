@@ -73,7 +73,7 @@ PokeballType* Pokeballs::getPokeballTypeByServerID(const uint16_t id) const
 	return it->second;
 }
 
-PokeballType* Pokeballs::getPokeballTypeByName(const std::string name) const
+PokeballType* Pokeballs::getPokeballTypeByName(const std::string& name) const
 {
 	for (std::map<uint32_t, PokeballType*>::const_iterator it = pokeballs.begin(); it != pokeballs.end(); ++it) {
 		if (it->second->getName() == name) {

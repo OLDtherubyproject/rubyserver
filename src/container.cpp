@@ -74,6 +74,7 @@ Item* Container::clone() const
 		clone->addItem(item->clone());
 	}
 	clone->totalWeight = totalWeight;
+	clone->totalPokemon = totalPokemon;
 	return clone;
 }
 
@@ -138,6 +139,7 @@ bool Container::unserializeItemNode(OTB::Loader& loader, const OTB::Node& node, 
 
 		addItem(item);
 		updateItemWeight(item->getWeight());
+		updateItemPokemonCount(item->getPokemonCount());
 	}
 	return true;
 }
@@ -153,6 +155,19 @@ void Container::updateItemWeight(int32_t diff)
 uint32_t Container::getWeight() const
 {
 	return Item::getWeight() + totalWeight;
+}
+
+void Container::updateItemPokemonCount(int32_t diff)
+{
+	totalPokemon += diff;
+	if (Container* parentContainer = getParentContainer()) {
+		parentContainer->updateItemPokemonCount(diff);
+	}
+}
+
+uint8_t Container::getPokemonCount() const
+{
+	return totalPokemon;
 }
 
 std::string Container::getContentDescription() const
@@ -491,6 +506,7 @@ void Container::addThing(int32_t index, Thing* thing)
 	item->setParent(this);
 	itemlist.push_front(item);
 	updateItemWeight(item->getWeight());
+	updateItemPokemonCount(item->getPokemonCount());
 
 	//send change to client
 	if (getParent() && (getParent() != VirtualCylinder::virtualCylinder)) {
@@ -502,6 +518,7 @@ void Container::addItemBack(Item* item)
 {
 	addItem(item);
 	updateItemWeight(item->getWeight());
+	updateItemPokemonCount(item->getPokemonCount());
 
 	//send change to client
 	if (getParent() && (getParent() != VirtualCylinder::virtualCylinder)) {
@@ -522,9 +539,11 @@ void Container::updateThing(Thing* thing, uint16_t itemId, uint32_t count)
 	}
 
 	const int32_t oldWeight = item->getWeight();
+	const int8_t oldPokemonCount = item->getPokemonCount();
 	item->setID(itemId);
 	item->setSubType(count);
 	updateItemWeight(-oldWeight + item->getWeight());
+	updateItemPokemonCount(-oldPokemonCount + item->getPokemonCount());
 
 	//send change to client
 	if (getParent()) {
@@ -547,6 +566,7 @@ void Container::replaceThing(uint32_t index, Thing* thing)
 	itemlist[index] = item;
 	item->setParent(this);
 	updateItemWeight(-static_cast<int32_t>(replacedItem->getWeight()) + item->getWeight());
+	updateItemPokemonCount(-static_cast<int8_t>(replacedItem->getPokemonCount()) + item->getPokemonCount());
 
 	//send change to client
 	if (getParent()) {
@@ -571,8 +591,10 @@ void Container::removeThing(Thing* thing, uint32_t count)
 	if (item->isStackable() && count != item->getItemCount()) {
 		uint16_t newCount = static_cast<uint16_t>(std::max<int32_t>(0, item->getItemCount() - count));
 		const int32_t oldWeight = item->getWeight();
+		const int32_t oldPokemonCount = item->getPokemonCount();
 		item->setItemCount(newCount);
 		updateItemWeight(-oldWeight + item->getWeight());
+		updateItemPokemonCount(-oldPokemonCount + item->getPokemonCount());
 
 		//send change to client
 		if (getParent()) {
@@ -580,6 +602,7 @@ void Container::removeThing(Thing* thing, uint32_t count)
 		}
 	} else {
 		updateItemWeight(-static_cast<int32_t>(item->getWeight()));
+		updateItemPokemonCount(-static_cast<int8_t>(item->getPokemonCount()));
 
 		//send change to client
 		if (getParent()) {
@@ -682,6 +705,7 @@ void Container::internalAddThing(uint32_t, Thing* thing)
 	item->setParent(this);
 	itemlist.push_front(item);
 	updateItemWeight(item->getWeight());
+	updateItemPokemonCount(item->getPokemonCount());
 }
 
 void Container::startDecaying()

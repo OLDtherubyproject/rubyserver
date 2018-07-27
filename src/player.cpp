@@ -311,6 +311,21 @@ void Player::updateInventoryWeight()
 	}
 }
 
+void Player::updateInventoryPokemonCount()
+{
+	if (hasFlag(PlayerFlag_HasInfinitePokemonCapacity)) {
+		return;
+	}
+
+	inventoryPokemonCount = 0;
+	for (int i = CONST_SLOT_FIRST; i <= CONST_SLOT_LAST; ++i) {
+		const Item* item = inventory[i];
+		if (item) {
+			inventoryPokemonCount += item->getPokemonCount();
+		}
+	}
+}
+
 void Player::addSkillAdvance(skills_t skill, uint64_t count)
 {
 	uint64_t currReqTries = profession->getReqSkillTries(skill, skills[skill].level);
@@ -1913,6 +1928,20 @@ bool Player::hasCapacity(const Item* item, uint32_t count) const
 	return itemWeight <= getFreeCapacity();
 }
 
+bool Player::hasPokemonCapacity(const Item* item) const
+{
+	if (hasFlag(PlayerFlag_CannotPickupItem)) {
+		return false;
+	}
+
+	if (hasFlag(PlayerFlag_HasInfinitePokemonCapacity) || item->getTopParent() == this) {
+		return true;
+	}
+
+	uint8_t pokemonCount = item->getContainer() != nullptr ? item->getPokemonCount() : 1;
+	return pokemonCount <= getFreePokemonCapacity();
+}
+
 ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, uint32_t flags, Creature*) const
 {
 	const Item* item = thing.getItem();
@@ -1920,26 +1949,17 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
 
-	if (item->getPokemonId() && (item->getTopParent() != this)) {
-		if (getPokemonCapacity() >= 6 ) {
-			return RETURNVALUE_MAXPOKEMONINBAG;
-		}
-	} else if (item->getContainer() && (item->getTopParent() != this)) {
-		uint16_t pkmCount = g_game.findQuantityOfPokeballs(item->getContainer());
-
-		if ((getPokemonCapacity() + pkmCount) > 6) {
-			return RETURNVALUE_MAXPOKEMONINBAG;
-		}
-	}
-
 	bool childIsOwner = hasBitSet(FLAG_CHILDISOWNER, flags);
 	if (childIsOwner) {
 		//a child container is querying the player, just check if enough capacity
 		bool skipLimit = hasBitSet(FLAG_NOLIMIT, flags);
-		if (skipLimit || hasCapacity(item, count)) {
-			return RETURNVALUE_NOERROR;
+		if (!skipLimit && !hasCapacity(item, count)) {
+			return RETURNVALUE_NOTENOUGHCAPACITY;
+		} else if (!skipLimit && !hasPokemonCapacity(item)) {
+			return RETURNVALUE_MAXPOKEMONINBAG;
 		}
-		return RETURNVALUE_NOTENOUGHCAPACITY;
+
+		return RETURNVALUE_NOERROR;
 	}
 
 	if (!item->isPickupable()) {
@@ -2054,6 +2074,11 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 	//check if enough capacity
 	if (!hasCapacity(item, count)) {
 		return RETURNVALUE_NOTENOUGHCAPACITY;
+	}
+
+	//check if enough pokemon capacity
+	if (!hasPokemonCapacity(item)) {
+		return RETURNVALUE_MAXPOKEMONINBAG;
 	}
 
 	if (!g_moveEvents->onPlayerEquip(const_cast<Player*>(this), const_cast<Item*>(item), static_cast<slots_t>(index), true)) {
@@ -2547,9 +2572,10 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 		}
 
 		updateInventoryWeight();
+		updateInventoryPokemonCount();
 		updateItemsLight();
 
-		if (const Item* item = thing->getItem()) {
+		/*if (const Item* item = thing->getItem()) {
 			if (item->getPokemonId()) {
 				changePokemonCapacity(1);
 				updatedStatus = true;
@@ -2558,7 +2584,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 				changePokemonCapacity(getPokemonCapacity() + count);
 				updatedStatus = true;
 			}
-		}
+		}*/
 
 		if (!updatedStatus) {
 			sendStats();
@@ -2616,9 +2642,10 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 		}
 
 		updateInventoryWeight();
+		updateInventoryPokemonCount();
 		updateItemsLight();
 
-		if (const Item* item = thing->getItem()) {
+		/*if (const Item* item = thing->getItem()) {
 			if (item->getPokemonId()) {
 				changePokemonCapacity(-1);
 				updatedStatus = true;
@@ -2627,7 +2654,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 				changePokemonCapacity(count * -1);
 				updatedStatus = true;
 			}
-		}
+		}*/
 
 		if (!updatedStatus) {
 			sendStats();
@@ -3154,7 +3181,7 @@ void Player::changePokemonHealth(int32_t healthChange)
 	sendStats();
 }
 
-void Player::changePokemonCapacity(int32_t capacityChange)
+/*void Player::changePokemonCapacity(int32_t capacityChange)
 {
 	if (capacityChange > 0) {
 		pokemonCapacity = std::min<uint32_t>(6, pokemonCapacity + capacityChange);
@@ -3163,7 +3190,7 @@ void Player::changePokemonCapacity(int32_t capacityChange)
 	}
 
 	sendStats();
-}
+}*/
 
 bool Player::canWear(uint32_t lookType, uint8_t addons) const
 {

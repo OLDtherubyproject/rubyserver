@@ -788,6 +788,11 @@ uint32_t Item::getWeight() const
 	return weight;
 }
 
+uint8_t Item::getPokemonCount() const
+{
+	return getPokemonId() ? 1 : 0;
+}
+
 int32_t Item::getPrice() const
 {
 	int32_t price = getBasePrice();

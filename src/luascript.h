@@ -197,7 +197,7 @@ enum ErrorCode_t {
 class LuaScriptInterface
 {
 	public:
-		explicit LuaScriptInterface(std::string interfaceName);
+		explicit LuaScriptInterface(const std::string& interfaceName);
 		virtual ~LuaScriptInterface();
 
 		// non-copyable

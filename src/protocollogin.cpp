@@ -124,16 +124,7 @@ void ProtocolLogin::onRecvFirstMessage(NetworkMessage& msg)
 		return;
 	}
 
-	msg.skipBytes(2); // client OS
-
 	uint16_t version = msg.get<uint16_t>();
-	msg.skipBytes(17);
-	/*
-	 * Skipped bytes:
-	 * 4 bytes: protocolVersion
-	 * 12 bytes: dat, spr, pic signatures (4 bytes each)
-	 * 1 byte: 0
-	 */
 
 	if (!Protocol::RSA_decrypt(msg)) {
 		disconnect();

@@ -297,7 +297,6 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 		player->levelPercent = 0;
 	}
 
-	player->pokemonCapacity = result->getNumber<uint16_t>("pokemon_capacity");
 	player->capacity = result->getNumber<uint32_t>("cap") * 100;
 	player->blessings = result->getNumber<uint16_t>("blessings");
 
@@ -527,6 +526,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 
 	player->updateBaseSpeed();
 	player->updateInventoryWeight();
+	player->updateInventoryPokemonCount();
 	player->updateItemsLight(true);
 	return true;
 }
@@ -640,7 +640,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`looklegs` = " << static_cast<uint32_t>(player->defaultOutfit.lookLegs) << ',';
 	query << "`looktype` = " << player->defaultOutfit.lookType << ',';
 	query << "`lookaddons` = " << static_cast<uint32_t>(player->defaultOutfit.lookAddons) << ',';
-	query << "`pokemon_capacity` = " << static_cast<uint16_t>(player->pokemonCapacity) << ',';
+	query << "`pokemon_capacity` = " << 0 << ',';
 	query << "`town_id` = " << player->town->getID() << ',';
 
 	const Position& loginPosition = player->getLoginPosition();
