@@ -3786,24 +3786,28 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2807" article="a" name="fainted ivysaur">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2808" article="a" name="fainted venusaur">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2809" article="a" name="fainted charmander">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2810" article="a" name="dead troll">
@@ -3823,120 +3827,140 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2814" article="a" name="fainted squirtle">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2815" article="a" name="fainted wartortle">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2816" article="a" name="fainted wartortle">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2817" article="a" name="fainted blastoise">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2818" article="a" name="fainted caterpie">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2819" article="a" name="fainted metapod">
     <attribute key="weight" value="620" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2820" article="a" name="fainted butterfree">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2821" article="a" name="fainted weedle">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2822" article="a" name="fainted kakuna">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2823" article="a" name="fainted beedrill">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2824" article="a" name="fainted pidgey">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2825" article="a" name="fainted pidgeotto">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2826" article="a" name="fainted pidgeot">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2827" article="a" name="fainted rattata">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2828" article="a" name="fainted raticate">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2829" article="a" name="fainted raticate">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2830" article="a" name="fainted spearow">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2831" article="a" name="fainted fearow">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2832" article="a" name="fainted ekans">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2833" article="a" name="dead minotaur">
@@ -3955,18 +3979,21 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2836" article="a" name="fainted sandshrew">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2837" article="a" name="fainted sandslash">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2838" article="a" name="dead deer">
@@ -3979,90 +4006,105 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2840" article="a" name="fainted nidoqueen">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2841" article="a" name="fainted nidoran">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2842" article="a" name="fainted nidorino">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2843" article="a" name="fainted nidoking">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2844" article="a" name="fainted clefairy">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2845" article="a" name="fainted clefable">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2846" article="a" name="fainted vulpix">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2847" article="a" name="fainted bellsprout">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2848" article="a" name="fainted jigglypuff">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2849" article="a" name="fainted wigglytuff">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2850" article="a" name="fainted zubat">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2851" article="a" name="fainted golbat">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2852" article="a" name="fainted golbat">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2853" article="a" name="fainted venonat">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2854" article="a" name="slain ghoul">
@@ -4073,84 +4115,98 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2856" article="a" name="fainted diglett">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2857" article="a" name="fainted meowth">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2858" article="a" name="fainted persian">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2859" article="a" name="fainted psyduck">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2860" article="a" name="fainted golduck">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2861" article="a" name="fainted mankey">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2862" article="a" name="fainted primeape">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2863" article="a" name="fainted growlithe">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2864" article="a" name="fainted arcanine">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2865" article="a" name="fainted poliwag">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2866" article="a" name="fainted poliwhirl">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2867" article="a" name="fainted poliwrath">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2868" article="a" name="fainted ekans">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item fromid="2869" toid="2870" article="a" name="dead minotaur">
@@ -4163,12 +4219,14 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2872" article="a" name="fainted kadabra">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2873" article="a" name="dead minotaur">
@@ -4187,12 +4245,14 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2877" article="a" name="fainted machop">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2878" article="a" name="dead minotaur">
@@ -4211,54 +4271,63 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2882" article="a" name="fainted machoke">
     <attribute key="containerSize" value="28" />
     <attribute key="decayTo" value="2883" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2883" article="a" name="fainted bellsprout">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2884" article="a" name="fainted wepinbell">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2885" article="a" name="fainted wepinbell">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2886" article="a" name="fainted victreebel">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2887" article="a" name="fainted tentacool">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2888" article="a" name="fainted tentacruel">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2889" article="a" name="fainted geodude">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2890" article="a" name="dead lion">
@@ -4271,18 +4340,21 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2892" article="a" name="fainted golem">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2893" article="a" name="fainted ponyta">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2894" article="a" name="dead bear">
@@ -4295,30 +4367,35 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2896" article="a" name="fainted slowpoke">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2897" article="a" name="fainted slowbro">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2898" article="a" name="fainted magnemite">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2899" article="a" name="fainted magneton">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2900" article="a" name="dead wasp">
@@ -4331,90 +4408,105 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2902" article="a" name="fainted dodrio">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2903" article="a" name="fainted seel">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2904" article="a" name="fainted dewgong">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2905" article="a" name="fainted grimer">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2906" article="a" name="fainted muk">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2907" article="a" name="fainted shellder">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2908" article="a" name="fainted cloyster">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2909" article="a" name="fainted gastly">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2910" article="a" name="fainted haunter">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2911" name="fainted gengar">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2912" name="fainted onix">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2913" name="fainted drowzee">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2914" article="a" name="fainted hypno">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2915" article="a" name="fainted krabby">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2916" article="a" name="slain demon">
@@ -4427,42 +4519,49 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2918" article="a" name="fainted electrode">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2919" article="a" name="fainted electrode">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2920" article="a" name="fainted exeggcute">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2921" article="a" name="fainted exeggutor">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2922" article="a" name="fainted cubone">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2923" article="a" name="fainted marowak">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2924" article="a" name="dead wolf">
@@ -4475,6 +4574,7 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2926" article="a" name="dead wolf">
@@ -4487,30 +4587,35 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2928" article="a" name="fainted weezing">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2929" article="a" name="fainted rhyhorn">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2930" article="a" name="fainted charizard">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2931" article="a" name="fainted tangela">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2932" article="a" name="dead behemoth">
@@ -4523,42 +4628,49 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2934" article="a" name="fainted horsea">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2935" article="a" name="fainted seadra">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2936" article="a" name="fainted goldeen">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2937" article="a" name="fainted seaking">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2938" article="a" name="fainted staryu">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2939" article="a" name="fainted starmie">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2940" article="a" name="dead goblin">
@@ -4571,18 +4683,21 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2942" article="a" name="fainted jynx">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2943" article="a" name="fainted jynx">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2944" article="a" name="dead spider">
@@ -4595,18 +4710,21 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2946" article="a" name="fainted pinsir">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
-  <item id="2947" article="a" name="fainted taurus">
+  <item id="2947" article="a" name="fainted tauros">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2948" article="a" name="dead elf">
@@ -4626,12 +4744,14 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2951" name="fainted eevee">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2952" article="a" name="split stone golem">
@@ -4674,6 +4794,7 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2959" article="a" name="slain vampire">
@@ -4683,30 +4804,35 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2961" article="a" name="fainted snorlax">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2962" article="a" name="fainted articuno">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2963" article="a" name="fainted articuno">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2964" article="a" name="fainted zapdos">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2965" article="a" name="dead scorpion">
@@ -4719,132 +4845,154 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2967" article="a" name="fainted dragonair">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2968" article="a" name="fainted dragonite">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2969" article="a" name="fainted mewtwo">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2970" article="a" name="fainted mew">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2971" article="a" name="fainted arbok">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2972" article="a" name="fainted pikachu">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2973" article="a" name="fainted oddish">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2974" article="a" name="fainted gloom">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2975" article="a" name="fainted vileplume">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2976" article="a" name="fainted paras">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2977" article="a" name="fainted parasect">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2978" article="a" name="fainted aerodactyl">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2979" article="a" name="fainted magikarp">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2980" article="a" name="fainted flareon">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2981" article="a" name="fainted gyarados">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2982" article="a" name="fainted hitmonlee">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2983" article="a" name="fainted kangaskhan">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2984" article="a" name="fainted weepinbell">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2985" article="a" name="fainted porygon">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2986" article="a" name="fainted kingler">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2987" article="a" name="fainted ninetales">
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2988" article="a" name="dead dwarf">
@@ -4900,6 +5048,7 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="2998" article="a" name="slain banshee">
@@ -15072,6 +15221,7 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="9083" name="mummy disguise">
@@ -19790,6 +19940,7 @@
     <attribute key="containerSize" value="10" />
     <attribute key="decayTo" value="0" />
     <attribute key="duration" value="30" />
+    <attribute key="moveable" value="0" />
     <attribute key="type" value="corpse" />
   </item>
   <item id="12662" name="stone of wisdom">
