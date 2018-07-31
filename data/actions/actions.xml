@@ -34,8 +34,7 @@
 	<action fromid="27727" toid="27730" script="other/decayto.lua" />
 	<action fromid="28695" toid="28698" script="other/decayto.lua" />
 	<action fromid="28764" toid="28767" script="other/decayto.lua" />
-
-	<!-- Food -->
+	<action itemid="7552" script="sea/large_seashell.lua" />
 
 	<!-- Other -->
 	<action itemid="6578" script="other/partyhat.lua" />
