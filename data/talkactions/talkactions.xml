@@ -13,6 +13,11 @@
 	<talkaction words="m10" script="pokemon/m10.lua" />
 	<talkaction words="m11" script="pokemon/m11.lua" />
 	<talkaction words="m12" script="pokemon/m12.lua" />
+	<talkaction words="t1" script="pokemon/turn_pokemon.lua" />
+	<talkaction words="t2" script="pokemon/turn_pokemon.lua" />
+	<talkaction words="t3" script="pokemon/turn_pokemon.lua" />
+	<talkaction words="t4" script="pokemon/turn_pokemon.lua" />
+	<talkaction words="!tp" separator=" " script="pokemon/teleport.lua" />
 	<!-- commands -->
 	<talkaction words="/ban" separator=" " script="ban.lua" />
 	<talkaction words="/ipban" separator=" " script="ipban.lua" />
