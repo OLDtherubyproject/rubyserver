@@ -1027,6 +1027,9 @@ class LuaScriptInterface
 
 		static int luaPokemonLikesFood(lua_State* L);
 
+		static int luaPokemonAddSpecialAbility(lua_State* L);
+		static int luaPokemonHasSpecialAbility(lua_State* L);
+
 		// Npc
 		static int luaNpcCreate(lua_State* L);
 
@@ -1168,9 +1171,6 @@ class LuaScriptInterface
 
 		static int luaItemTypeGetHitChance(lua_State* L);
 		static int luaItemTypeGetShootRange(lua_State* L);
-		static int luaItemTypeGetDefense(lua_State* L);
-		static int luaItemTypeGetExtraDefense(lua_State* L);
-		static int luaItemTypeGetArmor(lua_State* L);
 		static int luaItemTypeGetMaxCount(lua_State* L);
 
 		static int luaItemTypeGetElementType(lua_State* L);

@@ -196,7 +196,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 		case CONST_SLOT_HEAD: slotp = SLOTP_HEAD; break;
 		case CONST_SLOT_NECKLACE: slotp = SLOTP_NECKLACE; break;
 		case CONST_SLOT_BACKPACK: slotp = SLOTP_BACKPACK; break;
-		case CONST_SLOT_ARMOR: slotp = SLOTP_ARMOR; break;
+		case CONST_SLOT_ORDER: slotp = SLOTP_ORDER; break;
 		case CONST_SLOT_RIGHT: slotp = SLOTP_RIGHT; break;
 		case CONST_SLOT_LEFT: slotp = SLOTP_LEFT; break;
 		case CONST_SLOT_PORTRAIT: slotp = SLOTP_PORTRAIT; break;
@@ -464,8 +464,8 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 				slot = SLOTP_NECKLACE;
 			} else if (tmpStr == "backpack") {
 				slot = SLOTP_BACKPACK;
-			} else if (tmpStr == "armor") {
-				slot = SLOTP_ARMOR;
+			} else if (tmpStr == "order") {
+				slot = SLOTP_ORDER;
 			} else if (tmpStr == "right-hand") {
 				slot = SLOTP_RIGHT;
 			} else if (tmpStr == "left-hand") {
@@ -651,13 +651,6 @@ uint32_t EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slo
 		}
 	}
 
-	for (int32_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; ++i) {
-		if (it.abilities->specialSkills[i]) {
-			needUpdateSkills = true;
-			player->setVarSpecialSkill(static_cast<SpecialSkills_t>(i), it.abilities->specialSkills[i]);
-		}
-	}
-
 	if (needUpdateSkills) {
 		player->sendSkills();
 	}
@@ -726,13 +719,6 @@ uint32_t DeEquipItem(MoveEvent*, Player* player, Item* item, slots_t slot, bool)
 		if (it.abilities->skills[i] != 0) {
 			needUpdateSkills = true;
 			player->setVarSkill(static_cast<skills_t>(i), -it.abilities->skills[i]);
-		}
-	}
-
-	for (int32_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; ++i) {
-		if (it.abilities->specialSkills[i] != 0) {
-			needUpdateSkills = true;
-			player->setVarSpecialSkill(static_cast<SpecialSkills_t>(i), -it.abilities->specialSkills[i]);
 		}
 	}
 

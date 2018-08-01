@@ -413,7 +413,7 @@ class Game
 		void playerTryCatchPokemon(Player* player, const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
 		void sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corpse, const PokeballType* pokeballType);
 		void playerSendPokemonEmot(uint32_t playerGUID, uint16_t effect);
-
+		void playerOrderPokemon(Player* player, const Position& toPos, Creature* creature);
 
 		void parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer);
 
@@ -535,7 +535,7 @@ class Game
 		bool isNight();
 		bool isSunrise();
 		
-		void evolvePokemon(Player* player, Item* item, Creature* creature);
+		void playerEvolvePokemon(Player* player, Item* item, Creature* creature);
 
 		Groups groups;
 		Map map;

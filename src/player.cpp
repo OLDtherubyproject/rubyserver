@@ -1115,6 +1115,12 @@ void Player::onCreatureMove(Creature* creature, const Tile* newTile, const Posit
 		setListeningMusic(newTile->getMusic());
 	}
 
+	if (getHisPokemon()) {
+		if (!getHisPokemon()->holdingPosition()) {
+			getHisPokemon()->setFollowCreature(this);
+		}
+	}
+
 	if (tradeState != TRADE_TRANSFER) {
 		//check if we should close trade
 		if (tradeItem && !Position::areInRange<1, 1, 0>(tradeItem->getPosition(), getPosition())) {
@@ -1970,7 +1976,7 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 
 	const int32_t& slotPosition = item->getSlotPosition();
 	if ((slotPosition & SLOTP_HEAD) || (slotPosition & SLOTP_NECKLACE) ||
-	        (slotPosition & SLOTP_BACKPACK) || (slotPosition & SLOTP_ARMOR) ||
+	        (slotPosition & SLOTP_BACKPACK) || (slotPosition & SLOTP_ORDER) ||
 	        (slotPosition & SLOTP_PORTRAIT) || (slotPosition & SLOTP_POKEBALL) ||
 	        (slotPosition & SLOTP_RING) || ((slotPosition & SLOTP_SUPPORT) || (slotPosition & SLOTP_POKEBALL))) {
 		ret = RETURNVALUE_CANNOTBEDRESSED;
@@ -2000,8 +2006,8 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 			break;
 		}
 
-		case CONST_SLOT_ARMOR: {
-			if (slotPosition & SLOTP_ARMOR) {
+		case CONST_SLOT_ORDER: {
+			if (slotPosition & SLOTP_ORDER) {
 				ret = RETURNVALUE_NOERROR;
 			}
 			break;

@@ -591,7 +591,8 @@ bool Game::removeCreature(Creature* creature, bool isLogout/* = true*/)
 
 	creature->removeList();
 	creature->setRemoved();
-	ReleaseCreature(creature);
+	if (!creature->getPlayer())
+		ReleaseCreature(creature);
 
 	removeCreatureCheck(creature);
 
@@ -1797,8 +1798,8 @@ slots_t getSlotType(const ItemType& it)
 		slot = CONST_SLOT_HEAD;
 	} else if (slotPosition & SLOTP_NECKLACE) {
 		slot = CONST_SLOT_NECKLACE;
-	} else if (slotPosition & SLOTP_ARMOR) {
-		slot = CONST_SLOT_ARMOR;
+	} else if (slotPosition & SLOTP_ORDER) {
+		slot = CONST_SLOT_ORDER;
 	} else if (slotPosition & SLOTP_PORTRAIT) {
 		slot = CONST_SLOT_PORTRAIT;
 	} else if (slotPosition & SLOTP_POKEBALL) {
@@ -2134,16 +2135,32 @@ void Game::playerUseItemEx(uint32_t playerId, const Position& fromPos, uint8_t f
 		return;
 	}
 
-	if (item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
-		return;
-	}
-
-	if (item->isFood() && g_foods->useFood(player, fromPos, toPos, item, isHotkey, nullptr)) {
-		return;
-	}
-
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
+
+	// Order
+	if ((item->getSlotPosition() & SLOTP_ORDER)) {
+		g_game.playerOrderPokemon(player, toPos, nullptr);
+		return;
+	}
+
+	// Catch
+	if (item->isUnusedPokeball()) {
+		g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey);
+		return;
+	}
+
+	// Food
+	if (item->isFood()) {
+		g_foods->useFood(player, fromPos, toPos, item, isHotkey, nullptr);
+		return;
+	}
+
+	// Evolution
+	if (item->isEvolutionStone()) {
+		g_game.playerEvolvePokemon(player, item, nullptr);
+		return;
+	}
 
 	g_actions->useItemEx(player, fromPos, toPos, toStackPos, item, isHotkey);
 }
@@ -2302,16 +2319,27 @@ void Game::playerUseWithCreature(uint32_t playerId, const Position& fromPos, uin
 	player->resetIdleTime();
 	player->setNextActionTask(nullptr);
 
-	if (item->isUnusedPokeball() && g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey)) {
+	// Order
+	if ((item->getSlotPosition() & SLOTP_ORDER)) {
+		g_game.playerOrderPokemon(player, toPos, creature);
 		return;
 	}
 
-	if (item->isFood() && g_foods->useFood(player, fromPos, toPos, item, isHotkey, creature)) {
+	// Catch
+	if (item->isUnusedPokeball()) {
+		g_pokeballs->usePokeball(player, item, fromPos, toPos, isHotkey);
 		return;
 	}
 
+	// Food
+	if (item->isFood()) {
+		g_foods->useFood(player, fromPos, toPos, item, isHotkey, creature);
+		return;
+	}
+
+	// Evolution
 	if (item->isEvolutionStone()) {
-		g_game.evolvePokemon(player, item, creature);
+		g_game.playerEvolvePokemon(player, item, creature);
 		return;
 	}
 
@@ -3700,7 +3728,8 @@ void Game::checkCreatures(size_t index)
 		} else {
 			creature->inCheckCreaturesVector = false;
 			it = checkCreatureList.erase(it);
-			ReleaseCreature(creature);
+			if (!creature->getPlayer())
+				ReleaseCreature(creature);
 		}
 	}
 
@@ -4064,22 +4093,6 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		if (healthChange == 0) {
 			return true;
 		}
-
-        /* soon for helds
-		if (attackerPokemon) {
-			uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHCHANCE);
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				CombatDamage lifeLeech;
-				lifeLeech.value = std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT) / 100.));
-				g_game.combatChangeHealth(nullptr, attackerPlayer, lifeLeech);
-			}
-
-			chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				healthChange += std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT) / 100.));
-				g_game.addEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
-		}*/
 
 		TextMessage message;
 		message.position = targetPos;
@@ -4485,7 +4498,8 @@ void Game::cleanup()
 
 void Game::ReleaseCreature(Creature* creature)
 {
-	ToReleaseCreatures.push_back(creature);
+	if (!creature->getPlayer())
+		ToReleaseCreatures.push_back(creature);
 }
 
 void Game::ReleaseItem(Item* item)
@@ -5363,6 +5377,53 @@ void Game::playerSendPokemonEmot(uint32_t playerGUID, uint16_t pokemonEmot) {
 	}
 }
 
+void Game::playerOrderPokemon(Player* player, const Position& toPos, Creature* creature) {
+	if (!player) {
+		return;
+	}
+
+	Pokemon* pokemon = player->getHisPokemon();
+	if (pokemon) {
+		if (pokemon == creature) {
+			if (!pokemon->hasSpecialAbility(SPECIALABILITY_FLASH)) {
+				return;
+			}
+
+			Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_LIGHT, (11 * 60 + 35) * 1000, 8 | (215 << 8));
+			pokemon->addCondition(condition);
+			internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemon->getName() + ", flash!", false);
+			return;
+		} else {
+			Item* item = g_game.map.getTile(toPos)->getTopTopItem();
+			if ((item && item->isCuttable() && pokemon->hasSpecialAbility(SPECIALABILITY_CUT)) ||
+				(item && item->isSmashable() && pokemon->hasSpecialAbility(SPECIALABILITY_ROCKSMASH))) {
+				if (!pokemon->moveTo(toPos, 0, 1)) {
+					return;
+				}
+
+				if (item && item->isCuttable()) {
+					g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemon->getName() + ", cut!", false);
+				} else {
+					g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemon->getName() + ", break it!", false);
+				}
+
+				pokemon->checkOrder = std::bind(&Pokemon::checkCutOrRockSmash, pokemon, item);
+			} else {
+				if (!pokemon->moveTo(toPos, 0, 0)) {
+					return;
+				}
+
+				g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, pokemon->getName() + ", move!", false);
+			}
+		}
+	} else {
+		if (player == creature) {
+			// get out of fly or ride...
+			return;
+		}
+	}
+}
+
 void Game::sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corpse, const PokeballType* pokeballType) {
 	if (!pokemon || !corpse || !pokeballType) {
 		return;
@@ -5590,7 +5651,7 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 	}
 
 	if (!result) {
-		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`) VALUES ");		
+		DBInsert pokemonQuery("INSERT INTO `pokemon` (`pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`, `abilities`) VALUES ");		
 		query << "'" << pbServerID << "', ";
 		query << "'" << pokemon->mType->typeName << "', ";
 		query << "'" << pokemon->getShinyStatus() << "', ";
@@ -5605,7 +5666,10 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "'" << pokemon->ivs.special_attack << "', ";
 		query << "'" << pokemon->ivs.special_defense << "', ";
 		query << db.escapeBlob(conditions, conditionsSize) << ", ";
-		query << db.escapeBlob(moves, movesSize);
+		query << db.escapeBlob(moves, movesSize) << ", ";
+		query << "'" << pokemon->abilities << "'";
+
+		std::cout << pokemon->abilities << std::endl;
 
 		if (!pokemonQuery.addRow(query)) {
 			return 0;
@@ -5633,7 +5697,8 @@ uint32_t Game::savePokemon(Pokemon* pokemon)
 		query << "`spatk` = " << pokemon->ivs.special_attack << ", ";
 		query << "`spdef` = " << pokemon->ivs.special_defense << ", ";
 		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize) << ", ";
-		query << "`moves` = " << db.escapeBlob(moves, movesSize);
+		query << "`moves` = " << db.escapeBlob(moves, movesSize) << ", ";
+		query << "`abilities` = " << pokemon->abilities;
 		query << " WHERE `id` = " << pokemon->getGUID();
 
 		if (db.executeQuery(query.str())) {
@@ -5684,7 +5749,7 @@ Pokemon* Game::loadPokemon(uint32_t id, Player* player /* = nullptr */)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves` FROM `pokemon` WHERE `id` = " << id;
+	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`, `abilities` FROM `pokemon` WHERE `id` = " << id;
 	DBResult_ptr result = db.storeQuery(query.str());
 
 	if (!result) {
@@ -5716,7 +5781,7 @@ Pokemon* Game::loadPokemon(uint32_t id, Player* player /* = nullptr */)
 	pokemon->ivs.special_defense = result->getNumber<uint16_t>("spdef");
 	pokemon->setShinyStatus(result->getNumber<uint16_t>("shiny"));
 	pokemon->setLevel((player) ? player->getLevel() : 1);
-
+	pokemon->abilities = result->getNumber<uint32_t>("abilities");
 	//load hp
 	pokemon->setHealth(result->getNumber<int32_t>("hpnow"));
 
@@ -6072,7 +6137,7 @@ bool Game::isSunrise()
 	return lightState == LIGHT_STATE_SUNRISE;
 }
 
-void Game::evolvePokemon(Player* player, Item* item, Creature* creature)
+void Game::playerEvolvePokemon(Player* player, Item* item, Creature* creature)
 {
 	if (!player || !item) {
 		return;

@@ -343,7 +343,7 @@ void Items::buildInventoryList()
 			type.slotPosition & SLOTP_SUPPORT ||
 			type.slotPosition & SLOTP_POKEBALL ||
 			type.slotPosition & SLOTP_HEAD ||
-			type.slotPosition & SLOTP_ARMOR ||
+			type.slotPosition & SLOTP_ORDER ||
 			type.slotPosition & SLOTP_PORTRAIT)
 		{
 			inventory.push_back(type.clientId);
@@ -436,12 +436,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.weight = pugi::cast<uint32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "showcount") {
 			it.showCount = valueAttribute.as_bool();
-		} else if (tmpStrValue == "armor") {
-			it.armor = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "defense") {
-			it.defense = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "extradef") {
-			it.extraDefense = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "rotateto") {
 			it.rotateTo = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "moveable" || tmpStrValue == "movable") {
@@ -531,8 +525,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			tmpStrValue = asLowerCaseString(valueAttribute.as_string());
 			if (tmpStrValue == "head") {
 				it.slotPosition |= SLOTP_HEAD;
-			} else if (tmpStrValue == "body") {
-				it.slotPosition |= SLOTP_ARMOR;
+			} else if (tmpStrValue == "order") {
+				it.slotPosition |= SLOTP_ORDER;
 			} else if (tmpStrValue == "portrait") {
 				it.slotPosition |= SLOTP_PORTRAIT;
 			} else if (tmpStrValue == "pokeball") {
@@ -614,6 +608,10 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.stopTime = valueAttribute.as_bool();
 		} else if (tmpStrValue == "decayto") {
 			it.decayTo = pugi::cast<int32_t>(valueAttribute.value());
+		} else if (tmpStrValue == "cuttable") {
+			it.allowCuttable = valueAttribute.as_bool();
+		} else if (tmpStrValue == "smashable") {
+			it.allowSmashable = valueAttribute.as_bool();
 		} else if (tmpStrValue == "transformequipto") {
 			it.transformEquipTo = pugi::cast<uint16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "transformdeequipto") {
@@ -664,14 +662,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.getAbilities().stats[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "maxhitpointspercent") {
 			it.getAbilities().statsPercent[STAT_MAXHITPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "criticalhitchance") {
-			it.getAbilities().specialSkills[SPECIALSKILL_CRITICALHITCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "criticalhitamount") {
-			it.getAbilities().specialSkills[SPECIALSKILL_CRITICALHITAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "hitpointsleechchance") {
-			it.getAbilities().specialSkills[SPECIALSKILL_HITPOINTSLEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-		} else if (tmpStrValue == "hitpointsleechamount") {
-			it.getAbilities().specialSkills[SPECIALSKILL_HITPOINTSLEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "fieldabsorbpercentenergy") {
 			it.getAbilities().fieldAbsorbPercent[combatTypeToIndex(COMBAT_ELECTRICDAMAGE)] += pugi::cast<int16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "fieldabsorbpercentfire") {

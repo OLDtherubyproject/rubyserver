@@ -1196,10 +1196,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_SUBID)
 	registerEnum(CONDITION_PARAM_FIELD)
 	registerEnum(CONDITION_PARAM_DISABLE_DEFENSE)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_CRITICALHITCHANCE)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_CRITICALHITAMOUNT)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHCHANCE)
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHAMOUNT)
 	registerEnum(CONDITION_PARAM_COMBATTYPE)
 
 	registerEnum(CONST_ME_NONE)
@@ -1376,7 +1372,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONST_SLOT_HEAD)
 	registerEnum(CONST_SLOT_NECKLACE)
 	registerEnum(CONST_SLOT_BACKPACK)
-	registerEnum(CONST_SLOT_ARMOR)
+	registerEnum(CONST_SLOT_ORDER)
 	registerEnum(CONST_SLOT_RIGHT)
 	registerEnum(CONST_SLOT_LEFT)
 	registerEnum(CONST_SLOT_PORTRAIT)
@@ -1589,6 +1585,14 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKILL_FISHING)
 	registerEnum(SKILL_LEVEL)
 
+	registerEnum(SPECIALABILITY_TELEPORT)
+	registerEnum(SPECIALABILITY_FLY)
+	registerEnum(SPECIALABILITY_CUT)
+	registerEnum(SPECIALABILITY_ROCKSMASH)
+	registerEnum(SPECIALABILITY_SURF)
+	registerEnum(SPECIALABILITY_HEADBUTT)
+	registerEnum(SPECIALABILITY_FLASH)
+
 	registerEnum(GENDER_NONE)
 	registerEnum(GENDER_UNDEFINED)
 	registerEnum(GENDER_MALE)
@@ -1713,7 +1717,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SLOTP_HEAD)
 	registerEnum(SLOTP_NECKLACE)
 	registerEnum(SLOTP_BACKPACK)
-	registerEnum(SLOTP_ARMOR)
+	registerEnum(SLOTP_ORDER)
 	registerEnum(SLOTP_RIGHT)
 	registerEnum(SLOTP_LEFT)
 	registerEnum(SLOTP_PORTRAIT)
@@ -2508,6 +2512,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "setLevel", LuaScriptInterface::luaPokemonSetLevel);
 
 	registerMethod("Pokemon", "likesFood", LuaScriptInterface::luaPokemonLikesFood);
+	registerMethod("Pokemon", "addSpecialAbility", LuaScriptInterface::luaPokemonAddSpecialAbility);
+	registerMethod("Pokemon", "hasSpecialAbility", LuaScriptInterface::luaPokemonHasSpecialAbility);
 
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
@@ -2658,9 +2664,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getHitChance", LuaScriptInterface::luaItemTypeGetHitChance);
 	registerMethod("ItemType", "getShootRange", LuaScriptInterface::luaItemTypeGetShootRange);
 
-	registerMethod("ItemType", "getDefense", LuaScriptInterface::luaItemTypeGetDefense);
-	registerMethod("ItemType", "getExtraDefense", LuaScriptInterface::luaItemTypeGetExtraDefense);
-	registerMethod("ItemType", "getArmor", LuaScriptInterface::luaItemTypeGetArmor);
 	registerMethod("ItemType", "getMaxCount", LuaScriptInterface::luaItemTypeGetMaxCount);
 
 	registerMethod("ItemType", "getElementType", LuaScriptInterface::luaItemTypeGetElementType);
@@ -10144,6 +10147,45 @@ int LuaScriptInterface::luaPokemonLikesFood(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPokemonAddSpecialAbility(lua_State* L)
+{
+	// pokemon:addSpecialAbility()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	SpecialAbilities_t specialAbility = getNumber<SpecialAbilities_t>(L, 2);
+	if (!specialAbility) {
+		lua_pushnil(L);
+	}
+	
+	pokemon->addSpecialAbility(specialAbility);
+	lua_pushboolean(L, true);
+	
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonHasSpecialAbility(lua_State* L)
+{
+	// pokemon:hasSpecialAbility(ability)
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	SpecialAbilities_t specialAbility = getNumber<SpecialAbilities_t>(L, 2);
+	if (!specialAbility) {
+		lua_pushnil(L);
+	}
+	
+	lua_pushboolean(L, pokemon->hasSpecialAbility(specialAbility));
+	
+	return 1;
+}
+
 // Npc
 int LuaScriptInterface::luaNpcCreate(lua_State* L)
 {
@@ -11574,42 +11616,6 @@ int LuaScriptInterface::luaItemTypeGetShootRange(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		lua_pushnumber(L, itemType->shootRange);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetDefense(lua_State* L)
-{
-	// itemType:getDefense()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		lua_pushnumber(L, itemType->defense);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetExtraDefense(lua_State* L)
-{
-	// itemType:getExtraDefense()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		lua_pushnumber(L, itemType->extraDefense);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetArmor(lua_State* L)
-{
-	// itemType:getArmor()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		lua_pushnumber(L, itemType->armor);
 	} else {
 		lua_pushnil(L);
 	}

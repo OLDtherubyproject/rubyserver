@@ -936,6 +936,12 @@ class Item : virtual public Thing
 		bool isPickupable() const {
 			return items[id].pickupable;
 		}
+		bool isCuttable() const {
+			return items[id].allowCuttable;
+		}
+		bool isSmashable() const {
+			return items[id].allowSmashable;
+		}
 		bool isUseable() const {
 			return items[id].useable;
 		}

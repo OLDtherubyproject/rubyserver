@@ -228,6 +228,7 @@ class Pokemon final : public Creature
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) override;
 		void onWalk() override;
+		void onWalkComplete() override;
 		bool getNextStep(Direction& direction, uint32_t& flags) override;
 		void onFollowCreatureComplete(const Creature* creature) override;
 
@@ -327,6 +328,19 @@ class Pokemon final : public Creature
 
 		bool castMove(uint16_t moveId, bool ignoreMessages = false);
 		bool feed(const FoodType* foodType) override;
+		bool holdingPosition() const {
+			return holdPosition;
+		}
+
+		void setHoldPosition(bool hold) {
+			holdPosition = hold;
+		}
+		void addSpecialAbility(SpecialAbilities_t specialAbility) {
+			abilities |= specialAbility;
+		}
+		void turnToThing(Thing* thing);
+
+		std::function<void(void)> checkOrder = nullptr;
 
 	private:
 		CreatureHashSet friendList;
@@ -358,6 +372,7 @@ class Pokemon final : public Creature
 		uint32_t defenseTicks = 0;
 		uint32_t yellTicks = 0;
 		uint32_t level = 1;
+		uint32_t abilities = 0;
 		int32_t minCombatValue = 0;
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
@@ -373,6 +388,8 @@ class Pokemon final : public Creature
 		bool isMasterInRange = false;
 		bool randomStepping = false;
 		bool ignoreFieldDamage = false;
+		bool followMaster = true;
+		bool holdPosition = false;
 
 		void onCreatureEnter(Creature* creature);
 		void onCreatureLeave(Creature* creature);
@@ -471,6 +488,12 @@ class Pokemon final : public Creature
 		bool isNotVeryEffective(CombatType_t type) const {
 			return hasBitSet(static_cast<uint32_t>(type), getDamageNotVeryEffective());
 		}
+		bool hasSpecialAbility(SpecialAbilities_t specialAbility) const {
+			return hasBitSet(specialAbility, abilities);
+		}
+		bool moveTo(const Position& pos, int32_t minTargetDist = 0, int32_t maxTargetDist = 0);
+
+		void checkCutOrRockSmash(Item* item);
 
 		friend class LuaScriptInterface;
 		friend class Game;

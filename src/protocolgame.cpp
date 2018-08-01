@@ -1820,11 +1820,8 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 	msg.addItemId(itemId);
 
 	const ItemType& it = Item::items[itemId];
-	if (it.armor != 0) {
-		msg.addString(std::to_string(it.armor));
-	} else {
-		msg.add<uint16_t>(0x00);
-	}
+	// Removed armor attribute
+	msg.add<uint16_t>(0x00);
 
 	// Removed attack attribute
 	msg.add<uint16_t>(0x00);
@@ -1835,17 +1832,8 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 		msg.add<uint16_t>(0x00);
 	}
 
-	if (it.defense != 0) {
-		if (it.extraDefense != 0) {
-			std::ostringstream ss;
-			ss << it.defense << ' ' << std::showpos << it.extraDefense << std::noshowpos;
-			msg.addString(ss.str());
-		} else {
-			msg.addString(std::to_string(it.defense));
-		}
-	} else {
-		msg.add<uint16_t>(0x00);
-	}
+	// Remove extraDefense and defense attribute
+	msg.add<uint16_t>(0x00);
 
 	if (!it.description.empty()) {
 		const std::string& descr = it.description;
@@ -2455,7 +2443,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	sendInventoryItem(CONST_SLOT_HEAD, player->getInventoryItem(CONST_SLOT_HEAD));
 	sendInventoryItem(CONST_SLOT_NECKLACE, player->getInventoryItem(CONST_SLOT_NECKLACE));
 	sendInventoryItem(CONST_SLOT_BACKPACK, player->getInventoryItem(CONST_SLOT_BACKPACK));
-	sendInventoryItem(CONST_SLOT_ARMOR, player->getInventoryItem(CONST_SLOT_ARMOR));
+	sendInventoryItem(CONST_SLOT_ORDER, player->getInventoryItem(CONST_SLOT_ORDER));
 	sendInventoryItem(CONST_SLOT_RIGHT, player->getInventoryItem(CONST_SLOT_RIGHT));
 	sendInventoryItem(CONST_SLOT_LEFT, player->getInventoryItem(CONST_SLOT_LEFT));
 	sendInventoryItem(CONST_SLOT_PORTRAIT, player->getInventoryItem(CONST_SLOT_PORTRAIT));

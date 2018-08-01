@@ -73,18 +73,18 @@ FoodType* Foods::getFoodTypeByName(const std::string& name) const
 	return nullptr;
 }
 
-bool Foods::useFood(Player* player, const Position& fromPos, const Position& toPos, Item* item, bool isHotkey, Creature* creature /*=nullptr*/) const
+void Foods::useFood(Player* player, const Position& fromPos, const Position& toPos, Item* item, bool isHotkey, Creature* creature /*=nullptr*/) const
 {
 	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::FOODS_DELAY_INTERVAL));
 	player->stopWalk();
 
 	const FoodType* foodType = getFoodTypeByItemID(item->getID());
 	if (!foodType) {
-		return false;
+		return;
 	}
 
 	foodType->useFood(player, fromPos, toPos, item, isHotkey, creature);
-	return true;
+	return;
 }
 
 void Foods::clear()

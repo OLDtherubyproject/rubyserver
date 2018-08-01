@@ -42,7 +42,7 @@ class Foods final : public BaseEvents
 		FoodType* getFoodTypeByItemID(const uint16_t id) const;
 		FoodType* getFoodTypeByName(const std::string& name) const;
 
-		bool useFood(Player* player, const Position& fromPos, const Position& toPos, Item* item, bool isHotkey, Creature* creature = nullptr) const;
+		void useFood(Player* player, const Position& fromPos, const Position& toPos, Item* item, bool isHotkey, Creature* creature = nullptr) const;
 	private:
 		void clear() final;
 		LuaScriptInterface& getScriptInterface() override;

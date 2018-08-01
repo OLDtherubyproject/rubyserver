@@ -43,7 +43,7 @@ class Pokeballs final : public BaseEvents
 		PokeballType* getPokeballTypeByServerID(const uint16_t id) const;
 		PokeballType* getPokeballTypeByName(const std::string& name) const;
 
-		bool usePokeball(Player* player, Item* pokeball, const Position& fromPos, const Position& toPos, bool isHotkey) const;
+		void usePokeball(Player* player, Item* pokeball, const Position& fromPos, const Position& toPos, bool isHotkey) const;
 	private:
 		void clear() final;
 		LuaScriptInterface& getScriptInterface() override;

@@ -73,7 +73,6 @@ std::string getCombatName(CombatType_t combatType);
 
 PokemonType_t getPokemonElementType(const std::string& strValue);
 
-std::string getSpecialSkillName(uint8_t skillid);
 std::string getSkillName(uint8_t skillid);
 
 uint32_t adlerChecksum(const uint8_t* data, size_t length);

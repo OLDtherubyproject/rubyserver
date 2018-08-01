@@ -799,26 +799,6 @@ PokemonType_t getPokemonElementType(const std::string& strValue)
 	return TYPE_NONE;
 }
 
-std::string getSpecialSkillName(uint8_t skillid)
-{
-	switch (skillid) {
-		case SPECIALSKILL_CRITICALHITCHANCE:
-			return "critical hit chance";
-
-		case SPECIALSKILL_CRITICALHITAMOUNT:
-			return "critical extra damage";
-
-		case SPECIALSKILL_HITPOINTSLEECHCHANCE:
-			return "hitpoints leech chance";
-
-		case SPECIALSKILL_HITPOINTSLEECHAMOUNT:
-			return "hitpoints leech amount";
-
-		default:
-			return "unknown";
-	}
-}
-
 std::string getSkillName(uint8_t skillid)
 {
 	switch (skillid) {

@@ -749,7 +749,7 @@ bool Pokemon::castMove(uint16_t moveId, bool ignoreMessages /* = false */)
 	if (!ignoreMessages) {
 		g_game.internalCreatureSay(this, TALKTYPE_POKEMON_SAY, move->getName(), false);
 		if (player) {
-			g_game.internalCreatureSay(player, TALKTYPE_SAY, getName() + ", use " + move->getName() + "!", false);
+			g_game.internalCreatureSay(player, TALKTYPE_POKEMON_SAY, getName() + ", " + move->getName() + "!", false);
 		}
 	}
 
@@ -975,7 +975,8 @@ void Pokemon::onThink(uint32_t interval)
 						selectTarget(getMaster()->getAttackedCreature());
 					} else if (getMaster() != followCreature) {
 						//Our master has not ordered us to attack anything, lets follow him around instead.
-						setFollowCreature(getMaster());
+						if (followMaster)
+							setFollowCreature(getMaster());
 					}
 				} else if (attackedCreature == this) {
 					setFollowCreature(nullptr);
@@ -1163,6 +1164,16 @@ void Pokemon::onThinkEmoticon(uint32_t interval)
 void Pokemon::onWalk()
 {
 	Creature::onWalk();
+}
+
+void Pokemon::onWalkComplete()
+{
+	Creature::onWalkComplete();
+
+	if (checkOrder != nullptr) {
+		checkOrder();
+		checkOrder = nullptr;
+	}
 }
 
 bool Pokemon::pushItem(Item* item)
@@ -2260,4 +2271,77 @@ float Pokemon::getSpeedMultiplier() const
 	} else {
 		return 1;
 	}
+}
+
+bool Pokemon::moveTo(const Position& pos, int32_t minTargetDist /* = 0 */, int32_t maxTargetDist /* = 0 */)
+{
+	FindPathParams fpp;
+	fpp.fullPathSearch = true;
+	fpp.clearSight = true;
+	fpp.maxSearchDist = 30;
+	fpp.minTargetDist = minTargetDist;
+	fpp.maxTargetDist = maxTargetDist;
+
+	std::forward_list<Direction> listDir;
+	if (getPathTo(pos, listDir, fpp)) {
+		hasFollowPath = true;
+		followMaster = false;
+		setFollowCreature(nullptr);
+		startAutoWalk(listDir);
+		return true;
+	}
+
+	return false;
+}
+
+void Pokemon::checkCutOrRockSmash(Item* item) {
+	if (!item && !item->isCuttable() && !item->isSmashable()) {
+		return;
+	}
+
+	const Position& pokemonPos = getPosition();
+	const Position& itemPos = item->getPosition();
+
+	if ((sqrt(pow((pokemonPos.x - itemPos.x), 2) + pow((pokemonPos.y - itemPos.y), 2))) < 1.5f) {
+		if (item->isCuttable()) {
+			g_game.addEffect(item->getPosition(), 292);
+		} else {
+			g_game.addEffect(item->getPosition(), 292);
+		}
+
+		turnToThing(item);
+		g_game.transformItem(item, Item::items[item->getID()].destroyTo);
+		item->startDecaying();
+	}
+}
+
+void Pokemon::turnToThing(Thing* thing)
+{
+	const Position& thingPos = thing->getPosition();
+	const Position& myPos = getPosition();
+	const auto dx = Position::getOffsetX(myPos, thingPos);
+	const auto dy = Position::getOffsetY(myPos, thingPos);
+
+	float tan;
+	if (dx != 0) {
+		tan = static_cast<float>(dy) / dx;
+	} else {
+		tan = 10;
+	}
+
+	Direction dir;
+	if (std::abs(tan) < 1) {
+		if (dx > 0) {
+			dir = DIRECTION_WEST;
+		} else {
+			dir = DIRECTION_EAST;
+		}
+	} else {
+		if (dy > 0) {
+			dir = DIRECTION_NORTH;
+		} else {
+			dir = DIRECTION_SOUTH;
+		}
+	}
+	g_game.internalCreatureTurn(this, dir);
 }

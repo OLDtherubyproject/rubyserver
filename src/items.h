@@ -31,7 +31,7 @@ enum SlotPositionBits : uint32_t {
 	SLOTP_HEAD = 1 << 0,
 	SLOTP_NECKLACE = 1 << 1,
 	SLOTP_BACKPACK = 1 << 2,
-	SLOTP_ARMOR = 1 << 3,
+	SLOTP_ORDER = 1 << 3,
 	SLOTP_RIGHT = 1 << 4,
 	SLOTP_LEFT = 1 << 5,
 	SLOTP_PORTRAIT = 1 << 6,
@@ -75,7 +75,6 @@ struct Abilities {
 
 	//extra skill modifiers
 	int32_t skills[SKILL_LAST + 1] = { 0 };
-	int32_t specialSkills[SPECIALSKILL_LAST + 1] = { 0 };
 
 	int32_t speed = 0;
 
@@ -146,6 +145,12 @@ class ItemType
 		}
 		bool isPickupable() const {
 			return (allowPickupable || pickupable);
+		}
+		bool isCuttable() const {
+			return (allowCuttable);
+		}
+		bool isSmashable() const {
+			return (allowSmashable);
 		}
 		bool isUseable() const {
 			return (useable);
@@ -219,9 +224,6 @@ class ItemType
 		int32_t price = -1;
 		int32_t maxHitChance = -1;
 		int32_t decayTo = -1;
-		int32_t defense = 0;
-		int32_t extraDefense = 0;
-		int32_t armor = 0;
 		uint16_t rotateTo = 0;
 		uint16_t maxCount = 0;
 
@@ -281,6 +283,8 @@ class ItemType
 		bool stopTime = false;
 		bool showCount = true;
 		bool showPrice = true;
+		bool allowCuttable = false;
+		bool allowSmashable = false;
 };
 
 class Items
