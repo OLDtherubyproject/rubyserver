@@ -4,7 +4,7 @@
 	<type first="fire" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2379" />
-	<icon charged="26412" discharged="26630" />
+	<icon charged="26412" discharged="26631" />
 	<genders>
 		<gender name="male" percentage="87.5" />
 		<gender name="female" percentage="12.5" />

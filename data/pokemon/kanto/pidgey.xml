@@ -4,7 +4,7 @@
 	<type first="normal" second="flying" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2391" />	
-	<icon charged="26520" discharged="26750" />
+	<icon charged="26529" discharged="26750" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />

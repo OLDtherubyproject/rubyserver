@@ -70,7 +70,7 @@
 	<pokemon name="Machoke" region="kanto" file="machoke.xml" />
 	<pokemon name="Machamp" region="kanto" file="machamp.xml" />
 	<pokemon name="Bellsprout" region="kanto" file="bellsprout.xml" />
-	<pokemon name="Weepinbell" region="kanto" file="wepinbell.xml" />
+	<pokemon name="Weepinbell" region="kanto" file="weepinbell.xml" />
 	<pokemon name="Victreebel" region="kanto" file="victreebel.xml" />
 	<pokemon name="Tentacool" region="kanto" file="tentacool.xml" />
 	<pokemon name="Tentacruel" region="kanto" file="tentacruel.xml" />

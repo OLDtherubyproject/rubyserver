@@ -4,7 +4,7 @@
 	<type first="bug" second="poison" />
 	<targetchange interval="4000" chance="0" />
 	<portrait id="2389" />
-	<icon charged="26467" discharged="26687" />
+	<icon charged="26494" discharged="26714" />
 	<genders>
 		<gender name="male" percentage="50" />
 		<gender name="female" percentage="50" />
