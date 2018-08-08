@@ -482,15 +482,6 @@ void Tile::onUpdateTile(const SpectatorHashSet& spectators)
 ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags, Creature*) const
 {
 	if (const Creature* creature = thing.getCreature()) {
-		if (const Pokemon* pokemon = creature->getPokemon()) {
-			if (pokemon->isGhost()){
-				if ((!pokemon->isSummon() && !hasFlag(TILESTATE_PROTECTIONZONE)) || 
-				    (pokemon->isSummon() && pokemon->getMaster()->getPlayer())) {
-					return RETURNVALUE_NOERROR;
-				}
-			}
-		}
-
 		if (hasBitSet(FLAG_NOLIMIT, flags)) {
 			return RETURNVALUE_NOERROR;
 		}
@@ -505,7 +496,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 
 		if (const Pokemon* pokemon = creature->getPokemon()) {
 			if (hasFlag(TILESTATE_PROTECTIONZONE)) {
-				if (!(pokemon->isSummon() && pokemon->getMaster()->getPlayer())) {
+				if (!pokemon->belongsToPlayer()) {
 					return RETURNVALUE_NOTPOSSIBLE;
 				}
 			}
@@ -538,15 +529,19 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			}
 
 			if (hasFlag(TILESTATE_IMMOVABLEBLOCKSOLID)) {
-				return RETURNVALUE_NOTPOSSIBLE;
+				if (!pokemon->isGhost()) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
 			}
 
 			if (hasBitSet(FLAG_PATHFINDING, flags) && hasFlag(TILESTATE_IMMOVABLENOFIELDBLOCKPATH)) {
-				return RETURNVALUE_NOTPOSSIBLE;
+				if (!pokemon->isGhost()) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
 			}
 
 			if (hasFlag(TILESTATE_BLOCKSOLID) || (hasBitSet(FLAG_PATHFINDING, flags) && hasFlag(TILESTATE_NOFIELDBLOCKPATH))) {
-				if (!(pokemon->canPushItems() || hasBitSet(FLAG_IGNOREBLOCKITEM, flags))) {
+				if (!pokemon->isGhost() && !(pokemon->canPushItems() || hasBitSet(FLAG_IGNOREBLOCKITEM, flags))) {
 					return RETURNVALUE_NOTPOSSIBLE;
 				}
 			}
