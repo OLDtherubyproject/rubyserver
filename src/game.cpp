@@ -2933,7 +2933,7 @@ std::string Game::getTradeErrorDescription(ReturnValue ret, Item* item)
 			}
 
 			return ss.str();
-		} else if (ret == RETURNVALUE_NOTENOUGHCAPACITY) {
+		} else if (ret == RETURNVALUE_MAXPOKEMONINBAG) {
 			std::ostringstream ss;
 			ss << "You can only have 6 Pokemon.";
 			return ss.str();
