@@ -2566,7 +2566,6 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 	bool requireListUpdate = true;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
-		bool updatedStatus = false;
 		const Item* i = (oldParent ? oldParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
