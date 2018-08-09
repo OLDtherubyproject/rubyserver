@@ -2621,7 +2621,6 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 	bool requireListUpdate = true;
 
 	if (link == LINK_OWNER || link == LINK_TOPPARENT) {
-		bool updatedStatus = false;
 		const Item* i = (newParent ? newParent->getItem() : nullptr);
 
 		// Check if we owned the old container too, so we don't need to do anything,
@@ -2637,21 +2636,7 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 		updateInventoryWeight();
 		updateInventoryPokemonCount();
 		updateItemsLight();
-
-		/*if (const Item* item = thing->getItem()) {
-			if (item->getPokemonId()) {
-				changePokemonCapacity(-1);
-				updatedStatus = true;
-			} else if (const Container* container = item->getContainer()) {
-				uint16_t count = g_game.findQuantityOfPokeballs(container);
-				changePokemonCapacity(count * -1);
-				updatedStatus = true;
-			}
-		}*/
-
-		if (!updatedStatus) {
-			sendStats();
-		}
+		sendStats();
 	}
 
 	if (const Item* item = thing->getItem()) {
