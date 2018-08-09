@@ -138,9 +138,6 @@ class Npc final : public Creature
 		bool load();
 		void reload();
 
-		const std::string& getName() const override {
-			return name;
-		}
 		const std::string& getNameDescription() const override {
 			return name;
 		}
@@ -230,7 +227,6 @@ class Npc final : public Creature
 		std::set<Player*> shopPlayerSet;
 		std::set<Player*> spectators;
 
-		std::string name;
 		std::string filename;
 
 		NameColor_t nameColor = NAMECOLOR_GREEN;

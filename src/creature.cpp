@@ -23,6 +23,7 @@
 #include "creature.h"
 #include "game.h"
 #include "pokemon.h"
+#include "pokeballs.h"
 #include "configmanager.h"
 #include "scheduler.h"
 
@@ -80,7 +81,7 @@ bool Creature::canSee(const Position& pos) const
 
 bool Creature::canSeeCreature(const Creature* creature) const
 {
-	if (!canSeeInvisibility() && creature->isInvisible()) {
+	if (creature->isRemoved() || (!canSeeInvisibility() && creature->isInvisible())) {
 		return false;
 	}
 	return true;
@@ -691,9 +692,14 @@ void Creature::onDeath()
 bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreature, bool lastHitUnjustified, bool mostDamageUnjustified)
 {
 	if (!lootDrop && getPokemon()) {
-		if (getMaster() && getMaster()->getPlayer()) {
+		if (getMaster()) {
 			Player* player = getMaster()->getPlayer();
-			player->gobackPokemon(player->getInventoryItem(CONST_SLOT_POKEBALL), true, true);
+			if (player) {
+				const PokeballType* pbType = getPokemon()->getPokeballType();
+				if (pbType) {
+					g_game.addEffect(getPosition(), pbType->getGobackEffect());
+				}
+			}
 
 			//scripting event - onDeath
 			const CreatureEventList& deathEvents = getCreatureEvents(CREATURE_EVENT_DEATH);
@@ -710,6 +716,12 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 		if (corpse) {
 			g_game.internalAddItem(tile, corpse, INDEX_WHEREEVER, FLAG_NOLIMIT);
 			g_game.startDecay(corpse);
+		}
+
+		Player* player = getPlayer();
+		if (player && player->getHisPokemon()) {
+			Item* item = player->getInventoryItem(CONST_SLOT_POKEBALL);
+			player->gobackPokemon(item);
 		}
 
 		//scripting event - onDeath

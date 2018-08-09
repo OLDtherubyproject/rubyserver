@@ -135,6 +135,12 @@ class Game
 		Pokemon* getPokemonByID(uint32_t id);
 
 		/**
+		  * Returns a pokémon based on guid
+		  * \returns A Pointer to the pokémon
+		  */
+		Pokemon* getPokemonByGUID(const uint32_t& guid);
+
+		/**
 		  * Returns a npc based on the unique creature identifier
 		  * \param id is the unique npc id to get a npc pointer to
 		  * \returns A NPC pointer to the npc
@@ -204,8 +210,9 @@ class Game
 		  * \param pos The position to place the creature
 		  * \param extendedPos If true, the creature will in first-hand be placed 2 tiles away
 		  * \param force If true, placing the creature will not fail because of obstacles (creatures/items)
+		  * \param sendEffect If true, placing the creture will send an effect
 		  */
-		bool placeCreature(Creature* creature, const Position& pos, bool extendedPos = false, bool forced = false);
+		bool placeCreature(Creature* creature, const Position& pos, bool extendedPos = false, bool forced = false, bool sendEffect = true);
 
 		/**
 		  * Remove Creature from the map.
@@ -410,10 +417,11 @@ class Game
 		void playerCancelMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter);
 		void playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter, uint16_t amount);
 
-		void playerTryCatchPokemon(Player* player, const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
-		void sendPokemonToPlayer(uint32_t playerGUID, Pokemon* pokemon, Item* corpse, const PokeballType* pokeballType);
-		void playerSendPokemonEmot(uint32_t playerGUID, uint16_t effect);
-		void playerOrderPokemon(Player* player, const Position& toPos, Creature* creature);
+		void sendPokemonToPlayer(uint32_t playerId, Pokemon* pokemon);
+		void playerSendPokemonEffect(uint32_t playerId, uint16_t effect);
+		void playerOrderPokemon(uint32_t playerId, const Position& toPos, Creature* creature);
+		void playerEvolvePokemon(uint32_t playerId, Item* item, Creature* creature);
+		void playerSendTextMessage(uint32_t playerId, MessageClasses mclass, const std::string& message);
 
 		void parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer);
 
@@ -433,6 +441,7 @@ class Game
 		void changeSpeed(Creature* creature, int32_t varSpeedDelta);
 		void internalCreatureChangeOutfit(Creature* creature, const Outfit_t& outfit);
 		void internalCreatureChangeVisible(Creature* creature, bool visible);
+		void internalCreatureChangeName(Creature* creature, const std::string& name);
 		void changeLight(const Creature* creature);
 		void updateCreatureGender(const Creature* creature);
 		void updatePlayerShield(Player* player);
@@ -462,7 +471,7 @@ class Game
 		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
 		void addEffect(const Position& pos, uint16_t effect);
 		static void addEffect(const SpectatorHashSet& spectators, const Position& pos, uint16_t effect);
-		void addSoundToPlayer(Player* player, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
+		void addSoundToPlayer(uint32_t playerId, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
 		void addSound(const Position& pos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
 		static void addSound(const SpectatorHashSet& spectators, const Position& pos, uint16_t sound, uint8_t channel = SOUND_CHANNEL_EFFECT);
 		void addAnimatedText(const Position& pos, uint8_t textColor, const std::string& text);
@@ -500,11 +509,6 @@ class Game
 
 		void addPokemon(Pokemon* pokemon);
 		void removePokemon(Pokemon* pokemon);
-		uint32_t savePokemon(Pokemon* pokemon);
-		Pokemon* preloadPokemon(uint32_t id, Player* player = nullptr);
-		Pokemon* loadPokemon(uint32_t id, Player* player = nullptr);
-		PokemonType* loadPokemonTypeById(uint32_t id);
-		PokeballType* loadPokemonPokeballById(uint32_t id);
 
 		Guild* getGuild(uint32_t id) const;
 		void addGuild(Guild* guild);
@@ -534,8 +538,6 @@ class Game
 		bool isSunset();
 		bool isNight();
 		bool isSunrise();
-		
-		void playerEvolvePokemon(Player* player, Item* item, Creature* creature);
 
 		Groups groups;
 		Map map;
@@ -573,7 +575,7 @@ class Game
 
 		std::map<uint32_t, Npc*> npcs;
 		std::map<uint32_t, Pokemon*> pokemons;
-
+		
 		//list of items that are in trading state, mapped to the player
 		std::map<Item*, uint32_t> tradeItems;
 

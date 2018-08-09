@@ -266,7 +266,7 @@ bool FoodType::useFood(Player* player, const Position& fromPos, const Position& 
 	ReturnValue ret = playerFoodCheck(player, toPos, creature);
 	if (ret != RETURNVALUE_NOERROR) {
 		if (ret == RETURNVALUE_YOURPOKEMONDONOTLIKEIT) {
-			player->sendPokemonEmot(CONST_ME_EMOT_SEASICK);
+			player->sendPokemonEffect(CONST_ME_EMOT_SEASICK);
 			player->sendPokemonTextMessage("Grrrrr");
 		}
 

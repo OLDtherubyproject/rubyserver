@@ -51,6 +51,7 @@ class Pokemon final : public Creature
 		static int32_t despawnRadius;
 
 		explicit Pokemon(PokemonType* mType, int32_t level = 1, bool spawn = true);
+		explicit Pokemon();
 		~Pokemon();
 
 		// non-copyable
@@ -73,9 +74,6 @@ class Pokemon final : public Creature
 		void removeList() override;
 		void addList() override;
 
-		const std::string& getName() const override {
-			return name;
-		}
 		const std::string& getNameDescription() const override {
 			return mType->nameDescription;
 		}
@@ -146,8 +144,31 @@ class Pokemon final : public Creature
 			return mType->info.isHostile;
 		}
 		bool isGhost() const {
-			return mType->info.isGhost;
+			return ((mType->info.firstType == TYPE_GHOST) || (mType->info.secondType == TYPE_GHOST));
 		}
+
+		uint32_t getChargedIcon() const {
+			if (isShiny) {
+				return mType->info.shiny.iconCharged;
+			}
+			return mType->info.iconCharged;
+		}
+		uint32_t getDischargedIcon() const {
+			if (isShiny) {
+				return mType->info.shiny.iconDischarged;
+			}
+			return mType->info.iconDischarged;
+		}
+		uint32_t getLevelToUse() const {
+			return mType->info.level;
+		}
+		uint32_t getPortrait() const {
+			if (isShiny) {
+				return mType->info.shiny.portrait;
+			}
+			return mType->info.portrait;
+		}
+
 		bool canSee(const Position& pos) const override;
 		bool canSeeInvisibility() const override {
 			return isImmune(CONDITION_INVISIBLE);
@@ -170,6 +191,12 @@ class Pokemon final : public Creature
 		Natures_t getNature() const {
 			return nature;
 		}
+		bool getShinyStatus() const {
+			return isShiny;
+		}
+		bool getDittoStatus() const {
+			return isDitto;
+		}
 		float getAttack() const override;
 		float getDefense() const override;
 		float getSpecialAttack() const override;
@@ -185,9 +212,6 @@ class Pokemon final : public Creature
 		}
 		void setNature(Natures_t nature) {
 			this->nature = nature;
-		}
-		void setName(std::string name) {
-			this->name = name;
 		}
 		void setMaxHealth(int32_t healthMax) {
 			this->healthMax = healthMax;
@@ -207,9 +231,7 @@ class Pokemon final : public Creature
 		void setPokeballType(const PokeballType* pokeballType) {
 			this->pokeballType = pokeballType;
 		}
-		void setPokemonType(PokemonType* pokemonType) {
-			this->mType = pokemonType;
-		}
+		void setPokemonType(PokemonType* pokemonType);
 		float getAttackMultiplier() const;
 		float getDefenseMultiplier() const;
 		float getSpecialAttackMultiplier() const;
@@ -310,7 +332,18 @@ class Pokemon final : public Creature
 			return level;
 		}
 		void setLevel(uint32_t newLevel) {
+			if (level == newLevel) {
+				return;
+			}
+
 			level = newLevel;
+
+			if (getHealth() > getMaxHealth()) {
+				setHealth(getMaxHealth());
+			}
+		}
+		uint32_t getXpOnDex() const {
+			return mType->info.xpOnDex;
 		}
 
 		bool addMove(std::pair<uint16_t, uint16_t> move) {
@@ -340,7 +373,71 @@ class Pokemon final : public Creature
 		}
 		void turnToThing(Thing* thing);
 
-		std::function<void(void)> checkOrder = nullptr;
+		void setIVHP(uint8_t iv) {
+			ivs.hp = iv;
+		}
+		uint8_t getIVHP() const {
+			return ivs.hp;
+		}
+
+		void setIVAttack(uint8_t iv) {
+			ivs.attack = iv;
+		}
+		uint8_t getIVAttack() const {
+			return ivs.attack;
+		}
+
+		void setIVSpecialAttack(uint8_t iv) {
+			ivs.special_attack = iv;
+		}
+		uint8_t getIVSpecialAttack() const {
+			return ivs.special_attack;
+		}
+
+		void setIVDefense(uint8_t iv) {
+			ivs.defense = iv;
+		}
+		uint8_t getIVDefense() const {
+			return ivs.defense;
+		}
+
+		void setIVSpecialDefense(uint8_t iv) {
+			ivs.special_defense = iv;
+		}
+		uint8_t getIVSpecialDefense() const {
+			return ivs.special_defense;
+		}
+
+		uint8_t getIVSpeed() const {
+			return ivs.speed;
+		}
+		void setIVSpeed(uint8_t iv) {
+			ivs.speed = iv;
+		}
+
+		void setAbilities(uint32_t newAbilities) {
+			abilities = newAbilities;
+		}
+		uint32_t getAbilities() const {
+			return abilities;
+		}
+		bool isSuperEffective(CombatType_t type) const {
+			return hasBitSet(static_cast<uint32_t>(type), getDamageSuperEffective());
+		}
+		bool isNotVeryEffective(CombatType_t type) const {
+			return hasBitSet(static_cast<uint32_t>(type), getDamageNotVeryEffective());
+		}
+		bool hasSpecialAbility(SpecialAbilities_t specialAbility) const {
+			return hasBitSet(specialAbility, abilities);
+		}
+		bool moveTo(const Position& pos, int32_t minTargetDist = 0, int32_t maxTargetDist = 0);
+		bool setMaster(Creature* newMaster) override;
+
+		void transform(PokemonType* pmType);		
+		void checkCutDigOrRockSmash(Item* item);
+		void setNextOrder(std::function<void(void)> order) {
+			checkOrder = order;
+		}
 
 	private:
 		CreatureHashSet friendList;
@@ -351,12 +448,12 @@ class Pokemon final : public Creature
 
 		uint32_t emotsTicks[3] = {0, 0, 0};
 
-		std::string name;
 		std::string strDescription;
 
-		PokemonType* mType;
+		PokemonType* mType = nullptr;
 		Spawn* spawn = nullptr;
 		const PokeballType* pokeballType = nullptr;
+		std::function<void(void)> checkOrder = nullptr;
 
 		Natures_t nature = static_cast<Natures_t>(uniform_random(1, 25));
 		PokemonEVs evs = {};
@@ -413,12 +510,6 @@ class Pokemon final : public Creature
 		void updateIdleStatus();
 		bool getIdleStatus() const {
 			return isIdle;
-		}
-		bool getShinyStatus() const {
-			return isShiny;
-		}
-		bool getDittoStatus() const {
-			return isDitto;
 		}
 
 		//combat event functions
@@ -482,21 +573,9 @@ class Pokemon final : public Creature
 			return !randomStepping;
 		}
 
-		bool isSuperEffective(CombatType_t type) const {
-			return hasBitSet(static_cast<uint32_t>(type), getDamageSuperEffective());
-		}
-		bool isNotVeryEffective(CombatType_t type) const {
-			return hasBitSet(static_cast<uint32_t>(type), getDamageNotVeryEffective());
-		}
-		bool hasSpecialAbility(SpecialAbilities_t specialAbility) const {
-			return hasBitSet(specialAbility, abilities);
-		}
-		bool moveTo(const Position& pos, int32_t minTargetDist = 0, int32_t maxTargetDist = 0);
-
-		void checkCutOrRockSmash(Item* item);
-
 		friend class LuaScriptInterface;
 		friend class Game;
+		friend class IOLoginData;
 };
 
 #endif

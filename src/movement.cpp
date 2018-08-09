@@ -193,8 +193,8 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 {
 	uint32_t slotp;
 	switch (slot) {
-		case CONST_SLOT_HEAD: slotp = SLOTP_HEAD; break;
-		case CONST_SLOT_NECKLACE: slotp = SLOTP_NECKLACE; break;
+		case CONST_SLOT_ROD: slotp = SLOTP_ROD; break;
+		case CONST_SLOT_POKEDEX: slotp = SLOTP_POKEDEX; break;
 		case CONST_SLOT_BACKPACK: slotp = SLOTP_BACKPACK; break;
 		case CONST_SLOT_ORDER: slotp = SLOTP_ORDER; break;
 		case CONST_SLOT_RIGHT: slotp = SLOTP_RIGHT; break;
@@ -202,7 +202,7 @@ MoveEvent* MoveEvents::getEvent(Item* item, MoveEvent_t eventType, slots_t slot)
 		case CONST_SLOT_PORTRAIT: slotp = SLOTP_PORTRAIT; break;
 		case CONST_SLOT_POKEBALL: slotp = SLOTP_POKEBALL; break;
 		case CONST_SLOT_SUPPORT: slotp = SLOTP_SUPPORT; break;
-		case CONST_SLOT_RING: slotp = SLOTP_RING; break;
+		case CONST_SLOT_PICK: slotp = SLOTP_PICK; break;
 		default: slotp = 0; break;
 	}
 
@@ -314,25 +314,21 @@ uint32_t MoveEvents::onCreatureMove(Creature* creature, const Tile* tile, MoveEv
 uint32_t MoveEvents::onPlayerEquip(Player* player, Item* item, slots_t slot, bool isCheck)
 {
 	// portrait appear
-	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && (slot == CONST_SLOT_POKEBALL)) {
-		PokemonType* pokemonType = g_game.loadPokemonTypeById(item->getPokemonId());
-		if (!pokemonType) {
-			return 0;
-		}
-
-		Pokemon* pokemon = g_game.preloadPokemon(item->getPokemonId(), player);
+	if ((item->getSlotPosition() & SLOTP_POKEBALL) && (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID))) {
+		Pokemon* pokemon = g_game.getPokemonByGUID(item->getPokemonId());
 		if (!pokemon) {
 			return 0;
 		}
 
 		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
 		if (portrait) {
-			g_game.transformItem(portrait, pokemonType->info.portrait);
+			g_game.transformItem(portrait, pokemon->getPortrait());
 		} else {
-			Item* item = Item::CreateItem(pokemonType->info.portrait, 1);
+			Item* item = Item::CreateItem(pokemon->getPortrait(), 1);
 			g_game.internalPlayerAddItem(player, item, false, CONST_SLOT_PORTRAIT);
 		}
 
+		pokemon->setLevel(player->getLevel());
 		player->setPokemonHealthMax(pokemon->getMaxHealth());
 		player->setPokemonHealth(pokemon->getHealth());
 		player->sendStats();
@@ -350,7 +346,6 @@ uint32_t MoveEvents::onPlayerDeEquip(Player* player, Item* item, slots_t slot)
 	// portrait disappear
 	if (item->hasAttribute(ITEM_ATTRIBUTE_POKEMONID) && (slot == CONST_SLOT_POKEBALL)) {
 		Item* portrait = player->getInventoryItem(CONST_SLOT_PORTRAIT);
-
 		if (portrait) {
 			g_game.transformItem(portrait, 2513);
 		} else {
@@ -458,10 +453,10 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		pugi::xml_attribute slotAttribute = node.attribute("slot");
 		if (slotAttribute) {
 			tmpStr = asLowerCaseString(slotAttribute.as_string());
-			if (tmpStr == "head") {
-				slot = SLOTP_HEAD;
-			} else if (tmpStr == "necklace") {
-				slot = SLOTP_NECKLACE;
+			if (tmpStr == "rod") {
+				slot = SLOTP_ROD;
+			} else if (tmpStr == "pokedex") {
+				slot = SLOTP_POKEDEX;
 			} else if (tmpStr == "backpack") {
 				slot = SLOTP_BACKPACK;
 			} else if (tmpStr == "order") {
@@ -476,8 +471,8 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 				slot = SLOTP_PORTRAIT;
 			} else if (tmpStr == "pokeball") {
 				slot = SLOTP_POKEBALL;
-			} else if (tmpStr == "ring") {
-				slot = SLOTP_RING;
+			} else if (tmpStr == "pick") {
+				slot = SLOTP_PICK;
 			} else {
 				std::cout << "[Warning - MoveEvent::configureMoveEvent] Unknown slot type: " << slotAttribute.as_string() << std::endl;
 			}

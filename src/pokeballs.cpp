@@ -290,7 +290,7 @@ void PokeballType::internalUsePokeball(Player* player, Item* pokeball, const Pos
 		g_actions->showUseHotkeyMessage(player, pokeball, player->getItemTypeCount(pokeball->getID(), -1));
 	}
 
-	player->tryCatchPokemon(this, corpse, pokeball, currentRate, fromPos, toPos);
+	player->tryCatchPokemon(this, corpse, currentRate, toPos);
 	decrementItemCount(pokeball);
 }
 

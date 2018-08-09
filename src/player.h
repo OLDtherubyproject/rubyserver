@@ -101,6 +101,12 @@ struct OutfitEntry {
 	uint8_t addons;
 };
 
+struct PokedexEntry {
+	constexpr PokedexEntry(uint16_t pokemonNumber) : pokemonNumber(pokemonNumber) {}
+
+	uint16_t pokemonNumber;
+};
+
 struct Skill {
 	uint64_t tries = 0;
 	uint16_t level = 10;
@@ -137,12 +143,6 @@ class Player final : public Creature, public Cylinder
 
 		static MuteCountMap muteCountMap;
 
-		const std::string& getName() const override {
-			return name;
-		}
-		void setName(std::string name) {
-			this->name = std::move(name);
-		}
 		const std::string& getNameDescription() const override {
 			return name;
 		}
@@ -662,6 +662,10 @@ class Player final : public Creature, public Cylinder
 		bool removeOutfitAddon(uint16_t lookType, uint8_t addons);
 		bool getOutfitAddons(const Outfit& outfit, uint8_t& addons) const;
 
+		bool hasPokedexEntry(uint16_t pokemonNumber) const;
+		void addPokedexEntry(uint16_t pokemonNumber);
+		bool removePokedexEntry(uint16_t pokemonNumber);
+
 		bool canLogout();
 
 		size_t getMaxVIPEntries() const;
@@ -772,6 +776,11 @@ class Player final : public Creature, public Cylinder
 				} else {
 					client->sendRemoveTileThing(creature->getPosition(), stackpos);
 				}
+			}
+		}
+		void sendCreatureChangeName(const Creature* creature, const std::string& name) {
+			if (client) {
+				client->sendCreatureName(creature, name);
 			}
 		}
 		void sendCreatureLight(const Creature* creature) {
@@ -1129,7 +1138,6 @@ class Player final : public Creature, public Cylinder
 		}
 		uint32_t getNextCastMoveTime() const;
 
-
 		void setNextGoback(int64_t time) {
 			if (time > nextGoback) {
 				nextGoback = time;
@@ -1146,10 +1154,6 @@ class Player final : public Creature, public Cylinder
 		House* getEditHouse(uint32_t& windowTextId, uint32_t& listId);
 		void setEditHouse(House* house, uint32_t listId = 0);
 
-		void learnInstantMove(const std::string& moveName);
-		void forgetMove(const std::string& moveName);
-		bool hasLearnedInstantMove(const std::string& moveName) const;
-
 		Pokemon* getHisPokemon() const {
 			if (summons.size()) {
 				Creature* creature = summons.front();
@@ -1161,11 +1165,14 @@ class Player final : public Creature, public Cylinder
 			return nullptr;
 		}
 
-		void tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, Item* pokeball, double rate, const Position& fromPos, const Position& toPos);
-		void sendPokemonEmot(uint16_t pokemonEmot) const;
+		void tryCatchPokemon(const PokeballType* pokeballType, Item* corpse, double rate, const Position& toPos);
+		void sendPokemonEffect(uint16_t effect) const;
 		void sendPokemonTextMessage(const std::string& message) const;
+		void gobackPokemon(Item* pokeball);
+		void sendPokemon(Pokemon* pokemon);
+		void orderPokemon(const Position& toPos, Creature* creature);
+		void evolvePokemon(Item* item, Creature* creature);
 		bool feed(const FoodType* foodType) override;
-		bool gobackPokemon(Item* pokeball, bool ignoreDelay = false, bool ignoreTransformPokeball = false);
 
 	private:
 		std::forward_list<Condition*> getMuteConditions() const;
@@ -1225,16 +1232,15 @@ class Player final : public Creature, public Cylinder
 		std::map<uint32_t, int32_t> storageMap;
 
 		std::vector<OutfitEntry> outfits;
+		std::vector<PokedexEntry> pokedexEntries;
 		GuildWarVector guildWarVector;
 
 		std::list<ShopInfo> shopItemList;
 
 		std::forward_list<Party*> invitePartyList;
 		std::forward_list<uint32_t> modalWindows;
-		std::forward_list<std::string> learnedInstantMoveList;
 		std::forward_list<Condition*> storedConditionList; // TODO: This variable is only temporarily used when logging in, get rid of it somehow
 
-		std::string name;
 		std::string guildNick;
 
 		Skill skills[SKILL_LAST + 1];

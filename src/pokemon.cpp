@@ -91,6 +91,11 @@ Pokemon::Pokemon(PokemonType* mType, int32_t plevel /* = 1 */, bool spawn /* = t
 	}
 }
 
+Pokemon::Pokemon()
+{
+	//
+}
+
 Pokemon::~Pokemon()
 {
 	clearTargetList();
@@ -2206,6 +2211,27 @@ bool Pokemon::checkSpawn()
 	return false;
 }
 
+void Pokemon::setPokemonType(PokemonType* pmType)
+{
+	if (mType == pmType) {
+		return;
+	}
+
+	if (mType && name == mType->name) {
+		g_game.internalCreatureChangeName(this, pmType->name);
+	}
+
+	mType = pmType;
+	strDescription = pmType->nameDescription;
+
+	if (isShiny && (pmType->info.shiny.outfit.lookType)) {
+		g_game.internalCreatureChangeOutfit(this, pmType->info.shiny.outfit);
+		defaultOutfit = pmType->info.shiny.outfit;
+	} else {
+		g_game.internalCreatureChangeOutfit(this, pmType->info.outfit);
+		defaultOutfit = pmType->info.outfit;
+	}
+}
 
 float Pokemon::getAttackMultiplier() const
 {
@@ -2294,8 +2320,8 @@ bool Pokemon::moveTo(const Position& pos, int32_t minTargetDist /* = 0 */, int32
 	return false;
 }
 
-void Pokemon::checkCutOrRockSmash(Item* item) {
-	if (!item && !item->isCuttable() && !item->isSmashable()) {
+void Pokemon::checkCutDigOrRockSmash(Item* item) {
+	if (!item && !item->isCuttable() && !item->isSmashable() && !item->isDiggable()) {
 		return;
 	}
 
@@ -2305,7 +2331,7 @@ void Pokemon::checkCutOrRockSmash(Item* item) {
 	if ((sqrt(pow((pokemonPos.x - itemPos.x), 2) + pow((pokemonPos.y - itemPos.y), 2))) < 1.5f) {
 		if (item->isCuttable()) {
 			g_game.addEffect(item->getPosition(), 292);
-		} else {
+		} else if (item->isSmashable()) {
 			g_game.addEffect(item->getPosition(), 292);
 		}
 
@@ -2344,4 +2370,35 @@ void Pokemon::turnToThing(Thing* thing)
 		}
 	}
 	g_game.internalCreatureTurn(this, dir);
+}
+
+void Pokemon::transform(PokemonType* pmType)
+{
+	setPokemonType(pmType);
+	setHealth(getMaxHealth());
+	cleanConditions();
+}
+
+bool Pokemon::setMaster(Creature* newMaster)
+{
+	if (!Creature::setMaster(newMaster)) {
+		return false;
+	}
+
+	if (!newMaster) {
+		return false;
+	}
+
+	if (!newMaster->getPlayer() && !newMaster->getPokemon()) {
+		return true;
+	}
+
+	Player* player = newMaster->getPlayer();
+	setLevel(player->getLevel());
+
+	if (getHealth() > getMaxHealth()) {
+		setHealth(getMaxHealth());
+	}
+
+	return true;
 }

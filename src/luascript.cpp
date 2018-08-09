@@ -1369,15 +1369,15 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONST_PROP_NOFIELDBLOCKPATH)
 	registerEnum(CONST_PROP_SUPPORTHANGABLE)
 
-	registerEnum(CONST_SLOT_HEAD)
-	registerEnum(CONST_SLOT_NECKLACE)
+	registerEnum(CONST_SLOT_ROD)
+	registerEnum(CONST_SLOT_POKEDEX)
 	registerEnum(CONST_SLOT_BACKPACK)
 	registerEnum(CONST_SLOT_ORDER)
 	registerEnum(CONST_SLOT_RIGHT)
 	registerEnum(CONST_SLOT_LEFT)
 	registerEnum(CONST_SLOT_PORTRAIT)
 	registerEnum(CONST_SLOT_POKEBALL)
-	registerEnum(CONST_SLOT_RING)
+	registerEnum(CONST_SLOT_PICK)
 	registerEnum(CONST_SLOT_SUPPORT)
 
 	registerEnum(CREATURE_EVENT_NONE)
@@ -1592,6 +1592,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SPECIALABILITY_SURF)
 	registerEnum(SPECIALABILITY_HEADBUTT)
 	registerEnum(SPECIALABILITY_FLASH)
+	registerEnum(SPECIALABILITY_DIG)
 
 	registerEnum(GENDER_NONE)
 	registerEnum(GENDER_UNDEFINED)
@@ -1714,18 +1715,17 @@ void LuaScriptInterface::registerFunctions()
 
 	// Use with itemType:getSlotPosition
 	registerEnum(SLOTP_WHEREEVER)
-	registerEnum(SLOTP_HEAD)
-	registerEnum(SLOTP_NECKLACE)
+	registerEnum(SLOTP_ROD)
+	registerEnum(SLOTP_POKEDEX)
 	registerEnum(SLOTP_BACKPACK)
 	registerEnum(SLOTP_ORDER)
 	registerEnum(SLOTP_RIGHT)
 	registerEnum(SLOTP_LEFT)
 	registerEnum(SLOTP_PORTRAIT)
 	registerEnum(SLOTP_POKEBALL)
-	registerEnum(SLOTP_RING)
+	registerEnum(SLOTP_PICK)
 	registerEnum(SLOTP_SUPPORT)
 	registerEnum(SLOTP_DEPOT)
-	registerEnum(SLOTP_TWO_HAND)
 
 	// Use with combat functions
 	registerEnum(ORIGIN_NONE)
@@ -2040,9 +2040,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Game", "isNight", LuaScriptInterface::luaGameIsNight);
 	registerMethod("Game", "isSunrise", LuaScriptInterface::luaGameIsSunrise);
 
-	registerMethod("Game", "loadPokemon", LuaScriptInterface::luaGameLoadPokemon);
-	registerMethod("Game", "savePokemon", LuaScriptInterface::luaGameSavePokemon);
-
 	registerMethod("Game", "sendAnimatedText", LuaScriptInterface::luaGameSendAnimatedText);
 
 	// Variant
@@ -2261,6 +2258,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Creature", "getId", LuaScriptInterface::luaCreatureGetId);
 	registerMethod("Creature", "getName", LuaScriptInterface::luaCreatureGetName);
+	registerMethod("Creature", "setName", LuaScriptInterface::luaCreatureSetName);
 
 	registerMethod("Creature", "getTarget", LuaScriptInterface::luaCreatureGetTarget);
 	registerMethod("Creature", "setTarget", LuaScriptInterface::luaCreatureSetTarget);
@@ -2430,6 +2428,10 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "removeMount", LuaScriptInterface::luaPlayerRemoveMount);
 	registerMethod("Player", "hasMount", LuaScriptInterface::luaPlayerHasMount);
 
+	registerMethod("Player", "addPokedexEntry", LuaScriptInterface::luaPlayerAddPokedexEntry);
+	registerMethod("Player", "removePokedexEntry", LuaScriptInterface::luaPlayerRemovePokedexEntry);
+	registerMethod("Player", "hasPokedexEntry", LuaScriptInterface::luaPlayerHasPokedexEntry);
+
 	registerMethod("Player", "getPremiumDays", LuaScriptInterface::luaPlayerGetPremiumDays);
 	registerMethod("Player", "addPremiumDays", LuaScriptInterface::luaPlayerAddPremiumDays);
 	registerMethod("Player", "removePremiumDays", LuaScriptInterface::luaPlayerRemovePremiumDays);
@@ -2461,11 +2463,15 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "hasChaseMode", LuaScriptInterface::luaPlayerHasChaseMode);
 	registerMethod("Player", "getFightMode", LuaScriptInterface::luaPlayerGetFightMode);
 
+	registerMethod("Player", "sendPokemon", LuaScriptInterface::luaPlayerSendPokemon);
+
 	// Pokemon
 	registerClass("Pokemon", "Creature", LuaScriptInterface::luaPokemonCreate);
 	registerMetaMethod("Pokemon", "__eq", LuaScriptInterface::luaUserdataCompare);
 
 	registerMethod("Pokemon", "isPokemon", LuaScriptInterface::luaPokemonIsPokemon);
+
+	registerMethod("Pokemon", "getGuid", LuaScriptInterface::luaPokemonGetGuid);
 
 	registerMethod("Pokemon", "isMale", LuaScriptInterface::luaPokemonIsMale);
 	registerMethod("Pokemon", "isFemale", LuaScriptInterface::luaPokemonIsFemale);
@@ -2503,6 +2509,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "searchTarget", LuaScriptInterface::luaPokemonSearchTarget);
 
 	registerMethod("Pokemon", "castMove", LuaScriptInterface::luaPokemonCastMove);
+
 	registerMethod("Pokemon", "getPokemonType", LuaScriptInterface::luaPokemonGetPokemonType);
 
 	registerMethod("Pokemon", "addMove", LuaScriptInterface::luaPokemonAddMove);
@@ -2511,9 +2518,25 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Pokemon", "getLevel", LuaScriptInterface::luaPokemonGetLevel);
 	registerMethod("Pokemon", "setLevel", LuaScriptInterface::luaPokemonSetLevel);
 
+	registerMethod("Pokemon", "getIVHP", LuaScriptInterface::luaPokemonGetIVHP);
+	registerMethod("Pokemon", "getIVAttack", LuaScriptInterface::luaPokemonGetIVAttack);
+	registerMethod("Pokemon", "getIVSpecialAttack", LuaScriptInterface::luaPokemonGetIVSpecialAttack);
+	registerMethod("Pokemon", "getIVDefense", LuaScriptInterface::luaPokemonGetIVDefense);
+	registerMethod("Pokemon", "getIVSpecialDefense", LuaScriptInterface::luaPokemonGetIVSpecialDefense);
+	registerMethod("Pokemon", "getIVSpeed", LuaScriptInterface::luaPokemonGetIVSpeed);
+
+	registerMethod("Pokemon", "getXpOnDex", LuaScriptInterface::luaPokemonGetXpOnDex);
+
+	registerMethod("Pokemon", "getPokeballType", LuaScriptInterface::luaPokemonGetPokeballType);
+	registerMethod("Pokemon", "setPokeballType", LuaScriptInterface::luaPokemonSetPokeballType);
+
 	registerMethod("Pokemon", "likesFood", LuaScriptInterface::luaPokemonLikesFood);
 	registerMethod("Pokemon", "addSpecialAbility", LuaScriptInterface::luaPokemonAddSpecialAbility);
 	registerMethod("Pokemon", "hasSpecialAbility", LuaScriptInterface::luaPokemonHasSpecialAbility);
+
+	registerMethod("Pokemon", "transform", LuaScriptInterface::luaPokemonTransform);
+
+	registerMethod("Pokemon", "save", LuaScriptInterface::luaPokemonSave);
 
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
@@ -4279,23 +4302,29 @@ int LuaScriptInterface::luaGameCreateContainer(lua_State* L)
 int LuaScriptInterface::luaGameCreatePokemon(lua_State* L)
 {
 	// Game.createPokemon(pokemonName, level[, position[, extended = false[, force = false]]])
-	Pokemon* pokemon = Pokemon::createPokemon(getString(L, 1),  getNumber<int32_t>(L, 2), true);
+	Pokemon* pokemon = Pokemon::createPokemon(getString(L, 1),  getNumber<int32_t>(L, 2, 1), true);
 	if (!pokemon) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	const Position& position = getPosition(L, 3);
-	bool extended = getBoolean(L, 4, false);
-	bool force = getBoolean(L, 5, false);
+	if (lua_gettop(L) >= 3) {
+		const Position& position = getPosition(L, 3);
+		bool extended = getBoolean(L, 4, false);
+		bool force = getBoolean(L, 5, false);
 
-	if (g_game.placeCreature(pokemon, position, extended, force)) {
+		if (g_game.placeCreature(pokemon, position, extended, force)) {
+			pushUserdata<Pokemon>(L, pokemon);
+			setMetatable(L, -1, "Pokemon");
+		} else {
+			delete pokemon;
+			lua_pushnil(L);
+		}
+	} else {
 		pushUserdata<Pokemon>(L, pokemon);
 		setMetatable(L, -1, "Pokemon");
-	} else {
-		delete pokemon;
-		lua_pushnil(L);
 	}
+
 	return 1;
 }
 
@@ -4423,45 +4452,6 @@ int LuaScriptInterface::luaGameIsSunrise(lua_State* L)
 {
 	// Game.isSunrise()
 	pushBoolean(L, g_game.isSunrise());
-	return 1;
-}
-
-int LuaScriptInterface::luaGameLoadPokemon(lua_State* L)
-{
-	// Game.loadPokemon(id, player)
-	uint32_t id = getNumber<uint32_t>(L, 1);
-	if (!id) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	Player* player = getUserdata<Player>(L, 2);
-	if (!player) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	Pokemon* pokemon = g_game.loadPokemon(id, player);
-	if (!pokemon) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	pushUserdata<Pokemon>(L, pokemon);
-	setMetatable(L, -1, "Pokemon");	
-	return 1;
-}
-
-int LuaScriptInterface::luaGameSavePokemon(lua_State* L)
-{
-	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
-	if (!pokemon) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	g_game.savePokemon(pokemon);
-	pushBoolean(L, true);
 	return 1;
 }
 
@@ -7074,6 +7064,20 @@ int LuaScriptInterface::luaCreatureGetName(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaCreatureSetName(lua_State* L)
+{
+	// creature:setName(name)
+	Creature* creature = getUserdata<Creature>(L, 1);
+	const std::string& name = getString(L, 2);
+	if (creature) {
+		g_game.internalCreatureChangeName(creature, name);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaCreatureGetTarget(lua_State* L)
 {
 	// creature:getTarget()
@@ -7347,7 +7351,7 @@ int LuaScriptInterface::luaCreatureSetHealth(lua_State* L)
 		return 1;
 	}
 
-	creature->health = std::min<int32_t>(getNumber<uint32_t>(L, 2), creature->healthMax);
+	creature->health = std::min<int32_t>(getNumber<uint32_t>(L, 2), creature->getMaxHealth());
 	g_game.addCreatureHealth(creature);
 
 	Player* player = creature->getPlayer();
@@ -9224,6 +9228,45 @@ int LuaScriptInterface::luaPlayerHasMount(lua_State* L) {
 	return 1;
 }
 
+int LuaScriptInterface::luaPlayerAddPokedexEntry(lua_State* L)
+{
+	// player:addPokedexEntry(pokemonNumber)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		player->addPokedexEntry(getNumber<uint16_t>(L, 2, 0));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerRemovePokedexEntry(lua_State* L)
+{
+	// player:removePokedexEntry(pokemonNumber)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t pokemonNumber = getNumber<uint16_t>(L, 2);
+		pushBoolean(L, player->removePokedexEntry(pokemonNumber));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerHasPokedexEntry(lua_State* L)
+{
+	// player:hasPokedexEntry(pokemonNumber)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t pokemonNumber = getNumber<uint16_t>(L, 2);
+		pushBoolean(L, player->hasPokedexEntry(pokemonNumber));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaPlayerGetPremiumDays(lua_State* L)
 {
 	// player:getPremiumDays()
@@ -9604,13 +9647,35 @@ int LuaScriptInterface::luaPlayerGetFightMode(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPlayerSendPokemon(lua_State* L)
+{
+	// player:sendPokemon(Pokemon)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+	}
+
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 2);
+	if (!pokemon) {
+		lua_pushnil(L);
+	}
+
+	player->sendPokemon(pokemon);
+	return 1;
+}
+
 // Pokemon
 int LuaScriptInterface::luaPokemonCreate(lua_State* L)
 {
-	// Pokemon(id or userdata)
+	// Pokemon(id or guid or userdata)
 	Pokemon* pokemon;
 	if (isNumber(L, 2)) {
-		pokemon = g_game.getPokemonByID(getNumber<uint32_t>(L, 2));
+		uint32_t id = getNumber<uint32_t>(L, 2);
+		if (id >= 0x10000000 && id <= Pokemon::pokemonAutoID) {
+			pokemon = g_game.getPokemonByID(id);
+		} else {
+			pokemon = g_game.getPokemonByGUID(id);
+		}
 	} else if (isUserdata(L, 2)) {
 		if (getUserdataType(L, 2) != LuaData_Pokemon) {
 			lua_pushnil(L);
@@ -9634,6 +9699,18 @@ int LuaScriptInterface::luaPokemonIsPokemon(lua_State* L)
 {
 	// pokemon:isPokemon()
 	pushBoolean(L, getUserdata<const Pokemon>(L, 1) != nullptr);
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetGuid(lua_State* L)
+{
+	// pokemon:getGuid()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (pokemon) {
+		lua_pushnumber(L, pokemon->getGUID());
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 
@@ -10108,7 +10185,7 @@ int LuaScriptInterface::luaPokemonGetLevel(lua_State* L)
 
 int LuaScriptInterface::luaPokemonSetLevel(lua_State* L)
 {
-	// pokemon:getLevel()
+	// pokemon:setLevel()
 	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
 	if (!pokemon) {
 		lua_pushnil(L);
@@ -10117,6 +10194,139 @@ int LuaScriptInterface::luaPokemonSetLevel(lua_State* L)
 
 	pokemon->setLevel(getNumber<int32_t>(L, 2));
 	lua_pushboolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVHP(lua_State* L)
+{
+	// pokemon:getIVHP()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVHP());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVAttack(lua_State* L)
+{
+	// pokemon:getIVAttack()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVAttack());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVSpecialAttack(lua_State* L)
+{
+	// pokemon:getIVSpecialAttack()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVSpecialAttack());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVDefense(lua_State* L)
+{
+	// pokemon:getIVDefense()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVDefense());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVSpecialDefense(lua_State* L)
+{
+	// pokemon:getIVSpecialDefense()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVSpecialDefense());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetIVSpeed(lua_State* L)
+{
+	// pokemon:getIVSpeed()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getIVSpeed());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetXpOnDex(lua_State* L)
+{
+	// pokemon:getXpOnDex()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, pokemon->getXpOnDex());
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonGetPokeballType(lua_State* L)
+{
+	// pokemon:getPokeballType()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	const PokeballType* pokeballType = pokemon->getPokeballType();
+	if (pokeballType) {
+		pushUserdata<const PokeballType>(L, pokeballType);
+		setMetatable(L, -1, "PokeballType");
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonSetPokeballType(lua_State* L)
+{
+	// pokemon:setPokeballType(PokeballType)
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	if (isUserdata(L, 2)) {
+		const PokeballType* pokeballType = getUserdata<PokeballType>(L, 2);
+		if (!pokeballType) {
+			lua_pushnil(L);
+			return 1;
+		}
+
+		pokemon->setPokeballType(pokeballType);
+		lua_pushboolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	
 	return 1;
 }
 
@@ -10159,6 +10369,7 @@ int LuaScriptInterface::luaPokemonAddSpecialAbility(lua_State* L)
 	SpecialAbilities_t specialAbility = getNumber<SpecialAbilities_t>(L, 2);
 	if (!specialAbility) {
 		lua_pushnil(L);
+		return 1;
 	}
 	
 	pokemon->addSpecialAbility(specialAbility);
@@ -10179,10 +10390,52 @@ int LuaScriptInterface::luaPokemonHasSpecialAbility(lua_State* L)
 	SpecialAbilities_t specialAbility = getNumber<SpecialAbilities_t>(L, 2);
 	if (!specialAbility) {
 		lua_pushnil(L);
+		return 1;
 	}
 	
 	lua_pushboolean(L, pokemon->hasSpecialAbility(specialAbility));
 	
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonTransform(lua_State* L)
+{
+	// pokemon:transform(PokemonType)
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (!pokemon) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	PokemonType* pokemonType;
+	if (lua_gettop(L) >= 2) {
+		if (isString(L, 2)) {
+			pokemonType = g_pokemons.getPokemonType(getString(L, 2));
+		} else if (isUserdata(L, 2)) {
+			pokemonType = getUserdata<PokemonType>(L, 2);
+		}
+	}
+
+	if (!pokemonType) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	pokemon->transform(pokemonType);
+	lua_pushboolean(L, true);
+	
+	return 1;
+}
+
+int LuaScriptInterface::luaPokemonSave(lua_State* L)
+{
+	// pokemon:save()
+	Pokemon* pokemon = getUserdata<Pokemon>(L, 1);
+	if (pokemon) {
+		pushBoolean(L, IOLoginData::savePokemon(pokemon));
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 
@@ -12992,6 +13245,8 @@ int LuaScriptInterface::luaPokeballTypeCreate(lua_State* L)
 	const PokeballType* pokeballType;
 	if (isNumber(L, 2)) {
 		pokeballType = g_pokeballs->getPokeballTypeByItemID(getNumber<uint16_t>(L, 2));
+	} else if (isString(L, 2)) {
+		pokeballType = g_pokeballs->getPokeballTypeByName(getString(L, 2));
 	} else {
 		pokeballType = nullptr;
 	}

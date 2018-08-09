@@ -942,6 +942,9 @@ class Item : virtual public Thing
 		bool isSmashable() const {
 			return items[id].allowSmashable;
 		}
+		bool isDiggable() const {
+			return items[id].allowDiggable;
+		}
 		bool isUseable() const {
 			return items[id].useable;
 		}

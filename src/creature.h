@@ -34,18 +34,18 @@ using CreatureEventList = std::list<CreatureEvent*>;
 
 enum slots_t : uint8_t {
 	CONST_SLOT_WHEREEVER = 0,
-	CONST_SLOT_HEAD = 1,
-	CONST_SLOT_NECKLACE = 2,
+	CONST_SLOT_ROD = 1,
+	CONST_SLOT_POKEDEX = 2,
 	CONST_SLOT_BACKPACK = 3,
 	CONST_SLOT_ORDER = 4,
 	CONST_SLOT_RIGHT = 5,
 	CONST_SLOT_LEFT = 6,
 	CONST_SLOT_PORTRAIT = 7,
 	CONST_SLOT_POKEBALL = 8,
-	CONST_SLOT_RING = 9,
+	CONST_SLOT_PICK = 9,
 	CONST_SLOT_SUPPORT = 10,
 
-	CONST_SLOT_FIRST = CONST_SLOT_HEAD,
+	CONST_SLOT_FIRST = CONST_SLOT_ROD,
 	CONST_SLOT_LAST = CONST_SLOT_SUPPORT,
 };
 
@@ -131,7 +131,12 @@ class Creature : virtual public Thing
 			return nullptr;
 		}
 
-		virtual const std::string& getName() const = 0;
+		void setName(std::string name) {
+			this->name = name;
+		}
+		const std::string& getName() const {
+			return name;
+		}
 		virtual const std::string& getNameDescription() const = 0;
 
 		virtual const NameColor_t getNameColor() const {
@@ -142,6 +147,9 @@ class Creature : virtual public Thing
 		virtual void setID() = 0;
 		void setRemoved() {
 			isInternalRemoved = true;
+		}
+		void setNotRemoved() {
+			isInternalRemoved = false;
 		}
 
 		uint32_t getID() const {
@@ -238,6 +246,9 @@ class Creature : virtual public Thing
 		void setCurrentOutfit(Outfit_t outfit) {
 			currentOutfit = outfit;
 		}
+		void setDefaultOutfit(Outfit_t outfit) {
+			defaultOutfit = outfit;
+		}
 		const Outfit_t getDefaultOutfit() const {
 			return defaultOutfit;
 		}
@@ -275,7 +286,7 @@ class Creature : virtual public Thing
 		virtual BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
 		                             bool field = false);
 
-		bool setMaster(Creature* newMaster);
+		virtual bool setMaster(Creature* newMaster);
 
 		void removeMaster() {
 			if (master) {
@@ -473,6 +484,10 @@ class Creature : virtual public Thing
 			return false;
 		}
 
+		bool isPersistent() const {
+			return persistent;
+		}
+
 	protected:
 		virtual bool useCacheMap() const {
 			return false;
@@ -489,6 +504,7 @@ class Creature : virtual public Thing
 		static constexpr int32_t maxWalkCacheHeight = (mapWalkHeight - 1) / 2;
 
 		Position position;
+		std::string name;
 
 		using CountMap = std::map<uint32_t, CountBlock_t>;
 		CountMap damageMap;
@@ -541,6 +557,7 @@ class Creature : virtual public Thing
 		bool forceUpdateFollowPath = false;
 		bool hiddenHealth = false;
 		bool canUseDefense = true;
+		bool persistent = false;
 
 		//creature script events
 		bool hasEventRegistered(CreatureEventType_t event) const {

@@ -338,11 +338,11 @@ void Items::buildInventoryList()
 {
 	inventory.reserve(items.size());
 	for (const auto& type: items) {
-		if (type.slotPosition & SLOTP_NECKLACE ||
-			type.slotPosition & SLOTP_RING ||
+		if (type.slotPosition & SLOTP_POKEDEX ||
+			type.slotPosition & SLOTP_PICK ||
 			type.slotPosition & SLOTP_SUPPORT ||
 			type.slotPosition & SLOTP_POKEBALL ||
-			type.slotPosition & SLOTP_HEAD ||
+			type.slotPosition & SLOTP_ROD ||
 			type.slotPosition & SLOTP_ORDER ||
 			type.slotPosition & SLOTP_PORTRAIT)
 		{
@@ -523,8 +523,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.writeOnceItemId = pugi::cast<uint16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "slottype") {
 			tmpStrValue = asLowerCaseString(valueAttribute.as_string());
-			if (tmpStrValue == "head") {
-				it.slotPosition |= SLOTP_HEAD;
+			if (tmpStrValue == "rod") {
+				it.slotPosition |= SLOTP_ROD;
 			} else if (tmpStrValue == "order") {
 				it.slotPosition |= SLOTP_ORDER;
 			} else if (tmpStrValue == "portrait") {
@@ -539,10 +539,10 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.slotPosition &= ~SLOTP_LEFT;
 			} else if (tmpStrValue == "left-hand") {
 				it.slotPosition &= ~SLOTP_RIGHT;
-			} else if (tmpStrValue == "necklace") {
-				it.slotPosition |= SLOTP_NECKLACE;
-			} else if (tmpStrValue == "ring") {
-				it.slotPosition |= SLOTP_RING;
+			} else if (tmpStrValue == "pokedex") {
+				it.slotPosition |= SLOTP_POKEDEX;
+			} else if (tmpStrValue == "pick") {
+				it.slotPosition |= SLOTP_PICK;
 			} else if (tmpStrValue == "hand") {
 				it.slotPosition |= SLOTP_HAND;
 			} else {
@@ -612,6 +612,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.allowCuttable = valueAttribute.as_bool();
 		} else if (tmpStrValue == "smashable") {
 			it.allowSmashable = valueAttribute.as_bool();
+		} else if (tmpStrValue == "diggable") {
+			it.allowDiggable = valueAttribute.as_bool();
 		} else if (tmpStrValue == "transformequipto") {
 			it.transformEquipTo = pugi::cast<uint16_t>(valueAttribute.value());
 		} else if (tmpStrValue == "transformdeequipto") {

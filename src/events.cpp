@@ -25,6 +25,9 @@
 #include "item.h"
 #include "player.h"
 #include "pokemons.h"
+#include "game.h"
+
+extern Game g_game;
 
 #include <set>
 
@@ -802,8 +805,8 @@ void Events::eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_
 	scriptInterface.resetScriptEnv();
 }
 
-void Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType, Item* pokeball) {
-	// Player:onCatchPokemon(player, pokemonType, pokeballType, pokeball)
+void Events::eventPlayerOnCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType, Pokemon* pokemon) {
+	// Player:onCatchPokemon(player, pokemonType, pokeballType, pokemon)
 	if (info.playerOnCatchPokemon == -1) {
 		return;
 	}
@@ -813,7 +816,8 @@ void Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType,
 		return;
 	}
 
-	if(!player || !pokemonType || !pokeballType || !pokeball){
+	Player* player = g_game.getPlayerByID(playerId);
+	if(!player || !pokemonType || !pokeballType || !pokemon){
 		return;
 	}
 
@@ -832,13 +836,13 @@ void Events::eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType,
 	LuaScriptInterface::pushUserdata<const PokeballType>(L, pokeballType);
 	LuaScriptInterface::setMetatable(L, -1, "PokeballType");
 
-	LuaScriptInterface::pushUserdata<Item>(L, pokeball);
-	LuaScriptInterface::setItemMetatable(L, -1, pokeball);
+	LuaScriptInterface::pushUserdata<Pokemon>(L, pokemon);
+	LuaScriptInterface::setMetatable(L, -1, "Pokemon");
 
 	return scriptInterface.callVoidFunction(4);
 }
 
-void Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType) {
+void Events::eventPlayerOnDontCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType) {
 	// Player:onDontCatchPokemon(player, pokemonType, pokeballType)
 	if (info.playerOnDontCatchPokemon == -1) {
 		return;
@@ -849,6 +853,7 @@ void Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonT
 		return;
 	}
 
+	Player* player = g_game.getPlayerByID(playerId);
 	if(!player || !pokemonType || !pokeballType){
 		return;
 	}
@@ -871,7 +876,7 @@ void Events::eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonT
 	return scriptInterface.callVoidFunction(3);
 }
 
-void Events::eventPlayerOnTryCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType) {
+void Events::eventPlayerOnTryCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType) {
 	// Player:onTryCatchPokemon(player, pokemonType, pokeballType)
 	if (info.playerOnTryCatchPokemon == -1) {
 		return;
@@ -882,6 +887,7 @@ void Events::eventPlayerOnTryCatchPokemon(Player* player, PokemonType* pokemonTy
 		return;
 	}
 
+	Player* player = g_game.getPlayerByID(playerId);
 	if(!player || !pokemonType || !pokeballType){
 		return;
 	}

@@ -28,15 +28,15 @@
 
 enum SlotPositionBits : uint32_t {
 	SLOTP_WHEREEVER = 0xFFFFFFFF,
-	SLOTP_HEAD = 1 << 0,
-	SLOTP_NECKLACE = 1 << 1,
+	SLOTP_ROD = 1 << 0,
+	SLOTP_POKEDEX = 1 << 1,
 	SLOTP_BACKPACK = 1 << 2,
 	SLOTP_ORDER = 1 << 3,
 	SLOTP_RIGHT = 1 << 4,
 	SLOTP_LEFT = 1 << 5,
 	SLOTP_PORTRAIT = 1 << 6,
 	SLOTP_POKEBALL = 1 << 7,
-	SLOTP_RING = 1 << 8,
+	SLOTP_PICK = 1 << 8,
 	SLOTP_SUPPORT = 1 << 9,
 	SLOTP_DEPOT = 1 << 10,
 	SLOTP_TWO_HAND = 1 << 11,
@@ -151,6 +151,9 @@ class ItemType
 		}
 		bool isSmashable() const {
 			return (allowSmashable);
+		}
+		bool isDiggable() const {
+			return (allowDiggable);
 		}
 		bool isUseable() const {
 			return (useable);
@@ -285,6 +288,7 @@ class ItemType
 		bool showPrice = true;
 		bool allowCuttable = false;
 		bool allowSmashable = false;
+		bool allowDiggable = false;
 };
 
 class Items

@@ -196,6 +196,7 @@ class ProtocolGame final : public Protocol
 		void sendChangeSpeed(const Creature* creature, uint32_t speed);
 		void sendCancelTarget();
 		void sendCreatureOutfit(const Creature* creature, const Outfit_t& outfit);
+		void sendCreatureName(const Creature* creature, const std::string& name);
 		void sendStats();
 		void sendBasicData();
 		void sendTextMessage(const TextMessage& message);

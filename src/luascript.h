@@ -561,9 +561,6 @@ class LuaScriptInterface
 		static int luaGameIsNight(lua_State* L);
 		static int luaGameIsSunrise(lua_State* L);
 
-		static int luaGameLoadPokemon(lua_State* L);
-		static int luaGameSavePokemon(lua_State* L);
-
 		// Variant
 		static int luaVariantCreate(lua_State* L);
 
@@ -771,6 +768,7 @@ class LuaScriptInterface
 
 		static int luaCreatureGetId(lua_State* L);
 		static int luaCreatureGetName(lua_State* L);
+		static int luaCreatureSetName(lua_State* L);
 
 		static int luaCreatureGetTarget(lua_State* L);
 		static int luaCreatureSetTarget(lua_State* L);
@@ -944,6 +942,10 @@ class LuaScriptInterface
 		static int luaPlayerRemoveMount(lua_State* L);
 		static int luaPlayerHasMount(lua_State* L);
 
+		static int luaPlayerAddPokedexEntry(lua_State* L);
+		static int luaPlayerRemovePokedexEntry(lua_State* L);
+		static int luaPlayerHasPokedexEntry(lua_State* L);
+
 		static int luaPlayerGetPremiumDays(lua_State* L);
 		static int luaPlayerAddPremiumDays(lua_State* L);
 		static int luaPlayerRemovePremiumDays(lua_State* L);
@@ -975,10 +977,14 @@ class LuaScriptInterface
 		static int luaPlayerHasChaseMode(lua_State* L);
 		static int luaPlayerGetFightMode(lua_State* L);
 
+		static int luaPlayerSendPokemon(lua_State* L);
+
 		// Pokemon
 		static int luaPokemonCreate(lua_State* L);
 
 		static int luaPokemonIsPokemon(lua_State* L);
+
+		static int luaPokemonGetGuid(lua_State* L);
 
 		static int luaPokemonIsMale(lua_State* L);
 		static int luaPokemonIsFemale(lua_State* L);
@@ -1025,10 +1031,26 @@ class LuaScriptInterface
 		static int luaPokemonGetLevel(lua_State* L);
 		static int luaPokemonSetLevel(lua_State* L);
 
+		static int luaPokemonGetIVHP(lua_State* L);
+		static int luaPokemonGetIVAttack(lua_State* L);
+		static int luaPokemonGetIVSpecialAttack(lua_State* L);
+		static int luaPokemonGetIVDefense(lua_State* L);
+		static int luaPokemonGetIVSpecialDefense(lua_State* L);
+		static int luaPokemonGetIVSpeed(lua_State* L);
+
+		static int luaPokemonGetXpOnDex(lua_State* L);
+
+		static int luaPokemonGetPokeballType(lua_State* L);
+		static int luaPokemonSetPokeballType(lua_State* L);
+
 		static int luaPokemonLikesFood(lua_State* L);
 
 		static int luaPokemonAddSpecialAbility(lua_State* L);
 		static int luaPokemonHasSpecialAbility(lua_State* L);
+
+		static int luaPokemonTransform(lua_State* L);
+
+		static int luaPokemonSave(lua_State* L);
 
 		// Npc
 		static int luaNpcCreate(lua_State* L);

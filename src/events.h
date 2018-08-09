@@ -98,9 +98,9 @@ class Events
 		void eventPlayerOnGainExperience(Player* player, Creature* source, uint64_t& exp, uint64_t rawExp);
 		void eventPlayerOnLoseExperience(Player* player, uint64_t& exp);
 		void eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_t& tries);
-		void eventPlayerOnCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType, Item* pokeball);
-		void eventPlayerOnDontCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType);
-		void eventPlayerOnTryCatchPokemon(Player* player, PokemonType* pokemonType, const PokeballType* pokeballType);
+		void eventPlayerOnCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType, Pokemon* pokemon);
+		void eventPlayerOnDontCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType);
+		void eventPlayerOnTryCatchPokemon(uint32_t playerId, PokemonType* pokemonType, const PokeballType* pokeballType);
 		bool eventPlayerOnFeedPokemon(Player* player, Pokemon* pokemon, const FoodType* foodType);
 		bool eventPlayerOnFeedHimself(Player* player, const FoodType* foodType);
 		bool eventPlayerOnFeed(Player* player, Creature* creature, const FoodType* foodType);

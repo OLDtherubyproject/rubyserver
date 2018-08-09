@@ -953,3 +953,189 @@ void IOLoginData::removePremiumDays(uint32_t accountId, int32_t removeDays)
 	query << "UPDATE `accounts` SET `premdays` = `premdays` - " << removeDays << " WHERE `id` = " << accountId;
 	Database::getInstance().executeQuery(query.str());
 }
+
+bool IOLoginData::loadPokemonById(Pokemon* pokemon, uint32_t id)
+{
+	Database& db = Database::getInstance();
+	std::ostringstream query;
+	query << "SELECT `id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`, `abilities` FROM `pokemon` WHERE `id` = " << id;
+	return loadPokemon(pokemon, db.storeQuery(query.str()));
+}
+
+bool IOLoginData::loadPokemon(Pokemon* pokemon, DBResult_ptr result)
+{
+	if (!result) {
+		return false;
+	}
+
+	const PokeballType* pokeballType = g_pokeballs->getPokeballTypeByServerID(result->getNumber<uint16_t>("pokeball"));
+	if (!pokeballType) {
+		return false;
+	}
+
+	PokemonType* pokemonType = g_pokemons.getPokemonType(result->getString("type"));
+	if (!pokemonType) {
+		return false;
+	}
+
+	pokemon->setGUID(result->getNumber<uint64_t>("id"));
+	pokemon->setPokeballType(pokeballType);
+	pokemon->setPokemonType(pokemonType);
+	pokemon->setShinyStatus(result->getNumber<uint16_t>("shiny"));
+	pokemon->setName(result->getString("nickname"));
+	pokemon->setGender(static_cast<Genders_t>(result->getNumber<uint16_t>("gender")));
+	pokemon->setNature(static_cast<Natures_t>(result->getNumber<uint16_t>("nature")));
+	pokemon->setIVHP(result->getNumber<uint16_t>("hp"));
+	pokemon->setIVAttack(result->getNumber<uint16_t>("atk"));
+	pokemon->setIVDefense(result->getNumber<uint16_t>("def"));
+	pokemon->setIVSpeed(result->getNumber<uint16_t>("speed"));
+	pokemon->setIVSpecialAttack(result->getNumber<uint16_t>("spatk"));
+	pokemon->setIVSpecialDefense(result->getNumber<uint16_t>("spdef"));
+	pokemon->setAbilities(result->getNumber<uint32_t>("abilities"));
+	//load hp
+	pokemon->health = result->getNumber<int32_t>("hpnow");
+	pokemon->persistent = true;
+
+	if (pokemon->getShinyStatus() && (pokemon->getPokemonType()->info.shiny.outfit.lookType)) {
+		pokemon->setCurrentOutfit(pokemon->getPokemonType()->info.shiny.outfit);
+		pokemon->setDefaultOutfit(pokemon->getPokemonType()->info.shiny.outfit);
+	} else {
+		pokemon->setCurrentOutfit(pokemon->getPokemonType()->info.outfit);
+		pokemon->setDefaultOutfit(pokemon->getPokemonType()->info.outfit);
+	}
+
+	// load conditions
+	unsigned long conditionsSize;
+	const char* conditions = result->getStream("conditions", conditionsSize);
+	PropStream propStream;
+	propStream.init(conditions, conditionsSize);
+
+	Condition* condition = Condition::createCondition(propStream);
+	while (condition) {
+		if (condition->unserialize(propStream)) {
+			pokemon->storedConditionList.push_front(condition);
+		} else {
+			delete condition;
+		}
+		condition = Condition::createCondition(propStream);
+	}
+
+	// load moves
+	unsigned long movesSize;
+	const char* moves = result->getStream("moves", movesSize);
+	PropStream movePropStream;
+	movePropStream.init(moves, movesSize);
+
+	while (true) {
+		uint16_t moveId;
+
+		if (!movePropStream.read<uint16_t>(moveId)) {
+			break;
+		}
+
+		pokemon->addMove(std::pair<uint16_t, uint16_t>(moveId, 100));
+	}
+
+	return true;
+}
+
+bool IOLoginData::savePokemon(Pokemon* pokemon)
+{
+	Database& db = Database::getInstance();
+
+	std::ostringstream query;
+	query << "SELECT `id` FROM `pokemon` WHERE `id` = " << pokemon->getGUID();
+	DBResult_ptr result = db.storeQuery(query.str());
+
+	//serialize conditions
+	PropWriteStream propWriteStream;
+	for (Condition* condition : pokemon->conditions) {
+		if (condition->isPersistent()) {
+			condition->serialize(propWriteStream);
+			propWriteStream.write<uint8_t>(CONDITIONATTR_END);
+		}
+	}
+
+	size_t conditionsSize;
+	const char* conditions = propWriteStream.getStream(conditionsSize);
+
+	//serialize moves
+	propWriteStream.clear();
+	for (const auto& moveType : pokemon->getMoves()) {
+		Move* move = g_moves->getMove(moveType.first);
+
+		if (!move) {
+			continue;
+		}
+
+		if (move->isPersistent()) {
+			move->serialize(propWriteStream);
+		}
+	}
+
+	size_t movesSize;
+	const char* moves = propWriteStream.getStream(movesSize);
+
+	const PokeballType* pbType = pokemon->getPokeballType();
+	if (!pbType) {
+		return false;
+	}
+
+	query.str(std::string());
+	if (result) {
+		query << "UPDATE `pokemon` SET ";
+		query << "`pokeball` = " << pbType->getServerID() << ',';
+		query << "`type` = '" << pokemon->getPokemonType()->typeName << "',";
+		query << "`shiny` = " << pokemon->getShinyStatus() << ',';
+		query << "`nickname` = '" << pokemon->getName() << "',";
+		query << "`gender` = " << pokemon->getGender() << ',';
+		query << "`nature` = " << pokemon->getNature() << ',';
+		query << "`hpnow` = " << pokemon->getHealth() << ',';
+		query << "`hp` = " << static_cast<uint32_t>(pokemon->getIVHP()) << ',';
+		query << "`atk` = " << static_cast<uint32_t>(pokemon->getIVAttack()) << ',';
+		query << "`def` = " << static_cast<uint32_t>(pokemon->getIVDefense()) << ',';
+		query << "`speed` = " << static_cast<uint32_t>(pokemon->getIVSpeed()) << ',';
+		query << "`spatk` = " << static_cast<uint32_t>(pokemon->getIVSpecialAttack()) << ',';
+		query << "`spdef` = " << static_cast<uint32_t>(pokemon->getIVSpecialDefense()) << ',';
+
+		query << "`conditions` = " << db.escapeBlob(conditions, conditionsSize) << ',';
+		query << "`moves` = " << db.escapeBlob(moves, movesSize) << ',';
+
+		query << "`abilities` = " << pokemon->getAbilities();
+
+		query << " WHERE `id` = " << pokemon->getGUID();
+
+		if (!db.executeQuery(query.str())) {
+			return false;
+		}
+	} else {
+		query << "INSERT INTO `pokemon` (`id`, `pokeball`, `type`, `shiny`, `nickname`, `gender`, `nature`, `hpnow`, `hp`, `atk`, `def`, `speed`, `spatk`, `spdef`, `conditions`, `moves`, `abilities`) VALUES (";
+		query << (pokemon->getGUID() ? pokemon->getGUID() : 0) << ',';
+		query << pbType->getServerID() << ',';
+		query << '\'' << pokemon->getPokemonType()->typeName << "',";
+		query << pokemon->getShinyStatus() << ',';
+		query << '\'' << pokemon->getName() <<  "',";
+		query << pokemon->getGender() << ',';
+		query << pokemon->getNature() << ',';
+		query << pokemon->getHealth() << ',';
+		query << static_cast<uint32_t>(pokemon->getIVHP()) << ',';
+		query << static_cast<uint32_t>(pokemon->getIVAttack()) << ',';
+		query << static_cast<uint32_t>(pokemon->getIVDefense()) << ',';
+		query << static_cast<uint32_t>(pokemon->getIVSpeed()) << ',';
+		query << static_cast<uint32_t>(pokemon->getIVSpecialAttack()) << ',';
+		query << static_cast<uint32_t>(pokemon->getIVSpecialDefense()) << ',';
+
+		query << db.escapeBlob(conditions, conditionsSize) << ',';
+		query << db.escapeBlob(moves, movesSize) << ',';
+
+		query << pokemon->getAbilities() << ')';
+
+		if (!db.executeQuery(query.str())) {
+			return false;
+		}
+
+		pokemon->setGUID(db.getLastInsertId());
+	}
+
+	return true;
+}

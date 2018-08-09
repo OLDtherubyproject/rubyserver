@@ -116,6 +116,7 @@ class PokemonType
 		uint32_t iconDischarged = 0;
 		uint32_t portrait = 0;
 		uint32_t level = 0;
+		uint32_t xpOnDex = 0;
 
 		int32_t price = -1;
 		int32_t creatureAppearEvent = -1;
@@ -136,7 +137,6 @@ class PokemonType
 		bool isConvinceable = false;
 		bool isAttackable = true;
 		bool isHostile = true;
-		bool isGhost = false;
 		bool hiddenHealth = false;
 		bool canWalkOnEnergy = true;
 		bool canWalkOnFire = true;

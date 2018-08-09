@@ -23,7 +23,14 @@
 
 #include "account.h"
 #include "player.h"
+#include "pokeballs.h"
+#include "moves.h"
+#include "pokemons.h"
 #include "database.h"
+
+extern Pokeballs* g_pokeballs;
+extern Moves* g_moves;
+extern Pokemons g_pokemons;
 
 using ItemBlockList = std::list<std::pair<int32_t, Item*>>;
 
@@ -60,6 +67,9 @@ class IOLoginData
 		static void addPremiumDays(uint32_t accountId, int32_t addDays);
 		static void removePremiumDays(uint32_t accountId, int32_t removeDays);
 
+		static bool loadPokemonById(Pokemon* pokemon, uint32_t id);
+		static bool loadPokemon(Pokemon* pokemon, DBResult_ptr result);
+		static bool savePokemon(Pokemon* pokemon);
 	private:
 		using ItemMap = std::map<uint32_t, std::pair<Item*, uint32_t>>;
 

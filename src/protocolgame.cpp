@@ -234,8 +234,8 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 	}
 
 	if (player->getHisPokemon()) {
-		Item* pokeball = player->getInventoryItem(CONST_SLOT_POKEBALL);
-		player->gobackPokemon(pokeball, true, false);
+		Item* item = player->getInventoryItem(CONST_SLOT_POKEBALL);
+		player->gobackPokemon(item);
 	}
 
 	disconnect();
@@ -1196,6 +1196,19 @@ void ProtocolGame::sendCreatureOutfit(const Creature* creature, const Outfit_t& 
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendCreatureName(const Creature* creature, const std::string& name)
+{
+	if (!canSee(creature)) {
+		return;
+	}
+
+	NetworkMessage msg;
+	msg.addByte(0x62);
+	msg.add<uint32_t>(creature->getID());
+	msg.addString(name);
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendCreatureLight(const Creature* creature)
 {
 	if (!canSee(creature)) {
@@ -1929,14 +1942,6 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 	//deprecated
 	std::string weaponName = "";
 
-	if (it.slotPosition & SLOTP_TWO_HAND) {
-		if (!weaponName.empty()) {
-			weaponName += ", two-handed";
-		} else {
-			weaponName = "two-handed";
-		}
-	}
-
 	msg.addString(weaponName);
 	//deprecated
 
@@ -2440,15 +2445,15 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 		sendEffect(pos, CONST_ME_TELEPORT);
 	}
 
-	sendInventoryItem(CONST_SLOT_HEAD, player->getInventoryItem(CONST_SLOT_HEAD));
-	sendInventoryItem(CONST_SLOT_NECKLACE, player->getInventoryItem(CONST_SLOT_NECKLACE));
+	sendInventoryItem(CONST_SLOT_ROD, player->getInventoryItem(CONST_SLOT_ROD));
+	sendInventoryItem(CONST_SLOT_POKEDEX, player->getInventoryItem(CONST_SLOT_POKEDEX));
 	sendInventoryItem(CONST_SLOT_BACKPACK, player->getInventoryItem(CONST_SLOT_BACKPACK));
 	sendInventoryItem(CONST_SLOT_ORDER, player->getInventoryItem(CONST_SLOT_ORDER));
 	sendInventoryItem(CONST_SLOT_RIGHT, player->getInventoryItem(CONST_SLOT_RIGHT));
 	sendInventoryItem(CONST_SLOT_LEFT, player->getInventoryItem(CONST_SLOT_LEFT));
 	sendInventoryItem(CONST_SLOT_PORTRAIT, player->getInventoryItem(CONST_SLOT_PORTRAIT));
 	sendInventoryItem(CONST_SLOT_POKEBALL, player->getInventoryItem(CONST_SLOT_POKEBALL));
-	sendInventoryItem(CONST_SLOT_RING, player->getInventoryItem(CONST_SLOT_RING));
+	sendInventoryItem(CONST_SLOT_PICK, player->getInventoryItem(CONST_SLOT_PICK));
 	sendInventoryItem(CONST_SLOT_SUPPORT, player->getInventoryItem(CONST_SLOT_SUPPORT));
 
 	sendStats();
