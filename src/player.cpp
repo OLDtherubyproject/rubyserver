@@ -2582,21 +2582,7 @@ void Player::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_
 		updateInventoryWeight();
 		updateInventoryPokemonCount();
 		updateItemsLight();
-
-		/*if (const Item* item = thing->getItem()) {
-			if (item->getPokemonId()) {
-				changePokemonCapacity(1);
-				updatedStatus = true;
-			} else if (const Container* container = item->getContainer()) {
-				uint16_t count = g_game.findQuantityOfPokeballs(container);
-				changePokemonCapacity(getPokemonCapacity() + count);
-				updatedStatus = true;
-			}
-		}*/
-
-		if (!updatedStatus) {
-			sendStats();
-		}
+		sendStats();
 	}
 
 	if (const Item* item = thing->getItem()) {
