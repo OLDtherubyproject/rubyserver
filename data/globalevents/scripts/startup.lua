@@ -42,7 +42,7 @@ function onStartup()
 	db.query("TRUNCATE TABLE `towns`")
 	db.query("SET FOREIGN_KEY_CHECKS = 1")
 	for i, town in ipairs(Game.getTowns()) do
-		local position = town:getTemplePosition()
+		local position = town:getPokemonCenterPosition()
 		db.query("INSERT INTO `towns` (`id`, `name`, `x`, `y`, `z`) VALUES (" .. town:getId() .. ", " .. db.escapeString(town:getName()) .. ", " .. position.x .. ", " .. position.y .. ", " .. position.z .. ")")
 	end
 end

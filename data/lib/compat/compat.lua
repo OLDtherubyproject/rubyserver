@@ -283,7 +283,7 @@ function getPlayerGuildRank(cid)
 	return rank and rank.name or false
 end
 function getPlayerGuildNick(cid) local p = Player(cid) return p and p:getGuildNick() or false end
-function getPlayerMasterPos(cid) local p = Player(cid) return p and p:getTown():getTemplePosition() or false end
+function getPlayerMasterPos(cid) local p = Player(cid) return p and p:getTown():getPokemonCenterPosition() or false end
 function getPlayerItemCount(cid, itemId, ...) local p = Player(cid) return p and p:getItemCount(itemId, ...) or false end
 function getPlayerSlotItem(cid, slot)
 	local player = Player(cid)
@@ -555,7 +555,7 @@ end
 
 function getTownId(townName) local t = Town(townName) return t and t:getId() or false end
 function getTownName(townId) local t = Town(townId) return t and t:getName() or false end
-function getTownTemplePosition(townId) local t = Town(townId) return t and t:getTemplePosition() or false end
+function getTownPokemonCenterPosition(townId) local t = Town(townId) return t and t:getPokemonCenterPosition() or false end
 
 function doSetItemActionId(uid, actionId) local i = Item(uid) return i and i:setActionId(actionId) or false end
 function doTransformItem(uid, newItemId, ...) local i = Item(uid) return i and i:transform(newItemId, ...) or false end

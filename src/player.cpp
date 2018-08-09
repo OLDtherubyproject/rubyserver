@@ -1613,7 +1613,7 @@ uint32_t Player::getIP() const
 
 void Player::death(Creature* lastHitCreature)
 {
-	loginPosition = town->getTemplePosition();
+	loginPosition = town->getPokemonCenterPosition();
 
 	if (skillLoss) {
 		uint8_t unfairFightReduction = 100;
@@ -1749,7 +1749,7 @@ void Player::death(Creature* lastHitCreature)
 		}
 
 		health = healthMax;
-		g_game.internalTeleport(this, getTemplePosition(), true);
+		g_game.internalTeleport(this, getPokemonCenterPosition(), true);
 		g_game.addCreatureHealth(this);
 		onThink(EVENT_CREATURE_THINK_INTERVAL);
 		onIdleStatus();

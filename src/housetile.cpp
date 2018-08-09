@@ -112,7 +112,7 @@ Tile* HouseTile::queryDestination(int32_t& index, const Thing& thing, Item** des
 					          << " - House id: " << house->getId()
 					          << " - Tile not found: " << entryPos << std::endl;
 
-					destTile = g_game.map.getTile(player->getTemplePosition());
+					destTile = g_game.map.getTile(player->getPokemonCenterPosition());
 					if (!destTile) {
 						destTile = &(Tile::nullptr_tile);
 					}

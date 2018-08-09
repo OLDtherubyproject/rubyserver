@@ -1751,7 +1751,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(MAPMARK_EXCLAMATION)
 	registerEnum(MAPMARK_STAR)
 	registerEnum(MAPMARK_CROSS)
-	registerEnum(MAPMARK_TEMPLE)
+	registerEnum(MAPMARK_PC)
 	registerEnum(MAPMARK_KISS)
 	registerEnum(MAPMARK_SHOVEL)
 	registerEnum(MAPMARK_SWORD)
@@ -2618,7 +2618,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Town", "getId", LuaScriptInterface::luaTownGetId);
 	registerMethod("Town", "getName", LuaScriptInterface::luaTownGetName);
-	registerMethod("Town", "getTemplePosition", LuaScriptInterface::luaTownGetTemplePosition);
+	registerMethod("Town", "getPokemonCenterPosition", LuaScriptInterface::luaTownGetPokemonCenterPosition);
 
 	// House
 	registerClass("House", "", LuaScriptInterface::luaHouseCreate);
@@ -11135,12 +11135,12 @@ int LuaScriptInterface::luaTownGetName(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaTownGetTemplePosition(lua_State* L)
+int LuaScriptInterface::luaTownGetPokemonCenterPosition(lua_State* L)
 {
-	// town:getTemplePosition()
+	// town:getPokemonCenterPosition()
 	Town* town = getUserdata<Town>(L, 1);
 	if (town) {
-		pushPosition(L, town->getTemplePosition());
+		pushPosition(L, town->getPokemonCenterPosition());
 	} else {
 		lua_pushnil(L);
 	}

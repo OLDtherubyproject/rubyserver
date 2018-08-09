@@ -408,8 +408,8 @@ class Player final : public Creature, public Cylinder
 		const Position& getLoginPosition() const {
 			return loginPosition;
 		}
-		const Position& getTemplePosition() const {
-			return town->getTemplePosition();
+		const Position& getPokemonCenterPosition() const {
+			return town->getPokemonCenterPosition();
 		}
 		Town* getTown() const {
 			return town;

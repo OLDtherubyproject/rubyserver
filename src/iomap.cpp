@@ -444,7 +444,7 @@ bool IOMap::parseTowns(OTB::Loader& loader, const OTB::Node& townsNode, Map& map
 			return false;
 		}
 
-		town->setTemplePos(Position(town_coords.x, town_coords.y, town_coords.z));
+		town->setPokemonCenterPos(Position(town_coords.x, town_coords.y, town_coords.z));
 	}
 	return true;
 }

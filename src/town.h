@@ -28,15 +28,15 @@ class Town
 	public:
 		explicit Town(uint32_t id) : id(id) {}
 
-		const Position& getTemplePosition() const {
-			return templePosition;
+		const Position& getPokemonCenterPosition() const {
+			return pcPosition;
 		}
 		const std::string& getName() const {
 			return name;
 		}
 
-		void setTemplePos(Position pos) {
-			templePosition = pos;
+		void setPokemonCenterPos(Position pos) {
+			pcPosition = pos;
 		}
 		void setName(std::string name) {
 			this->name = std::move(name);
@@ -48,7 +48,7 @@ class Town
 	private:
 		uint32_t id;
 		std::string name;
-		Position templePosition;
+		Position pcPosition;
 };
 
 using TownMap = std::map<uint32_t, Town*>;

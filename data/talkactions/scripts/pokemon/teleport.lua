@@ -44,9 +44,9 @@ function onSay(player, words, param)
             summon:addCondition(condition)
 
             player:say(summon:getName() .. ", teleport to " .. town:getName() .. "!", TALKTYPE_POKEMON_SAY)
-            player:teleportTo(town:getTemplePosition())
+            player:teleportTo(town:getPokemonCenterPosition())
             player:getPosition():sendEffect(CONST_ME_TELEPORT)
-            summon:teleportTo(town:getTemplePosition())
+            summon:teleportTo(town:getPokemonCenterPosition())
             summon:getPosition():sendEffect(CONST_ME_TELEPORT)
         else
             player:sendCancelMessage("Town not found.")

@@ -137,8 +137,8 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		player->setOperatingSystem(operatingSystem);
 
 		if (!g_game.placeCreature(player, player->getLoginPosition())) {
-			if (!g_game.placeCreature(player, player->getTemplePosition(), false, true)) {
-				disconnectClient("Temple position is wrong. Contact the administrator.");
+			if (!g_game.placeCreature(player, player->getPokemonCenterPosition(), false, true)) {
+				disconnectClient("Pokemon Center position is wrong. Contact the administrator.");
 				return;
 			}
 		}

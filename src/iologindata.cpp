@@ -353,7 +353,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 
 	const Position& loginPos = player->loginPosition;
 	if (loginPos.x == 0 && loginPos.y == 0 && loginPos.z == 0) {
-		player->loginPosition = player->getTemplePosition();
+		player->loginPosition = player->getPokemonCenterPosition();
 	}
 
 	player->staminaMinutes = result->getNumber<uint16_t>("stamina");
