@@ -10407,14 +10407,12 @@ int LuaScriptInterface::luaPokemonTransform(lua_State* L)
 		return 1;
 	}
 
-	PokemonType* pokemonType;
+	PokemonType* pokemonType = nullptr;
 	if (lua_gettop(L) >= 2) {
 		if (isString(L, 2)) {
 			pokemonType = g_pokemons.getPokemonType(getString(L, 2));
 		} else if (isUserdata(L, 2)) {
 			pokemonType = getUserdata<PokemonType>(L, 2);
-		} else {
-			pokemonType = nullptr;
 		}
 	}
 
