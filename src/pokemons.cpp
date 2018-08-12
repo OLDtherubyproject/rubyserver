@@ -932,6 +932,10 @@ PokemonType* Pokemons::loadPokemon(const std::string& file, const std::string& p
 		if ((auxNode = node.child("look"))) {
 			if ((attr = auxNode.attribute("type"))) {
 				mType->info.shiny.outfit.lookType = pugi::cast<uint16_t>(attr.value());
+
+				if ((attr = auxNode.attribute("addons"))) {
+					mType->info.shiny.outfit.lookAddons = pugi::cast<uint16_t>(attr.value());
+				}
 			} else {
 				std::cout << "[Warning - Pokemons::loadPokemon] Missing shiny look type. " << file << std::endl;
 			}
