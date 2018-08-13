@@ -465,10 +465,10 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 		if (!teleport) {
 			if (oldPos.z != newPos.z) {
 				//floor change extra cost
-				lastStepCost = 2;
+				lastStepCost = 1;
 			} else if (Position::getDistanceX(newPos, oldPos) >= 1 && Position::getDistanceY(newPos, oldPos) >= 1) {
 				//diagonal extra cost
-				lastStepCost = 3;
+				lastStepCost = 2;
 			}
 		} else {
 			stopEventWalk();
